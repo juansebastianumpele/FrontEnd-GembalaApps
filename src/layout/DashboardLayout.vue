@@ -22,6 +22,12 @@
               path: '/masterData/kawin',
             }"
           />
+          <sidebar-item
+            :link="{
+              name: 'Data Kandang',
+              path: '/masterData/kandang',
+            }"
+          />
         </sidebar-item>
 
         <div class="dropdown-divider" />
