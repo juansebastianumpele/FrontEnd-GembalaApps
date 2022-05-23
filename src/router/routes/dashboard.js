@@ -21,31 +21,11 @@ const dashboardRoutes = [
         component: () => import("@/views/Dashboard/HomePage.vue"),
         meta: { requiresAuth: true },
       },
-    ],
-  },
-  {
-    path: "/ticket",
-    component: DashboardLayout,
-    beforeEnter: (to, from, next) => {
-      const { role } = certDetail();
-      if (to.matched.some(({ meta }) => meta.requiresAuth) && role === "") {
-        next({ name: "Login" });
-      } else {
-        next();
-      }
-    },
-    children: [
       {
-        path: "order",
-        name: "Order",
-        component: () => import("@/views/Dashboard/Ticket/OrderPage.vue"),
-        meta: { requireAuth: true },
-      },
-      {
-        path: "delivery",
-        name: "Delivery",
-        component: () => import("@/views/Dashboard/Ticket/DeliveryPage.vue"),
-        meta: { requireAuth: true },
+        path: "chart",
+        name: "Chart",
+        component: () => import("@/views/Dashboard/Chart.vue"),
+        meta: { requiresAuth: true },
       },
     ],
   },
@@ -71,6 +51,12 @@ const dashboardRoutes = [
         path: "kandang",
         name: "Kandang",
         component: () => import("@/views/Dashboard/MasterData/KandangPage.vue"),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "kesehatan",
+        name: "Kesehatan",
+        component: () => import("@/views/Dashboard/MasterData/KesehatanPage.vue"),
         meta: { requireAuth: true },
       },
     ],

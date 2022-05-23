@@ -6,8 +6,19 @@
 
         <sidebar-item
           :link="{
-            name: 'Master Data',
+            name: 'Dashboard',
             icon: 'fas fa-shopping-cart text-success',
+            path: '/dashboard/chart',
+          }"
+        >
+        </sidebar-item>
+
+        <div class="dropdown-divider" />
+
+        <sidebar-item
+          :link="{
+            name: 'Master Data',
+            icon: 'fas fa-address-book text-primary',
           }"
         >
           <sidebar-item
@@ -28,43 +39,10 @@
               path: '/masterData/kandang',
             }"
           />
-        </sidebar-item>
-
-        <div class="dropdown-divider" />
-
-        <sidebar-item
-          :link="{
-            name: 'Pengiriman Pesanan',
-            icon: 'fas fa-shopping-cart text-success',
-          }"
-        >
           <sidebar-item
             :link="{
-              name: 'Pengiriman Terjadwal',
-              path: '/ticket/order',
-            }"
-          />
-
-          <sidebar-item
-            :link="{
-              name: 'Riwayat Pengiriman',
-              path: '/ticket/delivery',
-            }"
-          />
-        </sidebar-item>
-
-        <div class="dropdown-divider" />
-
-        <sidebar-item
-          :link="{
-            name: 'Master Data',
-            icon: 'fas fa-address-book text-primary',
-          }"
-        >
-          <sidebar-item
-            :link="{
-              name: 'Pelanggan',
-              path: '/masterData/customer',
+              name: 'Data Kesehatan',
+              path: '/masterData/kesehatan',
             }"
           />
         </sidebar-item>
