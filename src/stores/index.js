@@ -4,7 +4,7 @@ import useAuthStore from "./auth";
 const u$site = defineStore("siteMeta", {
   state: () => ({
     site: {
-      title: "Dashboard Gembala Apps",
+      title: "Gembala Apps",
       description: "",
       logo: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%"><text font-family="Arial" font-size="16" font-weight="600" x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">Argon Dashboard</text></svg>',
       image:
