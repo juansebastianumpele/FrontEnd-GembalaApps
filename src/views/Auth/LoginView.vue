@@ -1,29 +1,26 @@
 <script>
-import {
-  object as y$object,
-  string as y$string,
-} from 'yup';
+import { object as y$object, string as y$string } from "yup";
 
-import { inject } from 'vue';
-import useAuthStore from '@/stores/auth';
-import { useRouter } from 'vue-router';
+import { inject } from "vue";
+import useAuthStore from "@/stores/auth";
+import { useRouter } from "vue-router";
 
 export default {
-  name: 'LoginView',
+  name: "LoginView",
   metaInfo: () => ({
-    title: 'Login',
+    title: "Login",
   }),
   setup() {
     const router = useRouter();
     const auth = useAuthStore();
-    const notify = inject('notify');
+    const notify = inject("notify");
 
     async function onSubmit(values) {
       try {
         const login = await auth.a$login(values);
-        if (login === 'Login success!') {
+        if (login === "Login success!") {
           notify(login);
-          router.push({ name: 'Home' });
+          router.push({ name: "Home" });
         } else {
           throw new Error(login);
         }
@@ -33,8 +30,8 @@ export default {
     }
 
     const schema = y$object({
-      username: y$string().required().label('Username'),
-      password: y$string().min(5).required().label('Password'),
+      username: y$string().required().label("Username"),
+      password: y$string().min(5).required().label("Password"),
     });
 
     return {
@@ -61,14 +58,7 @@ export default {
       </div>
     </div>
     <div class="separator separator-bottom separator-skew zindex-100">
-      <svg
-        x="0"
-        y="0"
-        viewBox="0 0 2560 100"
-        preserveAspectRatio="none"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+      <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
       </svg>
     </div>
@@ -82,26 +72,19 @@ export default {
               <small>Masuk menggunakan Username dan Sandi</small>
             </div>
             <form-comp :validation-schema="schema" @submit="onSubmit">
-              <base-input
-                name="username"
-                addon-left-icon="fas fa-user"
-                placeholder="Username"
-              >
-              </base-input>
+              <base-input name="username" addon-left-icon="fas fa-user" placeholder="Username"> </base-input>
 
-              <base-input
+              <!-- <base-input
                 name="password"
                 addon-left-icon="fas fa-lock"
                 type="password"
                 placeholder="Password"
                 password
               >
-              </base-input>
+              </base-input> -->
 
               <div class="text-center">
-                <base-button type="primary" native-type="submit" class="my-4">
-                  Sign in
-                </base-button>
+                <base-button type="primary" native-type="submit" class="my-4"> Sign in </base-button>
               </div>
             </form-comp>
           </div>
