@@ -6,6 +6,22 @@
 
         <sidebar-item
           :link="{
+            name: 'Master Data',
+            icon: 'fas fa-shopping-cart text-success',
+          }"
+        >
+          <sidebar-item
+            :link="{
+              name: 'Pakan',
+              path: '/masterData/pakan',
+            }"
+          />
+        </sidebar-item>
+
+        <div class="dropdown-divider" />
+
+        <sidebar-item
+          :link="{
             name: 'Pengiriman Pesanan',
             icon: 'fas fa-shopping-cart text-success',
           }"
@@ -56,11 +72,11 @@
 </template>
 <script>
 /* eslint-disable no-new */
-import PerfectScrollbar from 'perfect-scrollbar';
-import 'perfect-scrollbar/css/perfect-scrollbar.css';
+import PerfectScrollbar from "perfect-scrollbar";
+import "perfect-scrollbar/css/perfect-scrollbar.css";
 
-import DashboardNavbar from './DashboardNavbar.vue';
-import ContentFooter from './ContentFooter.vue';
+import DashboardNavbar from "./DashboardNavbar.vue";
+import ContentFooter from "./ContentFooter.vue";
 
 function hasElement(className) {
   return document.getElementsByClassName(className).length > 0;
@@ -87,9 +103,9 @@ export default {
   },
   methods: {
     initScrollbar() {
-      const isWindows = navigator.platform.startsWith('Win');
+      const isWindows = navigator.platform.startsWith("Win");
       if (isWindows) {
-        initScrollbar('sidenav');
+        initScrollbar("sidenav");
       }
     },
   },
