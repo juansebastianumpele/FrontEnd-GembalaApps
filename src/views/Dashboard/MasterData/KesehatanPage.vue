@@ -12,7 +12,8 @@ export default {
     const schema = y$object({
       nama_kesehatan: y$string().required().label("Nama"),
       deskripsi: y$string().nullable().label("Deskripsi"),
-      komposisi: y$string().nullable().label("Komposisi"),
+      ciri_penyakit: y$string().nullable().label("Ciri-ciri"),
+      pengobatan: y$string().nullable().label("Pengobatan"),
     });
     return {
       schema,
@@ -25,7 +26,7 @@ export default {
       id: null,
       nama_kesehatan: "",
       deskripsi: "",
-      komposisi: "",
+      ciri_penyakit: "",
     },
     // UI
     modal: {
@@ -37,16 +38,20 @@ export default {
     dt: {
       column: [
         {
-          name: "nama_kesehatan",
-          th: "Nama Kesehatan",
+          name: "nama_penyakit",
+          th: "Nama Penyakit",
         },
         {
           name: "deskripsi",
           th: "Deskripsi",
         },
         {
-          name: "komposisi",
-          th: "Komposisi",
+          name: "ciri_penyakit",
+          th: "Ciri-ciri",
+        },
+        {
+          name: "pengobatan",
+          th: "Pengobatan",
         },
       ],
       action: [
@@ -86,16 +91,18 @@ export default {
         id: null,
         nama_kesehatan: "",
         deskripsi: "",
-        komposisi: "",
+        ciri_penyakit: "",
+        pengobatan: "",
       };
     },
     async addKesehatan() {
       try {
-        const { nama_kesehatan, deskripsi, komposisi } = this.input;
+        const { nama_kesehatan, deskripsi, ciri_penyakit, pengobatan } = this.input;
         const data = {
           nama_kesehatan,
           deskripsi,
-          komposisi,
+          ciri_penyakit,
+          pengobatan,
         };
         await this.schema.validate(data);
         await this.a$kesehatanAdd(data);
@@ -109,12 +116,13 @@ export default {
     },
     async editKesehatan() {
       try {
-        const { id, nama_kesehatan, deskripsi, komposisi } = this.input;
+        const { id, nama_kesehatan, deskripsi, ciri_penyakit, pengobatan } = this.input;
         const data = {
           id,
           nama_kesehatan,
           deskripsi,
-          komposisi,
+          ciri_penyakit,
+          pengobatan,
         };
         await this.schema.validate(data);
         await this.a$kesehatanEdit(data);
@@ -140,12 +148,13 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_kesehatan, nama_kesehatan, deskripsi, komposisi } = row;
+        const { id_kesehatan, nama_kesehatan, deskripsi, ciri_penyakit, pengobatan } = row;
         this.input = {
           id: id_kesehatan,
           nama_kesehatan,
           deskripsi,
-          komposisi,
+          ciri_penyakit,
+          pengobatan,
         };
         this.modal.ubahKesehatan = true;
       } catch (error) {
@@ -207,8 +216,13 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.komposisi" type="text" name="komposisi">
-                  <base-input v-bind="field" placeholder="Text" label="Komposisi"></base-input>
+                <field-form v-slot="{ field }" v-model="input.ciri_penyakit" type="text" name="ciri_penyakit">
+                  <base-input v-bind="field" placeholder="Text" label="Ciri-ciri"></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.pengobatan" type="text" name="pengobatan">
+                  <base-input v-bind="field" placeholder="Text" label="Pengobatan"></base-input>
                 </field-form>
               </div>
             </div>
@@ -237,8 +251,13 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.komposisi" type="text" name="komposisi">
-                  <base-input v-bind="field" placeholder="Text" label="Komposisi"></base-input>
+                <field-form v-slot="{ field }" v-model="input.ciri_penyakit" type="text" name="ciri_penyakit">
+                  <base-input v-bind="field" placeholder="Text" label="Ciri-ciri"></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.pengobatan" type="text" name="pengobatan">
+                  <base-input v-bind="field" placeholder="Text" label="Pengobatan"></base-input>
                 </field-form>
               </div>
             </div>
