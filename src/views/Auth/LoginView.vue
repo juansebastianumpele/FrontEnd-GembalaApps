@@ -2,7 +2,7 @@
 import { object as y$object, string as y$string } from "yup";
 
 import { inject } from "vue";
-import useAuthStore from "@/stores/auth";
+import d$auth from "@/stores/auth";
 import { useRouter } from "vue-router";
 
 export default {
@@ -12,7 +12,7 @@ export default {
   }),
   setup() {
     const router = useRouter();
-    const auth = useAuthStore();
+    const auth = d$auth();
     const notify = inject("notify");
 
     async function onSubmit(values) {
