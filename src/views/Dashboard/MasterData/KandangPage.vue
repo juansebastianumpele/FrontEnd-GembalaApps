@@ -10,9 +10,7 @@ export default {
   }),
   setup() {
     const schema = y$object({
-      nama_pakan: y$string().required().label("Nama"),
-      deskripsi: y$string().nullable().label("Deskripsi"),
-      komposisi: y$string().nullable().label("Komposisi"),
+      nama_kandang: y$string().required().label("Nama"),
     });
     return {
       schema,
@@ -23,30 +21,20 @@ export default {
     // Input
     input: {
       id: null,
-      nama_pakan: "",
-      deskripsi: "",
-      komposisi: "",
+      nama_kandang: "",
     },
     // UI
     modal: {
-      addPakan: false,
-      ubahPakan: false,
+      addKandang: false,
+      ubahKandang: false,
       confirm: false,
     },
     // DataTable
     dt: {
       column: [
         {
-          name: "nama_pakan",
+          name: "nama_kandang",
           th: "Nama Kandang",
-        },
-        {
-          name: "deskripsi",
-          th: "Deskripsi",
-        },
-        {
-          name: "komposisi",
-          th: "Komposisi",
         },
       ],
       action: [
@@ -64,7 +52,7 @@ export default {
     },
   }),
   computed: {
-    ...mapState(d$kandang, ["g$pakanList", "g$pakanDetail"]),
+    ...mapState(d$kandang, ["g$kandangList", "g$kandangDetail"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -77,77 +65,77 @@ export default {
     },
   },
   async mounted() {
-    await this.a$pakanList().catch((error) => this.notify(error, false));
+    await this.a$kandangList().catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$kandang, ["a$pakanAdd", "a$pakanList", "a$pakanDelete", "a$pakanEdit"]),
+    ...mapActions(d$kandang, ["a$kandangAdd", "a$kandangList", "a$kandangDelete", "a$kandangEdit"]),
     clearInput() {
       this.input = {
         id: null,
-        nama_pakan: "",
+        nama_kandang: "",
         deskripsi: "",
         komposisi: "",
       };
     },
-    async addPakan() {
+    async addKandang() {
       try {
-        const { nama_pakan, deskripsi, komposisi } = this.input;
+        const { nama_kandang, deskripsi, komposisi } = this.input;
         const data = {
-          nama_pakan,
+          nama_kandang,
           deskripsi,
           komposisi,
         };
         await this.schema.validate(data);
-        await this.a$pakanAdd(data);
-        this.modal.addPakan = false;
+        await this.a$kandangAdd(data);
+        this.modal.addKandang = false;
         this.notify(`Tambah ${this.pageTitle} Sukses!`);
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$pakanList();
+        this.a$kandangList();
       }
     },
-    async editPakan() {
+    async editKandang() {
       try {
-        const { id, nama_pakan, deskripsi, komposisi } = this.input;
+        const { id, nama_kandang, deskripsi, komposisi } = this.input;
         const data = {
           id,
-          nama_pakan,
+          nama_kandang,
           deskripsi,
           komposisi,
         };
         await this.schema.validate(data);
-        await this.a$pakanEdit(data);
-        this.modal.ubahPakan = false;
+        await this.a$kandangEdit(data);
+        this.modal.ubahKandang = false;
         this.notify(`Edit ${this.pageTitle} Sukses!`);
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$pakanList();
+        this.a$kandangList();
       }
     },
-    async delPakan() {
+    async delKandang() {
       try {
         const { id } = this.input;
-        await this.a$pakanDelete(id);
+        await this.a$kandangDelete(id);
         this.modal.confirm = false;
         this.notify(`Hapus ${this.pageTitle} Sukses!`);
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$pakanList();
+        this.a$kandangList();
       }
     },
     async triggerEditModal(row) {
       try {
-        const { id_pakan, nama_pakan, deskripsi, komposisi } = row;
+        const { id_kandang, nama_kandang, deskripsi, komposisi } = row;
         this.input = {
-          id: id_pakan,
-          nama_pakan,
+          id: id_kandang,
+          nama_kandang,
           deskripsi,
           komposisi,
         };
-        this.modal.ubahPakan = true;
+        this.modal.ubahKandang = true;
       } catch (error) {
         this.clearInput();
         this.notify(error, false);
@@ -155,10 +143,10 @@ export default {
     },
     async triggerDelete(row) {
       try {
-        const { id_pakan, nama_pakan } = row;
+        const { id_kandang, nama_kandang } = row;
         this.input = {
-          id: id_pakan,
-          nama_pakan,
+          id: id_kandang,
+          nama_kandang,
         };
         this.modal.confirm = true;
       } catch (error) {
@@ -178,26 +166,26 @@ export default {
           <h3>Daftar {{ pageTitle }}</h3>
         </div>
         <div class="col text-right">
-          <base-button type="success" @click="modal.addPakan = true"> Tambah {{ pageTitle }} </base-button>
+          <base-button type="success" @click="modal.addKandang = true"> Tambah {{ pageTitle }} </base-button>
         </div>
       </div>
     </template>
 
     <template #body>
-      <empty-result v-if="!g$pakanList.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$pakanList" :columns="dt.column" :actions="dt.action" @ubah-kandang="triggerEditModal" @hapus-kandang="triggerDelete" />
+      <empty-result v-if="!g$kandangList.length" :text="`${pageTitle}`" />
+      <data-table v-else :index="true" :data="g$kandangList" :columns="dt.column" :actions="dt.action" @ubah-kandang="triggerEditModal" @hapus-kandang="triggerDelete" />
     </template>
 
     <template #modal>
-      <modal-comp v-model:show="modal.addPakan" modal-classes="modal-md">
+      <modal-comp v-model:show="modal.addKandang" modal-classes="modal-md">
         <template #header>
           <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
         </template>
         <template #body>
-          <form-comp v-if="modal.addPakan" :validation-schema="schema">
+          <form-comp v-if="modal.addKandang" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.nama_pakan" type="text" name="nama_pakan">
+                <field-form v-slot="{ field }" v-model="input.nama_kandang" type="text" name="nama_kandang">
                   <base-input v-bind="field" placeholder="Text" label="Nama" required></base-input>
                 </field-form>
               </div>
@@ -215,19 +203,19 @@ export default {
           </form-comp>
         </template>
         <template #footer>
-          <base-button type="secondary" @click="modal.addPakan = false"> Tutup </base-button>
-          <base-button type="primary" @click="addPakan()"> Tambah {{ pageTitle }} </base-button>
+          <base-button type="secondary" @click="modal.addKandang = false"> Tutup </base-button>
+          <base-button type="primary" @click="addKandang()"> Tambah {{ pageTitle }} </base-button>
         </template>
       </modal-comp>
-      <modal-comp v-model:show="modal.ubahPakan" modal-classes="modal-lg">
+      <modal-comp v-model:show="modal.ubahKandang" modal-classes="modal-lg">
         <template #header>
           <h3 class="modal-title">Detail {{ pageTitle }}</h3>
         </template>
         <template #body>
-          <form-comp v-if="modal.ubahPakan" :validation-schema="schema">
+          <form-comp v-if="modal.ubahKandang" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.nama_pakan" type="text" name="nama_pakan">
+                <field-form v-slot="{ field }" v-model="input.nama_kandang" type="text" name="nama_kandang">
                   <base-input v-bind="field" placeholder="Text" label="Nama" required></base-input>
                 </field-form>
               </div>
@@ -245,8 +233,8 @@ export default {
           </form-comp>
         </template>
         <template #footer>
-          <base-button type="secondary" @click="modal.ubahPakan = false"> Tutup </base-button>
-          <base-button type="primary" @click="editPakan()"> Simpan Perubahan </base-button>
+          <base-button type="secondary" @click="modal.ubahKandang = false"> Tutup </base-button>
+          <base-button type="primary" @click="editKandang()"> Simpan Perubahan </base-button>
         </template>
       </modal-comp>
       <modal-comp v-model:show="modal.confirm" modal-classes="modal-lg">
@@ -255,12 +243,12 @@ export default {
         </template>
         <template #body>
           <p>
-            Yakin ingin menghapus {{ pageTitle }}: <strong>{{ input.nama_pakan }}</strong>
+            Yakin ingin menghapus {{ pageTitle }}: <strong>{{ input.nama_kandang }}</strong>
           </p>
         </template>
         <template #footer>
           <base-button type="secondary" @click="modal.confirm = false"> Tutup </base-button>
-          <base-button type="danger" @click="delPakan()">Hapus</base-button>
+          <base-button type="danger" @click="delKandang()">Hapus</base-button>
         </template>
       </modal-comp>
     </template>
