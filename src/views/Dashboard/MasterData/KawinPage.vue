@@ -1,12 +1,12 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import d$pakan from "@/stores/masterData/pakan";
+import d$pakan from "@/stores/masterData/kawin";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 
 export default {
   metaInfo: () => ({
-    title: "Data Pakan",
+    title: "Data Kawin",
   }),
   setup() {
     const schema = y$object({

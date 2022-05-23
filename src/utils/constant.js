@@ -8,6 +8,7 @@ const subApiUrl = {
   api: "api",
   // Sub Sub URL
   pakan: "pakan",
+  kawin: "kawin",
 };
 
 export { host, baseApiUrl, subApiUrl };

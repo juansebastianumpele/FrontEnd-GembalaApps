@@ -12,8 +12,14 @@
         >
           <sidebar-item
             :link="{
-              name: 'Pakan',
+              name: 'Data Pakan',
               path: '/masterData/pakan',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Data Kawin',
+              path: '/masterData/kawin',
             }"
           />
         </sidebar-item>
