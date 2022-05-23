@@ -74,14 +74,7 @@ export default {
             <form-comp :validation-schema="schema" @submit="onSubmit">
               <base-input name="username" addon-left-icon="fas fa-user" placeholder="Username"> </base-input>
 
-              <!-- <base-input
-                name="password"
-                addon-left-icon="fas fa-lock"
-                type="password"
-                placeholder="Password"
-                password
-              >
-              </base-input> -->
+              <base-input name="password" addon-left-icon="fas fa-lock" type="password" placeholder="Password" password> </base-input>
 
               <div class="text-center">
                 <base-button type="primary" native-type="submit" class="my-4"> Sign in </base-button>
