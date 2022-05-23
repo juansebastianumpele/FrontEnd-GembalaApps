@@ -69,7 +69,7 @@ export default {
         <div class="card bg-secondary shadow border-0">
           <div class="card-header bg-transparent pb-5">
             <div class="text-muted text-center mt-2 mb-3">
-              <small>Masuk menggunakan Username dan Sandi</small>
+              <small>Silahkan Masukan Username dan Password</small>
             </div>
             <form-comp :validation-schema="schema" @submit="onSubmit">
               <base-input name="username" addon-left-icon="fas fa-user" placeholder="Username"> </base-input>
@@ -77,7 +77,7 @@ export default {
               <base-input name="password" addon-left-icon="fas fa-lock" type="password" placeholder="Password" password> </base-input>
 
               <div class="text-center">
-                <base-button type="primary" native-type="submit" class="my-4"> Sign in </base-button>
+                <base-button type="primary" native-type="submit" class="my-4"> Masuk </base-button>
               </div>
             </form-comp>
           </div>
