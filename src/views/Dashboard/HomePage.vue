@@ -1,10 +1,10 @@
 <script>
 export default {
   metaInfo: () => ({
-    title: 'Beranda',
+    title: "Beranda",
   }),
   data: () => ({
-    pageTitle: 'Beranda',
+    pageTitle: "Beranda",
   }),
 };
 </script>
