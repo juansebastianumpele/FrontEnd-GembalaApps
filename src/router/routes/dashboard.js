@@ -67,6 +67,12 @@ const dashboardRoutes = [
         component: () => import("@/views/Dashboard/MasterData/PakanPage.vue"),
         meta: { requireAuth: true },
       },
+      {
+        path: "kawin",
+        name: "Kawin",
+        component: () => import("@/views/Dashboard/MasterData/KawinPage.vue"),
+        meta: { requireAuth: true },
+      },
     ],
   },
   {
