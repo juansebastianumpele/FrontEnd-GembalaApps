@@ -11,6 +11,8 @@ export default {
   setup() {
     const schema = y$object({
       nama_kandang: y$string().required().label("Nama Kandang"),
+      blok_kandang: y$string().required().label("Blok Kandang"),
+      populasi: y$string().required().label("Populasi Kandang"),
     });
     return {
       schema,
@@ -22,6 +24,8 @@ export default {
     input: {
       id: null,
       nama_kandang: "",
+      blok_kandang: "",
+      populasi: "",
     },
     // UI
     modal: {
@@ -41,7 +45,7 @@ export default {
           th: "Blok Kandang",
         },
         {
-          name: "populasi_kandang",
+          name: "populasi",
           th: "Populasi Kandang",
         },
       ],
@@ -87,16 +91,16 @@ export default {
         id: null,
         nama_kandang: "",
         blok_kandang: "",
-        komposisi: "",
+        populasi: "",
       };
     },
     async addKandang() {
       try {
-        const { nama_kandang, blok_kandang, komposisi } = this.input;
+        const { nama_kandang, blok_kandang, populasi } = this.input;
         const data = {
           nama_kandang,
           blok_kandang,
-          komposisi,
+          populasi,
         };
         await this.schema.validate(data);
         await this.a$kandangAdd(data);
@@ -110,12 +114,12 @@ export default {
     },
     async editKandang() {
       try {
-        const { id, nama_kandang, blok_kandang, komposisi } = this.input;
+        const { id, nama_kandang, blok_kandang, populasi } = this.input;
         const data = {
           id,
           nama_kandang,
           blok_kandang,
-          komposisi,
+          populasi,
         };
         await this.schema.validate(data);
         await this.a$kandangEdit(data);
@@ -141,12 +145,12 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_kandang, nama_kandang, blok_kandang, komposisi } = row;
+        const { id_kandang, nama_kandang, blok_kandang, populasi } = row;
         this.input = {
           id: id_kandang,
           nama_kandang,
           blok_kandang,
-          komposisi,
+          populasi,
         };
         this.modal.ubahKandang = true;
       } catch (error) {
@@ -208,7 +212,7 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.komposisi" type="text" name="komposisi">
+                <field-form v-slot="{ field }" v-model="input.populasi" type="text" name="populasi">
                   <base-input v-bind="field" placeholder="Text" label="Populasi Kandang"></base-input>
                 </field-form>
               </div>
@@ -238,7 +242,7 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.komposisi" type="text" name="komposisi">
+                <field-form v-slot="{ field }" v-model="input.populasi" type="text" name="populasi">
                   <base-input v-bind="field" placeholder="Text" label="Populasi Kandang"></base-input>
                 </field-form>
               </div>

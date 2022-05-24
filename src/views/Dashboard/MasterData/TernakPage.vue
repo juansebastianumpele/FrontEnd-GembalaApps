@@ -110,7 +110,7 @@ export default {
     },
     async addTernak() {
       try {
-        const { id_ternak, nama_varietas, jenis_kelamin } = this.input;
+        const { id_ternak, nama_varietas, jenis_kelamin, umur } = this.input;
         const data = {
           id_ternak,
           nama_varietas,
@@ -130,7 +130,7 @@ export default {
     },
     async editTernak() {
       try {
-        const { id, id_ternak, nama_varietas, jenis_kelamin } = this.input;
+        const { id, id_ternak, nama_varietas, jenis_kelamin, fase_pemeliharaan, umur } = this.input;
         const data = {
           id,
           id_ternak,
@@ -163,7 +163,7 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_ternak, nama_varietas, jenis_kelamin } = row;
+        const { id_ternak, nama_varietas, jenis_kelamin, fase_pemeliharaan, umur } = row;
         this.input = {
           id: id_ternak,
           id_ternak,

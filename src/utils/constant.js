@@ -11,6 +11,7 @@ const subApiUrl = {
   kawin: "kawin",
   kandang: "kandang",
   kesehatan: "kesehatan",
+  penyakit: "penyakit",
   ternak: "ternak",
 };
 

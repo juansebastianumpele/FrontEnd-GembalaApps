@@ -7,7 +7,7 @@ const u$penyakit = defineStore({
     penyakit: [],
   }),
   actions: {
-    async a$kesehatanList() {
+    async a$pakanList() {
       try {
         const { data } = await s$penyakit.list();
         this.penyakit = data;
@@ -16,21 +16,21 @@ const u$penyakit = defineStore({
         throw error;
       }
     },
-    async a$kesehatanAdd(request) {
+    async a$pakanAdd(request) {
       try {
         await s$penyakit.add(request);
       } catch ({ error }) {
         throw error;
       }
     },
-    async a$kesehatanEdit(request) {
+    async a$pakanEdit(request) {
       try {
         await s$penyakit.edit(request);
       } catch ({ error }) {
         throw error;
       }
     },
-    async a$kesehatanDelete(request) {
+    async a$pakanDelete(request) {
       try {
         await s$penyakit.del(request);
       } catch ({ error }) {
@@ -39,7 +39,7 @@ const u$penyakit = defineStore({
     },
   },
   getters: {
-    g$kesehatanList: (state) => state.penyakit,
+    g$pakanList: (state) => state.penyakit,
   },
 });
 
