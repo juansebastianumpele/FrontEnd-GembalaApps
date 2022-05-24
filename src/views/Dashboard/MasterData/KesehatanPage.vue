@@ -1,0 +1,268 @@
+<script>
+import { mapActions, mapState } from "pinia";
+import d$kesehatan from "@/stores/masterData/kesehatan";
+
+import { object as y$object, string as y$string, ref as y$ref } from "yup";
+
+export default {
+  metaInfo: () => ({
+    title: "Data Kesehatan",
+  }),
+  setup() {
+    const schema = y$object({
+      nama_kesehatan: y$string().required().label("Nama"),
+      deskripsi: y$string().nullable().label("Deskripsi"),
+      komposisi: y$string().nullable().label("Komposisi"),
+    });
+    return {
+      schema,
+    };
+  },
+  data: () => ({
+    pageTitle: "Kesehatan",
+    // Input
+    input: {
+      id: null,
+      nama_kesehatan: "",
+      deskripsi: "",
+      komposisi: "",
+    },
+    // UI
+    modal: {
+      addKesehatan: false,
+      ubahKesehatan: false,
+      confirm: false,
+    },
+    // DataTable
+    dt: {
+      column: [
+        {
+          name: "nama_kesehatan",
+          th: "Nama Kesehatan",
+        },
+        {
+          name: "deskripsi",
+          th: "Deskripsi",
+        },
+        {
+          name: "komposisi",
+          th: "Komposisi",
+        },
+      ],
+      action: [
+        {
+          text: "Ubah",
+          color: "warning",
+          event: "ubah-kesehatan",
+        },
+        {
+          text: "Hapus",
+          color: "danger",
+          event: "hapus-kesehatan",
+        },
+      ],
+    },
+  }),
+  computed: {
+    ...mapState(d$kesehatan, ["g$kesehatanList", "g$kesehatanDetail"]),
+    modals() {
+      return Object.values(this.modal).includes(true);
+    },
+  },
+  watch: {
+    modals(val) {
+      if (!val) {
+        this.clearInput();
+      }
+    },
+  },
+  async mounted() {
+    await this.a$kesehatanList().catch((error) => this.notify(error, false));
+  },
+  methods: {
+    ...mapActions(d$kesehatan, ["a$kesehatanAdd", "a$kesehatanList", "a$kesehatanDelete", "a$kesehatanEdit"]),
+    clearInput() {
+      this.input = {
+        id: null,
+        nama_kesehatan: "",
+        deskripsi: "",
+        komposisi: "",
+      };
+    },
+    async addKesehatan() {
+      try {
+        const { nama_kesehatan, deskripsi, komposisi } = this.input;
+        const data = {
+          nama_kesehatan,
+          deskripsi,
+          komposisi,
+        };
+        await this.schema.validate(data);
+        await this.a$kesehatanAdd(data);
+        this.modal.addKesehatan = false;
+        this.notify(`Tambah ${this.pageTitle} Sukses!`);
+      } catch (error) {
+        this.notify(error, false);
+      } finally {
+        this.a$kesehatanList();
+      }
+    },
+    async editKesehatan() {
+      try {
+        const { id, nama_kesehatan, deskripsi, komposisi } = this.input;
+        const data = {
+          id,
+          nama_kesehatan,
+          deskripsi,
+          komposisi,
+        };
+        await this.schema.validate(data);
+        await this.a$kesehatanEdit(data);
+        this.modal.ubahKesehatan = false;
+        this.notify(`Edit ${this.pageTitle} Sukses!`);
+      } catch (error) {
+        this.notify(error, false);
+      } finally {
+        this.a$kesehatanList();
+      }
+    },
+    async delKesehatan() {
+      try {
+        const { id } = this.input;
+        await this.a$kesehatanDelete(id);
+        this.modal.confirm = false;
+        this.notify(`Hapus ${this.pageTitle} Sukses!`);
+      } catch (error) {
+        this.notify(error, false);
+      } finally {
+        this.a$kesehatanList();
+      }
+    },
+    async triggerEditModal(row) {
+      try {
+        const { id_kesehatan, nama_kesehatan, deskripsi, komposisi } = row;
+        this.input = {
+          id: id_kesehatan,
+          nama_kesehatan,
+          deskripsi,
+          komposisi,
+        };
+        this.modal.ubahKesehatan = true;
+      } catch (error) {
+        this.clearInput();
+        this.notify(error, false);
+      }
+    },
+    async triggerDelete(row) {
+      try {
+        const { id_kesehatan, nama_kesehatan } = row;
+        this.input = {
+          id: id_kesehatan,
+          nama_kesehatan,
+        };
+        this.modal.confirm = true;
+      } catch (error) {
+        this.clearInput();
+        this.notify(error, false);
+      }
+    },
+  },
+};
+</script>
+
+<template>
+  <main-layout :title="pageTitle" disable-padding>
+    <template #header>
+      <div class="row align-items-center">
+        <div class="col-auto">
+          <h3>Daftar {{ pageTitle }}</h3>
+        </div>
+        <div class="col text-right">
+          <base-button type="success" @click="modal.addKesehatan = true"> Tambah {{ pageTitle }} </base-button>
+        </div>
+      </div>
+    </template>
+
+    <template #body>
+      <empty-result v-if="!g$kesehatanList.length" :text="`${pageTitle}`" />
+      <data-table v-else :index="true" :data="g$kesehatanList" :columns="dt.column" :actions="dt.action" @ubah-kesehatan="triggerEditModal" @hapus-kesehatan="triggerDelete" />
+    </template>
+
+    <template #modal>
+      <modal-comp v-model:show="modal.addKesehatan" modal-classes="modal-md">
+        <template #header>
+          <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
+        </template>
+        <template #body>
+          <form-comp v-if="modal.addKesehatan" :validation-schema="schema">
+            <div class="row">
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.nama_kesehatan" type="text" name="nama_kesehatan">
+                  <base-input v-bind="field" placeholder="Text" label="Nama" required></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.deskripsi" type="text" name="deskripsi">
+                  <base-input v-bind="field" placeholder="Text" label="Deskripsi"></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.komposisi" type="text" name="komposisi">
+                  <base-input v-bind="field" placeholder="Text" label="Komposisi"></base-input>
+                </field-form>
+              </div>
+            </div>
+          </form-comp>
+        </template>
+        <template #footer>
+          <base-button type="secondary" @click="modal.addKesehatan = false"> Tutup </base-button>
+          <base-button type="primary" @click="addKesehatan()"> Tambah {{ pageTitle }} </base-button>
+        </template>
+      </modal-comp>
+      <modal-comp v-model:show="modal.ubahKesehatan" modal-classes="modal-lg">
+        <template #header>
+          <h3 class="modal-title">Detail {{ pageTitle }}</h3>
+        </template>
+        <template #body>
+          <form-comp v-if="modal.ubahKesehatan" :validation-schema="schema">
+            <div class="row">
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.nama_kesehatan" type="text" name="nama_kesehatan">
+                  <base-input v-bind="field" placeholder="Text" label="Nama" required></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.deskripsi" type="text" name="deskripsi">
+                  <base-input v-bind="field" placeholder="Text" label="Deskripsi"></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.komposisi" type="text" name="komposisi">
+                  <base-input v-bind="field" placeholder="Text" label="Komposisi"></base-input>
+                </field-form>
+              </div>
+            </div>
+          </form-comp>
+        </template>
+        <template #footer>
+          <base-button type="secondary" @click="modal.ubahKesehatan = false"> Tutup </base-button>
+          <base-button type="primary" @click="editKesehatan()"> Simpan Perubahan </base-button>
+        </template>
+      </modal-comp>
+      <modal-comp v-model:show="modal.confirm" modal-classes="modal-lg">
+        <template #header>
+          <h3 class="modal-title">Hapus {{ pageTitle }}</h3>
+        </template>
+        <template #body>
+          <p>
+            Yakin ingin menghapus {{ pageTitle }}: <strong>{{ input.nama_kesehatan }}</strong>
+          </p>
+        </template>
+        <template #footer>
+          <base-button type="secondary" @click="modal.confirm = false"> Tutup </base-button>
+          <base-button type="danger" @click="delKesehatan()">Hapus</base-button>
+        </template>
+      </modal-comp>
+    </template>
+  </main-layout>
+</template>
