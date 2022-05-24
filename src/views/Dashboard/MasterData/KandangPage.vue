@@ -36,8 +36,21 @@ export default {
           name: "nama_kandang",
           th: "Nama Kandang",
         },
+        {
+          name: "blok_kandang",
+          th: "Blok Kandang",
+        },
+        {
+          name: "populasi_kandang",
+          th: "Populasi Kandang",
+        },
       ],
       action: [
+        {
+          text: "Detail",
+          color: "info",
+          event: "detail-kandang",
+        },
         {
           text: "Ubah",
           color: "warning",

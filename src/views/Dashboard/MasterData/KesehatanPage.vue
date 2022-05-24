@@ -10,7 +10,7 @@ export default {
   }),
   setup() {
     const schema = y$object({
-      nama_kesehatan: y$string().required().label("Nama"),
+      nama_penyakit: y$string().required().label("Nama Penyakit"),
       deskripsi: y$string().nullable().label("Deskripsi"),
       ciri_penyakit: y$string().nullable().label("Ciri-ciri"),
       pengobatan: y$string().nullable().label("Pengobatan"),
@@ -24,9 +24,10 @@ export default {
     // Input
     input: {
       id: null,
-      nama_kesehatan: "",
+      nama_penyakit: "",
       deskripsi: "",
       ciri_penyakit: "",
+      pengobatan: "",
     },
     // UI
     modal: {
@@ -55,6 +56,11 @@ export default {
         },
       ],
       action: [
+        {
+          text: "Detail",
+          color: "info",
+          event: "detail-kesehatan",
+        },
         {
           text: "Ubah",
           color: "warning",
@@ -89,7 +95,7 @@ export default {
     clearInput() {
       this.input = {
         id: null,
-        nama_kesehatan: "",
+        nama_penyakit: "",
         deskripsi: "",
         ciri_penyakit: "",
         pengobatan: "",
@@ -97,9 +103,9 @@ export default {
     },
     async addKesehatan() {
       try {
-        const { nama_kesehatan, deskripsi, ciri_penyakit, pengobatan } = this.input;
+        const { nama_penyakit, deskripsi, ciri_penyakit, pengobatan } = this.input;
         const data = {
-          nama_kesehatan,
+          nama_penyakit,
           deskripsi,
           ciri_penyakit,
           pengobatan,
@@ -107,7 +113,7 @@ export default {
         await this.schema.validate(data);
         await this.a$kesehatanAdd(data);
         this.modal.addKesehatan = false;
-        this.notify(`Tambah ${this.pageTitle} Sukses!`);
+        this.notify(`Tambah ${this.pageTitle} Sukses !`);
       } catch (error) {
         this.notify(error, false);
       } finally {
@@ -116,10 +122,11 @@ export default {
     },
     async editKesehatan() {
       try {
-        const { id, nama_kesehatan, deskripsi, ciri_penyakit, pengobatan } = this.input;
+        const { id, id_ternak, nama_penyakit, deskripsi, ciri_penyakit, pengobatan } = this.input;
         const data = {
           id,
-          nama_kesehatan,
+          id_ternak,
+          nama_penyakit,
           deskripsi,
           ciri_penyakit,
           pengobatan,
@@ -127,7 +134,7 @@ export default {
         await this.schema.validate(data);
         await this.a$kesehatanEdit(data);
         this.modal.ubahKesehatan = false;
-        this.notify(`Edit ${this.pageTitle} Sukses!`);
+        this.notify(`Edit ${this.pageTitle} Sukses !`);
       } catch (error) {
         this.notify(error, false);
       } finally {
@@ -139,7 +146,7 @@ export default {
         const { id } = this.input;
         await this.a$kesehatanDelete(id);
         this.modal.confirm = false;
-        this.notify(`Hapus ${this.pageTitle} Sukses!`);
+        this.notify(`Hapus ${this.pageTitle} Sukses !`);
       } catch (error) {
         this.notify(error, false);
       } finally {
@@ -148,10 +155,11 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_kesehatan, nama_kesehatan, deskripsi, ciri_penyakit, pengobatan } = row;
+        const { id_kesehatan, id_ternak, nama_penyakit, deskripsi, ciri_penyakit, pengobatan } = row;
         this.input = {
           id: id_kesehatan,
-          nama_kesehatan,
+          id_ternak,
+          nama_penyakit,
           deskripsi,
           ciri_penyakit,
           pengobatan,
@@ -164,10 +172,10 @@ export default {
     },
     async triggerDelete(row) {
       try {
-        const { id_kesehatan, nama_kesehatan } = row;
+        const { id_kesehatan, nama_penyakit } = row;
         this.input = {
           id: id_kesehatan,
-          nama_kesehatan,
+          nama_penyakit,
         };
         this.modal.confirm = true;
       } catch (error) {
@@ -206,8 +214,8 @@ export default {
           <form-comp v-if="modal.addKesehatan" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.nama_kesehatan" type="text" name="nama_kesehatan">
-                  <base-input v-bind="field" placeholder="Text" label="Nama" required></base-input>
+                <field-form v-slot="{ field }" v-model="input.nama_penyakit" type="text" name="nama_penyakit">
+                  <base-input v-bind="field" placeholder="Text" label="Nama Penyakit" required></base-input>
                 </field-form>
               </div>
               <div class="col-12">
@@ -241,8 +249,8 @@ export default {
           <form-comp v-if="modal.ubahKesehatan" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.nama_kesehatan" type="text" name="nama_kesehatan">
-                  <base-input v-bind="field" placeholder="Text" label="Nama" required></base-input>
+                <field-form v-slot="{ field }" v-model="input.nama_penyakit" type="text" name="nama_penyakit">
+                  <base-input v-bind="field" placeholder="Text" label="Nama Penyakit" required></base-input>
                 </field-form>
               </div>
               <div class="col-12">
@@ -274,7 +282,7 @@ export default {
         </template>
         <template #body>
           <p>
-            Yakin ingin menghapus {{ pageTitle }}: <strong>{{ input.nama_kesehatan }}</strong>
+            Yakin ingin menghapus {{ pageTitle }}: <strong>{{ input.nama_penyakit }}</strong>
           </p>
         </template>
         <template #footer>

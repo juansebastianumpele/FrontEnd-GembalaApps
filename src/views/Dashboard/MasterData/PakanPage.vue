@@ -51,6 +51,11 @@ export default {
       ],
       action: [
         {
+          text: "Detail",
+          color: "info",
+          event: "detail-pakan",
+        },
+        {
           text: "Ubah",
           color: "warning",
           event: "ubah-pakan",
