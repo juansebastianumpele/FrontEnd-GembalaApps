@@ -10,7 +10,7 @@ export default {
   }),
   setup() {
     const schema = y$object({
-      nama_pakan: y$string().required().label("Nama"),
+      nama_pakan: y$string().required().label("Nama Pakan"),
       deskripsi: y$string().nullable().label("Deskripsi"),
       komposisi: y$string().nullable().label("Komposisi"),
     });
@@ -203,7 +203,7 @@ export default {
             <div class="row">
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.nama_pakan" type="text" name="nama_pakan">
-                  <base-input v-bind="field" placeholder="Text" label="Nama" required></base-input>
+                  <base-input v-bind="field" placeholder="Text" label="Nama Pakan" required></base-input>
                 </field-form>
               </div>
               <div class="col-12">
@@ -233,7 +233,7 @@ export default {
             <div class="row">
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.nama_pakan" type="text" name="nama_pakan">
-                  <base-input v-bind="field" placeholder="Text" label="Nama" required></base-input>
+                  <base-input v-bind="field" placeholder="Text" label="Nama Pakan" required></base-input>
                 </field-form>
               </div>
               <div class="col-12">

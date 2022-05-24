@@ -10,7 +10,7 @@ export default {
   }),
   setup() {
     const schema = y$object({
-      nama_kandang: y$string().required().label("Nama"),
+      nama_kandang: y$string().required().label("Nama Kandang"),
     });
     return {
       schema,
@@ -86,16 +86,16 @@ export default {
       this.input = {
         id: null,
         nama_kandang: "",
-        deskripsi: "",
+        blok_kandang: "",
         komposisi: "",
       };
     },
     async addKandang() {
       try {
-        const { nama_kandang, deskripsi, komposisi } = this.input;
+        const { nama_kandang, blok_kandang, komposisi } = this.input;
         const data = {
           nama_kandang,
-          deskripsi,
+          blok_kandang,
           komposisi,
         };
         await this.schema.validate(data);
@@ -110,11 +110,11 @@ export default {
     },
     async editKandang() {
       try {
-        const { id, nama_kandang, deskripsi, komposisi } = this.input;
+        const { id, nama_kandang, blok_kandang, komposisi } = this.input;
         const data = {
           id,
           nama_kandang,
-          deskripsi,
+          blok_kandang,
           komposisi,
         };
         await this.schema.validate(data);
@@ -141,11 +141,11 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_kandang, nama_kandang, deskripsi, komposisi } = row;
+        const { id_kandang, nama_kandang, blok_kandang, komposisi } = row;
         this.input = {
           id: id_kandang,
           nama_kandang,
-          deskripsi,
+          blok_kandang,
           komposisi,
         };
         this.modal.ubahKandang = true;
@@ -199,17 +199,17 @@ export default {
             <div class="row">
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.nama_kandang" type="text" name="nama_kandang">
-                  <base-input v-bind="field" placeholder="Text" label="Nama" required></base-input>
+                  <base-input v-bind="field" placeholder="Text" label="Nama Kandang" required></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.deskripsi" type="text" name="deskripsi">
-                  <base-input v-bind="field" placeholder="Text" label="Deskripsi"></base-input>
+                <field-form v-slot="{ field }" v-model="input.blok_kandang" type="text" name="blok_kandang">
+                  <base-input v-bind="field" placeholder="Text" label="Blok Kandang"></base-input>
                 </field-form>
               </div>
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.komposisi" type="text" name="komposisi">
-                  <base-input v-bind="field" placeholder="Text" label="Komposisi"></base-input>
+                  <base-input v-bind="field" placeholder="Text" label="Populasi Kandang"></base-input>
                 </field-form>
               </div>
             </div>
@@ -229,17 +229,17 @@ export default {
             <div class="row">
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.nama_kandang" type="text" name="nama_kandang">
-                  <base-input v-bind="field" placeholder="Text" label="Nama" required></base-input>
+                  <base-input v-bind="field" placeholder="Text" label="Nama Kandang" required></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.deskripsi" type="text" name="deskripsi">
-                  <base-input v-bind="field" placeholder="Text" label="Deskripsi"></base-input>
+                <field-form v-slot="{ field }" v-model="input.blok_kandang" type="text" name="blok_kandang">
+                  <base-input v-bind="field" placeholder="Text" label="Blok Kandang"></base-input>
                 </field-form>
               </div>
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.komposisi" type="text" name="komposisi">
-                  <base-input v-bind="field" placeholder="Text" label="Komposisi"></base-input>
+                  <base-input v-bind="field" placeholder="Text" label="Populasi Kandang"></base-input>
                 </field-form>
               </div>
             </div>

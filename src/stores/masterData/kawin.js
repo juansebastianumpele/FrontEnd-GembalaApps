@@ -10,9 +10,9 @@ const u$kawin = defineStore({
     async a$kawinList() {
       try {
         const { data } = await s$kawin.list();
-        this.pakan = data;
+        this.kawin = data;
       } catch ({ error }) {
-        this.pakan = [];
+        this.kawin = [];
         throw error;
       }
     },

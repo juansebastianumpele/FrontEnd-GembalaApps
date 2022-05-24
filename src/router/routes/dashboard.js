@@ -42,21 +42,27 @@ const dashboardRoutes = [
     },
     children: [
       {
+        path: "kandang",
+        name: "Kandang",
+        component: () => import("@/views/Dashboard/MasterData/KandangPage.vue"),
+        meta: { requireAuth: true },
+      },
+      {
         path: "pakan",
         name: "Pakan",
         component: () => import("@/views/Dashboard/MasterData/PakanPage.vue"),
         meta: { requireAuth: true },
       },
       {
-        path: "kawin",
-        name: "Kawin",
-        component: () => import("@/views/Dashboard/MasterData/KawinPage.vue"),
+        path: "ternak",
+        name: "Ternak",
+        component: () => import("@/views/Dashboard/MasterData/TernakPage.vue"),
         meta: { requireAuth: true },
       },
       {
-        path: "kandang",
-        name: "Kandang",
-        component: () => import("@/views/Dashboard/MasterData/KandangPage.vue"),
+        path: "kawin",
+        name: "Kawin",
+        component: () => import("@/views/Dashboard/MasterData/KawinPage.vue"),
         meta: { requireAuth: true },
       },
       {
