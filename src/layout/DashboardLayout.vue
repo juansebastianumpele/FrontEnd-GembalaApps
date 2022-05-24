@@ -7,7 +7,7 @@
         <sidebar-item
           :link="{
             name: 'Dashboard',
-            icon: 'fas fa-shopping-cart text-success',
+            icon: 'fas fa-square-poll-vertical text-danger',
             path: '/dashboard/chart',
           }"
         >
