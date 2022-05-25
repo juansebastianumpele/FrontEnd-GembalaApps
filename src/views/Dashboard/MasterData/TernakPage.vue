@@ -1,6 +1,7 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import d$ternak from "@/stores/masterData/ternak";
+import d$dropdown from "@/stores/dropdown";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 
@@ -104,6 +105,7 @@ export default {
   }),
   computed: {
     ...mapState(d$ternak, ["g$ternakList", "g$ternakDetail"]),
+    ...mapState(d$dropdown, ["g$ddTernak", "g$ddJenisKelamin", "g$ddVarietas"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -120,6 +122,7 @@ export default {
   },
   methods: {
     ...mapActions(d$ternak, ["a$ternakAdd", "a$ternakList", "a$ternakDelete", "a$ternakEdit"]),
+    ...mapActions(d$dropdown, ["a$ddTernak"]),
     clearInput() {
       this.input = {
         id: null,
@@ -149,8 +152,8 @@ export default {
           id_users,
           id_ternak,
           rf_id,
-          jenis_kelamin,
-          nama_varietas,
+          jenis_kelamin: jenis_kelamin.nama,
+          nama_varietas: nama_varietas.id,
           berat_berkala,
           suhu_berkala,
           tanggal_lahir,
@@ -308,15 +311,20 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.jenis_kelamin" type="text" name="jenis_kelamin">
-                  <base-input v-bind="field" placeholder="Text" label="Jenis Kelamin" required></base-input>
-                </field-form>
+                <base-input name="jenis_kelamin" placeholder="Jenis Kelamin" label="Jenis Kelamin">
+                  <multi-select v-model="input.jenis_kelamin" :options="g$ddJenisKelamin" label="nama" track-by="nama" placeholder="Pilih Jenis Kelamin" :show-labels="false" />
+                </base-input>
               </div>
               <div class="col-12">
+                <base-input name="nama_varietas" placeholder="Varietas" label="Varietas">
+                  <multi-select v-model="input.nama_varietas" :options="g$ddVarietas" label="nama" track-by="id" placeholder="Pilih Varietas" :show-labels="false" />
+                </base-input>
+              </div>
+              <!-- <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.nama_varietas" type="text" name="nama_varietas">
                   <base-input v-bind="field" placeholder="Text" label="Varietas"></base-input>
                 </field-form>
-              </div>
+              </div> -->
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.berat_berkala" type="text" name="berat_berkala">
                   <base-input v-bind="field" placeholder="Text" label="Berat Berkala" required></base-input>
