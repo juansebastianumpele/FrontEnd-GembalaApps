@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
 import * as s$kandang from "@/services/masterData/kandang";
 import * as s$pakan from "@/services/masterData/pakan";
-import * as s$ternak from "@/services/masterData/ternak";
 import * as s$customer from "@/services/customer";
 import * as s$commodity from "@/services/commodity";
 import * as s$driver from "@/services/driver";
 import * as s$device from "@/services/device";
 import * as s$unit from "@/services/unit";
+import * as s$ternak from "@/services/masterData/ternak";
 
 const u$dropdown = defineStore({
   id: "dropdown",
@@ -25,6 +25,7 @@ const u$dropdown = defineStore({
       // { id: 2, name: "Selesai" },
       // { id: 3, name: "Tidak Terkirim" },
     ],
+    varietas: [],
   }),
   actions: {
     async a$ddTernak() {
@@ -94,6 +95,15 @@ const u$dropdown = defineStore({
         throw error;
       }
     },
+    async a$listVarietas() {
+      try {
+        const { data } = await s$ternak.listVarietas();
+        this.varietas = data;
+      } catch ({ error }) {
+        this.varietas = [];
+        throw error;
+      }
+    },
   },
   getters: {
     g$ddJenisKelamin: (state) => state.jenisKelamin,
@@ -106,6 +116,7 @@ const u$dropdown = defineStore({
     g$ddStatusFalse: (state) => state.status.map(({ id, name }) => ({ id, name })).filter((obj) => obj.id <= 1),
     g$ddStatusTrue: (state) => state.status.map(({ id, name }) => ({ id, name })).filter((obj) => obj.id >= 2),
     g$ddTruck: (state) => state.truck.map(({ id, truckNumber }) => ({ id, name: truckNumber })),
+    g$listVarietas: (state) => state.varietas.map(({ id_varietas, nama_varietas }) => ({ id: id_varietas, name: nama_varietas })),
   },
 });
 
