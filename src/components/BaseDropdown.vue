@@ -12,54 +12,54 @@
 </template>
 <script>
 export default {
-  name: 'BaseDropdown',
+  name: "BaseDropdown",
   props: {
     tag: {
       type: String,
-      default: 'div',
-      description: 'Dropdown html tag (e.g div, ul etc)',
+      default: "div",
+      description: "Dropdown html tag (e.g div, ul etc)",
     },
     titleTag: {
       type: String,
-      default: 'button',
-      description: 'Dropdown title (toggle) html tag',
+      default: "button",
+      description: "Dropdown title (toggle) html tag",
     },
     title: {
       type: String,
-      description: 'Dropdown title',
-      default: '',
+      description: "Dropdown title",
+      default: "",
     },
     direction: {
       type: String,
-      default: 'down', // up | down
-      description: 'Dropdown menu direction (up|down)',
+      default: "down", // up | down
+      description: "Dropdown menu direction (up|down)",
     },
     icon: {
       type: String,
-      description: 'Dropdown icon',
-      default: '',
+      description: "Dropdown icon",
+      default: "",
     },
     titleClasses: {
       type: [String, Object, Array],
-      description: 'Title css classes',
-      default: '',
+      description: "Title css classes",
+      default: "",
     },
     menuClasses: {
       type: [String, Object],
-      description: 'Menu css classes',
-      default: '',
+      description: "Menu css classes",
+      default: "",
     },
     menuOnRight: {
       type: Boolean,
-      description: 'Whether menu should appear on the right',
+      description: "Whether menu should appear on the right",
     },
     hasToggle: {
       type: Boolean,
-      description: 'Whether dropdown has arrow icon shown',
+      description: "Whether dropdown has arrow icon shown",
       default: true,
     },
   },
-  emits: ['change'],
+  emits: ["change"],
   data() {
     return {
       isOpen: false,
@@ -68,7 +68,7 @@ export default {
   methods: {
     toggleDropDown() {
       this.isOpen = !this.isOpen;
-      this.$emit('change', this.isOpen);
+      this.$emit("change", this.isOpen);
       // event.stopPropagation();
       // let dropdowns = document.querySelectorAll('.dropdown-menu');
       // for(var i=0; i<dropdowns.length; i++){
@@ -78,7 +78,7 @@ export default {
     },
     closeDropDown() {
       this.isOpen = false;
-      this.$emit('change', false);
+      this.$emit("change", false);
     },
   },
 };

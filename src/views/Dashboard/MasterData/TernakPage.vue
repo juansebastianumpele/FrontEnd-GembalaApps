@@ -10,11 +10,22 @@ export default {
   }),
   setup() {
     const schema = y$object({
+      nomor: y$string().required().label("Nomor"),
+      id_users: y$string().required().label("ID Users"),
       id_ternak: y$string().required().label("ID Ternak"),
-      nama_varietas: y$string().nullable().label("Varietas"),
+      rf_id: y$string().required().label("RF ID"),
       jenis_kelamin: y$string().nullable().label("Jenis Kelamin"),
-      fase_pemeliharaan: y$string().nullable().label("Fase Pemeliharaan"),
+      nama_varietas: y$string().nullable().label("Varietas"),
+      berat_berkala: y$string().nullable().label("Berat Berkala"),
+      suhu_berkala: y$string().nullable().label("Suhu Berkala"),
+      tanggal_lahir: y$string().nullable().label("Tanggal Lahir"),
       umur: y$string().nullable().label("Umur"),
+      tanggal_masuk: y$string().nullable().label("Tanggal Masuk"),
+      status_sehat: y$string().nullable().label("Status Sehat"),
+      fase_pemeliharaan: y$string().nullable().label("Fase Pemeliharaan"),
+      nama_pakan: y$string().nullable().label("Nama Pakan"),
+      id_induk: y$string().nullable().label("ID Induk"),
+      id_pejantan: y$string().nullable().label("ID Pejantan"),
     });
     return {
       schema,
@@ -25,11 +36,22 @@ export default {
     // Input
     input: {
       id: null,
+      nomor: "",
+      id_users: "",
       id_ternak: "",
-      nama_varietas: "",
+      rf_id: "",
       jenis_kelamin: "",
-      fase_pemeliharaan: "",
+      nama_varietas: "",
+      berat_berkala: "",
+      suhu_berkala: "",
+      tanggal_lahir: "",
       umur: "",
+      tanggal_masuk: "",
+      status_sehat: "",
+      fase_pemeliharaan: "",
+      nama_pakan: "",
+      id_induk: "",
+      id_pejantan: "",
     },
     // UI
     modal: {
@@ -101,22 +123,44 @@ export default {
     clearInput() {
       this.input = {
         id: null,
+        nomor: "",
+        id_users: "",
         id_ternak: "",
-        nama_varietas: "",
+        rf_id: "",
         jenis_kelamin: "",
-        fase_pemeliharaan: "",
+        nama_varietas: "",
+        berat_berkala: "",
+        suhu_berkala: "",
+        tanggal_lahir: "",
         umur: "",
+        tanggal_masuk: "",
+        status_sehat: "",
+        fase_pemeliharaan: "",
+        nama_pakan: "",
+        id_induk: "",
+        id_pejantan: "",
       };
     },
     async addTernak() {
       try {
-        const { id_ternak, nama_varietas, jenis_kelamin, umur } = this.input;
+        const { nomor, id_users, id_ternak, rf_id, jenis_kelamin, nama_varietas, berat_berkala, suhu_berkala, tanggal_lahir, umur, tanggal_masuk, status_sehat, fase_pemeliharaan, nama_pakan, id_induk, id_pejantan } = this.input;
         const data = {
+          nomor,
+          id_users,
           id_ternak,
-          nama_varietas,
+          rf_id,
           jenis_kelamin,
-          fase_pemeliharaan,
+          nama_varietas,
+          berat_berkala,
+          suhu_berkala,
+          tanggal_lahir,
           umur,
+          tanggal_masuk,
+          status_sehat,
+          fase_pemeliharaan,
+          nama_pakan,
+          id_induk,
+          id_pejantan,
         };
         await this.schema.validate(data);
         await this.a$ternakAdd(data);
@@ -130,14 +174,25 @@ export default {
     },
     async editTernak() {
       try {
-        const { id, id_ternak, nama_varietas, jenis_kelamin, fase_pemeliharaan, umur } = this.input;
+        const { id, nomor, id_users, id_ternak, rf_id, jenis_kelamin, nama_varietas, berat_berkala, suhu_berkala, tanggal_lahir, umur, tanggal_masuk, status_sehat, fase_pemeliharaan, nama_pakan, id_induk, id_pejantan } = this.input;
         const data = {
           id,
+          nomor,
+          id_users,
           id_ternak,
-          nama_varietas,
+          rf_id,
           jenis_kelamin,
-          fase_pemeliharaan,
+          nama_varietas,
+          berat_berkala,
+          suhu_berkala,
+          tanggal_lahir,
           umur,
+          tanggal_masuk,
+          status_sehat,
+          fase_pemeliharaan,
+          nama_pakan,
+          id_induk,
+          id_pejantan,
         };
         await this.schema.validate(data);
         await this.a$ternakEdit(data);
@@ -163,14 +218,25 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_ternak, nama_varietas, jenis_kelamin, fase_pemeliharaan, umur } = row;
+        const { nomor, id_users, id_ternak, rf_id, jenis_kelamin, nama_varietas, berat_berkala, suhu_berkala, tanggal_lahir, umur, tanggal_masuk, status_sehat, fase_pemeliharaan, nama_pakan, id_induk, id_pejantan } = row;
         this.input = {
           id: id_ternak,
+          nomor,
+          id_users,
           id_ternak,
-          nama_varietas,
+          rf_id,
           jenis_kelamin,
-          fase_pemeliharaan,
+          nama_varietas,
+          berat_berkala,
+          suhu_berkala,
+          tanggal_lahir,
           umur,
+          tanggal_masuk,
+          status_sehat,
+          fase_pemeliharaan,
+          nama_pakan,
+          id_induk,
+          id_pejantan,
         };
         this.modal.ubahTernak = true;
       } catch (error) {
@@ -222,8 +288,28 @@ export default {
           <form-comp v-if="modal.addTernak" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.nomor" type="text" name="nomor">
+                  <base-input v-bind="field" placeholder="Text" label="Nomor" required></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.id_users" type="text" name="id_users">
+                  <base-input v-bind="field" placeholder="Text" label="ID Users" required></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.id_ternak" type="text" name="id_ternak">
                   <base-input v-bind="field" placeholder="Text" label="ID Ternak" required></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.rf_id" type="text" name="rf_id">
+                  <base-input v-bind="field" placeholder="Text" label="RFID Ternak" required></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.jenis_kelamin" type="text" name="jenis_kelamin">
+                  <base-input v-bind="field" placeholder="Text" label="Jenis Kelamin" required></base-input>
                 </field-form>
               </div>
               <div class="col-12">
@@ -232,8 +318,33 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.jenis_kelamin" type="text" name="jenis_kelamin">
-                  <base-input v-bind="field" placeholder="Text" label="Jenis Kelamin"></base-input>
+                <field-form v-slot="{ field }" v-model="input.berat_berkala" type="text" name="berat_berkala">
+                  <base-input v-bind="field" placeholder="Text" label="Berat Berkala" required></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.suhu_berkala" type="text" name="suhu_berkala">
+                  <base-input v-bind="field" placeholder="Text" label="Suhu Berkala" required></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <base-input name="tanggal_lahir" class="my-4" placeholder="YYYY-MM-DD" label="Tanggal Lahir">
+                  <flat-pickr v-model.lazy="input.tanggal_lahir" :config="{ mode: 'single', allowInput: true }" class="form-control datepicker" placeholder="YYYY-MM-DD" />
+                </base-input>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.umur" type="text" name="umur">
+                  <base-input v-bind="field" placeholder="Text" label="Umur" required></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <base-input name="tanggal_masuk" class="my-4" placeholder="YYYY-MM-DD" label="Tanggal Masuk">
+                  <flat-pickr v-model.lazy="input.tanggal_masuk" :config="{ mode: 'single', allowInput: true }" class="form-control datepicker" placeholder="YYYY-MM-DD" />
+                </base-input>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.status_sehat" type="text" name="status_sehat">
+                  <base-input v-bind="field" placeholder="Text" label="Status Sehat" required></base-input>
                 </field-form>
               </div>
               <div class="col-12">
@@ -242,8 +353,18 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.umur" type="text" name="umur">
-                  <base-input v-bind="field" placeholder="Text" label="Umur"></base-input>
+                <field-form v-slot="{ field }" v-model="input.nama_pakan" type="text" name="nama_pakan">
+                  <base-input v-bind="field" placeholder="Text" label="Nama Pakan"></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.id_induk" type="text" name="id_induk">
+                  <base-input v-bind="field" placeholder="Text" label="ID Induk"></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.id_pejantan" type="text" name="id_pejantan">
+                  <base-input v-bind="field" placeholder="Text" label="ID Pejantan"></base-input>
                 </field-form>
               </div>
             </div>
@@ -262,8 +383,28 @@ export default {
           <form-comp v-if="modal.ubahTernak" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.nomor" type="text" name="nomor">
+                  <base-input v-bind="field" placeholder="Text" label="Nomor" required></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.id_users" type="text" name="id_users">
+                  <base-input v-bind="field" placeholder="Text" label="ID Users" required></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.id_ternak" type="text" name="id_ternak">
                   <base-input v-bind="field" placeholder="Text" label="ID Ternak" required></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.rf_id" type="text" name="rf_id">
+                  <base-input v-bind="field" placeholder="Text" label="RFID Ternak" required></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.jenis_kelamin" type="text" name="jenis_kelamin">
+                  <base-input v-bind="field" placeholder="Text" label="Jenis Kelamin" required></base-input>
                 </field-form>
               </div>
               <div class="col-12">
@@ -272,8 +413,33 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.jenis_kelamin" type="text" name="jenis_kelamin">
-                  <base-input v-bind="field" placeholder="Text" label="Jenis Kelamin"></base-input>
+                <field-form v-slot="{ field }" v-model="input.berat_berkala" type="text" name="berat_berkala">
+                  <base-input v-bind="field" placeholder="Text" label="Berat Berkala" required></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.suhu_berkala" type="text" name="suhu_berkala">
+                  <base-input v-bind="field" placeholder="Text" label="Suhu Berkala" required></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.tanggal_lahir" type="text" name="tanggal_lahir">
+                  <base-input v-bind="field" placeholder="Text" label="Tanggal Lahir" required></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.umur" type="text" name="umur">
+                  <base-input v-bind="field" placeholder="Text" label="Umur" required></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.tanggal_masuk" type="text" name="tanggal_masuk">
+                  <base-input v-bind="field" placeholder="Text" label="Tanggal Masuk" required></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.status_sehat" type="text" name="status_sehat">
+                  <base-input v-bind="field" placeholder="Text" label="Status Sehat" required></base-input>
                 </field-form>
               </div>
               <div class="col-12">
@@ -282,8 +448,18 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.umur" type="text" name="umur">
-                  <base-input v-bind="field" placeholder="Text" label="Umur"></base-input>
+                <field-form v-slot="{ field }" v-model="input.nama_pakan" type="text" name="nama_pakan">
+                  <base-input v-bind="field" placeholder="Text" label="Nama Pakan"></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.id_induk" type="text" name="id_induk">
+                  <base-input v-bind="field" placeholder="Text" label="ID Induk"></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.id_pejantan" type="text" name="id_pejantan">
+                  <base-input v-bind="field" placeholder="Text" label="ID Pejantan"></base-input>
                 </field-form>
               </div>
             </div>

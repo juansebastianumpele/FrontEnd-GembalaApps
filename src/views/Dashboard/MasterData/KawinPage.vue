@@ -130,8 +130,9 @@ export default {
     },
     async editKawin() {
       try {
-        const { id_kawin, id_ternak, tanggal_kawin, fase_induk, id_pemancek } = this.input;
+        const { id, id_kawin, id_ternak, tanggal_kawin, fase_induk, id_pemancek } = this.input;
         const data = {
+          id,
           id_kawin,
           id_ternak,
           tanggal_kawin,
@@ -221,7 +222,7 @@ export default {
             <div class="row">
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.id_kawin" type="text" name="id_kawin">
-                  <base-input v-bind="field" placeholder="Text" label="ID Ternak" required></base-input>
+                  <base-input v-bind="field" placeholder="Text" label="ID Kawin" required></base-input>
                 </field-form>
               </div>
               <div class="col-12">
@@ -231,7 +232,7 @@ export default {
               </div>
               <div class="col-12">
                 <base-input name="tanggal_kawin" class="my-4" placeholder="YYYY-MM-DD" label="Tanggal Kawin">
-                  <flat-pickr v-model.lazy="filter.dateRange" :config="{ mode: 'range', allowInput: true }" class="form-control datepicker" placeholder="YYYY-MM-DD" />
+                  <flat-pickr v-model.lazy="input.tanggal_kawin" :config="{ mode: 'single', allowInput: true }" class="form-control datepicker" placeholder="YYYY-MM-DD" />
                 </base-input>
               </div>
               <div class="col-12">

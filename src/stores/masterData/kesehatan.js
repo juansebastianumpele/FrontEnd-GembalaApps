@@ -1,46 +1,46 @@
 import { defineStore } from "pinia";
-import * as s$penyakit from "@/services/masterData/penyakit";
+import * as s$kesehatan from "@/services/masterData/kesehatan";
 
-const u$penyakit = defineStore({
-  id: "penyakit",
+const u$kesehatan = defineStore({
+  id: "kesehatan",
   state: () => ({
-    penyakit: [],
+    kesehatan: [],
   }),
   actions: {
     async a$kesehatanList() {
       try {
-        const { data } = await s$penyakit.list();
-        this.penyakit = data;
+        const { data } = await s$kesehatan.list();
+        this.kesehatan = data;
       } catch ({ error }) {
-        this.penyakit = [];
+        this.kesehatan = [];
         throw error;
       }
     },
     async a$kesehatanAdd(request) {
       try {
-        await s$penyakit.add(request);
+        await s$kesehatan.add(request);
       } catch ({ error }) {
         throw error;
       }
     },
     async a$kesehatanEdit(request) {
       try {
-        await s$penyakit.edit(request);
+        await s$kesehatan.edit(request);
       } catch ({ error }) {
         throw error;
       }
     },
     async a$kesehatanDelete(request) {
       try {
-        await s$penyakit.del(request);
+        await s$kesehatan.del(request);
       } catch ({ error }) {
         throw error;
       }
     },
   },
   getters: {
-    g$kesehatanList: (state) => state.penyakit,
+    g$kesehatanList: (state) => state.kesehatan,
   },
 });
 
-export default u$penyakit;
+export default u$kesehatan;

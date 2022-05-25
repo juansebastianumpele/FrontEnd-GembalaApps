@@ -1,12 +1,12 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import d$kesehatan from "@/stores/masterData/kesehatan";
+import d$penyakit from "@/stores/masterData/penyakit";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 
 export default {
   metaInfo: () => ({
-    title: "Data Kesehatan",
+    title: "Data Penyakit",
   }),
   setup() {
     const schema = y$object({
@@ -31,8 +31,8 @@ export default {
     },
     // UI
     modal: {
-      addKesehatan: false,
-      ubahKesehatan: false,
+      addPenyakit: false,
+      ubahPenyakit: false,
       confirm: false,
     },
     // DataTable
@@ -59,23 +59,23 @@ export default {
         {
           text: "Detail",
           color: "info",
-          event: "detail-kesehatan",
+          event: "detail-penyakit",
         },
         {
           text: "Ubah",
           color: "warning",
-          event: "ubah-kesehatan",
+          event: "ubah-penyakit",
         },
         {
           text: "Hapus",
           color: "danger",
-          event: "hapus-kesehatan",
+          event: "hapus-penyakit",
         },
       ],
     },
   }),
   computed: {
-    ...mapState(d$kesehatan, ["g$kesehatanList", "g$kesehatanDetail"]),
+    ...mapState(d$penyakit, ["g$penyakitList", "g$penyakitDetail"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -88,10 +88,10 @@ export default {
     },
   },
   async mounted() {
-    await this.a$kesehatanList().catch((error) => this.notify(error, false));
+    await this.a$penyakitList().catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$kesehatan, ["a$kesehatanAdd", "a$kesehatanList", "a$kesehatanDelete", "a$kesehatanEdit"]),
+    ...mapActions(d$penyakit, ["a$penyakitAdd", "a$penyakitList", "a$penyakitDelete", "a$penyakitEdit"]),
     clearInput() {
       this.input = {
         id: null,
@@ -101,7 +101,7 @@ export default {
         pengobatan: "",
       };
     },
-    async addKesehatan() {
+    async addPenyakit() {
       try {
         const { nama_penyakit, deskripsi, ciri_penyakit, pengobatan } = this.input;
         const data = {
@@ -111,60 +111,58 @@ export default {
           pengobatan,
         };
         await this.schema.validate(data);
-        await this.a$kesehatanAdd(data);
-        this.modal.addKesehatan = false;
+        await this.a$penyakitAdd(data);
+        this.modal.addPenyakit = false;
         this.notify(`Tambah ${this.pageTitle} Sukses !`);
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$kesehatanList();
+        this.a$penyakitList();
       }
     },
-    async editKesehatan() {
+    async editPenyakit() {
       try {
-        const { id, id_ternak, nama_penyakit, deskripsi, ciri_penyakit, pengobatan } = this.input;
+        const { id, nama_penyakit, deskripsi, ciri_penyakit, pengobatan } = this.input;
         const data = {
           id,
-          id_ternak,
           nama_penyakit,
           deskripsi,
           ciri_penyakit,
           pengobatan,
         };
         await this.schema.validate(data);
-        await this.a$kesehatanEdit(data);
-        this.modal.ubahKesehatan = false;
+        await this.a$penyakitEdit(data);
+        this.modal.ubahPenyakit = false;
         this.notify(`Edit ${this.pageTitle} Sukses !`);
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$kesehatanList();
+        this.a$penyakitList();
       }
     },
-    async delKesehatan() {
+    async delPenyakit() {
       try {
         const { id } = this.input;
-        await this.a$kesehatanDelete(id);
+        await this.a$penyakitDelete(id);
         this.modal.confirm = false;
         this.notify(`Hapus ${this.pageTitle} Sukses !`);
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$kesehatanList();
+        this.a$penyakitList();
       }
     },
     async triggerEditModal(row) {
       try {
-        const { id_kesehatan, id_ternak, nama_penyakit, deskripsi, ciri_penyakit, pengobatan } = row;
+        const { id_penyakit, nama_penyakit, deskripsi, ciri_penyakit, pengobatan } = row;
         this.input = {
-          id: id_kesehatan,
-          id_ternak,
+          id: id_penyakit,
           nama_penyakit,
           deskripsi,
           ciri_penyakit,
           pengobatan,
         };
-        this.modal.ubahKesehatan = true;
+        this.modal.ubahPenyakit = true;
       } catch (error) {
         this.clearInput();
         this.notify(error, false);
@@ -172,9 +170,9 @@ export default {
     },
     async triggerDelete(row) {
       try {
-        const { id_kesehatan, nama_penyakit } = row;
+        const { id_penyakit, nama_penyakit } = row;
         this.input = {
-          id: id_kesehatan,
+          id: id_penyakit,
           nama_penyakit,
         };
         this.modal.confirm = true;
@@ -195,23 +193,23 @@ export default {
           <h3>Daftar {{ pageTitle }}</h3>
         </div>
         <div class="col text-right">
-          <base-button type="success" @click="modal.addKesehatan = true"> Tambah {{ pageTitle }} </base-button>
+          <base-button type="success" @click="modal.addPenyakit = true"> Tambah {{ pageTitle }} </base-button>
         </div>
       </div>
     </template>
 
     <template #body>
-      <empty-result v-if="!g$kesehatanList.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$kesehatanList" :columns="dt.column" :actions="dt.action" @ubah-kesehatan="triggerEditModal" @hapus-kesehatan="triggerDelete" />
+      <empty-result v-if="!g$penyakitList.length" :text="`${pageTitle}`" />
+      <data-table v-else :index="true" :data="g$penyakitList" :columns="dt.column" :actions="dt.action" @ubah-penyakit="triggerEditModal" @hapus-penyakit="triggerDelete" />
     </template>
 
     <template #modal>
-      <modal-comp v-model:show="modal.addKesehatan" modal-classes="modal-md">
+      <modal-comp v-model:show="modal.addPenyakit" modal-classes="modal-md">
         <template #header>
           <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
         </template>
         <template #body>
-          <form-comp v-if="modal.addKesehatan" :validation-schema="schema">
+          <form-comp v-if="modal.addPenyakit" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.nama_penyakit" type="text" name="nama_penyakit">
@@ -237,16 +235,16 @@ export default {
           </form-comp>
         </template>
         <template #footer>
-          <base-button type="secondary" @click="modal.addKesehatan = false"> Tutup </base-button>
-          <base-button type="primary" @click="addKesehatan()"> Tambah {{ pageTitle }} </base-button>
+          <base-button type="secondary" @click="modal.addPenyakit = false"> Tutup </base-button>
+          <base-button type="primary" @click="addPenyakit()"> Tambah {{ pageTitle }} </base-button>
         </template>
       </modal-comp>
-      <modal-comp v-model:show="modal.ubahKesehatan" modal-classes="modal-lg">
+      <modal-comp v-model:show="modal.ubahPenyakit" modal-classes="modal-lg">
         <template #header>
           <h3 class="modal-title">Detail {{ pageTitle }}</h3>
         </template>
         <template #body>
-          <form-comp v-if="modal.ubahKesehatan" :validation-schema="schema">
+          <form-comp v-if="modal.ubahPenyakit" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.nama_penyakit" type="text" name="nama_penyakit">
@@ -272,8 +270,8 @@ export default {
           </form-comp>
         </template>
         <template #footer>
-          <base-button type="secondary" @click="modal.ubahKesehatan = false"> Tutup </base-button>
-          <base-button type="primary" @click="editKesehatan()"> Simpan Perubahan </base-button>
+          <base-button type="secondary" @click="modal.ubahPenyakit = false"> Tutup </base-button>
+          <base-button type="primary" @click="editPenyakit()"> Simpan Perubahan </base-button>
         </template>
       </modal-comp>
       <modal-comp v-model:show="modal.confirm" modal-classes="modal-lg">
@@ -287,7 +285,7 @@ export default {
         </template>
         <template #footer>
           <base-button type="secondary" @click="modal.confirm = false"> Tutup </base-button>
-          <base-button type="danger" @click="delKesehatan()">Hapus</base-button>
+          <base-button type="danger" @click="delPenyakit()">Hapus</base-button>
         </template>
       </modal-comp>
     </template>

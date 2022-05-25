@@ -1,13 +1,25 @@
-import { defineStore } from 'pinia';
-import * as s$customer from '@/services/customer';
-import * as s$commodity from '@/services/commodity';
-import * as s$driver from '@/services/driver';
-import * as s$device from '@/services/device';
-import * as s$unit from '@/services/unit';
+import { defineStore } from "pinia";
+import * as s$kandang from "@/services/masterData/kandang";
+import * as s$pakan from "@/services/masterData/pakan";
+import * as s$ternak from "@/services/masterData/ternak";
+import * as s$kawin from "@/services/masterData/kawin";
+import * as s$kesehatan from "@/services/masterData/kesehatan";
+import * as s$penyakit from "@/services/masterData/penyakit";
+import * as s$customer from "@/services/customer";
+import * as s$commodity from "@/services/commodity";
+import * as s$driver from "@/services/driver";
+import * as s$device from "@/services/device";
+import * as s$unit from "@/services/unit";
 
 const u$dropdown = defineStore({
-  id: 'dropdown',
+  id: "dropdown",
   state: () => ({
+    kandang: [],
+    pakan: [],
+    ternak: [],
+    kawin: [],
+    kesehatan: [],
+    penyakit: [],
     customer: [],
     commodity: [],
     driver: [],
@@ -15,10 +27,10 @@ const u$dropdown = defineStore({
     tank: [],
     unit: [],
     status: [
-      { id: 0, name: 'Siap Dikirim' },
-      { id: 1, name: 'Sedang Dikirim' },
-      { id: 2, name: 'Selesai' },
-      { id: 3, name: 'Tidak Terkirim' },
+      // { id: 0, name: "Siap Dikirim" },
+      // { id: 1, name: "Sedang Dikirim" },
+      // { id: 2, name: "Selesai" },
+      // { id: 3, name: "Tidak Terkirim" },
     ],
   }),
   actions: {
@@ -82,6 +94,7 @@ const u$dropdown = defineStore({
     },
   },
   getters: {
+    g$ddkan: (state) => state.kandang,
     g$ddCustomer: (state) => state.customer.map(({ id, name }) => ({ id, name })),
     g$ddDriver: (state) => state.driver.map(({ id, name }) => ({ id, username: name })),
     g$ddCommodity: (state) => state.commodity.map(({ id, name }) => ({ id, name })),
