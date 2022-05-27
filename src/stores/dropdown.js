@@ -13,6 +13,7 @@ const u$dropdown = defineStore({
   state: () => ({
     jenisKelamin: [],
     varietas: [],
+    statusSehat: [],
     fasePemeliharaan: [],
     statusKeluar: [],
     kandang: [],
@@ -33,7 +34,7 @@ const u$dropdown = defineStore({
   actions: {
     async a$ddJenisKelamin() {
       try {
-        const { data } = await s$ternak.listJenisKelamin();
+        const { data } = await s$ternak.list();
         this.jenisKelamin = data;
       } catch ({ error }) {
         this.jenisKelamin = [];
@@ -49,9 +50,18 @@ const u$dropdown = defineStore({
         throw error;
       }
     },
+    async a$ddStatusSehat() {
+      try {
+        const { data } = await s$ternak.listStatusSehat();
+        this.statusSehat = data;
+      } catch ({ error }) {
+        this.statusSehat = [];
+        throw error;
+      }
+    },
     async a$ddFasePemeliharaan() {
       try {
-        const { data } = await s$ternak.listFasePemeliharaan();
+        const { data } = await s$ternak.listFase();
         this.fasePemeliharaan = data;
       } catch ({ error }) {
         this.fasePemeliharaan = [];
@@ -60,7 +70,7 @@ const u$dropdown = defineStore({
     },
     async a$ddStatusKeluar() {
       try {
-        const { data } = await s$ternak.listStatusKeluar();
+        const { data } = await s$ternak.list();
         this.statusKeluar = data;
       } catch ({ error }) {
         this.statusKeluar = [];
@@ -69,7 +79,7 @@ const u$dropdown = defineStore({
     },
     async a$ddKandang() {
       try {
-        const { data } = await s$kandang.listKandang();
+        const { data } = await s$kandang.list();
         this.kandang = data;
       } catch ({ error }) {
         this.kandang = [];
@@ -78,7 +88,7 @@ const u$dropdown = defineStore({
     },
     async a$ddPakan() {
       try {
-        const { data } = await s$pakan.listPakan();
+        const { data } = await s$pakan.list();
         this.pakan = data;
       } catch ({ error }) {
         this.pakan = [];
@@ -145,12 +155,6 @@ const u$dropdown = defineStore({
     // },
   },
   getters: {
-    g$ddJenisKelamin: (state) => state.jenisKelamin.map(({ jenis_kelamin }) => ({ name: jenis_kelamin })),
-    g$ddFasePemeliharaan: (state) => state.fasePemeliharaan.map(({ fase_pemeliharaan }) => ({ name: fase_pemeliharaan })),
-    g$ddStatusKeluar: (state) => state.statusKeluar.map(({ status_keluar }) => ({ name: status_keluar })),
-    g$ddVarietas: (state) => state.varietas.map(({ id_varietas, nama_varietas }) => ({ id: id_varietas, name: nama_varietas })),
-    g$ddKandang: (state) => state.kandang.map(({ id_kandang, nama_kandang }) => ({ id: id_kandang, name: nama_kandang })),
-    g$ddPakan: (state) => state.pakan.map(({ id_pakan, nama_pakan }) => ({ id: id_pakan, name: nama_pakan })),
     // g$ddCustomer: (state) => state.customer.map(({ id, name }) => ({ id, name })),
     // g$ddDriver: (state) => state.driver.map(({ id, name }) => ({ id, username: name })),
     // g$ddCommodity: (state) => state.commodity.map(({ id, name }) => ({ id, name })),
@@ -159,6 +163,13 @@ const u$dropdown = defineStore({
     // g$ddStatusFalse: (state) => state.status.map(({ id, name }) => ({ id, name })).filter((obj) => obj.id <= 1),
     // g$ddStatusTrue: (state) => state.status.map(({ id, name }) => ({ id, name })).filter((obj) => obj.id >= 2),
     // g$ddTruck: (state) => state.truck.map(({ id, truckNumber }) => ({ id, name: truckNumber })),
+    g$ddJenisKelamin: (state) => state.jenisKelamin.map(({ jenis_kelamin }) => ({ name: jenis_kelamin })),
+    g$ddFasePemeliharaan: (state) => state.fasePemeliharaan.map(({ fase }) => ({ name: fase })),
+    g$ddStatusSehat: (state) => state.statusSehat.map(({ status_sehat }) => ({ name: status_sehat })),
+    g$ddStatusKeluar: (state) => state.statusKeluar.map(({ status_keluar }) => ({ name: status_keluar })),
+    g$ddVarietas: (state) => state.varietas.map(({ id_varietas, nama_varietas }) => ({ id: id_varietas, name: nama_varietas })),
+    g$ddKandang: (state) => state.kandang.map(({ id_kandang, nama_kandang }) => ({ id: id_kandang, name: nama_kandang })),
+    g$ddPakan: (state) => state.pakan.map(({ id_pakan, nama_pakan }) => ({ id: id_pakan, name: nama_pakan })),
   },
 });
 

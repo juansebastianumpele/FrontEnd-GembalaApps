@@ -24,7 +24,7 @@ export default {
       status_sehat: y$string().nullable().label("Status Sehat"),
       id_kandang: y$string().nullable().label("ID Kandang"),
       id_pakan: y$string().nullable().label("ID Pakan"),
-      fase_pemeliharaan: y$string().nullable().label("Fase Pemeliharaan"),
+      fase: y$string().nullable().label("Fase Pemeliharaan"),
       tanggal_keluar: y$string().nullable().label("Tanggal Keluar"),
       status_keluar: y$string().nullable().label("Status Keluar"),
       foto: y$string().nullable().label("Foto"),
@@ -51,7 +51,7 @@ export default {
       status_sehat: "",
       id_kandang: "",
       id_pakan: "",
-      fase_pemeliharaan: "",
+      fase: "",
       tanggal_keluar: "",
       status_keluar: "",
       foto: "",
@@ -78,7 +78,7 @@ export default {
           th: "Jenis Kelamin",
         },
         {
-          name: "fase_pemeliharaan",
+          name: "fase",
           th: "Fase Pemeliharaan",
         },
         {
@@ -107,7 +107,7 @@ export default {
   }),
   computed: {
     ...mapState(d$ternak, ["g$ternakList", "g$ternakDetail"]),
-    ...mapState(d$dropdown, ["g$ddTernak", "g$ddJenisKelamin", "g$ddVarietas"]),
+    ...mapState(d$dropdown, ["g$ddJenisKelamin", "g$ddVarietas", "g$ddStatusSehat", "g$ddFasePemeliharaan", "g$ddStatusKeluar", "g$ddKandang", "g$ddPakan"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -120,12 +120,17 @@ export default {
     },
   },
   async mounted() {
-    await this.a$ternakList().catch((error) => this.notify(error, false));
+    await this.a$ddJenisKelamin().catch((error) => this.notify(error, false));
     await this.a$ddVarietas().catch((error) => this.notify(error, false));
+    await this.a$ddStatusSehat().catch((error) => this.notify(error, false));
+    await this.a$ddFasePemeliharaan().catch((error) => this.notify(error, false));
+    await this.a$ddStatusKeluar().catch((error) => this.notify(error, false));
+    await this.a$ddKandang().catch((error) => this.notify(error, false));
+    await this.a$ddPakan().catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$ternak, ["a$ternakAdd", "a$ternakList", "a$ternakDelete", "a$ternakEdit"]),
-    ...mapActions(d$dropdown, ["a$ddTernak", "a$ddVarietas"]),
+    ...mapActions(d$dropdown, ["a$ddJenisKelamin", "a$ddVarietas", "a$ddStatusSehat", "a$ddFasePemeliharaan", "a$ddStatusKeluar", "a$ddKandang", "a$ddPakan"]),
     clearInput() {
       this.input = {
         id: null,
@@ -142,7 +147,7 @@ export default {
         status_sehat,
         id_kandang,
         id_pakan,
-        fase_pemeliharaan,
+        fase,
         tanggal_keluar,
         status_keluar,
         foto,
@@ -150,26 +155,25 @@ export default {
     },
     async addTernak() {
       try {
-        const { rf_id, id_users, jenis_kelamin, nama_varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, id_kandang, id_pakan, fase_pemeliharaan, tanggal_keluar, status_keluar, foto } =
-          this.input;
+        const { rf_id, id_users, jenis_kelamin, nama_varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, id_kandang, id_pakan, fase, tanggal_keluar, status_keluar, foto } = this.input;
         const data = new FormData();
-        data.append("rf_id", rf_id);
-        data.append("id_users", id_users);
-        data.append("jenis_kelamin", jenis_kelamin);
-        data.append("nama_varietas", nama_varietas);
-        data.append("berat_berkala", berat_berkala);
-        data.append("suhu_berkala", suhu_berkala);
-        data.append("tanggal_lahir", tanggal_lahir);
-        data.append("tanggal_masuk", tanggal_masuk);
-        data.append("id_induk", id_induk);
-        data.append("id_pejantan", id_pejantan);
-        data.append("status_sehat", status_sehat);
-        data.append("id_kandang", id_kandang);
-        data.append("id_pakan", id_pakan);
-        data.append("fase_pemeliharaan", fase_pemeliharaan);
-        data.append("tanggal_keluar", tanggal_keluar);
-        data.append("status_keluar", status_keluar);
-        data.append("foto", foto);
+        data.append(rf_id, "0987654321zxc");
+        data.append(id_users, "10");
+        data.append(jenis_kelamin, "Betina");
+        data.append(nama_varietas, "01");
+        data.append(berat_berkala, "50");
+        data.append(suhu_berkala, "30");
+        data.append(tanggal_lahir, "2022-04-05");
+        data.append(tanggal_masuk, "2022-10-05");
+        data.append(id_induk, "2");
+        data.append(id_pejantan, "3");
+        data.append(status_sehat, "Sehat");
+        data.append(id_kandang, "id_kandang");
+        data.append(id_pakan, "01");
+        data.append(fase, "Cempe");
+        data.append(tanggal_keluar, "2022-10-05");
+        data.append(status_keluar, "Jual");
+        data.append(foto, "");
         await this.schema.validate(data);
         await this.a$ternakAdd(data);
         this.modal.addTernak = false;
@@ -182,8 +186,7 @@ export default {
     },
     async editTernak() {
       try {
-        const { rf_id, id_users, jenis_kelamin, nama_varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, id_kandang, id_pakan, fase_pemeliharaan, tanggal_keluar, status_keluar, foto } =
-          this.input;
+        const { rf_id, id_users, jenis_kelamin, nama_varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, id_kandang, id_pakan, fase, tanggal_keluar, status_keluar, foto } = this.input;
         const data = {
           id,
           rf_id,
@@ -199,7 +202,7 @@ export default {
           status_sehat,
           id_kandang,
           id_pakan,
-          fase_pemeliharaan,
+          fase,
           tanggal_keluar,
           status_keluar,
           foto,
@@ -228,8 +231,7 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { rf_id, id_users, jenis_kelamin, nama_varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, id_kandang, id_pakan, fase_pemeliharaan, tanggal_keluar, status_keluar, foto } =
-          row;
+        const { rf_id, id_users, jenis_kelamin, nama_varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, id_kandang, id_pakan, fase, tanggal_keluar, status_keluar, foto } = row;
         this.input = {
           id: id_ternak,
           rf_id,
@@ -245,7 +247,7 @@ export default {
           status_sehat,
           id_kandang,
           id_pakan,
-          fase_pemeliharaan,
+          fase,
           tanggal_keluar,
           status_keluar,
           foto,
@@ -351,22 +353,22 @@ export default {
               </div>
               <div class="col-12">
                 <base-input name="status_sehat" placeholder="Status Kesehatan" label="Status Kesehatan">
-                  <multi-select v-model="input.status_sehat" :options="g$ddVarietas" label="name" track-by="id" placeholder="Status Kesehatan" :show-labels="false" />
+                  <multi-select v-model="input.status_sehat" :options="g$ddStatusSehat" label="name" track-by="id" placeholder="Pilih Status Kesehatan" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
                 <base-input name="id_kandang" placeholder="Kandang" label="Kandang">
-                  <multi-select v-model="input.id_kandang" :options="g$ddVarietas" label="name" track-by="id" placeholder="Pilih Kandang" :show-labels="false" />
+                  <multi-select v-model="input.id_kandang" :options="g$ddKandang" label="name" track-by="id" placeholder="Pilih Kandang" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
                 <base-input name="id_pakan" placeholder="Pakan" label="Pakan">
-                  <multi-select v-model="input.id_pakan" :options="g$ddVarietas" label="name" track-by="id" placeholder="Pilih Pakan" :show-labels="false" />
+                  <multi-select v-model="input.id_pakan" :options="g$ddPakan" label="name" track-by="id" placeholder="Pilih Pakan" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
-                <base-input name="fase_pemeliharaan" placeholder="Fase Pemeliharaan" label="Fase Pemeliharaan">
-                  <multi-select v-model="input.fase_pemeliharaan" :options="g$ddVarietas" label="name" track-by="id" placeholder="Pilih Fase Pemeliharaan" :show-labels="false" />
+                <base-input name="fase" placeholder="Fase Pemeliharaan" label="Fase Pemeliharaan">
+                  <multi-select v-model="input.fase" :options="g$ddFasePemeliharaan" label="name" track-by="id" placeholder="Pilih Fase Pemeliharaan" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
@@ -376,7 +378,7 @@ export default {
               </div>
               <div class="col-12">
                 <base-input name="status_keluar" placeholder="Status Keluar" label="Status Keluar">
-                  <multi-select v-model="input.status_keluar" :options="g$ddVarietas" label="name" track-by="id" placeholder="Pilih Status Keluar" :show-labels="false" />
+                  <multi-select v-model="input.status_keluar" :options="g$ddStatusKeluar" label="name" track-by="id" placeholder="Pilih Status Keluar" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
@@ -465,8 +467,8 @@ export default {
                 </base-input>
               </div>
               <div class="col-12">
-                <base-input name="fase_pemeliharaan" placeholder="Fase Pemeliharaan" label="Fase Pemeliharaan">
-                  <multi-select v-model="input.fase_pemeliharaan" :options="g$ddVarietas" label="name" track-by="id" placeholder="Pilih Fase Pemeliharaan" :show-labels="false" />
+                <base-input name="fase" placeholder="Fase Pemeliharaan" label="Fase Pemeliharaan">
+                  <multi-select v-model="input.fase" :options="g$ddVarietas" label="name" track-by="id" placeholder="Pilih Fase Pemeliharaan" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
