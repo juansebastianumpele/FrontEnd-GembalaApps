@@ -11,6 +11,7 @@ export default {
   }),
   setup() {
     const schema = y$object({
+      id_ternak: y$string().required().label("ID Ternak"),
       rf_id: y$string().required().label("RF ID"),
       id_users: y$string().required().label("ID Users"),
       jenis_kelamin: y$string().nullable().label("Jenis Kelamin"),
@@ -27,7 +28,7 @@ export default {
       fase: y$string().nullable().label("Fase Pemeliharaan"),
       tanggal_keluar: y$string().nullable().label("Tanggal Keluar"),
       status_keluar: y$string().nullable().label("Status Keluar"),
-      foto: y$string().nullable().label("Foto"),
+      foto: y$object().nullable().label("Foto"),
     });
     return {
       schema,
@@ -38,6 +39,7 @@ export default {
     // Input
     input: {
       id: null,
+      id_ternak: "",
       rf_id: "",
       id_users: "",
       jenis_kelamin: "",
@@ -54,7 +56,7 @@ export default {
       fase: "",
       tanggal_keluar: "",
       status_keluar: "",
-      foto: "",
+      foto: null,
     },
     // UI
     modal: {
@@ -154,26 +156,31 @@ export default {
       };
     },
     async addTernak() {
+      console.log("abc");
       try {
         const { rf_id, id_users, jenis_kelamin, nama_varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, id_kandang, id_pakan, fase, tanggal_keluar, status_keluar, foto } = this.input;
         const data = new FormData();
-        data.append(rf_id, "0987654321zxc");
-        data.append(id_users, "10");
-        data.append(jenis_kelamin, "Betina");
-        data.append(nama_varietas, "01");
-        data.append(berat_berkala, "50");
-        data.append(suhu_berkala, "30");
-        data.append(tanggal_lahir, "2022-04-05");
-        data.append(tanggal_masuk, "2022-10-05");
-        data.append(id_induk, "2");
-        data.append(id_pejantan, "3");
-        data.append(status_sehat, "Sehat");
-        data.append(id_kandang, "id_kandang");
-        data.append(id_pakan, "01");
-        data.append(fase, "Cempe");
-        data.append(tanggal_keluar, "2022-10-05");
-        data.append(status_keluar, "Jual");
-        data.append(foto, "");
+        console.log(this.$refs.foto.files[0]);
+        data.append("rf_id", rf_id);
+        data.append("id_users", id_users);
+        data.append("jenis_kelamin", jenis_kelamin);
+        data.append("id_varietas", nama_varietas);
+        data.append("berat", berat_berkala);
+        data.append("suhu", suhu_berkala);
+        data.append("tanggal_lahir", tanggal_lahir);
+        data.append("tanggal_masuk", tanggal_masuk);
+        data.append("id_induk", id_induk);
+        data.append("id_pejantan", id_pejantan);
+        data.append("status_sehat", 1);
+        // data.append("id_kandang", id_kandang);
+        data.append("id_pakan", id_pakan);
+        data.append("fase_pemeliharaan", fase);
+        data.append("tanggal_keluar", tanggal_keluar);
+        data.append("status_keluar", "mati");
+        data.append("foto", foto.files[0]);
+        for (var pair of data.entries()) {
+          console.log(pair[0] + ", " + pair[1]);
+        }
         await this.schema.validate(data);
         await this.a$ternakAdd(data);
         this.modal.addTernak = false;
@@ -382,8 +389,8 @@ export default {
                 </base-input>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.foto" type="text" name="foto">
-                  <base-input v-bind="field" placeholder="Text" label="Foto" required></base-input>
+                <field-form v-slot="{ field }" v-model="input.foto" type="file" name="foto">
+                  <base-input v-bind="field" ref="foto" accept="image/*" placeholder="Text" type="file" label="Foto" required></base-input>
                 </field-form>
               </div>
             </div>

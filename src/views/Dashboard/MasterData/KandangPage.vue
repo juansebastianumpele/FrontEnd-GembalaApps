@@ -3,6 +3,7 @@ import { mapActions, mapState } from "pinia";
 import d$kandang from "@/stores/masterData/kandang";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
+import router from "../../../router";
 
 export default {
   metaInfo: () => ({
@@ -171,6 +172,15 @@ export default {
         this.notify(error, false);
       }
     },
+    async triggerDetail(row) {
+      try {
+        const { id_kandang } = row;
+        router.push(`/masterData/detail-kandang/${id_kandang}`);
+      } catch (error) {
+        this.clearInput();
+        this.notify(error, false);
+      }
+    },
   },
 };
 </script>
@@ -190,7 +200,7 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$kandangList.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$kandangList" :columns="dt.column" :actions="dt.action" @ubah-kandang="triggerEditModal" @hapus-kandang="triggerDelete" />
+      <data-table v-else :index="true" :data="g$kandangList" :columns="dt.column" :actions="dt.action" @ubah-kandang="triggerEditModal" @hapus-kandang="triggerDelete" @detail-kandang="triggerDetail" />
     </template>
 
     <template #modal>

@@ -48,6 +48,12 @@ const dashboardRoutes = [
         meta: { requireAuth: true },
       },
       {
+        path: "detail-kandang/:id",
+        name: "DetailKandang",
+        component: () => import("@/views/Dashboard/MasterData/KandangDetail.vue"),
+        meta: { requireAuth: true },
+      },
+      {
         path: "pakan",
         name: "Pakan",
         component: () => import("@/views/Dashboard/MasterData/PakanPage.vue"),
