@@ -34,7 +34,7 @@ const u$dropdown = defineStore({
   actions: {
     async a$ddJenisKelamin() {
       try {
-        const { data } = await s$ternak.list();
+        const { data } = await s$ternak.listJenisKelamin();
         this.jenisKelamin = data;
       } catch ({ error }) {
         this.jenisKelamin = [];
@@ -70,7 +70,7 @@ const u$dropdown = defineStore({
     },
     async a$ddStatusKeluar() {
       try {
-        const { data } = await s$ternak.list();
+        const { data } = await s$ternak.listStatusKeluar();
         this.statusKeluar = data;
       } catch ({ error }) {
         this.statusKeluar = [];
@@ -163,10 +163,10 @@ const u$dropdown = defineStore({
     // g$ddStatusFalse: (state) => state.status.map(({ id, name }) => ({ id, name })).filter((obj) => obj.id <= 1),
     // g$ddStatusTrue: (state) => state.status.map(({ id, name }) => ({ id, name })).filter((obj) => obj.id >= 2),
     // g$ddTruck: (state) => state.truck.map(({ id, truckNumber }) => ({ id, name: truckNumber })),
-    g$ddJenisKelamin: (state) => state.jenisKelamin.map(({ jenis_kelamin }) => ({ name: jenis_kelamin })),
-    g$ddFasePemeliharaan: (state) => state.fasePemeliharaan.map(({ fase }) => ({ name: fase })),
-    g$ddStatusSehat: (state) => state.statusSehat.map(({ status_sehat }) => ({ name: status_sehat })),
-    g$ddStatusKeluar: (state) => state.statusKeluar.map(({ status_keluar }) => ({ name: status_keluar })),
+    g$ddJenisKelamin: (state) => state.jenisKelamin.map(({ id_jenis, nama }) => ({ id: id_jenis, name: nama })),
+    g$ddFasePemeliharaan: (state) => state.fasePemeliharaan.map(({ id_fp, fase }) => ({ id: id_fp, name: fase })),
+    g$ddStatusSehat: (state) => state.statusSehat.map(({ id_status, status_sehat }) => ({ id: id_status, name: status_sehat })),
+    g$ddStatusKeluar: (state) => state.statusKeluar.map(({ id_keluar, status_keluar }) => ({ id: id_keluar, name: status_keluar })),
     g$ddVarietas: (state) => state.varietas.map(({ id_varietas, nama_varietas }) => ({ id: id_varietas, name: nama_varietas })),
     g$ddKandang: (state) => state.kandang.map(({ id_kandang, nama_kandang }) => ({ id: id_kandang, name: nama_kandang })),
     g$ddPakan: (state) => state.pakan.map(({ id_pakan, nama_pakan }) => ({ id: id_pakan, name: nama_pakan })),

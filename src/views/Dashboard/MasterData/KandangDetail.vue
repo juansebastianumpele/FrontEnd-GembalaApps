@@ -19,7 +19,7 @@ export default {
     };
   },
   data: () => ({
-    pageTitle: "Kandang",
+    pageTitle: "Detail Data Kandang",
     // Input
     input: {
       id: null,

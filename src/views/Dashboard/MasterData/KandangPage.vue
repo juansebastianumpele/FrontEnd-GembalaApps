@@ -181,7 +181,12 @@ export default {
     async triggerDetail(row) {
       try {
         const { id_kandang } = row;
-        router.push(`/masterData/detail-kandang/${id_kandang}`);
+        router.push({
+          name: "DetailKandang",
+          params: {
+            id: id_kandang,
+          },
+        });
       } catch (error) {
         this.clearInput();
         this.notify(error, false);

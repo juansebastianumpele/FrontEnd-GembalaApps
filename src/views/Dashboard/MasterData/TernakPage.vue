@@ -122,6 +122,7 @@ export default {
     },
   },
   async mounted() {
+    await this.a$ternakList().catch((error) => this.notify(error, false));
     await this.a$ddJenisKelamin().catch((error) => this.notify(error, false));
     await this.a$ddVarietas().catch((error) => this.notify(error, false));
     await this.a$ddStatusSehat().catch((error) => this.notify(error, false));
@@ -136,23 +137,24 @@ export default {
     clearInput() {
       this.input = {
         id: null,
-        rf_id,
-        id_users,
-        jenis_kelamin,
-        nama_varietas,
-        berat_berkala,
-        suhu_berkala,
-        tanggal_lahir,
-        tanggal_masuk,
-        id_induk,
-        id_pejantan,
-        status_sehat,
-        id_kandang,
-        id_pakan,
-        fase,
-        tanggal_keluar,
-        status_keluar,
-        foto,
+        id_ternak: "",
+        rf_id: "",
+        id_users: "",
+        jenis_kelamin: "",
+        nama_varietas: "",
+        berat_berkala: "",
+        suhu_berkala: "",
+        tanggal_lahir: "",
+        tanggal_masuk: "",
+        id_induk: "",
+        id_pejantan: "",
+        status_sehat: "",
+        id_kandang: "",
+        id_pakan: "",
+        fase: "",
+        tanggal_keluar: "",
+        status_keluar: "",
+        foto: null,
       };
     },
     async addTernak() {
@@ -320,7 +322,7 @@ export default {
               </div>
               <div class="col-12">
                 <base-input name="jenis_kelamin" placeholder="Jenis Kelamin" label="Jenis Kelamin">
-                  <multi-select v-model="input.jenis_kelamin" :options="g$ddJenisKelamin" label="name" track-by="name" placeholder="Pilih Jenis Kelamin" :show-labels="false" />
+                  <multi-select v-model="input.jenis_kelamin" :options="g$ddJenisKelamin" label="name" track-by="id" placeholder="Pilih Jenis Kelamin" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
@@ -460,22 +462,22 @@ export default {
               </div>
               <div class="col-12">
                 <base-input name="status_sehat" placeholder="Status Kesehatan" label="Status Kesehatan">
-                  <multi-select v-model="input.status_sehat" :options="g$ddVarietas" label="name" track-by="id" placeholder="Status Kesehatan" :show-labels="false" />
+                  <multi-select v-model="input.status_sehat" :options="g$ddStatusSehat" label="name" track-by="id" placeholder="Status Kesehatan" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
                 <base-input name="id_kandang" placeholder="Kandang" label="Kandang">
-                  <multi-select v-model="input.id_kandang" :options="g$ddVarietas" label="name" track-by="id" placeholder="Pilih Kandang" :show-labels="false" />
+                  <multi-select v-model="input.id_kandang" :options="g$ddKandang" label="name" track-by="id" placeholder="Pilih Kandang" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
                 <base-input name="id_pakan" placeholder="Pakan" label="Pakan">
-                  <multi-select v-model="input.id_pakan" :options="g$ddVarietas" label="name" track-by="id" placeholder="Pilih Pakan" :show-labels="false" />
+                  <multi-select v-model="input.id_pakan" :options="g$ddPakan" label="name" track-by="id" placeholder="Pilih Pakan" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
                 <base-input name="fase" placeholder="Fase Pemeliharaan" label="Fase Pemeliharaan">
-                  <multi-select v-model="input.fase" :options="g$ddVarietas" label="name" track-by="id" placeholder="Pilih Fase Pemeliharaan" :show-labels="false" />
+                  <multi-select v-model="input.fase" :options="g$ddFasePemeliharaan" label="name" track-by="id" placeholder="Pilih Fase Pemeliharaan" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
@@ -485,7 +487,7 @@ export default {
               </div>
               <div class="col-12">
                 <base-input name="status_keluar" placeholder="Status Keluar" label="Status Keluar">
-                  <multi-select v-model="input.status_keluar" :options="g$ddVarietas" label="name" track-by="id" placeholder="Pilih Status Keluar" :show-labels="false" />
+                  <multi-select v-model="input.status_keluar" :options="g$ddStatusKeluar" label="name" track-by="id" placeholder="Pilih Status Keluar" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">

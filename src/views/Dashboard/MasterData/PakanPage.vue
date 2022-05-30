@@ -13,6 +13,7 @@ export default {
       nama_pakan: y$string().required().label("Nama Pakan"),
       deskripsi: y$string().nullable().label("Deskripsi"),
       komposisi: y$string().nullable().label("Komposisi"),
+      id_users: y$string().required().label("ID Users"),
     });
     return {
       schema,
@@ -26,6 +27,7 @@ export default {
       nama_pakan: "",
       deskripsi: "",
       komposisi: "",
+      id_users: null,
     },
     // UI
     modal: {
@@ -92,15 +94,17 @@ export default {
         nama_pakan: "",
         deskripsi: "",
         komposisi: "",
+        id_users: null,
       };
     },
     async addPakan() {
       try {
-        const { nama_pakan, deskripsi, komposisi } = this.input;
+        const { nama_pakan, deskripsi, komposisi, id_users } = this.input;
         const data = {
           nama_pakan,
           deskripsi,
           komposisi,
+          id_users,
         };
         await this.schema.validate(data);
         await this.a$pakanAdd(data);
@@ -114,12 +118,13 @@ export default {
     },
     async editPakan() {
       try {
-        const { id, nama_pakan, deskripsi, komposisi } = this.input;
+        const { id, nama_pakan, deskripsi, komposisi, id_users } = this.input;
         const data = {
           id,
           nama_pakan,
           deskripsi,
           komposisi,
+          id_users,
         };
         await this.schema.validate(data);
         await this.a$pakanEdit(data);
@@ -145,12 +150,13 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_pakan, nama_pakan, deskripsi, komposisi } = row;
+        const { id_pakan, nama_pakan, deskripsi, komposisi, id_users } = row;
         this.input = {
           id: id_pakan,
           nama_pakan,
           deskripsi,
           komposisi,
+          id_users,
         };
         this.modal.ubahPakan = true;
       } catch (error) {
@@ -216,6 +222,11 @@ export default {
                   <base-input v-bind="field" placeholder="Text" label="Komposisi"></base-input>
                 </field-form>
               </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.id_users" type="text" name="id_users">
+                  <base-input v-bind="field" placeholder="Text" label="ID Users"></base-input>
+                </field-form>
+              </div>
             </div>
           </form-comp>
         </template>
@@ -244,6 +255,11 @@ export default {
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.komposisi" type="text" name="komposisi">
                   <base-input v-bind="field" placeholder="Text" label="Komposisi"></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.id_users" type="text" name="id_users">
+                  <base-input v-bind="field" placeholder="Text" label="ID Users"></base-input>
                 </field-form>
               </div>
             </div>

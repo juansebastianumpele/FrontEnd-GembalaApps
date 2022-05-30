@@ -9,5 +9,8 @@ const edit = (req) => baseApi.put(`${api}/${ternak}/${req.id}`, req);
 const del = (req) => baseApi.delete(`${api}/${ternak}/${req}`);
 const listVarietas = () => baseApi.get(`${api}/${ternak}/varietas`);
 const listFase = () => baseApi.get(`${api}/${ternak}/fase`);
+const listJenisKelamin = () => baseApi.get(`${api}/${ternak}/jeniskelamin`);
+const listStatusSehat = () => baseApi.get(`${api}/${ternak}/statussehat`);
+const listStatusKeluar = () => baseApi.get(`${api}/${ternak}/statuskeluar`);
 
-export { list, add, edit, del, listVarietas, listFase };
+export { list, add, edit, del, listVarietas, listFase, listJenisKelamin, listStatusSehat, listStatusKeluar };
