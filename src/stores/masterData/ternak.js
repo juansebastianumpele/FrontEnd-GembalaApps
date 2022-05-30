@@ -5,6 +5,7 @@ const u$ternak = defineStore({
   id: "ternak",
   state: () => ({
     ternak: [],
+    detailTernak: [],
   }),
   actions: {
     async a$ternakList() {
@@ -37,9 +38,20 @@ const u$ternak = defineStore({
         throw error;
       }
     },
+    // Detail Ternak by ID Kandang
+    async a$kandangDetail(request) {
+      try {
+        const { data } = await s$ternak.detailKandang(request);
+        this.detailTernak = data;
+      } catch ({ error }) {
+        this.detailTernak = {};
+        throw error;
+      }
+    },
   },
   getters: {
     g$ternakList: (state) => state.ternak,
+    g$detailKandang: (state) => state.detailTernak,
   },
 });
 
