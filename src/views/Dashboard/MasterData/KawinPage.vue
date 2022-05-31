@@ -49,12 +49,12 @@ export default {
           th: "ID Induk",
         },
         {
-          name: "tanggal_kawin",
-          th: "Tanggal Kawin",
+          name: "fase",
+          th: "Fase Pemeliharaan",
         },
         {
-          name: "fase_induk",
-          th: "Status Induk",
+          name: "tanggal_kawin",
+          th: "Tanggal Kawin",
         },
         {
           name: "id_pemancek",
