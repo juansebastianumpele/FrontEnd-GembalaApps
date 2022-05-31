@@ -19,8 +19,8 @@ export default {
   async created() {
     try {
       await this.a$setUserInfo();
-      this.notify(`Welcome back, ${this.userInfo.userId}!`);
-      if (this.$route.path.includes('/auth/') && this.userInfo.userId) this.$router.replace({ name: 'Home' });
+      this.notify(`Welcome back, ${this.userInfo.name}!`);
+      if (this.$route.path.includes('/auth/') && this.userInfo.name) this.$router.replace({ name: 'Home' });
     } catch (error) {
       if (!this.$route.path.includes('/auth/')) this.$router.replace({ name: 'Auth' });
       this.notify(error, false);

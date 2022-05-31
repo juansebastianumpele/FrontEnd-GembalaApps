@@ -8,27 +8,31 @@ import d from 'dayjs';
 const useAuthStore = defineStore({
   id: 'auth',
   state: () => ({
-    userId: '',
-    role: '',
+    id: undefined,
+    name: undefined,
+    role: undefined,
   }),
   getters: {
     userInfo: (state) => ({
-      userId: state.userId,
+      id: state.id,
+      name: state.name,
       role: state.role,
     }),
-    isLoggedIn: (state) => !!state.userId,
+    isLoggedIn: (state) => !!state.id,
   },
   actions: {
     async a$setUserInfo() {
       try {
-        const { id, role } = certDetail();
+        const { id, name, role } = certDetail();
         if (!id && !role) throw new Error('Tidak ada info Pengguna!');
         this.role = role;
-        this.userId = id;
+        this.name = name;
+        this.id = id;
         return 'User Authenticated';
       } catch ({ message }) {
-        this.role = '';
-        this.userId = '';
+        this.role = undefined;
+        this.name = undefined;
+        this.id = undefined;
         throw message;
       }
     },
