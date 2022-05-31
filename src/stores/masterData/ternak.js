@@ -48,10 +48,21 @@ const u$ternak = defineStore({
         throw error;
       }
     },
+    // Detail Ternak by ID Pakan
+    async a$pakanDetail(request) {
+      try {
+        const { data } = await s$ternak.detailPakan(request);
+        this.detailTernak = data;
+      } catch ({ error }) {
+        this.detailTernak = {};
+        throw error;
+      }
+    },
   },
   getters: {
     g$ternakList: (state) => state.ternak,
     g$detailKandang: (state) => state.detailTernak,
+    g$detailPakan: (state) => state.detailTernak,
   },
 });
 

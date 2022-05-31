@@ -3,6 +3,7 @@ import { mapActions, mapState } from "pinia";
 import d$pakan from "@/stores/masterData/pakan";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
+import router from "../../../router";
 
 export default {
   metaInfo: () => ({
@@ -177,6 +178,20 @@ export default {
         this.notify(error, false);
       }
     },
+    async triggerDetail(row) {
+      try {
+        const { id_pakan } = row;
+        router.push({
+          name: "DetailPakan",
+          params: {
+            id: id_pakan,
+          },
+        });
+      } catch (error) {
+        this.clearInput();
+        this.notify(error, false);
+      }
+    },
   },
 };
 </script>
@@ -196,7 +211,7 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$pakanList.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$pakanList" :columns="dt.column" :actions="dt.action" @ubah-pakan="triggerEditModal" @hapus-pakan="triggerDelete" />
+      <data-table v-else :index="true" :data="g$pakanList" :columns="dt.column" :actions="dt.action" @ubah-pakan="triggerEditModal" @hapus-pakan="triggerDelete" @detail-pakan="triggerDetail" />
     </template>
 
     <template #modal>

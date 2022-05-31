@@ -17,4 +17,6 @@ const listStatusKeluar = () => baseApi.get(`${api}/${ternak}/statuskeluar`);
 
 // Detail
 const detailKandang = (req) => baseApi.get(`${api}/${ternak}/listbykandang/${req}`);
-export { list, add, edit, del, listVarietas, listFase, listJenisKelamin, listStatusSehat, listStatusKeluar, detailKandang };
+const detailPakan = (req) => baseApi.get(`${api}/${ternak}/listternakpakan/${req}`);
+
+export { list, add, edit, del, listVarietas, listFase, listJenisKelamin, listStatusSehat, listStatusKeluar, detailKandang, detailPakan };

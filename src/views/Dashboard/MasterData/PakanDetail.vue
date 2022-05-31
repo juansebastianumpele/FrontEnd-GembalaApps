@@ -6,7 +6,7 @@ import { object as y$object, string as y$string, ref as y$ref } from "yup";
 
 export default {
   metaInfo: () => ({
-    title: "Detail Data Kandang",
+    title: "Detail Data Pakan",
   }),
   setup() {
     const schema = y$object({});
@@ -15,7 +15,7 @@ export default {
     };
   },
   data: () => ({
-    pageTitle: "Detail Data Kandang",
+    pageTitle: "Detail Data Pakan",
     // Input
     input: {
       id: null,
@@ -41,18 +41,22 @@ export default {
           name: "berat_berkala",
           th: "Berat Ternak",
         },
+        {
+          name: "nama_kandang",
+          th: "Kandang",
+        },
       ],
       action: [
         {
           text: "Detail",
           color: "info",
-          event: "detail-penghuni-kandang",
+          event: "detail-ternak",
         },
       ],
     },
   }),
   computed: {
-    ...mapState(d$ternak, ["g$detailKandang"]),
+    ...mapState(d$ternak, ["g$detailPakan"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -65,10 +69,10 @@ export default {
     },
   },
   async mounted() {
-    await this.a$kandangDetail(this.$route.params.id).catch((error) => this.notify(error, false));
+    await this.a$pakanDetail(this.$route.params.id).catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$ternak, ["a$kandangDetail"]),
+    ...mapActions(d$ternak, ["a$pakanDetail"]),
     clearInput() {
       this.input = {
         id: null,
@@ -89,8 +93,8 @@ export default {
     </template>
 
     <template #body>
-      <empty-result v-if="!g$detailKandang.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$detailKandang" :columns="dt.column" :actions="dt.action" />
+      <empty-result v-if="!g$detailPakan.length" :text="`${pageTitle}`" />
+      <data-table v-else :index="true" :data="g$detailPakan" :columns="dt.column" :actions="dt.action" />
     </template>
   </main-layout>
 </template>
