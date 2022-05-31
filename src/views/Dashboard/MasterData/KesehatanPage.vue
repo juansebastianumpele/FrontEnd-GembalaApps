@@ -3,6 +3,7 @@ import { mapActions, mapState } from "pinia";
 import d$penyakit from "@/stores/masterData/penyakit";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
+import router from "../../../router";
 
 export default {
   metaInfo: () => ({
@@ -59,7 +60,7 @@ export default {
         {
           text: "Detail",
           color: "info",
-          event: "detail-penyakit",
+          event: "detail-kesehatan",
         },
         {
           text: "Ubah",
@@ -181,6 +182,20 @@ export default {
         this.notify(error, false);
       }
     },
+    async triggerDetail(row) {
+      try {
+        const { id_penyakit } = row;
+        router.push({
+          name: "DetailTernakSakit",
+          params: {
+            id: id_penyakit,
+          },
+        });
+      } catch (error) {
+        this.clearInput();
+        this.notify(error, false);
+      }
+    },
   },
 };
 </script>
@@ -200,7 +215,7 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$penyakitList.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$penyakitList" :columns="dt.column" :actions="dt.action" @ubah-penyakit="triggerEditModal" @hapus-penyakit="triggerDelete" />
+      <data-table v-else :index="true" :data="g$penyakitList" :columns="dt.column" :actions="dt.action" @ubah-penyakit="triggerEditModal" @hapus-penyakit="triggerDelete" @detail-kesehatan="triggerDetail" />
     </template>
 
     <template #modal>

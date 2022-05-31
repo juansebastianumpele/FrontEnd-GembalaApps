@@ -5,6 +5,7 @@ const u$kesehatan = defineStore({
   id: "kesehatan",
   state: () => ({
     kesehatan: [],
+    detailKesehatan: [],
   }),
   actions: {
     async a$kesehatanList() {
@@ -37,9 +38,20 @@ const u$kesehatan = defineStore({
         throw error;
       }
     },
+    // Detail Kesehatan by ID Penyakit
+    async a$penyakitDetail(request) {
+      try {
+        const { data } = await s$kesehatan.detailKesehatan(request);
+        this.detailKesehatan = data;
+      } catch ({ error }) {
+        this.detailKesehatan = {};
+        throw error;
+      }
+    },
   },
   getters: {
     g$kesehatanList: (state) => state.kesehatan,
+    g$detailKesehatan: (state) => state.detailKesehatan,
   },
 });
 

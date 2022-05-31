@@ -194,7 +194,7 @@ export default {
         data.append("tanggal_keluar", tanggal_keluar);
         data.append("status_keluar", status_keluar);
         data.append("foto", foto);
-        await this.schema.validate(this.input);
+        // await this.schema.validate(this.input);
         await this.a$ternakAdd(data);
         this.modal.addTernak = false;
         this.notify(`Tambah ${this.pageTitle} Sukses!`);
