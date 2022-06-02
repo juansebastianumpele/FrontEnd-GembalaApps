@@ -1,49 +1,58 @@
 import { defineStore } from "pinia";
-// import * as s$chart from "@/services/chart";
+import * as s$total from "@/services/masterData/ternak";
 
-const u$chart = defineStore({
+const u$total = defineStore({
   id: "chart",
   state: () => ({
-    chartByMonth: [
-      {
-        bulan: "Jan",
-        betina: 34,
-        jantan: 12,
-        berat: 2,
-      },
-      {
-        bulan: "Feb",
-        betina: 12,
-        jantan: 3,
-        berat: 1,
-      },
-      {
-        bulan: "Mar",
-        betina: 34,
-        jantan: 12,
-        berat: 2,
-      },
-      {
-        bulan: "Apr",
-        betina: 0,
-        jantan: 0,
-        berat: 0,
-      },
-    ],
+    chartByPopulasi: [],
+    chartKesehatan: [],
+    chartJeniskelamin: [],
+    chartFase: [],
   }),
   actions: {
-    async a$chartList() {
+    async a$byKesehatan(req) {
+      console.log(req);
       try {
-        const { data } = await s$chart.list();
-        this.chart = data;
+        const { data } = await s$total.totalSehat(req);
+        this.chartKesehatan = data;
       } catch ({ error }) {
-        this.chart = [];
+        this.chartKesehatan = [];
+        throw error;
+      }
+    },
+    async a$byJeniskelamin(req) {
+      console.log(req);
+      try {
+        const { data } = await s$total.totalJeniskelamin (req);
+        this.chartJeniskelamin = data;
+      } catch ({ error }) {
+        this.chartJeniskelamin = [];
+        throw error;
+      }
+    },
+    async a$byFase(req) {
+      console.log(req);
+      try {
+        const { data } = await s$total.totalFase (req);
+        this.chartFase = data;
+      } catch ({ error }) {
+        this.chartFase = [];
+        throw error;
+      }
+    },
+    async a$byPopulasi(req) {
+      console.log(req);
+      try {
+        const { data } = await s$total.populasi (req);
+        this.chartByPopulasi = data;
+      } catch ({ error }) {
+        this.chartByPopulasi = [];
         throw error;
       }
     },
     async a$chartDetail(request) {
       try {
-        const { data } = await s$chart.detail(request);
+        const { data } = await s$total.detail(request);
         this.detail = { ...data[0] };
       } catch ({ error }) {
         this.detail = {};
@@ -52,51 +61,74 @@ const u$chart = defineStore({
     },
     async a$chartAdd(request) {
       try {
-        await s$chart.add(request);
+        await s$total.add(request);
       } catch ({ error }) {
         throw error;
       }
     },
     async a$chartEdit(request) {
       try {
-        await s$chart.edit(request);
+        await s$total.edit(request);
       } catch ({ error }) {
         throw error;
       }
     },
   },
   getters: {
-    g$byGenderChart: (state) => ({
-      categories: state.chartByMonth.map(({ bulan }) => bulan),
+    g$byPopulasi: (state) => ({
+      categories: state.chartByPopulasi.map(({ bulan }) => bulan),
       series: [
         {
           name: "Total",
-          data: state.chartByMonth.map(({ betina, jantan }) => betina + jantan),
-        },
-        {
-          type: "line",
-          name: "Jantan",
-          data: state.chartByMonth.map(({ jantan }) => jantan),
-        },
-        {
-          type: "line",
-          name: "Betina",
-          data: state.chartByMonth.map(({ betina }) => betina),
+          data: state.chartByPopulasi.map(({ total }) => total),
         },
       ],
-      length: state.chartByMonth.length,
+      length: state.chartByPopulasi.length,
     }),
-    g$byWeightChart: (state) => ({
-      categories: state.chartByMonth.map(({ bulan }) => bulan),
+    // g$byWeightChart: (state) => ({
+    //   categories: state.chartByMonth.map(({ bulan }) => bulan),
+    //   series: [
+    //     {
+    //       name: "Berat",
+    //       data: state.chartByMonth.map(({ berat }) => berat),
+    //     },
+    //   ],
+    //   length: state.chartByMonth.length,
+    // }),
+    g$byJeniskelamin: (state) => ({
+      categories: state.chartJeniskelamin.map(({ jenis_kelamin }) => jenis_kelamin),
       series: [
         {
-          name: "Berat",
-          data: state.chartByMonth.map(({ berat }) => berat),
+          name: "Jenis Kelamin",
+          data: state.chartJeniskelamin.map(({ Jumlah_ternak }) => Jumlah_ternak),
         },
       ],
-      length: state.chartByMonth.length,
+      length: state.chartJeniskelamin.length,
+    }),
+    g$byKesehatan: (state) => ({
+      categories: state.chartKesehatan.map(({ status_sehat }) => status_sehat),
+      series: [
+        {
+          name: "Total",
+          data: state.chartKesehatan.map(({ status_sehat, Jumlah }) => ({
+            name: status_sehat[0],
+            y: Jumlah,
+          })),
+        },
+      ],
+      length: state.chartKesehatan.length,
+    }),
+    g$byFase: (state) => ({
+      categories: state.chartFase.map(({fase }) => fase),
+      series: [
+        {
+          name: "Fase",
+          data: state.chartFase.map(({ Jumlah_ternak }) => Jumlah_ternak),
+        },
+      ],
+      length: state.chartFase.length,
     }),
   },
 });
 
-export default u$chart;
+export default u$total;

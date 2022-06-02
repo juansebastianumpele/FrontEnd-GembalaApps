@@ -41,7 +41,7 @@ export default {
     },
     height: {
       type: Number,
-      default: 400,
+      default: 250,
     },
     legend: {
       type: Boolean,
@@ -72,7 +72,7 @@ export default {
               enabled: this.dataLabels,
               format: "{y:,.0f} Kg",
               style: {
-                fontSize: 14,
+                fontSize: 12,
               },
             },
           },

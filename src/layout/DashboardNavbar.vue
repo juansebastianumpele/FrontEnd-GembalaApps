@@ -1,9 +1,5 @@
 <template>
-  <base-nav
-    container-classes="container-fluid"
-    class="navbar-top border-bottom navbar-expand sticky-top"
-    :class="{ 'bg-gradient-argon navbar-dark': type === 'default' }"
-  >
+  <base-nav container-classes="container-fluid" class="navbar-top border-bottom navbar-expand sticky-top" :class="{ 'bg-gradient-argon navbar-dark': type === 'default' }">
     <!-- BreadCrumbs -->
     <div class="navbar-search">
       <route-breadcrumb></route-breadcrumb>
@@ -29,24 +25,13 @@
         </div>
       </li>
       <li class="nav-item d-sm-none">
-        <a
-          class="nav-link"
-          href="#"
-          data-action="search-show"
-          data-target="#navbar-search-main"
-        >
+        <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
           <i class="ni ni-zoom-split-in"></i>
         </a>
       </li>
     </ul>
     <ul class="navbar-nav align-items-center ml-auto ml-md-0">
-      <base-dropdown
-        menu-on-right
-        class="nav-item"
-        tag="li"
-        title-tag="a"
-        title-classes="nav-link pr-0"
-      >
+      <base-dropdown menu-on-right class="nav-item" tag="li" title-tag="a" title-classes="nav-link pr-0">
         <template #title-container>
           <a href="#" class="nav-link pr-0" @click.prevent>
             <div class="media align-items-center">
@@ -54,9 +39,7 @@
                 <img alt="Image placeholder" :src="siteMeta.profile" />
               </span>
               <div class="media-body ml-2 d-none d-lg-block">
-                <span class="mb-0 text-sm font-weight-bold">{{
-                  userInfo.userId ?? 'User'
-                }}</span>
+                <span class="mb-0 text-sm font-weight-bold">{{ userInfo.name ?? "User" }}</span>
               </div>
             </div>
           </a>
@@ -79,11 +62,11 @@
   </base-nav>
 </template>
 <script>
-import BaseNav from '@/components/Navbar/BaseNav.vue';
-import RouteBreadcrumb from '@/components/Breadcrumb/RouteBreadCrumb.vue';
+import BaseNav from "@/components/Navbar/BaseNav.vue";
+import RouteBreadcrumb from "@/components/Breadcrumb/RouteBreadCrumb.vue";
 
-import { mapActions } from 'pinia';
-import useAuthStore from '@/stores/auth';
+import { mapActions } from "pinia";
+import useAuthStore from "@/stores/auth";
 
 export default {
   components: {
@@ -93,16 +76,15 @@ export default {
   props: {
     type: {
       type: String,
-      default: 'default', // default|light
-      description:
-        'Look of the dashboard navbar. Default (Green) or light (gray)',
+      default: "default", // default|light
+      description: "Look of the dashboard navbar. Default (Green) or light (gray)",
     },
   },
   data() {
     return {
       showMenu: false,
       searchModalVisible: false,
-      searchQuery: '',
+      searchQuery: "",
     };
   },
   computed: {
@@ -112,11 +94,11 @@ export default {
     },
   },
   methods: {
-    ...mapActions(useAuthStore, ['a$logout']),
+    ...mapActions(useAuthStore, ["a$logout"]),
     async Logout() {
       await this.a$logout();
-      this.notify('Logout success!');
-      this.$router.push({ name: 'Login' });
+      this.notify("Logout success!");
+      this.$router.push({ name: "Login" });
     },
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);

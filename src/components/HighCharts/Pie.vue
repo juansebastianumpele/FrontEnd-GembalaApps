@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import basicOptions from './config';
+import basicOptions from "./config";
 
 export default {
-  name: 'HcPie',
+  name: "HcPie",
   props: {
     data: {
       type: Object,
@@ -21,7 +21,7 @@ export default {
     },
     height: {
       type: Number,
-      default: 400,
+      default: 250,
     },
     dataLabels: {
       type: Boolean,
@@ -72,7 +72,8 @@ export default {
     options() {
       return {
         chart: {
-          type: 'pie',
+          type: "pie",
+          height: this.height,
         },
         ...basicOptions,
         title: {
@@ -83,18 +84,17 @@ export default {
           text: this.subtitle,
         },
         colors: this.colors,
+        legend: {
+          enabled: true,
+        },
         plotOptions: {
           pie: {
             allowPointSelect: true,
-            cursor: 'pointer',
-
+            cursor: "pointer",
             dataLabels: {
-              enabled: true,
-              format: '<b>{point.name}</b>: {point.percentage:.1f}%',
-              style: {
-                color: 'black',
-              },
+              enabled: false,
             },
+            showInLegend: true,
           },
         },
         series: this.data.series,

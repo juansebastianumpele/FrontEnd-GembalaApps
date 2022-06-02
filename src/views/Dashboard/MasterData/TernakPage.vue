@@ -13,7 +13,7 @@ export default {
       id_ternak: y$string().required().label("ID Ternak"),
       nama_varietas: y$string().nullable().label("Varietas"),
       jenis_kelamin: y$string().nullable().label("Jenis Kelamin"),
-      fase_pemeliharaan: y$string().nullable().label("Fase Pemeliharaan"),
+      fase: y$string().nullable().label("Fase Pemeliharaan"),
       umur: y$string().nullable().label("Umur"),
     });
     return {
@@ -28,7 +28,7 @@ export default {
       id_ternak: "",
       nama_varietas: "",
       jenis_kelamin: "",
-      fase_pemeliharaan: "",
+      fase: "",
       umur: "",
     },
     // UI
@@ -53,7 +53,7 @@ export default {
           th: "Jenis Kelamin",
         },
         {
-          name: "fase_pemeliharaan",
+          name: "fase",
           th: "Fase Pemeliharaan",
         },
         {
@@ -94,7 +94,7 @@ export default {
     },
   },
   async mounted() {
-    await this.a$ternakList().catch((error) => this.notify(error, false));
+    await this.a$ternakList({ id: this.userInfo.userId }).catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$ternak, ["a$ternakAdd", "a$ternakList", "a$ternakDelete", "a$ternakEdit"]),
@@ -104,7 +104,7 @@ export default {
         id_ternak: "",
         nama_varietas: "",
         jenis_kelamin: "",
-        fase_pemeliharaan: "",
+        fase: "",
         umur: "",
       };
     },
@@ -115,7 +115,7 @@ export default {
           id_ternak,
           nama_varietas,
           jenis_kelamin,
-          fase_pemeliharaan,
+          fase,
           umur,
         };
         await this.schema.validate(data);

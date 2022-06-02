@@ -5,6 +5,7 @@ import * as s$driver from "@/services/driver";
 import * as s$device from "@/services/device";
 import * as s$unit from "@/services/unit";
 import * as s$ternak from "@/services/masterData/ternak";
+import * as s$kandang from "@/services/masterData/kandang";
 
 const u$dropdown = defineStore({
   id: "dropdown",
@@ -22,7 +23,10 @@ const u$dropdown = defineStore({
       { id: 3, name: "Tidak Terkirim" },
     ],
     varietas: [],
+    fase: [],
+    kandang: [],
   }),
+
   actions: {
     async a$ddCustomer() {
       try {
@@ -91,6 +95,24 @@ const u$dropdown = defineStore({
         throw error;
       }
     },
+    async a$listFase() {
+      try {
+        const { data } = await s$ternak.listFase();
+        this.fase = data;
+      } catch ({ error }) {
+        this.fase = [];
+        throw error;
+      }
+    },
+    async a$listKandang(request) {
+      try {
+        const { data } = await s$kandang.list(request);
+        this.kandang = data;
+      } catch ({ error }) {
+        this.kandang = [];
+        throw error;
+      }
+    },
   },
   getters: {
     g$ddCustomer: (state) => state.customer.map(({ id, name }) => ({ id, name })),
@@ -102,6 +124,8 @@ const u$dropdown = defineStore({
     g$ddStatusTrue: (state) => state.status.map(({ id, name }) => ({ id, name })).filter((obj) => obj.id >= 2),
     g$ddTruck: (state) => state.truck.map(({ id, truckNumber }) => ({ id, name: truckNumber })),
     g$listVarietas: (state) => state.varietas.map(({ id_varietas, nama_varietas }) => ({ id: id_varietas, name: nama_varietas })),
+    g$listFase: (state) => state.fase.map(({ id_fp, fase }) => ({ id: id_fp, name: fase })),
+    g$listKandang: (state) => state.kandang.map(({ id_kandang, nama_kandang }) => ({ id: id_kandang, name: nama_kandang })),
   },
 });
 

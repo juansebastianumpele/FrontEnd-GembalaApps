@@ -1,19 +1,21 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
-import { login } from '@/services/auth';
-import { setCk, delCk, certDetail } from '@/utils/cookies';
+import { login } from "@/services/auth";
+import { setCk, delCk, certDetail } from "@/utils/cookies";
 
-import d from 'dayjs';
+import d from "dayjs";
 
 const useAuthStore = defineStore({
-  id: 'auth',
+  id: "auth",
   state: () => ({
-    userId: '',
-    role: '',
+    userId: "",
+    name: "",
+    role: "",
   }),
   getters: {
     userInfo: (state) => ({
       userId: state.userId,
+      name: state.name,
       role: state.role,
     }),
     isLoggedIn: (state) => !!state.userId,
@@ -21,35 +23,37 @@ const useAuthStore = defineStore({
   actions: {
     async a$setUserInfo() {
       try {
-        const { id, role } = certDetail();
-        if (!id && !role) throw new Error('Tidak ada info Pengguna!');
-        this.role = role;
+        const { id, name, role } = certDetail();
+        if (!id && !name && !role) throw new Error("Tidak ada info Pengguna!");
         this.userId = id;
-        return 'User Authenticated';
+        this.name = name;
+        this.role = role;
+        return "User Authenticated";
       } catch ({ message }) {
-        this.role = '';
-        this.userId = '';
+        this.userId = "";
+        this.name = "";
+        this.role = "";
         throw message;
       }
     },
     async a$login(payload) {
       try {
         const { data } = await login(payload);
-        setCk('CERT', data.token, { datetime: d(data.expiresAt) });
+        setCk("CERT", data.token, { datetime: d(data.expiresAt) });
         this.a$setUserInfo();
-        return 'Login success!';
+        return "Login success!";
       } catch ({ error, message }) {
-        throw (error || message) ?? 'Login failed!';
+        throw (error || message) ?? "Login failed!";
       }
     },
     async a$logout() {
       try {
         const { id, role, name } = certDetail();
-        if (id || role || name) delCk('CERT');
+        if (id || role || name) delCk("CERT");
         this.a$setUserInfo();
-        return 'Logout success!';
+        return "Logout success!";
       } catch ({ error, message }) {
-        throw (error || message) ?? 'Logout failed!';
+        throw (error || message) ?? "Logout failed!";
       }
     },
   },
