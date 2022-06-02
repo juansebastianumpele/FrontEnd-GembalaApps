@@ -225,6 +225,11 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.nama_kandang" type="text" name="nama_kandang">
+                  <base-input v-bind="field" placeholder="Text" label="Nama Kandang" required></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.blok_kandang" type="text" name="blok_kandang">
                   <base-input v-bind="field" placeholder="Text" label="Blok Kandang"></base-input>
                 </field-form>

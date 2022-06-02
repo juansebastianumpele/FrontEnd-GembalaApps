@@ -178,7 +178,7 @@ export default {
         const { rf_id, jenis_kelamin, nama_varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, id_kandang, id_pakan, fase, tanggal_keluar, status_keluar, foto } = this.input;
         const data = new FormData();
         data.append("rf_id", rf_id);
-        data.append("id_users", this.userInfo.userId);
+        data.append("id_users", this.userInfo.id);
         data.append("jenis_kelamin", jenis_kelamin);
         data.append("id_varietas", nama_varietas);
         data.append("berat", berat_berkala);
