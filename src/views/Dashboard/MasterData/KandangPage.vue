@@ -11,10 +11,10 @@ export default {
   }),
   setup() {
     const schema = y$object({
-      id_users: y$string().required().label("ID Users"),
+      // id_users: y$string().required().label("ID Users"),
       nama_kandang: y$string().required().label("Nama Kandang"),
-      blok_kandang: y$string().required().label("Blok Kandang"),
-      populasi: y$string().required().label("Populasi Kandang"),
+      // blok_kandang: y$string().required().label("Blok Kandang"),
+      // populasi: y$string().required().label("Populasi Kandang"),
     });
     return {
       schema,
@@ -256,7 +256,7 @@ export default {
             <div class="row">
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.id_users" type="text" name="id_users">
-                  <base-input v-bind="field" placeholder="Text" label="ID Users" required></base-input>
+                  <base-input v-bind="field" placeholder="Text" label="ID Users"></base-input>
                 </field-form>
               </div>
               <div class="col-12">

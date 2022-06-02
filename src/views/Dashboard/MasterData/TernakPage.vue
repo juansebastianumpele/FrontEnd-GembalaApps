@@ -38,9 +38,9 @@ export default {
       fase: y$object({
         id_fase: y$string().nullable().label("ID Fase"),
       }).label("Fase Pemeliharaan"),
-      tanggal_keluar: y$string().nullable().label("Tanggal Keluar"),
+      foto: y$array().nullable().label("Foto"),
+      // tanggal_keluar: y$string().nullable().label("Tanggal Keluar"),
       // status_keluar: y$string().nullable().label("Status Keluar"),
-      // foto: y$array().nullable().label("Foto"),
     });
     return {
       schema,
@@ -179,20 +179,20 @@ export default {
         const data = new FormData();
         data.append("rf_id", rf_id);
         data.append("id_users", this.userInfo.id);
-        data.append("jenis_kelamin", jenis_kelamin);
-        data.append("id_varietas", nama_varietas);
+        data.append("jenis_kelamin", jenis_kelamin.name);
+        data.append("id_varietas", nama_varietas.id);
         data.append("berat", berat_berkala);
         data.append("suhu", suhu_berkala);
         data.append("tanggal_lahir", tanggal_lahir);
         data.append("tanggal_masuk", tanggal_masuk);
         data.append("id_induk", id_induk);
         data.append("id_pejantan", id_pejantan);
-        data.append("status_sehat", status_sehat);
-        data.append("id_kandang", id_kandang);
-        data.append("id_pakan", id_pakan);
-        data.append("fase_pemeliharaan", fase);
+        data.append("status_sehat", status_sehat.name);
+        data.append("id_kandang", id_kandang.id);
+        data.append("id_pakan", id_pakan.id);
+        data.append("fase_pemeliharaan", fase.id);
         data.append("tanggal_keluar", tanggal_keluar);
-        data.append("status_keluar", status_keluar);
+        // data.append("status_keluar", status_keluar);
         data.append("foto", foto);
         // await this.schema.validate(this.input);
         await this.a$ternakAdd(data);
@@ -339,7 +339,7 @@ export default {
               </div> -->
               <div class="col-12">
                 <base-input name="jenis_kelamin" placeholder="Jenis Kelamin" label="Jenis Kelamin">
-                  <multi-select v-model="input.jenis_kelamin" :options="g$ddJenisKelamin" label="name" track-by="id" placeholder="Pilih Jenis Kelamin" :show-labels="false" />
+                  <multi-select v-model="input.jenis_kelamin" :options="g$ddJenisKelamin" label="name" track-by="name" placeholder="Pilih Jenis Kelamin" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
@@ -379,7 +379,7 @@ export default {
               </div>
               <div class="col-12">
                 <base-input name="status_sehat" placeholder="Status Kesehatan" label="Status Kesehatan">
-                  <multi-select v-model="input.status_sehat" :options="g$ddStatusSehat" label="name" track-by="id" placeholder="Pilih Status Kesehatan" :show-labels="false" />
+                  <multi-select v-model="input.status_sehat" :options="g$ddStatusSehat" label="name" track-by="name" placeholder="Pilih Status Kesehatan" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
@@ -402,14 +402,14 @@ export default {
                   <flat-pickr v-model.lazy="input.tanggal_keluar" :config="{ mode: 'single', allowInput: true }" class="form-control datepicker" placeholder="YYYY-MM-DD" />
                 </base-input>
               </div>
-              <div class="col-12">
+              <!-- <div class="col-12">
                 <base-input name="status_keluar" placeholder="Status Keluar" label="Status Keluar">
                   <multi-select v-model="input.status_keluar" :options="g$ddStatusKeluar" label="name" track-by="id" placeholder="Pilih Status Keluar" :show-labels="false" />
                 </base-input>
-              </div>
+              </div> -->
               <div class="col-12" v-if="!this.input.foto">
                 <div class="form-group has-label">
-                  <label class="form-control-label">Url</label>
+                  <label class="form-control-label">Foto</label>
                   <input class="form-control file" id="foto" type="file" ref="foto" accept="image/*" @change="handleFileUpload()" />
                 </div>
               </div>

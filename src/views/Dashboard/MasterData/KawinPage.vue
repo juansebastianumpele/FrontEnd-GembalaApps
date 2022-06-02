@@ -10,11 +10,11 @@ export default {
   }),
   setup() {
     const schema = y$object({
-      id_kawin: y$string().required().label("ID Kawin"),
+      // id_kawin: y$string().required().label("ID Kawin"),
       id_ternak: y$string().required().label("ID Induk"),
       tanggal_kawin: y$string().nullable().label("Tanggal Kawin"),
-      fase_induk: y$string().nullable().label("Fase Pemeliharaan"),
       id_pemancek: y$string().nullable().label("ID Pemancek"),
+      // nama_fase: y$string().nullable().label("Fase Pemeliharaan"),
     });
     return {
       schema,
@@ -29,7 +29,7 @@ export default {
       id_ternak: "",
       tanggal_kawin: "",
       id_pemancek: "",
-      fase_induk: "",
+      nama_fase: "",
     },
     // UI
     modal: {
@@ -49,7 +49,7 @@ export default {
           th: "ID Induk",
         },
         {
-          name: "fase",
+          name: "nama_fase",
           th: "Fase Pemeliharaan",
         },
         {
@@ -104,18 +104,18 @@ export default {
         id_kawin: "",
         id_ternak: "",
         tanggal_kawin: "",
-        fase_induk: "",
+        nama_fase: "",
         id_pemancek: "",
       };
     },
     async addKawin() {
       try {
-        const { id_kawin, id_ternak, tanggal_kawin, fase_induk, id_pemancek } = this.input;
+        const { id_kawin, id_ternak, tanggal_kawin, nama_fase, id_pemancek } = this.input;
         const data = {
           id_kawin,
           id_ternak,
           tanggal_kawin,
-          fase_induk,
+          nama_fase,
           id_pemancek,
         };
         await this.schema.validate(data);
@@ -130,13 +130,13 @@ export default {
     },
     async editKawin() {
       try {
-        const { id, id_kawin, id_ternak, tanggal_kawin, fase_induk, id_pemancek } = this.input;
+        const { id, id_kawin, id_ternak, tanggal_kawin, nama_fase, id_pemancek } = this.input;
         const data = {
           id,
           id_kawin,
           id_ternak,
           tanggal_kawin,
-          fase_induk,
+          nama_fase,
           id_pemancek,
         };
         await this.schema.validate(data);
@@ -163,12 +163,12 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_kawin, id_ternak, tanggal_kawin, fase_induk, id_pemancek } = row;
+        const { id_kawin, id_ternak, tanggal_kawin, nama_fase, id_pemancek } = row;
         this.input = {
           id: id_kawin,
           id_ternak,
           tanggal_kawin,
-          fase_induk,
+          nama_fase,
           id_pemancek,
         };
         this.modal.ubahKawin = true;
@@ -222,7 +222,7 @@ export default {
             <div class="row">
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.id_kawin" type="text" name="id_kawin">
-                  <base-input v-bind="field" placeholder="Text" label="ID Kawin" required></base-input>
+                  <base-input v-bind="field" placeholder="Text" label="ID Kawin"></base-input>
                 </field-form>
               </div>
               <div class="col-12">
@@ -231,18 +231,18 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
-                <base-input name="tanggal_kawin" class="my-4" placeholder="YYYY-MM-DD" label="Tanggal Kawin">
+                <base-input name="tanggal_kawin" class="my-4" placeholder="YYYY-MM-DD" label="Tanggal Kawin" required>
                   <flat-pickr v-model.lazy="input.tanggal_kawin" :config="{ mode: 'single', allowInput: true }" class="form-control datepicker" placeholder="YYYY-MM-DD" />
                 </base-input>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.fase_induk" type="text" name="fase_induk">
-                  <base-input v-bind="field" placeholder="Text" label="Status Induk"></base-input>
+                <field-form v-slot="{ field }" v-model="input.nama_fase" type="text" name="nama_fase">
+                  <base-input v-bind="field" placeholder="Text" label="Fase Pemeliharaan"></base-input>
                 </field-form>
               </div>
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.id_pemancek" type="text" name="id_pemancek">
-                  <base-input v-bind="field" placeholder="Text" label="ID Pemancek"></base-input>
+                  <base-input v-bind="field" placeholder="Text" label="ID Pemancek" required></base-input>
                 </field-form>
               </div>
             </div>
@@ -276,8 +276,8 @@ export default {
                 </base-input>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.fase_induk" type="text" name="fase_induk">
-                  <base-input v-bind="field" placeholder="Text" label="Status Induk"></base-input>
+                <field-form v-slot="{ field }" v-model="input.nama_fase" type="text" name="nama_fase">
+                  <base-input v-bind="field" placeholder="Text" label="Fase Pemeliharaan"></base-input>
                 </field-form>
               </div>
               <div class="col-12">
