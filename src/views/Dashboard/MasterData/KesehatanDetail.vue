@@ -43,7 +43,7 @@ export default {
         },
         // {
         //   name: "berat_berkala",
-        //   th: "Berat Ternak",
+        //   th: "Berat Ternak (kg)",
         // },
       ],
       action: [

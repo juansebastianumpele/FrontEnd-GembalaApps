@@ -35,11 +35,11 @@ export default {
         },
         {
           name: "fase",
-          th: "Fase Pemeliharaan",
+          th: "Status Ternak",
         },
         {
           name: "berat_berkala",
-          th: "Berat Ternak",
+          th: "Berat Ternak (kg)",
         },
         {
           name: "nama_kandang",

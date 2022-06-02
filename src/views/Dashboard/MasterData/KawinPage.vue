@@ -14,7 +14,7 @@ export default {
       id_ternak: y$string().required().label("ID Induk"),
       tanggal_kawin: y$string().nullable().label("Tanggal Kawin"),
       id_pemancek: y$string().nullable().label("ID Pemancek"),
-      // nama_fase: y$string().nullable().label("Fase Pemeliharaan"),
+      // nama_fase: y$string().nullable().label("Status Ternak"),
     });
     return {
       schema,
@@ -41,24 +41,12 @@ export default {
     dt: {
       column: [
         {
-          name: "id_kawin",
-          th: "ID Kawin",
-        },
-        {
           name: "id_ternak",
           th: "ID Induk",
         },
         {
           name: "nama_fase",
-          th: "Fase Pemeliharaan",
-        },
-        {
-          name: "tanggal_kawin",
-          th: "Tanggal Kawin",
-        },
-        {
-          name: "id_pemancek",
-          th: "ID Pemancek",
+          th: "Status Ternak",
         },
       ],
       action: [
@@ -237,7 +225,7 @@ export default {
               </div>
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.nama_fase" type="text" name="nama_fase">
-                  <base-input v-bind="field" placeholder="Text" label="Fase Pemeliharaan"></base-input>
+                  <base-input v-bind="field" placeholder="Text" label="Status Ternak"></base-input>
                 </field-form>
               </div>
               <div class="col-12">
@@ -277,7 +265,7 @@ export default {
               </div>
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.nama_fase" type="text" name="nama_fase">
-                  <base-input v-bind="field" placeholder="Text" label="Fase Pemeliharaan"></base-input>
+                  <base-input v-bind="field" placeholder="Text" label="Status Ternak"></base-input>
                 </field-form>
               </div>
               <div class="col-12">

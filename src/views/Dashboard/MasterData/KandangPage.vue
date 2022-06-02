@@ -49,7 +49,7 @@ export default {
         },
         {
           name: "populasi",
-          th: "Populasi Kandang",
+          th: "Jumlah Populasi Ternak",
         },
       ],
       action: [

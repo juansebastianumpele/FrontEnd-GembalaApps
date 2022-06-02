@@ -55,6 +55,10 @@ export default {
           name: "pengobatan",
           th: "Pengobatan",
         },
+        {
+          name: "ternak-sakit",
+          th: "Jumlah",
+        },
       ],
       action: [
         {

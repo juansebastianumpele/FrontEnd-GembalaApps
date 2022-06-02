@@ -51,6 +51,10 @@ export default {
           name: "komposisi",
           th: "Komposisi",
         },
+        {
+          name: "pakan",
+          th: "Stock Pakan (kg)",
+        },
       ],
       action: [
         {

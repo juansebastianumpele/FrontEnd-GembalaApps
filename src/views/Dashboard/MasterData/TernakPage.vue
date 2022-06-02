@@ -37,7 +37,7 @@ export default {
       }).label("ID Pakan"),
       fase: y$object({
         id_fase: y$string().nullable().label("ID Fase"),
-      }).label("Fase Pemeliharaan"),
+      }).label("Status Ternak"),
       foto: y$array().nullable().label("Foto"),
       // tanggal_keluar: y$string().nullable().label("Tanggal Keluar"),
       // status_keluar: y$string().nullable().label("Status Keluar"),
@@ -84,6 +84,10 @@ export default {
           th: "ID Ternak",
         },
         {
+          name: "nomor",
+          th: "Nomor Ternak",
+        },
+        {
           name: "nama_varietas",
           th: "Varietas",
         },
@@ -93,7 +97,7 @@ export default {
         },
         {
           name: "fase",
-          th: "Fase Pemeliharaan",
+          th: "Status Ternak",
         },
         {
           name: "umur",
@@ -393,8 +397,8 @@ export default {
                 </base-input>
               </div>
               <div class="col-12">
-                <base-input name="fase" placeholder="Fase Pemeliharaan" label="Fase Pemeliharaan">
-                  <multi-select v-model="input.fase" :options="g$ddFasePemeliharaan" label="name" track-by="id" placeholder="Pilih Fase Pemeliharaan" :show-labels="false" />
+                <base-input name="fase" placeholder="Status Ternak" label="Status Ternak">
+                  <multi-select v-model="input.fase" :options="g$ddFasePemeliharaan" label="name" track-by="id" placeholder="Pilih Status Ternak" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
@@ -507,8 +511,8 @@ export default {
                 </base-input>
               </div>
               <div class="col-12">
-                <base-input name="fase" placeholder="Fase Pemeliharaan" label="Fase Pemeliharaan">
-                  <multi-select v-model="input.fase" :options="g$ddFasePemeliharaan" label="name" track-by="id" placeholder="Pilih Fase Pemeliharaan" :show-labels="false" />
+                <base-input name="fase" placeholder="Status Ternak" label="Status Ternak">
+                  <multi-select v-model="input.fase" :options="g$ddFasePemeliharaan" label="name" track-by="id" placeholder="Pilih Status Ternak" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
