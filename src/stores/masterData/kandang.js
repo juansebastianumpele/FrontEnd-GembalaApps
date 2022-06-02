@@ -5,11 +5,12 @@ const u$kandang = defineStore({
   id: "kandang",
   state: () => ({
     kandang: [],
+    totalKandang: 0,
   }),
   actions: {
-    async a$kandangList() {
+    async a$kandangList(request) {
       try {
-        const { data } = await s$kandang.list();
+        const { data } = await s$kandang.list(request);
         this.kandang = data;
       } catch ({ error }) {
         this.kandang = [];
@@ -37,10 +38,19 @@ const u$kandang = defineStore({
         throw error;
       }
     },
+    async a$totalKandang(request) {
+      try {
+        const { data } = await s$kandang.totalKandang(request);
+        this.totalKandang ={...data[0]}
+        console.log( {...data[0]})
+      } catch ({ error }) {
+        throw error;
+      }
+    },
   },
   getters: {
     g$kandangList: (state) => state.kandang,
-  },
+    g$totalKandang: (state) => state.totalKandang}
 });
 
 export default u$kandang;

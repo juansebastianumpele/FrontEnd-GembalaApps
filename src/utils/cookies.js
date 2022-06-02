@@ -41,7 +41,7 @@ const certDetail = function getCertDetail() {
   const token = getCk("CERT");
   if (token) {
     const { id, name, level, exp } = parseJwt(token);
-    if (name === undefined) delCk("CERT");
+    if (id === undefined) delCk("CERT");
     return {
       id,
       name,
@@ -50,10 +50,10 @@ const certDetail = function getCertDetail() {
     };
   }
   return {
-    id: undefined,
-    name: undefined,
-    r: undefined,
-    exp: undefined,
+    id: "",
+    name: "",
+    r: "",
+    exp: "",
   };
 };
 

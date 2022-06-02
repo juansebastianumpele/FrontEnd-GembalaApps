@@ -19,4 +19,11 @@ const listStatusKeluar = () => baseApi.get(`${api}/${ternak}/statuskeluar`);
 const detailKandang = (req) => baseApi.get(`${api}/${ternak}/listbykandang/${req}`);
 const detailPakan = (req) => baseApi.get(`${api}/${ternak}/listternakpakan/${req}`);
 
-export { list, add, edit, del, listVarietas, listFase, listJenisKelamin, listStatusSehat, listStatusKeluar, detailKandang, detailPakan };
+// Dashboard
+const detailTernak = (req) => baseApi.get(`${api}/${ternak}/users/${req.id}`);
+const totalSehat = (req) => baseApi.get(`${api}/${ternak}/totalsehat/${req}`);
+const totalJeniskelamin = (req) => baseApi.get(`${api}/${ternak}/totaljeniskelamin/${req}`);
+const populasi = (req) => baseApi.get(`${api}/${ternak}/total/${req}`);
+const totalFase = (req) => baseApi.get(`${api}/${ternak}/totalfase/${req}`);
+
+export { list, add, edit, del, listVarietas, listFase, listJenisKelamin, listStatusSehat, listStatusKeluar, detailKandang, detailPakan, detailTernak, totalSehat, totalJeniskelamin, populasi, totalFase };

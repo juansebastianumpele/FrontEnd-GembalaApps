@@ -13,6 +13,8 @@ const subApiUrl = {
   kesehatan: "kesehatan",
   penyakit: "penyakit",
   ternak: "ternak",
+  costumer: "costumer",
+  total: "total",
 };
 
 export { host, baseApiUrl, subApiUrl };

@@ -1,7 +1,7 @@
 <script>
-import { mapActions } from 'pinia';
-import useAuthStore from '@/stores/auth';
-import { useMeta } from 'vue-meta';
+import { mapActions } from "pinia";
+import useAuthStore from "@/stores/auth";
+import { useMeta } from "vue-meta";
 
 export default {
   provide() {
@@ -12,7 +12,7 @@ export default {
   setup() {
     useMeta({
       htmlAttrs: {
-        lang: 'en',
+        lang: "en",
       },
     });
   },
@@ -20,14 +20,14 @@ export default {
     try {
       await this.a$setUserInfo();
       this.notify(`Welcome back, ${this.userInfo.name}!`);
-      if (this.$route.path.includes('/auth/') && this.userInfo.name) this.$router.replace({ name: 'Home' });
+      if (this.$route.path.includes("/auth/") && this.userInfo.name) this.$router.replace({ name: "Home" });
     } catch (error) {
-      if (!this.$route.path.includes('/auth/')) this.$router.replace({ name: 'Auth' });
+      if (!this.$route.path.includes("/auth/")) this.$router.replace({ name: "Auth" });
       this.notify(error, false);
     }
   },
   methods: {
-    ...mapActions(useAuthStore, ['a$setUserInfo']),
+    ...mapActions(useAuthStore, ["a$setUserInfo"]),
   },
 };
 </script>
@@ -41,6 +41,6 @@ export default {
 
 <style>
 .bg-gradient-argon {
-  background: linear-gradient(87deg,#2dce89 0,#2dcecc 100%)!important
+  background: linear-gradient(87deg, #2dce89 0, #2dcecc 100%) !important;
 }
 </style>
