@@ -13,30 +13,30 @@ export default {
     const schema = y$object({
       // id_ternak: y$string().required().label("ID Ternak"),
       // id_users: y$string().required().label("ID Users"),
-      rf_id: y$string().required().label("RF ID"),
+      rf_id: y$string().nullable().label("RF ID"),
       jenis_kelamin: y$object({
         id: y$string().nullable().label("Jenis Kelamin"),
       }).label("Jenis Kelamin"),
       nama_varietas: y$object({
         id: y$string().nullable().label("Varietas"),
       }).label("Varietas"),
-      berat_berkala: y$string().nullable().label("Berat Berkala"),
-      suhu_berkala: y$string().nullable().label("Suhu Berkala"),
-      tanggal_lahir: y$string().nullable().label("Tanggal Lahir"),
-      tanggal_masuk: y$string().nullable().label("Tanggal Masuk"),
-      id_induk: y$string().nullable().label("ID Induk"),
-      id_pejantan: y$string().nullable().label("ID Pejantan"),
+      berat_berkala: y$string().required().label("Berat Berkala"),
+      suhu_berkala: y$string().required().label("Suhu Berkala"),
+      tanggal_lahir: y$string().required().label("Tanggal Lahir"),
+      tanggal_masuk: y$string().required().label("Tanggal Masuk"),
+      id_induk: y$string().required().label("ID Induk"),
+      id_pejantan: y$string().required().label("ID Pejantan"),
       status_sehat: y$object({
-        id: y$string().nullable().label("Status Sehat"),
+        id: y$string().required().label("Status Sehat"),
       }).label("Status Sehat"),
       id_kandang: y$object({
-        id: y$string().nullable().label("ID Kandang"),
+        id: y$string().required().label("ID Kandang"),
       }).label("ID Kandang"),
       id_pakan: y$object({
-        id: y$string().nullable().label("ID Pakan"),
+        id: y$string().required().label("ID Pakan"),
       }).label("ID Pakan"),
       fase: y$object({
-        id_fase: y$string().nullable().label("ID Fase"),
+        id: y$string().required().label("ID Fase"),
       }).label("Status Ternak"),
       foto: y$array().nullable().label("Foto"),
       // tanggal_keluar: y$string().nullable().label("Tanggal Keluar"),
@@ -79,10 +79,6 @@ export default {
     // DataTable
     dt: {
       column: [
-        {
-          name: "id_ternak",
-          th: "ID Ternak",
-        },
         {
           name: "nomor",
           th: "Nomor Ternak",
@@ -196,9 +192,9 @@ export default {
         data.append("id_pakan", id_pakan.id);
         data.append("fase_pemeliharaan", fase.id);
         data.append("tanggal_keluar", tanggal_keluar);
-        // data.append("status_keluar", status_keluar);
         data.append("foto", foto);
-        // await this.schema.validate(this.input);
+        data.append("status_keluar", status_keluar);
+        await this.schema.validate(this.input);
         await this.a$ternakAdd(data);
         this.modal.addTernak = false;
         this.notify(`Tambah ${this.pageTitle} Sukses!`);
@@ -211,27 +207,26 @@ export default {
     },
     async editTernak() {
       try {
-        const { rf_id, id_users, jenis_kelamin, nama_varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, id_kandang, id_pakan, fase, tanggal_keluar, status_keluar, foto } = this.input;
-        const data = {
-          id,
-          rf_id,
-          id_users,
-          jenis_kelamin,
-          nama_varietas,
-          berat_berkala,
-          suhu_berkala,
-          tanggal_lahir,
-          tanggal_masuk,
-          id_induk,
-          id_pejantan,
-          status_sehat,
-          id_kandang,
-          id_pakan,
-          fase,
-          tanggal_keluar,
-          status_keluar,
-          foto,
-        };
+        const { rf_id, jenis_kelamin, nama_varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, id_kandang, id_pakan, fase, tanggal_keluar, status_keluar, foto } = this.input;
+        const data = new FormData();
+        id;
+        data.append("rf_id", rf_id);
+        data.append("id_users", this.userInfo.id);
+        data.append("jenis_kelamin", jenis_kelamin.name);
+        data.append("id_varietas", nama_varietas.id);
+        data.append("berat", berat_berkala);
+        data.append("suhu", suhu_berkala);
+        data.append("tanggal_lahir", tanggal_lahir);
+        data.append("tanggal_masuk", tanggal_masuk);
+        data.append("id_induk", id_induk);
+        data.append("id_pejantan", id_pejantan);
+        data.append("status_sehat", status_sehat.name);
+        data.append("id_kandang", id_kandang.id);
+        data.append("id_pakan", id_pakan.id);
+        data.append("fase_pemeliharaan", fase.id);
+        data.append("tanggal_keluar", tanggal_keluar);
+        data.append("foto", foto);
+        data.append("status_keluar", status_keluar);
         await this.schema.validate(data);
         await this.a$ternakEdit(data);
         this.modal.ubahTernak = false;
@@ -256,7 +251,8 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { rf_id, id_users, jenis_kelamin, nama_varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, id_kandang, id_pakan, fase, tanggal_keluar, status_keluar, foto } = row;
+        const { id_ternak, rf_id, id_users, jenis_kelamin, nama_varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, id_kandang, id_pakan, fase, tanggal_keluar, status_keluar, foto } =
+          row;
         this.input = {
           id: id_ternak,
           rf_id,
@@ -333,14 +329,9 @@ export default {
             <div class="row">
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.rf_id" type="text" name="rf_id">
-                  <base-input v-bind="field" placeholder="Text" label="RFID Ternak" required></base-input>
+                  <base-input v-bind="field" placeholder="Text" label="RFID Ternak"></base-input>
                 </field-form>
               </div>
-              <!-- <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.id_users" type="text" name="id_users">
-                  <base-input v-bind="field" placeholder="Text" label="ID Users" required></base-input>
-                </field-form>
-              </div> -->
               <div class="col-12">
                 <base-input name="jenis_kelamin" placeholder="Jenis Kelamin" label="Jenis Kelamin">
                   <multi-select v-model="input.jenis_kelamin" :options="g$ddJenisKelamin" label="name" track-by="name" placeholder="Pilih Jenis Kelamin" :show-labels="false" />
@@ -362,12 +353,12 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
-                <base-input name="tanggal_lahir" class="my-4" placeholder="YYYY-MM-DD" label="Tanggal Lahir">
+                <base-input name="tanggal_lahir" class="my-4" placeholder="YYYY-MM-DD" label="Tanggal Lahir" required>
                   <flat-pickr v-model.lazy="input.tanggal_lahir" :config="{ mode: 'single', allowInput: true }" class="form-control datepicker" placeholder="YYYY-MM-DD" />
                 </base-input>
               </div>
               <div class="col-12">
-                <base-input name="tanggal_masuk" class="my-4" placeholder="YYYY-MM-DD" label="Tanggal Masuk">
+                <base-input name="tanggal_masuk" class="my-4" placeholder="YYYY-MM-DD" label="Tanggal Masuk" required>
                   <flat-pickr v-model.lazy="input.tanggal_masuk" :config="{ mode: 'single', allowInput: true }" class="form-control datepicker" placeholder="YYYY-MM-DD" />
                 </base-input>
               </div>
@@ -382,30 +373,30 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
-                <base-input name="status_sehat" placeholder="Status Kesehatan" label="Status Kesehatan">
+                <base-input name="status_sehat" placeholder="Status Kesehatan" label="Status Kesehatan" required>
                   <multi-select v-model="input.status_sehat" :options="g$ddStatusSehat" label="name" track-by="name" placeholder="Pilih Status Kesehatan" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
-                <base-input name="id_kandang" placeholder="Kandang" label="Kandang">
+                <base-input name="id_kandang" placeholder="Kandang" label="Kandang" required>
                   <multi-select v-model="input.id_kandang" :options="g$ddKandang" label="name" track-by="id" placeholder="Pilih Kandang" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
-                <base-input name="id_pakan" placeholder="Pakan" label="Pakan">
+                <base-input name="id_pakan" placeholder="Pakan" label="Pakan" required>
                   <multi-select v-model="input.id_pakan" :options="g$ddPakan" label="name" track-by="id" placeholder="Pilih Pakan" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
-                <base-input name="fase" placeholder="Status Ternak" label="Status Ternak">
+                <base-input name="fase" placeholder="Status Ternak" label="Status Ternak" required>
                   <multi-select v-model="input.fase" :options="g$ddFasePemeliharaan" label="name" track-by="id" placeholder="Pilih Status Ternak" :show-labels="false" />
                 </base-input>
               </div>
-              <div class="col-12">
+              <!-- <div class="col-12">
                 <base-input name="tanggal_keluar" class="my-4" placeholder="YYYY-MM-DD" label="Tanggal Keluar">
                   <flat-pickr v-model.lazy="input.tanggal_keluar" :config="{ mode: 'single', allowInput: true }" class="form-control datepicker" placeholder="YYYY-MM-DD" />
                 </base-input>
-              </div>
+              </div> -->
               <!-- <div class="col-12">
                 <base-input name="status_keluar" placeholder="Status Keluar" label="Status Keluar">
                   <multi-select v-model="input.status_keluar" :options="g$ddStatusKeluar" label="name" track-by="id" placeholder="Pilih Status Keluar" :show-labels="false" />
@@ -425,11 +416,6 @@ export default {
                   <img width="250" v-if="input.fotoUrl" :src="input.fotoUrl" />
                 </div>
               </div>
-              <!-- <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.foto" type="file" name="foto">
-                  <base-input v-bind="field" ref="foto" accept="image/*" placeholder="Text" type="file" label="Foto" required></base-input>
-                </field-form>
-              </div> -->
             </div>
           </form-comp>
         </template>
@@ -438,6 +424,8 @@ export default {
           <base-button type="primary" @click="addTernak()"> Tambah {{ pageTitle }} </base-button>
         </template>
       </modal-comp>
+
+      <!-- Edit Modal -->
       <modal-comp v-model:show="modal.ubahTernak" modal-classes="modal-lg">
         <template #header>
           <h3 class="modal-title">Detail {{ pageTitle }}</h3>
@@ -447,14 +435,9 @@ export default {
             <div class="row">
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.rf_id" type="text" name="rf_id">
-                  <base-input v-bind="field" placeholder="Text" label="RFID Ternak" required></base-input>
+                  <base-input v-bind="field" placeholder="Text" label="RFID Ternak"></base-input>
                 </field-form>
               </div>
-              <!-- <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.id_users" type="text" name="id_users">
-                  <base-input v-bind="field" placeholder="Text" label="ID Users" required></base-input>
-                </field-form>
-              </div> -->
               <div class="col-12">
                 <base-input name="jenis_kelamin" placeholder="Jenis Kelamin" label="Jenis Kelamin">
                   <multi-select v-model="input.jenis_kelamin" :options="g$ddJenisKelamin" label="name" track-by="name" placeholder="Pilih Jenis Kelamin" :show-labels="false" />
@@ -476,12 +459,12 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
-                <base-input name="tanggal_lahir" class="my-4" placeholder="YYYY-MM-DD" label="Tanggal Lahir">
+                <base-input name="tanggal_lahir" class="my-4" placeholder="YYYY-MM-DD" label="Tanggal Lahir" required>
                   <flat-pickr v-model.lazy="input.tanggal_lahir" :config="{ mode: 'single', allowInput: true }" class="form-control datepicker" placeholder="YYYY-MM-DD" />
                 </base-input>
               </div>
               <div class="col-12">
-                <base-input name="tanggal_masuk" class="my-4" placeholder="YYYY-MM-DD" label="Tanggal Masuk">
+                <base-input name="tanggal_masuk" class="my-4" placeholder="YYYY-MM-DD" label="Tanggal Masuk" required>
                   <flat-pickr v-model.lazy="input.tanggal_masuk" :config="{ mode: 'single', allowInput: true }" class="form-control datepicker" placeholder="YYYY-MM-DD" />
                 </base-input>
               </div>
@@ -496,26 +479,26 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
-                <base-input name="status_sehat" placeholder="Status Kesehatan" label="Status Kesehatan">
+                <base-input name="status_sehat" placeholder="Status Kesehatan" label="Status Kesehatan" required>
                   <multi-select v-model="input.status_sehat" :options="g$ddStatusSehat" label="name" track-by="id" placeholder="Status Kesehatan" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
-                <base-input name="id_kandang" placeholder="Kandang" label="Kandang">
+                <base-input name="id_kandang" placeholder="Kandang" label="Kandang" required>
                   <multi-select v-model="input.id_kandang" :options="g$ddKandang" label="name" track-by="id" placeholder="Pilih Kandang" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
-                <base-input name="id_pakan" placeholder="Pakan" label="Pakan">
+                <base-input name="id_pakan" placeholder="Pakan" label="Pakan" required>
                   <multi-select v-model="input.id_pakan" :options="g$ddPakan" label="name" track-by="id" placeholder="Pilih Pakan" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
-                <base-input name="fase" placeholder="Status Ternak" label="Status Ternak">
+                <base-input name="fase" placeholder="Status Ternak" label="Status Ternak" required>
                   <multi-select v-model="input.fase" :options="g$ddFasePemeliharaan" label="name" track-by="id" placeholder="Pilih Status Ternak" :show-labels="false" />
                 </base-input>
               </div>
-              <div class="col-12">
+              <!-- <div class="col-12">
                 <base-input name="tanggal_keluar" class="my-4" placeholder="YYYY-MM-DD" label="Tanggal Keluar">
                   <flat-pickr v-model.lazy="input.tanggal_keluar" :config="{ mode: 'single', allowInput: true }" class="form-control datepicker" placeholder="YYYY-MM-DD" />
                 </base-input>
@@ -524,11 +507,20 @@ export default {
                 <base-input name="status_keluar" placeholder="Status Keluar" label="Status Keluar">
                   <multi-select v-model="input.status_keluar" :options="g$ddStatusKeluar" label="name" track-by="id" placeholder="Pilih Status Keluar" :show-labels="false" />
                 </base-input>
+              </div> -->
+              <div class="col-12" v-if="!this.input.foto">
+                <div class="form-group has-label">
+                  <label class="form-control-label">Foto</label>
+                  <input class="form-control file" id="foto" type="file" ref="foto" accept="image/*" @change="handleFileUpload()" />
+                </div>
               </div>
-              <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.foto" type="text" name="foto">
-                  <base-input v-bind="field" placeholder="Text" label="Foto" required></base-input>
-                </field-form>
+              <div class="col-12" v-if="this.input.fotoUrl">
+                <div class="text-center pb-2">
+                  <base-button type="danger" size="sm" @click="resetImage()"> Reset Image </base-button>
+                </div>
+                <div class="text-center">
+                  <img width="250" v-if="input.fotoUrl" :src="input.fotoUrl" />
+                </div>
               </div>
             </div>
           </form-comp>
