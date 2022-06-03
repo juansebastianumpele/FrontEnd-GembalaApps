@@ -1,10 +1,12 @@
 import { defineStore } from "pinia";
 import * as s$kawin from "@/services/masterData/kawin";
+import * as s$ternak from "@/services/masterData/ternak";
 
 const u$kawin = defineStore({
   id: "kawin",
   state: () => ({
     kawin: [],
+    betina: [],
   }),
   actions: {
     async a$kawinList() {
@@ -37,9 +39,20 @@ const u$kawin = defineStore({
         throw error;
       }
     },
+    // Get List Ternak Betina by ID Users
+    async a$listTernakBetina(request) {
+      try {
+        const { data } = await s$ternak.listBetina(request);
+        this.betina = data;
+      } catch ({ error }) {
+        this.betina = [];
+        throw error;
+      }
+    },
   },
   getters: {
     g$kawinList: (state) => state.kawin,
+    g$kawinBetina: (state) => state.betina,
   },
 });
 

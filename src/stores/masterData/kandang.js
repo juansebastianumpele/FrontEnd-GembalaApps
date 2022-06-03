@@ -7,9 +7,9 @@ const u$kandang = defineStore({
     kandang: [],
   }),
   actions: {
-    async a$kandangList() {
+    async a$kandangList(request) {
       try {
-        const { data } = await s$kandang.list();
+        const { data } = await s$kandang.list(request);
         this.kandang = data;
       } catch ({ error }) {
         this.kandang = [];

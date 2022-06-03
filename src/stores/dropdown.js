@@ -11,11 +11,11 @@ import * as s$pakan from "@/services/masterData/pakan";
 const u$dropdown = defineStore({
   id: "dropdown",
   state: () => ({
-    jenisKelamin: [],
+    jenisKelamin: ["Jantan", "Betina"],
     varietas: [],
-    statusSehat: [],
+    statusSehat: ["Sehat", "Sakit", "Sembuh"],
     fasePemeliharaan: [],
-    statusKeluar: [],
+    statusKeluar: ["Jual", "Mati", "Sembelih"],
     kandang: [],
     pakan: [],
     // customer: [],
@@ -32,15 +32,15 @@ const u$dropdown = defineStore({
     // ],
   }),
   actions: {
-    async a$ddJenisKelamin() {
-      try {
-        const { data } = await s$ternak.listJenisKelamin();
-        this.jenisKelamin = data;
-      } catch ({ error }) {
-        this.jenisKelamin = [];
-        throw error;
-      }
-    },
+    // async a$ddJenisKelamin() {
+    //   try {
+    //     const { data } = await s$ternak.listJenisKelamin();
+    //     this.jenisKelamin = data;
+    //   } catch ({ error }) {
+    //     this.jenisKelamin = [];
+    //     throw error;
+    //   }
+    // },
     async a$ddVarietas() {
       try {
         const { data } = await s$ternak.listVarietas();
@@ -163,10 +163,10 @@ const u$dropdown = defineStore({
     // g$ddStatusFalse: (state) => state.status.map(({ id, name }) => ({ id, name })).filter((obj) => obj.id <= 1),
     // g$ddStatusTrue: (state) => state.status.map(({ id, name }) => ({ id, name })).filter((obj) => obj.id >= 2),
     // g$ddTruck: (state) => state.truck.map(({ id, truckNumber }) => ({ id, name: truckNumber })),
-    g$ddJenisKelamin: (state) => state.jenisKelamin.map(({ id_jenis, nama }) => ({ id: id_jenis, name: nama })),
+    g$ddJenisKelamin: (state) => state.jenisKelamin,
     g$ddFasePemeliharaan: (state) => state.fasePemeliharaan.map(({ id_fp, fase }) => ({ id: id_fp, name: fase })),
-    g$ddStatusSehat: (state) => state.statusSehat.map(({ id_status, nama }) => ({ id: id_status, name: nama })),
-    g$ddStatusKeluar: (state) => state.statusKeluar.map(({ id_keluar, nama }) => ({ id: id_keluar, name: nama })),
+    g$ddStatusSehat: (state) => state.statusSehat,
+    g$ddStatusKeluar: (state) => state.statusKeluar,
     g$ddVarietas: (state) => state.varietas.map(({ id_varietas, nama_varietas }) => ({ id: id_varietas, name: nama_varietas })),
     g$ddKandang: (state) => state.kandang.map(({ id_kandang, nama_kandang }) => ({ id: id_kandang, name: nama_kandang })),
     g$ddPakan: (state) => state.pakan.map(({ id_pakan, nama_pakan }) => ({ id: id_pakan, name: nama_pakan })),

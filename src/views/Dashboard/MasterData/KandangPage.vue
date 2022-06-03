@@ -85,7 +85,7 @@ export default {
     },
   },
   async mounted() {
-    await this.a$kandangList().catch((error) => this.notify(error, false));
+    await this.a$kandangList(this.userInfo.id).catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$kandang, ["a$kandangAdd", "a$kandangList", "a$kandangDelete", "a$kandangEdit"]),
@@ -114,7 +114,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$kandangList();
+        this.a$kandangList(this.userInfo.id);
       }
     },
     async editKandang() {
@@ -131,7 +131,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$kandangList();
+        this.a$kandangList(this.userInfo.id);
       }
     },
     async delKandang() {
@@ -143,7 +143,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$kandangList();
+        this.a$kandangList(this.userInfo.id);
       }
     },
     async triggerEditModal(row) {
