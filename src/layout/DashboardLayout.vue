@@ -47,6 +47,12 @@
           />
           <sidebar-item
             :link="{
+              name: 'Data Penyakit',
+              path: '/masterData/penyakit',
+            }"
+          />
+          <sidebar-item
+            :link="{
               name: 'Data Kesehatan',
               path: '/masterData/kesehatan',
             }"

@@ -1,13 +1,13 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import d$kesehatan from "@/stores/masterData/kesehatan";
+import d$penyakit from "@/stores/masterData/penyakit";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 import router from "../../../router";
 
 export default {
   metaInfo: () => ({
-    title: "Data Kesehatan",
+    title: "Data Penyakit",
   }),
   setup() {
     const schema = y$object({
@@ -21,7 +21,7 @@ export default {
     };
   },
   data: () => ({
-    pageTitle: "Ternak Sakit",
+    pageTitle: "Penyakit",
     // Input
     input: {
       id: null,
@@ -44,21 +44,34 @@ export default {
           th: "Nama Penyakit",
         },
         {
-          name: "Jumlah",
-          th: "Jumlah Ternak Sakit",
+          name: "deskripsi",
+          th: "Deskripsi",
+        },
+        {
+          name: "ciri_penyakit",
+          th: "Ciri-ciri",
+        },
+        {
+          name: "pengobatan",
+          th: "Pengobatan",
         },
       ],
       action: [
         {
-          text: "Detail",
-          color: "info",
-          event: "detail-kesehatan",
+          text: "Ubah",
+          color: "warning",
+          event: "ubah-penyakit",
+        },
+        {
+          text: "Hapus",
+          color: "danger",
+          event: "hapus-penyakit",
         },
       ],
     },
   }),
   computed: {
-    ...mapState(d$kesehatan, ["g$kesehatanList", "g$penyakitDetail"]),
+    ...mapState(d$penyakit, ["g$penyakitList", "g$penyakitDetail"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -71,10 +84,10 @@ export default {
     },
   },
   async mounted() {
-    await this.a$kesehatanList(this.userInfo.id).catch((error) => this.notify(error, false));
+    await this.a$penyakitList().catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$kesehatan, ["a$kesehatanAdd", "a$kesehatanList", "a$kesehatanDelete", "a$kesehatanEdit"]),
+    ...mapActions(d$penyakit, ["a$penyakitAdd", "a$penyakitList", "a$penyakitDelete", "a$penyakitEdit"]),
     clearInput() {
       this.input = {
         id: null,
@@ -84,7 +97,7 @@ export default {
         pengobatan: "",
       };
     },
-    async addKesehatan() {
+    async addPenyakit() {
       try {
         const { nama_penyakit, deskripsi, ciri_penyakit, pengobatan } = this.input;
         const data = {
@@ -94,13 +107,13 @@ export default {
           pengobatan,
         };
         await this.schema.validate(data);
-        await this.a$kesehatanAdd(data);
+        await this.a$penyakitAdd(data);
         this.modal.addPenyakit = false;
         this.notify(`Tambah ${this.pageTitle} Sukses !`);
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$kesehatanList(this.userInfo.id);
+        this.a$penyakitList();
       }
     },
     async editPenyakit() {
@@ -114,25 +127,25 @@ export default {
           pengobatan,
         };
         await this.schema.validate(data);
-        await this.a$kesehatanEdit(data);
+        await this.a$penyakitEdit(data);
         this.modal.ubahPenyakit = false;
         this.notify(`Edit ${this.pageTitle} Sukses !`);
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$kesehatanList(this.userInfo.id);
+        this.a$penyakitList();
       }
     },
     async delPenyakit() {
       try {
         const { id } = this.input;
-        await this.a$kesehatanDelete(id);
+        await this.a$penyakitDelete(id);
         this.modal.confirm = false;
         this.notify(`Hapus ${this.pageTitle} Sukses !`);
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$kesehatanList(this.userInfo.id);
+        this.a$penyakitList();
       }
     },
     async triggerEditModal(row) {
@@ -196,8 +209,8 @@ export default {
     </template>
 
     <template #body>
-      <empty-result v-if="!g$kesehatanList.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$kesehatanList" :columns="dt.column" :actions="dt.action" @ubah-penyakit="triggerEditModal" @hapus-penyakit="triggerDelete" @detail-kesehatan="triggerDetail" />
+      <empty-result v-if="!g$penyakitList.length" :text="`${pageTitle}`" />
+      <data-table v-else :index="true" :data="g$penyakitList" :columns="dt.column" :actions="dt.action" @ubah-penyakit="triggerEditModal" @hapus-penyakit="triggerDelete" @detail-kesehatan="triggerDetail" />
     </template>
 
     <template #modal>
