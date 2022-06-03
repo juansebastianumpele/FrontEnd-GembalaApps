@@ -99,16 +99,18 @@ export default {
         nama_pakan: "",
         deskripsi: "",
         komposisi: "",
+        stock_pakan: "",
         id_users: null,
       };
     },
     async addPakan() {
       try {
-        const { nama_pakan, deskripsi, komposisi, id_users } = this.input;
+        const { nama_pakan, deskripsi, komposisi, stock_pakan, id_users } = this.input;
         const data = {
           nama_pakan,
           deskripsi,
           komposisi,
+          stock_pakan,
           id_users,
         };
         await this.schema.validate(data);
@@ -123,12 +125,13 @@ export default {
     },
     async editPakan() {
       try {
-        const { id, nama_pakan, deskripsi, komposisi, id_users } = this.input;
+        const { id, nama_pakan, deskripsi, komposisi, stock_pakan, id_users } = this.input;
         const data = {
           id,
           nama_pakan,
           deskripsi,
           komposisi,
+          stock_pakan,
           id_users,
         };
         await this.schema.validate(data);
@@ -155,12 +158,13 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_pakan, nama_pakan, deskripsi, komposisi, id_users } = row;
+        const { id_pakan, nama_pakan, deskripsi, komposisi, stock_pakan, id_users } = row;
         this.input = {
           id: id_pakan,
           nama_pakan,
           deskripsi,
           komposisi,
+          stock_pakan,
           id_users,
         };
         this.modal.ubahPakan = true;
@@ -242,10 +246,15 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.stock_pakan" type="text" name="stock_pakan">
+                  <base-input v-bind="field" placeholder="Text" label="Stock Pakan"></base-input>
+                </field-form>
+              </div>
+              <!-- <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.id_users" type="text" name="id_users">
                   <base-input v-bind="field" placeholder="Text" label="ID Users"></base-input>
                 </field-form>
-              </div>
+              </div> -->
             </div>
           </form-comp>
         </template>
@@ -277,10 +286,15 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.stock_pakan" type="text" name="stock_pakan">
+                  <base-input v-bind="field" placeholder="Text" label="Stock Pakan"></base-input>
+                </field-form>
+              </div>
+              <!-- <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.id_users" type="text" name="id_users">
                   <base-input v-bind="field" placeholder="Text" label="ID Users"></base-input>
                 </field-form>
-              </div>
+              </div> -->
             </div>
           </form-comp>
         </template>

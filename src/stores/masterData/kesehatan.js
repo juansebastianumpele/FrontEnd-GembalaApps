@@ -8,9 +8,9 @@ const u$kesehatan = defineStore({
     detailKesehatan: [],
   }),
   actions: {
-    async a$kesehatanList() {
+    async a$kesehatanList(request) {
       try {
-        const { data } = await s$kesehatan.list();
+        const { data } = await s$kesehatan.list(request);
         this.kesehatan = data;
       } catch ({ error }) {
         this.kesehatan = [];

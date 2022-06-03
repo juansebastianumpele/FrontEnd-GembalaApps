@@ -65,7 +65,7 @@ export default {
     },
   }),
   computed: {
-    ...mapState(d$kawin, ["g$kawinBetina", "g$kawinList"]),
+    ...mapState(d$kawin, ["g$kawinList", "g$kawinBetina"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -78,10 +78,10 @@ export default {
     },
   },
   async mounted() {
-    await this.a$listTernakBetina(this.userInfo.id).catch((error) => this.notify(error, false));
+    await this.a$listTernakBetina().catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$kawin, ["a$listTernakBetina", "a$kawinAdd", "a$kawinList", "a$kawinDelete", "a$kawinEdit"]),
+    ...mapActions(d$kawin, ["a$kawinAdd", "a$kawinList", "a$kawinDelete", "a$kawinEdit", "a$listTernakBetina"]),
     clearInput() {
       this.input = {
         id: null,

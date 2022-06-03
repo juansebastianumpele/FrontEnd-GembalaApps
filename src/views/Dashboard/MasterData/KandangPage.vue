@@ -219,11 +219,11 @@ export default {
         <template #body>
           <form-comp v-if="modal.addKandang" :validation-schema="schema">
             <div class="row">
-              <div class="col-12">
+              <!-- <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.id_users" type="text" name="id_users">
                   <base-input v-bind="field" placeholder="Text" label="ID Users" required></base-input>
                 </field-form>
-              </div>
+              </div> -->
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.nama_kandang" type="text" name="nama_kandang">
                   <base-input v-bind="field" placeholder="Text" label="Nama Kandang" required></base-input>
@@ -234,11 +234,11 @@ export default {
                   <base-input v-bind="field" placeholder="Text" label="Blok Kandang"></base-input>
                 </field-form>
               </div>
-              <div class="col-12">
+              <!-- <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.populasi" type="text" name="populasi">
                   <base-input v-bind="field" placeholder="Text" label="Populasi Kandang"></base-input>
                 </field-form>
-              </div>
+              </div> -->
             </div>
           </form-comp>
         </template>
@@ -254,11 +254,11 @@ export default {
         <template #body>
           <form-comp v-if="modal.ubahKandang" :validation-schema="schema">
             <div class="row">
-              <div class="col-12">
+              <!-- <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.id_users" type="text" name="id_users">
                   <base-input v-bind="field" placeholder="Text" label="ID Users"></base-input>
                 </field-form>
-              </div>
+              </div> -->
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.nama_kandang" type="text" name="nama_kandang">
                   <base-input v-bind="field" placeholder="Text" label="Nama Kandang" required></base-input>
@@ -269,11 +269,11 @@ export default {
                   <base-input v-bind="field" placeholder="Text" label="Blok Kandang"></base-input>
                 </field-form>
               </div>
-              <div class="col-12">
+              <!-- <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.populasi" type="text" name="populasi">
                   <base-input v-bind="field" placeholder="Text" label="Populasi Kandang"></base-input>
                 </field-form>
-              </div>
+              </div> -->
             </div>
           </form-comp>
         </template>

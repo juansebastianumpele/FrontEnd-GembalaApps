@@ -77,9 +77,9 @@ const u$dropdown = defineStore({
         throw error;
       }
     },
-    async a$ddKandang() {
+    async a$ddKandang(request) {
       try {
-        const { data } = await s$kandang.list();
+        const { data } = await s$kandang.list(request);
         this.kandang = data;
       } catch ({ error }) {
         this.kandang = [];

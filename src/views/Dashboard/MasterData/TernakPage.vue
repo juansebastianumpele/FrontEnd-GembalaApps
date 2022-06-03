@@ -135,7 +135,7 @@ export default {
     await this.a$ternakList(this.userInfo.id).catch((error) => this.notify(error, false));
     await this.a$ddVarietas().catch((error) => this.notify(error, false));
     await this.a$ddFasePemeliharaan().catch((error) => this.notify(error, false));
-    await this.a$ddKandang().catch((error) => this.notify(error, false));
+    await this.a$ddKandang(this.userInfo.id).catch((error) => this.notify(error, false));
     await this.a$ddPakan().catch((error) => this.notify(error, false));
   },
   methods: {
