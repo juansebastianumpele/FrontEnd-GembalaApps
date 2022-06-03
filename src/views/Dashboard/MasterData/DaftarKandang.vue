@@ -47,17 +47,8 @@ export default {
           name: "blok_kandang",
           th: "Blok Kandang",
         },
-        {
-          name: "populasi",
-          th: "Jumlah Populasi Ternak",
-        },
       ],
       action: [
-        {
-          text: "Detail",
-          color: "info",
-          event: "detail-kandang",
-        },
         {
           text: "Ubah",
           color: "warning",

@@ -50,8 +50,8 @@ export default {
       ],
       action: [
         {
-          text: "Detail",
-          color: "info",
+          text: "Lihat Ternak Sakit",
+          color: "warning",
           event: "detail-kesehatan",
         },
       ],

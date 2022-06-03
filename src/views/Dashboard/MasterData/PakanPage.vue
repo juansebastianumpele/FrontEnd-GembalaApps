@@ -14,7 +14,7 @@ export default {
       nama_pakan: y$string().required().label("Nama Pakan"),
       deskripsi: y$string().nullable().label("Deskripsi"),
       komposisi: y$string().nullable().label("Komposisi"),
-      id_users: y$string().required().label("ID Users"),
+      // id_users: y$string().required().label("ID Users"),
     });
     return {
       schema,
@@ -89,7 +89,7 @@ export default {
     },
   },
   async mounted() {
-    await this.a$pakanList().catch((error) => this.notify(error, false));
+    await this.a$pakanList(this.userInfo.id).catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$pakan, ["a$pakanAdd", "a$pakanList", "a$pakanDelete", "a$pakanEdit"]),
@@ -120,7 +120,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$pakanList();
+        this.a$pakanList(this.userInfo.id);
       }
     },
     async editPakan() {
@@ -141,7 +141,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$pakanList();
+        this.a$pakanList(this.userInfo.id);
       }
     },
     async delPakan() {
@@ -153,7 +153,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$pakanList();
+        this.a$pakanList(this.userInfo.id);
       }
     },
     async triggerEditModal(row) {

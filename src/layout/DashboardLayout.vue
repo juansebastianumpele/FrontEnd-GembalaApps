@@ -23,8 +23,20 @@
         >
           <sidebar-item
             :link="{
+              name: 'Daftar Kandang',
+              path: '/masterData/daftarkandang',
+            }"
+          />
+          <sidebar-item
+            :link="{
               name: 'Data Kandang',
               path: '/masterData/kandang',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Daftar Pakan',
+              path: '/masterData/daftarpakan',
             }"
           />
           <sidebar-item
@@ -47,7 +59,7 @@
           />
           <sidebar-item
             :link="{
-              name: 'Data Penyakit',
+              name: 'Daftar Penyakit',
               path: '/masterData/penyakit',
             }"
           />

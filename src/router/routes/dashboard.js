@@ -42,6 +42,12 @@ const dashboardRoutes = [
     },
     children: [
       {
+        path: "daftarkandang",
+        name: "Daftar Kandang",
+        component: () => import("@/views/Dashboard/MasterData/DaftarKandang.vue"),
+        meta: { requireAuth: true },
+      },
+      {
         path: "kandang",
         name: "Kandang",
         component: () => import("@/views/Dashboard/MasterData/KandangPage.vue"),
@@ -55,13 +61,13 @@ const dashboardRoutes = [
       },
       {
         path: "detail-ternak-sakit/:id",
-        name: "DetailTernakSakit",
+        name: "Detail Ternak Sakit",
         component: () => import("@/views/Dashboard/MasterData/KesehatanDetail.vue"),
         meta: { requireAuth: true },
       },
       {
         path: "detail-pakan/:id",
-        name: "DetailPakan",
+        name: "Detail Pakan",
         component: () => import("@/views/Dashboard/MasterData/PakanDetail.vue"),
         meta: { requireAuth: true },
       },
@@ -69,6 +75,12 @@ const dashboardRoutes = [
         path: "pakan",
         name: "Pakan",
         component: () => import("@/views/Dashboard/MasterData/PakanPage.vue"),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "daftarpakan",
+        name: "Daftar Pakan",
+        component: () => import("@/views/Dashboard/MasterData/"),
         meta: { requireAuth: true },
       },
       {

@@ -26,8 +26,8 @@ export default {
     dt: {
       column: [
         {
-          name: "id_ternak",
-          th: "ID Ternak",
+          name: "nomor",
+          th: "Nomor Ternak",
         },
         {
           name: "nama_penyakit",
@@ -46,13 +46,7 @@ export default {
         //   th: "Berat Ternak (kg)",
         // },
       ],
-      action: [
-        {
-          text: "Detail",
-          color: "info",
-          event: "detail-terna",
-        },
-      ],
+      action: [],
     },
   }),
   computed: {
