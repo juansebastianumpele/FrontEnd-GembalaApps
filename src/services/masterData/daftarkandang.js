@@ -3,7 +3,7 @@ import { subApiUrl } from "@/utils/constant";
 
 const { api, kandang } = subApiUrl;
 
-const list = (req) => baseApi.get(`${api}/${kandang}/list/${req}`);
+const list = () => baseApi.get(`${api}/${kandang}`);
 const add = (req) => baseApi.post(`${api}/${kandang}`, req);
 const edit = (req) => baseApi.put(`${api}/${kandang}/${req.id}`, req);
 const del = (req) => baseApi.delete(`${api}/${kandang}/${req}`);
