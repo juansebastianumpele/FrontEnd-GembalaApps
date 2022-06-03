@@ -1,9 +1,8 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import d$kandang from "@/stores/masterData/kandang";
+import d$kandang from "@/stores/masterData/daftarkandang";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
-import router from "../../../router";
 
 export default {
   metaInfo: () => ({
@@ -109,10 +108,11 @@ export default {
     },
     async editKandang() {
       try {
-        const { id, nama_kandang } = this.input;
+        const { id, nama_kandang, blok_kandang } = this.input;
         const data = {
           id,
           nama_kandang,
+          blok_kandang,
         };
         await this.schema.validate(data);
         await this.a$kandangEdit(data);

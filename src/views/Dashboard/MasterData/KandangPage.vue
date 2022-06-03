@@ -58,16 +58,6 @@ export default {
           color: "info",
           event: "detail-kandang",
         },
-        {
-          text: "Ubah",
-          color: "warning",
-          event: "ubah-kandang",
-        },
-        {
-          text: "Hapus",
-          color: "danger",
-          event: "hapus-kandang",
-        },
       ],
     },
   }),
