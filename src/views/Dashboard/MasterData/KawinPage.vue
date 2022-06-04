@@ -51,21 +51,11 @@ export default {
           color: "info",
           event: "ubah-kawin",
         },
-        {
-          text: "Ubah",
-          color: "warning",
-          event: "ubah-kawin",
-        },
-        {
-          text: "Hapus",
-          color: "danger",
-          event: "hapus-kawin",
-        },
       ],
     },
   }),
   computed: {
-    ...mapState(d$kawin, ["g$kawinList", "g$kawinBetina"]),
+    ...mapState(d$kawin, ["g$kawinList"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -78,10 +68,10 @@ export default {
     },
   },
   async mounted() {
-    await this.a$listTernakBetina().catch((error) => this.notify(error, false));
+    await this.a$kawinList(this.userInfo.id).catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$kawin, ["a$kawinAdd", "a$kawinList", "a$kawinDelete", "a$kawinEdit", "a$listTernakBetina"]),
+    ...mapActions(d$kawin, ["a$kawinList"]),
     clearInput() {
       this.input = {
         id: null,
@@ -109,7 +99,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$listTernakBetina();
+        this.a$kawinList(this.userInfo.id);
       }
     },
     async editKawin() {
@@ -130,7 +120,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$listTernakBetina();
+        this.a$kawinList(this.userInfo.id);
       }
     },
     async delKawin() {
@@ -142,7 +132,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$listTernakBetina();
+        this.a$kawinList(this.userInfo.id);
       }
     },
     async triggerEditModal(row) {

@@ -35,12 +35,6 @@
           />
           <sidebar-item
             :link="{
-              name: 'Daftar Pakan',
-              path: '/masterData/daftarpakan',
-            }"
-          />
-          <sidebar-item
-            :link="{
               name: 'Data Pakan',
               path: '/masterData/pakan',
             }"
