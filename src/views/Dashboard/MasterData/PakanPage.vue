@@ -111,7 +111,7 @@ export default {
           deskripsi,
           komposisi,
           stock_pakan,
-          id_users,
+          id_users: this.userInfo.id,
         };
         await this.schema.validate(data);
         await this.a$pakanAdd(data);
@@ -125,14 +125,13 @@ export default {
     },
     async editPakan() {
       try {
-        const { id, nama_pakan, deskripsi, komposisi, stock_pakan, id_users } = this.input;
+        const { id, nama_pakan, deskripsi, komposisi, stock_pakan } = this.input;
         const data = {
           id,
           nama_pakan,
           deskripsi,
           komposisi,
           stock_pakan,
-          id_users,
         };
         await this.schema.validate(data);
         await this.a$pakanEdit(data);
@@ -158,14 +157,13 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_pakan, nama_pakan, deskripsi, komposisi, stock_pakan, id_users } = row;
+        const { id_pakan, nama_pakan, deskripsi, komposisi, stock_pakan } = row;
         this.input = {
           id: id_pakan,
           nama_pakan,
           deskripsi,
           komposisi,
           stock_pakan,
-          id_users,
         };
         this.modal.ubahPakan = true;
       } catch (error) {

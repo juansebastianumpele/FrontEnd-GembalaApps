@@ -114,10 +114,11 @@ export default {
     },
     async editKandang() {
       try {
-        const { id, nama_kandang } = this.input;
+        const { id, nama_kandang, blok_kandang } = this.input;
         const data = {
           id,
           nama_kandang,
+          blok_kandang,
         };
         await this.schema.validate(data);
         await this.a$kandangEdit(data);
