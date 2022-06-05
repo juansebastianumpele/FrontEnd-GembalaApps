@@ -16,6 +16,7 @@ import Card from '@/components/Cards/Card.vue';
 import StatsCard from '@/components/Cards/StatsCard.vue';
 import Modal from '@/components/ModalComp.vue';
 
+import BaseTable from '@/components/BaseTable.vue';
 import BaseMap from '@/components/BaseMap.vue';
 
 import { Field, Form } from 'vee-validate';
@@ -46,6 +47,7 @@ const GlobalComponents = {
     app.component('StatsCard', StatsCard);
     // Map
     app.component('BaseMap', BaseMap);
+    app.component('BaseTable', BaseTable);
     // Form Comps
     app.component('FieldForm', Field);
     app.component('FormComp', Form);

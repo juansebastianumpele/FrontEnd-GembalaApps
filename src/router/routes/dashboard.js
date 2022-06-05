@@ -25,7 +25,13 @@ const dashboardRoutes = [
         path: "chart",
         name: "Chart",
         component: () => import("@/views/Dashboard/Chart.vue"),
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true, hideFooter: true },
+      },
+      {
+        path: "filter",
+        name: "Filter",
+        component: () => import("@/views/Dashboard/DetailFilter.vue"),
+        meta: { requiresAuth: true, hideFooter: true },
       },
     ],
   },
@@ -51,6 +57,12 @@ const dashboardRoutes = [
         path: "pakan",
         name: "Pakan",
         component: () => import("@/views/Dashboard/MasterData/PakanPage.vue"),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "ternak",
+        name: "Ternak",
+        component: () => import("@/views/Dashboard/MasterData/TernakPage.vue"),
         meta: { requireAuth: true },
       },
       {

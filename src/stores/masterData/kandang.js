@@ -42,7 +42,6 @@ const u$kandang = defineStore({
       try {
         const { data } = await s$kandang.totalKandang(request);
         this.totalKandang ={...data[0]}
-        console.log( {...data[0]})
       } catch ({ error }) {
         throw error;
       }
