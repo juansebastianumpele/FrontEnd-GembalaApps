@@ -41,14 +41,8 @@
           />
           <sidebar-item
             :link="{
-              name: 'Data Ternak',
+              name: 'Daftar Ternak',
               path: '/masterdata/ternak',
-            }"
-          />
-          <sidebar-item
-            :link="{
-              name: 'Data Kawin',
-              path: '/masterdata/kawin',
             }"
           />
           <!-- <sidebar-item
@@ -77,6 +71,12 @@
             :link="{
               name: 'Pakan',
               path: '/monitoring/pakan',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Kawin',
+              path: '/monitoring/kawin',
             }"
           />
           <sidebar-item

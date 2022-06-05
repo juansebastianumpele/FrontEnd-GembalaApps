@@ -72,12 +72,6 @@ const dashboardRoutes = [
         meta: { requireAuth: true },
       },
       {
-        path: "kawin",
-        name: "Kawin",
-        component: () => import("@/views/Dashboard/MasterData/KawinPage.vue"),
-        meta: { requireAuth: true },
-      },
-      {
         path: "penyakit",
         name: "Penyakit",
         component: () => import("@/views/Dashboard/MasterData/PenyakitPage.vue"),
@@ -127,6 +121,12 @@ const dashboardRoutes = [
         component: () => import("@/views/Dashboard/MasterData/PakanDetail.vue"),
         meta: { requireAuth: true },
       }, */
+      {
+        path: "kawin",
+        name: "Kawin",
+        component: () => import("@/views/Dashboard/Monitoring/KawinPage.vue"),
+        meta: { requireAuth: true },
+      },
       {
         path: "kesehatan",
         name: "Kesehatan",
