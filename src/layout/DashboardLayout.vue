@@ -24,48 +24,70 @@
           <sidebar-item
             :link="{
               name: 'Daftar Kandang',
-              path: '/masterData/daftarkandang',
+              path: '/masterdata/daftarkandang',
             }"
           />
           <sidebar-item
             :link="{
-              name: 'Data Kandang',
-              path: '/masterData/kandang',
-            }"
-          />
-          <sidebar-item
-            :link="{
-              name: 'Data Pakan',
-              path: '/masterData/pakan',
-            }"
-          />
-          <sidebar-item
-            :link="{
-              name: 'Data Ternak',
-              path: '/masterData/ternak',
-            }"
-          />
-          <sidebar-item
-            :link="{
-              name: 'Data Kawin',
-              path: '/masterData/kawin',
+              name: 'Daftar Pakan',
+              path: '/masterdata/pakan',
             }"
           />
           <sidebar-item
             :link="{
               name: 'Daftar Penyakit',
-              path: '/masterData/penyakit',
+              path: '/masterdata/penyakit',
             }"
           />
           <sidebar-item
             :link="{
-              name: 'Data Kesehatan',
-              path: '/masterData/kesehatan',
+              name: 'Data Ternak',
+              path: '/masterdata/ternak',
             }"
           />
+          <sidebar-item
+            :link="{
+              name: 'Data Kawin',
+              path: '/masterdata/kawin',
+            }"
+          />
+          <!-- <sidebar-item
+            :link="{
+              name: 'Data Kesehatan',
+              path: '/masterdata/kesehatan',
+            }"
+          /> -->
         </sidebar-item>
 
         <div class="dropdown-divider" />
+
+        <sidebar-item
+          :link="{
+            name: 'Monitoring',
+            icon: 'fas fa-address-book text-primary',
+          }"
+        >
+          <sidebar-item
+            :link="{
+              name: 'Kandang',
+              path: '/monitoring/kandang',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Pakan',
+              path: '/monitoring/pakan',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Kesehatan',
+              path: '/monitoring/kesehatan',
+            }"
+          />
+
+          <div class="dropdown-divider" />
+        </sidebar-item>
       </template>
     </side-bar>
     <div class="main-content">

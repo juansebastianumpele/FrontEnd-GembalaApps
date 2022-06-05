@@ -1,46 +1,46 @@
 import { defineStore } from "pinia";
-import * as s$kandang from "@/services/masterData/daftarkandang";
+import * as s$daftarkandang from "@/services/masterData/daftarkandang";
 
-const u$kandang = defineStore({
+const u$daftarkandang = defineStore({
   id: "kandang",
   state: () => ({
-    kandang: [],
+    listkandang: [],
   }),
   actions: {
     async a$kandangList(request) {
       try {
-        const { data } = await s$kandang.list(request);
-        this.kandang = data;
+        const { data } = await s$daftarkandang.list(request);
+        this.listkandang = data;
       } catch ({ error }) {
-        this.kandang = [];
+        this.listkandang = [];
         throw error;
       }
     },
     async a$kandangAdd(request) {
       try {
-        await s$kandang.add(request);
+        await s$daftarkandang.add(request);
       } catch ({ error }) {
         throw error;
       }
     },
     async a$kandangEdit(request) {
       try {
-        await s$kandang.edit(request);
+        await s$daftarkandang.edit(request);
       } catch ({ error }) {
         throw error;
       }
     },
     async a$kandangDelete(request) {
       try {
-        await s$kandang.del(request);
+        await s$daftarkandang.del(request);
       } catch ({ error }) {
         throw error;
       }
     },
   },
   getters: {
-    g$kandangList: (state) => state.kandang,
+    g$kandangList: (state) => state.listkandang,
   },
 });
 
-export default u$kandang;
+export default u$daftarkandang;

@@ -1,6 +1,6 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import d$kesehatan from "@/stores/masterData/kesehatan";
+import d$kesehatan from "@/stores/monitoring/kesehatan";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 
@@ -33,20 +33,14 @@ export default {
           name: "nama_penyakit",
           th: "Nama Penyakit",
         },
-        {
-          name: "tgl_sakit",
-          th: "Tanggal Sakit",
-        },
-        {
-          name: "tgl_sembuh",
-          th: "Tanggal Sembuh",
-        },
-        // {
-        //   name: "berat_berkala",
-        //   th: "Berat Ternak (kg)",
-        // },
       ],
-      action: [],
+      action: [
+        {
+          text: "Detail",
+          color: "info",
+          event: "detail-ternak-sakit",
+        },
+      ],
     },
   }),
   computed: {
@@ -72,6 +66,20 @@ export default {
         id: null,
       };
     },
+    // async triggerDetail(row) {
+    //   try {
+    //     const { id_kandang } = row;
+    //     router.push({
+    //       name: "Detail Kandang",
+    //       params: {
+    //         id: id_kandang,
+    //       },
+    //     });
+    //   } catch (error) {
+    //     this.clearInput();
+    //     this.notify(error, false);
+    //   }
+    // },
   },
 };
 </script>

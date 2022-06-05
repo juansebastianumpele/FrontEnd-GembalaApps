@@ -177,20 +177,6 @@ export default {
         this.notify(error, false);
       }
     },
-    async triggerDetail(row) {
-      try {
-        const { id_penyakit } = row;
-        router.push({
-          name: "DetailTernakSakit",
-          params: {
-            id: id_penyakit,
-          },
-        });
-      } catch (error) {
-        this.clearInput();
-        this.notify(error, false);
-      }
-    },
   },
 };
 </script>
@@ -210,7 +196,7 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$penyakitList.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$penyakitList" :columns="dt.column" :actions="dt.action" @ubah-penyakit="triggerEditModal" @hapus-penyakit="triggerDelete" @detail-kesehatan="triggerDetail" />
+      <data-table v-else :index="true" :data="g$penyakitList" :columns="dt.column" :actions="dt.action" @ubah-penyakit="triggerEditModal" @hapus-penyakit="triggerDelete" />
     </template>
 
     <template #modal>

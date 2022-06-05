@@ -1,6 +1,6 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import d$kandang from "@/stores/masterData/kandang";
+import d$kandang from "@/stores/monitoring/kandang";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 import router from "../../../router";
@@ -168,7 +168,7 @@ export default {
       try {
         const { id_kandang } = row;
         router.push({
-          name: "DetailKandang",
+          name: "Detail Kandang",
           params: {
             id: id_kandang,
           },

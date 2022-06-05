@@ -30,7 +30,7 @@ const dashboardRoutes = [
     ],
   },
   {
-    path: "/masterData",
+    path: "/masterdata",
     component: DashboardLayout,
     beforeEnter: (to, from, next) => {
       const { role } = certDetail();
@@ -47,19 +47,7 @@ const dashboardRoutes = [
         component: () => import("@/views/Dashboard/MasterData/DaftarKandang.vue"),
         meta: { requireAuth: true },
       },
-      {
-        path: "kandang",
-        name: "Kandang",
-        component: () => import("@/views/Dashboard/MasterData/KandangPage.vue"),
-        meta: { requireAuth: true },
-      },
-      {
-        path: "detail-kandang/:id",
-        name: "DetailKandang",
-        component: () => import("@/views/Dashboard/MasterData/KandangDetail.vue"),
-        meta: { requireAuth: true },
-      },
-      {
+      /*       {
         path: "detail-ternak-sakit/:id",
         name: "Detail Ternak Sakit",
         component: () => import("@/views/Dashboard/MasterData/KesehatanDetail.vue"),
@@ -70,7 +58,7 @@ const dashboardRoutes = [
         name: "Detail Pakan",
         component: () => import("@/views/Dashboard/MasterData/PakanDetail.vue"),
         meta: { requireAuth: true },
-      },
+      }, */
       {
         path: "pakan",
         name: "Pakan",
@@ -99,6 +87,56 @@ const dashboardRoutes = [
         path: "kesehatan",
         name: "Kesehatan",
         component: () => import("@/views/Dashboard/MasterData/KesehatanPage.vue"),
+        meta: { requireAuth: true },
+      },
+    ],
+  },
+  {
+    path: "/monitoring",
+    component: DashboardLayout,
+    beforeEnter: (to, from, next) => {
+      const { role } = certDetail();
+      if (to.matched.some(({ meta }) => meta.requiresAuth) && role === "") {
+        next({ name: "Login" });
+      } else {
+        next();
+      }
+    },
+    children: [
+      {
+        path: "kandang",
+        name: "Kandang",
+        component: () => import("@/views/Dashboard/Monitoring/KandangPage.vue"),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "detail-kandang/:id",
+        name: "Detail Kandang",
+        component: () => import("@/views/Dashboard/Monitoring/KandangDetail.vue"),
+        meta: { requireAuth: true },
+      },
+      /* {
+        path: "pakan",
+        name: "Pakan",
+        component: () => import("@/views/Dashboard/MasterData/PakanPage.vue"),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "detail-pakan/:id",
+        name: "Detail Pakan",
+        component: () => import("@/views/Dashboard/MasterData/PakanDetail.vue"),
+        meta: { requireAuth: true },
+      }, */
+      {
+        path: "kesehatan",
+        name: "Kesehatan",
+        component: () => import("@/views/Dashboard/Monitoring/KesehatanPage.vue"),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "detail-ternak-sakit/:id",
+        name: "Detail Ternak Sakit",
+        component: () => import("@/views/Dashboard/Monitoring/KesehatanDetail.vue"),
         meta: { requireAuth: true },
       },
     ],

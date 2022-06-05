@@ -44,6 +44,14 @@ export default {
           name: "nama_varietas",
           th: "Varietas",
         },
+        {
+          name: "fase",
+          th: "Status Ternak",
+        },
+        {
+          name: "nama_penyakit",
+          th: "Status Kesehatan",
+        },
       ],
       action: [
         {

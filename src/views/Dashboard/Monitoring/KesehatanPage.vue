@@ -1,6 +1,6 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import d$kesehatan from "@/stores/masterData/kesehatan";
+import d$kesehatan from "@/stores/monitoring/kesehatan";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 import router from "../../../router";
@@ -168,7 +168,7 @@ export default {
       try {
         const { id_penyakit } = row;
         router.push({
-          name: "DetailTernakSakit",
+          name: "Detail Ternak Sakit",
           params: {
             id: id_penyakit,
           },
