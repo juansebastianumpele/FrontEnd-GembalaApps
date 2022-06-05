@@ -136,7 +136,7 @@ export default {
     await this.a$ddVarietas().catch((error) => this.notify(error, false));
     await this.a$ddFasePemeliharaan().catch((error) => this.notify(error, false));
     await this.a$ddKandang(this.userInfo.id).catch((error) => this.notify(error, false));
-    await this.a$ddPakan().catch((error) => this.notify(error, false));
+    await this.a$ddPakan(this.userInfo.id).catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$ternak, ["a$ternakAdd", "a$ternakList", "a$ternakDelete", "a$ternakEdit"]),
@@ -183,7 +183,7 @@ export default {
         data.append("id_induk", id_induk);
         data.append("id_pejantan", id_pejantan);
         data.append("status_sehat", status_sehat);
-        data.append("id_pakan", id_pakan.id);
+        data.append("id_pakan", pakan.id);
         data.append("fase_pemeliharaan", fase.id);
         data.append("id_kandang", kandang.id);
         // data.append("tanggal_keluar", tanggal_keluar);

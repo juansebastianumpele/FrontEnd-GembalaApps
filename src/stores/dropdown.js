@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import * as s$ternak from "@/services/masterData/ternak";
-import * as s$kandang from "@/services/masterData/kandang";
+import * as s$kandang from "@/services/masterData/daftarkandang";
 import * as s$pakan from "@/services/masterData/pakan";
 // import * as s$customer from "@/services/customer";
 // import * as s$commodity from "@/services/commodity";
@@ -12,10 +12,10 @@ const u$dropdown = defineStore({
   id: "dropdown",
   state: () => ({
     jenisKelamin: ["Jantan", "Betina"],
-    varietas: [],
     statusSehat: ["Sehat", "Sakit", "Sembuh"],
-    fasePemeliharaan: [],
     statusKeluar: ["Jual", "Mati", "Sembelih"],
+    varietas: [],
+    fasePemeliharaan: [],
     kandang: [],
     pakan: [],
     // customer: [],
@@ -86,9 +86,9 @@ const u$dropdown = defineStore({
         throw error;
       }
     },
-    async a$ddPakan() {
+    async a$ddPakan(request) {
       try {
-        const { data } = await s$pakan.list();
+        const { data } = await s$pakan.list(request);
         this.pakan = data;
       } catch ({ error }) {
         this.pakan = [];
@@ -164,10 +164,10 @@ const u$dropdown = defineStore({
     // g$ddStatusTrue: (state) => state.status.map(({ id, name }) => ({ id, name })).filter((obj) => obj.id >= 2),
     // g$ddTruck: (state) => state.truck.map(({ id, truckNumber }) => ({ id, name: truckNumber })),
     g$ddJenisKelamin: (state) => state.jenisKelamin,
-    g$ddFasePemeliharaan: (state) => state.fasePemeliharaan.map(({ id_fp, fase }) => ({ id: id_fp, name: fase })),
     g$ddStatusSehat: (state) => state.statusSehat,
     g$ddStatusKeluar: (state) => state.statusKeluar,
     g$ddVarietas: (state) => state.varietas.map(({ id_varietas, nama_varietas }) => ({ id: id_varietas, name: nama_varietas })),
+    g$ddFasePemeliharaan: (state) => state.fasePemeliharaan.map(({ id_fp, fase }) => ({ id: id_fp, name: fase })),
     g$ddKandang: (state) => state.kandang.map(({ id_kandang, nama_kandang }) => ({ id: id_kandang, name: nama_kandang })),
     g$ddPakan: (state) => state.pakan.map(({ id_pakan, nama_pakan }) => ({ id: id_pakan, name: nama_pakan })),
   },
