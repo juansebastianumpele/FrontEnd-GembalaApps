@@ -1,12 +1,13 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import d$kesehatan from "@/stores/masterData/kesehatan";
+import d$kawin from "@/stores/masterData/kawin";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
+import router from "../../../router";
 
 export default {
   metaInfo: () => ({
-    title: "Detail Data Kesehatan",
+    title: "Data Kawin",
   }),
   setup() {
     const schema = y$object({});
@@ -15,7 +16,7 @@ export default {
     };
   },
   data: () => ({
-    pageTitle: "Detail Data Kesehatan",
+    pageTitle: "Data Kawin",
     // Input
     input: {
       id: null,
@@ -26,37 +27,33 @@ export default {
     dt: {
       column: [
         {
-          name: "id_ternak",
-          th: "ID Ternak",
+          name: "nomor",
+          th: "Nomor Ternak",
+        },
+        {
+          name: "nama_varietas",
+          th: "Varietas",
+        },
+        {
+          name: "fase",
+          th: "Status Ternak",
         },
         {
           name: "nama_penyakit",
-          th: "Nama Penyakit",
+          th: "Status Kesehatan",
         },
-        {
-          name: "tgl_sakit",
-          th: "Tanggal Sakit",
-        },
-        {
-          name: "tgl_sembuh",
-          th: "Tanggal Sembuh",
-        },
-        // {
-        //   name: "berat_berkala",
-        //   th: "Berat Ternak",
-        // },
       ],
       action: [
         {
           text: "Detail",
           color: "info",
-          event: "detail-terna",
+          event: "list-kawin",
         },
       ],
     },
   }),
   computed: {
-    ...mapState(d$kesehatan, ["g$detailKesehatan"]),
+    ...mapState(d$kawin, ["g$kawinList"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -69,14 +66,28 @@ export default {
     },
   },
   async mounted() {
-    await this.a$penyakitDetail(this.$route.params.id).catch((error) => this.notify(error, false));
+    await this.a$betinaList(this.userInfo.id).catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$kesehatan, ["a$penyakitDetail"]),
+    ...mapActions(d$kawin, ["a$betinaList"]),
     clearInput() {
       this.input = {
         id: null,
       };
+    },
+    async triggerDetail(row) {
+      try {
+        const { id_ternak } = row;
+        router.push({
+          name: "List Kawin",
+          params: {
+            id: id_ternak,
+          },
+        });
+      } catch (error) {
+        this.clearInput();
+        this.notify(error, false);
+      }
     },
   },
 };
@@ -93,8 +104,8 @@ export default {
     </template>
 
     <template #body>
-      <empty-result v-if="!g$detailKesehatan.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$detailKesehatan" :columns="dt.column" :actions="dt.action" />
+      <empty-result v-if="!g$kawinList.length" :text="`${pageTitle}`" />
+      <data-table v-else :index="true" :data="g$kawinList" :columns="dt.column" :actions="dt.action" @list-kawin="triggerDetail" />
     </template>
   </main-layout>
 </template>

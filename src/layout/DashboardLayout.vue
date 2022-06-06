@@ -23,37 +23,71 @@
         >
           <sidebar-item
             :link="{
-              name: 'Data Kandang',
-              path: '/masterData/kandang',
+              name: 'Daftar Kandang',
+              path: '/masterdata/daftarkandang',
             }"
           />
           <sidebar-item
             :link="{
-              name: 'Data Pakan',
-              path: '/masterData/pakan',
+              name: 'Daftar Pakan',
+              path: '/masterdata/pakan',
             }"
           />
           <sidebar-item
             :link="{
-              name: 'Data Ternak',
-              path: '/masterData/ternak',
+              name: 'Daftar Penyakit',
+              path: '/masterdata/penyakit',
             }"
           />
           <sidebar-item
             :link="{
-              name: 'Data Kawin',
-              path: '/masterData/kawin',
+              name: 'Daftar Ternak',
+              path: '/masterdata/ternak',
             }"
           />
-          <sidebar-item
+          <!-- <sidebar-item
             :link="{
               name: 'Data Kesehatan',
-              path: '/masterData/kesehatan',
+              path: '/masterdata/kesehatan',
             }"
-          />
+          /> -->
         </sidebar-item>
 
         <div class="dropdown-divider" />
+
+        <sidebar-item
+          :link="{
+            name: 'Monitoring',
+            icon: 'fas fa-address-book text-primary',
+          }"
+        >
+          <sidebar-item
+            :link="{
+              name: 'Kandang',
+              path: '/monitoring/kandang',
+            }"
+          />
+          <!-- <sidebar-item
+            :link="{
+              name: 'Pakan',
+              path: '/monitoring/pakan',
+            }"
+          /> -->
+          <sidebar-item
+            :link="{
+              name: 'Kawin',
+              path: '/monitoring/kawin',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Kesehatan',
+              path: '/monitoring/kesehatan',
+            }"
+          />
+
+          <div class="dropdown-divider" />
+        </sidebar-item>
       </template>
     </side-bar>
     <div class="main-content">

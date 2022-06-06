@@ -10,7 +10,7 @@ const u$ternak = defineStore({
   actions: {
     async a$ternakList(request) {
       try {
-        const { data } = await s$ternak.detailTernak(request);
+        const { data } = await s$ternak.list(request);
         this.ternak = data;
       } catch ({ error }) {
         this.ternak = [];

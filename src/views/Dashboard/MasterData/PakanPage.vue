@@ -14,7 +14,7 @@ export default {
       nama_pakan: y$string().required().label("Nama Pakan"),
       deskripsi: y$string().nullable().label("Deskripsi"),
       komposisi: y$string().nullable().label("Komposisi"),
-      id_users: y$string().required().label("ID Users"),
+      // id_users: y$string().required().label("ID Users"),
     });
     return {
       schema,
@@ -51,6 +51,10 @@ export default {
           name: "komposisi",
           th: "Komposisi",
         },
+        {
+          name: "pakan",
+          th: "Stock Pakan (kg)",
+        },
       ],
       action: [
         {
@@ -85,7 +89,7 @@ export default {
     },
   },
   async mounted() {
-    await this.a$pakanList().catch((error) => this.notify(error, false));
+    await this.a$pakanList(this.userInfo.id).catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$pakan, ["a$pakanAdd", "a$pakanList", "a$pakanDelete", "a$pakanEdit"]),
@@ -95,17 +99,19 @@ export default {
         nama_pakan: "",
         deskripsi: "",
         komposisi: "",
+        stock_pakan: "",
         id_users: null,
       };
     },
     async addPakan() {
       try {
-        const { nama_pakan, deskripsi, komposisi, id_users } = this.input;
+        const { nama_pakan, deskripsi, komposisi, stock_pakan, id_users } = this.input;
         const data = {
           nama_pakan,
           deskripsi,
           komposisi,
-          id_users,
+          stock_pakan,
+          id_users: this.userInfo.id,
         };
         await this.schema.validate(data);
         await this.a$pakanAdd(data);
@@ -114,18 +120,18 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$pakanList();
+        this.a$pakanList(this.userInfo.id);
       }
     },
     async editPakan() {
       try {
-        const { id, nama_pakan, deskripsi, komposisi, id_users } = this.input;
+        const { id, nama_pakan, deskripsi, komposisi, stock_pakan } = this.input;
         const data = {
           id,
           nama_pakan,
           deskripsi,
           komposisi,
-          id_users,
+          stock_pakan,
         };
         await this.schema.validate(data);
         await this.a$pakanEdit(data);
@@ -134,7 +140,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$pakanList();
+        this.a$pakanList(this.userInfo.id);
       }
     },
     async delPakan() {
@@ -146,18 +152,18 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$pakanList();
+        this.a$pakanList(this.userInfo.id);
       }
     },
     async triggerEditModal(row) {
       try {
-        const { id_pakan, nama_pakan, deskripsi, komposisi, id_users } = row;
+        const { id_pakan, nama_pakan, deskripsi, komposisi, stock_pakan } = row;
         this.input = {
           id: id_pakan,
           nama_pakan,
           deskripsi,
           komposisi,
-          id_users,
+          stock_pakan,
         };
         this.modal.ubahPakan = true;
       } catch (error) {
@@ -238,10 +244,15 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.stock_pakan" type="text" name="stock_pakan">
+                  <base-input v-bind="field" placeholder="Text" label="Stock Pakan"></base-input>
+                </field-form>
+              </div>
+              <!-- <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.id_users" type="text" name="id_users">
                   <base-input v-bind="field" placeholder="Text" label="ID Users"></base-input>
                 </field-form>
-              </div>
+              </div> -->
             </div>
           </form-comp>
         </template>
@@ -273,10 +284,15 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.stock_pakan" type="text" name="stock_pakan">
+                  <base-input v-bind="field" placeholder="Text" label="Stock Pakan"></base-input>
+                </field-form>
+              </div>
+              <!-- <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.id_users" type="text" name="id_users">
                   <base-input v-bind="field" placeholder="Text" label="ID Users"></base-input>
                 </field-form>
-              </div>
+              </div> -->
             </div>
           </form-comp>
         </template>

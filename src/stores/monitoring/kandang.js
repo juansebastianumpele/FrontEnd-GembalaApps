@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import * as s$kandang from "@/services/masterData/kandang";
+import * as s$kandang from "@/services/monitoring/kandang";
 
 const u$kandang = defineStore({
   id: "kandang",
@@ -11,6 +11,15 @@ const u$kandang = defineStore({
     async a$kandangList(request) {
       try {
         const { data } = await s$kandang.list(request);
+        this.kandang = data;
+      } catch ({ error }) {
+        this.kandang = [];
+        throw error;
+      }
+    },
+    async a$listKandang(request) {
+      try {
+        const { data } = await s$kandang.listKandang(request);
         this.kandang = data;
       } catch ({ error }) {
         this.kandang = [];
@@ -41,8 +50,8 @@ const u$kandang = defineStore({
     async a$totalKandang(request) {
       try {
         const { data } = await s$kandang.totalKandang(request);
-        this.totalKandang ={...data[0]}
-        console.log( {...data[0]})
+        this.totalKandang = { ...data[0] };
+        console.log({ ...data[0] });
       } catch ({ error }) {
         throw error;
       }
@@ -50,7 +59,8 @@ const u$kandang = defineStore({
   },
   getters: {
     g$kandangList: (state) => state.kandang,
-    g$totalKandang: (state) => state.totalKandang}
+    g$totalKandang: (state) => state.totalKandang,
+  },
 });
 
 export default u$kandang;

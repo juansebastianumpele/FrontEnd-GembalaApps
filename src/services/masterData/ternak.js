@@ -3,7 +3,7 @@ import { subApiUrl } from "@/utils/constant";
 
 const { api, ternak } = subApiUrl;
 
-const list = () => baseApi.get(`${api}/${ternak}`);
+const list = (req) => baseApi.get(`${api}/${ternak}/byUserId/${req}`);
 const add = (req) => baseApi.post(`${api}/${ternak}`, req, { headers: { "Content-Type": "multipart/form-data" } });
 const edit = (req) => baseApi.put(`${api}/${ternak}/${req.id}`, req);
 const del = (req) => baseApi.delete(`${api}/${ternak}/${req}`);
@@ -11,9 +11,9 @@ const del = (req) => baseApi.delete(`${api}/${ternak}/${req}`);
 // Dropdown
 const listVarietas = () => baseApi.get(`${api}/${ternak}/varietas`);
 const listFase = () => baseApi.get(`${api}/${ternak}/fase`);
-const listJenisKelamin = () => baseApi.get(`${api}/${ternak}/jeniskelamin`);
-const listStatusSehat = () => baseApi.get(`${api}/${ternak}/statussehat`);
-const listStatusKeluar = () => baseApi.get(`${api}/${ternak}/statuskeluar`);
+
+// Jumlah Ternak
+const listBetina = (req) => baseApi.get(`${api}/${ternak}/listbetina/${req}`);
 
 // Detail
 const detailKandang = (req) => baseApi.get(`${api}/${ternak}/listbykandang/${req}`);
@@ -26,4 +26,4 @@ const totalJeniskelamin = (req) => baseApi.get(`${api}/${ternak}/totaljeniskelam
 const populasi = (req) => baseApi.get(`${api}/${ternak}/total/${req}`);
 const totalFase = (req) => baseApi.get(`${api}/${ternak}/totalfase/${req}`);
 
-export { list, add, edit, del, listVarietas, listFase, listJenisKelamin, listStatusSehat, listStatusKeluar, detailKandang, detailPakan, detailTernak, totalSehat, totalJeniskelamin, populasi, totalFase };
+export { listBetina, list, add, edit, del, listVarietas, listFase, listJenisKelamin, listStatusSehat, listStatusKeluar, detailKandang, detailPakan, detailTernak, totalSehat, totalJeniskelamin, populasi, totalFase };

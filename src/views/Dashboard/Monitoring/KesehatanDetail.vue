@@ -1,12 +1,12 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import d$ternak from "@/stores/masterData/ternak";
+import d$kesehatan from "@/stores/monitoring/kesehatan";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 
 export default {
   metaInfo: () => ({
-    title: "Detail Data Kandang",
+    title: "Detail Data Kesehatan",
   }),
   setup() {
     const schema = y$object({});
@@ -15,7 +15,7 @@ export default {
     };
   },
   data: () => ({
-    pageTitle: "Detail Data Kandang",
+    pageTitle: "Detail Data Kesehatan",
     // Input
     input: {
       id: null,
@@ -30,29 +30,21 @@ export default {
           th: "Nomor Ternak",
         },
         {
-          name: "nama_varietas",
-          th: "Varietas",
-        },
-        {
-          name: "fase",
-          th: "Fase Pemeliharaan",
-        },
-        {
-          name: "berat_berkala",
-          th: "Berat Ternak",
+          name: "nama_penyakit",
+          th: "Nama Penyakit",
         },
       ],
       action: [
         {
           text: "Detail",
           color: "info",
-          event: "detail-penghuni-kandang",
+          event: "detail-ternak-sakit",
         },
       ],
     },
   }),
   computed: {
-    ...mapState(d$ternak, ["g$detailKandang"]),
+    ...mapState(d$kesehatan, ["g$detailKesehatan"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -65,15 +57,29 @@ export default {
     },
   },
   async mounted() {
-    await this.a$kandangDetail(this.$route.params.id).catch((error) => this.notify(error, false));
+    await this.a$penyakitDetail(this.$route.params.id).catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$ternak, ["a$kandangDetail"]),
+    ...mapActions(d$kesehatan, ["a$penyakitDetail"]),
     clearInput() {
       this.input = {
         id: null,
       };
     },
+    // async triggerDetail(row) {
+    //   try {
+    //     const { id_kandang } = row;
+    //     router.push({
+    //       name: "Detail Kandang",
+    //       params: {
+    //         id: id_kandang,
+    //       },
+    //     });
+    //   } catch (error) {
+    //     this.clearInput();
+    //     this.notify(error, false);
+    //   }
+    // },
   },
 };
 </script>
@@ -89,8 +95,8 @@ export default {
     </template>
 
     <template #body>
-      <empty-result v-if="!g$detailKandang.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$detailKandang" :columns="dt.column" :actions="dt.action" />
+      <empty-result v-if="!g$detailKesehatan.length" :text="`${pageTitle}`" />
+      <data-table v-else :index="true" :data="g$detailKesehatan" :columns="dt.column" :actions="dt.action" />
     </template>
   </main-layout>
 </template>
