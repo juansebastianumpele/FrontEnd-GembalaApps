@@ -38,7 +38,7 @@ const u$kawin = defineStore({
         throw error;
       }
     },
-    // Get List Kawin by ID User
+    // Get List Kawin by ID Ternak
     async a$kawinList(request) {
       try {
         const { data } = await s$kawin.listKawin(request);
@@ -48,20 +48,9 @@ const u$kawin = defineStore({
         throw error;
       }
     },
-    // // Get List Ternak Betina by ID Users
-    // async a$listTernakBetina(request) {
-    //   try {
-    //     const { data } = await s$ternak.listBetina(request);
-    //     this.betina = data;
-    //   } catch ({ error }) {
-    //     this.betina = [];
-    //     throw error;
-    //   }
-    // },
   },
   getters: {
     g$kawinList: (state) => state.kawin,
-    // g$kawinBetina: (state) => state.betina,
   },
 });
 

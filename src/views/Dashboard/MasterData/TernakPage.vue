@@ -32,9 +32,9 @@ export default {
       fase: y$object({
         id: y$string().required().label("ID Fase"),
       }).label("Status Ternak"),
+      foto: y$array().nullable().label("Foto"),
       // tanggal_keluar: y$string().nullable().label("Tanggal Keluar"),
       // status_keluar: y$string().nullable().label("Status Keluar"),
-      foto: y$array().nullable().label("Foto"),
       // id_ternak: y$string().required().label("ID Ternak"),
       // id_users: y$string().required().label("ID Users"),
     });
@@ -60,6 +60,7 @@ export default {
       kandang: "",
       pakan: "",
       fase: "",
+      tanggal_kawin: "",
       tanggal_keluar: "",
       status_keluar: "",
       foto: null,
@@ -161,6 +162,7 @@ export default {
         kandang: "",
         pakan: "",
         fase: "",
+        tanggal_kawin: "",
         tanggal_keluar: "",
         status_keluar: "",
         foto: null,
@@ -171,7 +173,27 @@ export default {
     },
     async addTernak() {
       try {
-        const { rf_id, jenis_kelamin, varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, kandang, pakan, fase, tanggal_keluar, status_keluar, foto, id_ternak, id_users } = this.input;
+        const {
+          rf_id,
+          jenis_kelamin,
+          varietas,
+          berat_berkala,
+          suhu_berkala,
+          tanggal_lahir,
+          tanggal_masuk,
+          id_induk,
+          id_pejantan,
+          status_sehat,
+          kandang,
+          pakan,
+          fase,
+          tanggal_kawin,
+          foto,
+          tanggal_keluar,
+          status_keluar,
+          id_ternak,
+          id_users,
+        } = this.input;
         const data = new FormData();
         data.append("rf_id", rf_id);
         data.append("jenis_kelamin", jenis_kelamin);
@@ -189,8 +211,9 @@ export default {
         // data.append("tanggal_keluar", tanggal_keluar);
         // data.append("status_keluar", status_keluar);
         data.append("foto", foto);
-        // data.append("id_ternak", this.input.id_ternak);
         data.append("id_users", this.userInfo.id);
+        data.append("tanggal_kawin", tanggal_kawin);
+        // data.append("id_ternak", this.input.id_ternak);
         await this.schema.validate(this.input);
         await this.a$ternakAdd(data);
         this.modal.addTernak = false;
@@ -204,7 +227,8 @@ export default {
     },
     async editTernak() {
       try {
-        const { id, rf_id, jenis_kelamin, varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, kandang, pakan, fase, tanggal_keluar, status_keluar, foto, id_ternak } = this.input;
+        const { id, rf_id, jenis_kelamin, varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, kandang, pakan, fase, tanggal_keluar, status_keluar, foto, id_ternak, tanggal_kawin } =
+          this.input;
         const data = {
           id,
           formData: new FormData(),
@@ -227,6 +251,7 @@ export default {
         if (foto) data.formData.append("foto", foto);
         data.formData.append("id_ternak", id);
         data.formData.append("id_users", this.userInfo.id);
+        if (tanggal_kawin) data.formData.append("tanggal_kawin", tanggal_kawin);
         await this.schema.validate(this.input);
         await this.a$ternakEdit(data);
         this.modal.ubahTernak = false;
@@ -251,8 +276,27 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_ternak, rf_id, jenis_kelamin, varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, nama_kandang, nama_pakan, fase, tanggal_keluar, status_keluar, foto, id_users } =
-          row;
+        const {
+          id_ternak,
+          rf_id,
+          jenis_kelamin,
+          varietas,
+          berat_berkala,
+          suhu_berkala,
+          tanggal_lahir,
+          tanggal_masuk,
+          id_induk,
+          id_pejantan,
+          status_sehat,
+          nama_kandang,
+          nama_pakan,
+          fase,
+          tanggal_keluar,
+          status_keluar,
+          foto,
+          tanggal_kawin,
+          id_users,
+        } = row;
         this.input = {
           id: id_ternak,
           rf_id,
@@ -283,6 +327,7 @@ export default {
           tanggal_keluar,
           status_keluar,
           foto,
+          tanggal_kawin,
           // id_users,
         };
         this.modal.ubahTernak = true;
@@ -405,7 +450,7 @@ export default {
                 </base-input>
               </div>
               <div class="col-6" v-if="input.fase.name === 'Cempe'">
-                <base-input name="fase" placeholder="Tanggal Kawin Induk" label="Tanggal Kawin Induk" required>
+                <base-input name="tanggal_kawin" placeholder="Tanggal Kawin Induk" label="Tanggal Kawin Induk" required>
                   <multi-select v-model="input.fase" :options="g$ddFasePemeliharaan" label="name" track-by="id" placeholder="Pilih Status Ternak" :show-labels="false" />
                 </base-input>
               </div>
@@ -512,6 +557,11 @@ export default {
               </div>
               <div class="col-6">
                 <base-input name="fase" placeholder="Status Ternak" label="Status Ternak" required>
+                  <multi-select v-model="input.fase" :options="g$ddFasePemeliharaan" label="name" track-by="id" placeholder="Pilih Status Ternak" :show-labels="false" />
+                </base-input>
+              </div>
+              <div class="col-6" v-if="input.fase.name === 'Cempe'">
+                <base-input name="tanggal_kawin" placeholder="Tanggal Kawin Induk" label="Tanggal Kawin Induk" required>
                   <multi-select v-model="input.fase" :options="g$ddFasePemeliharaan" label="name" track-by="id" placeholder="Pilih Status Ternak" :show-labels="false" />
                 </base-input>
               </div>

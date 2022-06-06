@@ -45,12 +45,12 @@ export default {
           th: "Varietas",
         },
         {
-          name: "fase",
-          th: "Status Ternak",
+          name: "tanggal_kawin",
+          th: "Tanggal Kawin",
         },
         {
-          name: "nama_penyakit",
-          th: "Status Kesehatan",
+          name: "id_pemancek",
+          th: "ID Pejantan",
         },
       ],
       action: [
@@ -76,7 +76,7 @@ export default {
     },
   },
   async mounted() {
-    await this.a$kawinList(this.userInfo.id).catch((error) => this.notify(error, false));
+    await this.a$kawinList(this.$route.params.id).catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$kawin, ["a$kawinList"]),
