@@ -404,6 +404,11 @@ export default {
                   <multi-select v-model="input.fase" :options="g$ddFasePemeliharaan" label="name" track-by="id" placeholder="Pilih Status Ternak" :show-labels="false" />
                 </base-input>
               </div>
+              <div class="col-6" v-if="input.fase.name === 'Cempe'">
+                <base-input name="fase" placeholder="Tanggal Kawin Induk" label="Tanggal Kawin Induk" required>
+                  <multi-select v-model="input.fase" :options="g$ddFasePemeliharaan" label="name" track-by="id" placeholder="Pilih Status Ternak" :show-labels="false" />
+                </base-input>
+              </div>
               <!-- <div class="col-6">
                 <base-input name="tanggal_keluar" placeholder="YYYY-MM-DD" label="Tanggal Keluar">
                   <flat-pickr v-model.lazy="input.tanggal_keluar" :config="{ mode: 'single', allowInput: true }" class="form-control datepicker" placeholder="YYYY-MM-DD" />
