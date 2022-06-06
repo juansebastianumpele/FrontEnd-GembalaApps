@@ -9,15 +9,13 @@
   <div class="container-fluid" :class="[!isFull ? 'mt--7' : '']">
     <div class="row">
       <div class="col-12">
-        <div>
-          <!-- <div v-if="!disableHeaderBody || $slots.header" class="card-header">
+        <div class="card shadow">
+          <div v-if="!disableHeaderBody || $slots.header" class="card-header">
             <slot name="header"></slot>
-          </div> -->
-
+          </div>
           <div class="card-body" :class="{ 'p-0': disablePadding }">
             <slot name="body"></slot>
           </div>
-
           <div v-if="$slots.footer" class="card-footer">
             <slot name="footer"></slot>
           </div>
