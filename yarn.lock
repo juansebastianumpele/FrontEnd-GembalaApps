@@ -409,6 +409,7 @@ __metadata:
     highcharts: ^10.1.0
     highcharts-vue: ^1.4.0
     jquery: ^3.6.0
+    keen-slider: ^6.6.14
     leaflet: ^1.8.0
     nouislider: ^15.6.0
     perfect-scrollbar: ^1.5.5
@@ -2112,6 +2113,13 @@ __metadata:
   version: 5.1.1
   resolution: "just-extend@npm:5.1.1"
   checksum: 2a3c1281e1d2b97b73e9286eed8e86e56ed624339cf6b30e7f28f363092e352391a5ffa5933f1274c3dda8a21dc08f92f7287cbbd53a813daa8a79bd7505b018
+  languageName: node
+  linkType: hard
+
+"keen-slider@npm:^6.6.14":
+  version: 6.6.14
+  resolution: "keen-slider@npm:6.6.14"
+  checksum: 808a8d7f6ef4e11747bd5a5b9e6af6fcfc9b71269b902581b252801fc9388d62bca917986da9f2b597cf4bc9cfb3325dae2a08170698f3bc3d682303f58f7c84
   languageName: node
   linkType: hard
 

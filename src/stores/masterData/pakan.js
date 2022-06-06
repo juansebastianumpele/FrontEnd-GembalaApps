@@ -42,7 +42,6 @@ const u$pakan = defineStore({
       try {
         const { data } = await s$pakan.totalPakan(request);
         this.totalPakan ={...data[0]}
-        console.log( {...data[0]})
       } catch ({ error }) {
         throw error;
       }

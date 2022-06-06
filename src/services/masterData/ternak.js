@@ -25,5 +25,7 @@ const totalSehat = (req) => baseApi.get(`${api}/${ternak}/totalsehat/${req}`);
 const totalJeniskelamin = (req) => baseApi.get(`${api}/${ternak}/totaljeniskelamin/${req}`);
 const populasi = (req) => baseApi.get(`${api}/${ternak}/total/${req}`);
 const totalFase = (req) => baseApi.get(`${api}/${ternak}/totalfase/${req}`);
+const tabelKandang = (req) => baseApi.get(`${api}/${ternak}/totalberat/${req}`);
+const filterTernak = (req) => baseApi.get(`${api}/${ternak}/listFilter?${req}`);
 
-export { listBetina, list, add, edit, del, listVarietas, listFase, detailKandang, detailPakan, detailTernak, totalSehat, totalJeniskelamin, populasi, totalFase };
+export { listBetina, list, add, edit, del, listVarietas, listFase, detailKandang, detailPakan, detailTernak, totalSehat, totalJeniskelamin, populasi, totalFase, tabelKandang, filterTernak };

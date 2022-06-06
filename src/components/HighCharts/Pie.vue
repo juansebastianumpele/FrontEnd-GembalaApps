@@ -85,7 +85,7 @@ export default {
         },
         colors: this.colors,
         legend: {
-          enabled: true,
+          enabled: this.legend,
         },
         plotOptions: {
           pie: {

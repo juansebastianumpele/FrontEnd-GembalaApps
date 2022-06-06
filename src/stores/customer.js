@@ -21,7 +21,6 @@ const u$costumer = defineStore({
       try {
         const { data } = await s$costumer.detail(request);
         this.detail = { ...data[0] };
-        console.log({ ...data[0] });
       } catch ({ error }) {
         this.detail = {};
         throw error;
