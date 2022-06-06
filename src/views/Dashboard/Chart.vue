@@ -100,8 +100,7 @@ export default {
       try {
         this.selectedTernak = { ...row };
         this.modal.detailTernak = true;
-      } catch (error) {
-      }
+      } catch (error) {}
     },
     clearAll() {
       this.input.varietas = null;
@@ -263,7 +262,7 @@ export default {
           <h3 class="modal-title">Detail Ternak Nomor {{ selectedTernak.nomor }}</h3>
         </template>
         <template #body>
-          <div style="max-height: 450px; overflow-y:auto; overflow-x: hidden">
+          <div style="max-height: 450px; overflow-y: auto; overflow-x: hidden">
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Nomor Ternak</span></div>
               <div class="col">
@@ -273,7 +272,7 @@ export default {
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">ID RFID</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ selectedTernak.rf_id?? "-" }}</span>
+                : <span style="font-weight: 300"> {{ selectedTernak.rf_id ?? "-" }}</span>
               </div>
             </div>
             <div class="row">
@@ -285,7 +284,7 @@ export default {
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Jenis Kelamin</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ selectedTernak.jenis_kelamin[0]}}</span>
+                : <span style="font-weight: 300"> {{ selectedTernak.jenis_kelamin == [0] ? "Jantan" : "Betina" }}</span>
               </div>
             </div>
             <div class="row">
@@ -297,7 +296,7 @@ export default {
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">ID Pemancek</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ selectedTernak.id_pejantan}}</span>
+                : <span style="font-weight: 300"> {{ selectedTernak.id_pejantan }}</span>
               </div>
             </div>
             <div class="row">
@@ -333,19 +332,19 @@ export default {
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Status Kesehatan</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ selectedTernak.status_sehat[0] }}</span>
+                : <span style="font-weight: 300"> {{ selectedTernak.status_sehat == [0]  }}</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Nama Penyakit</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ selectedTernak.nama_penyakit}}</span>
+                : <span style="font-weight: 300"> {{ selectedTernak.nama_penyakit }}</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Tanggal Masuk</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ selectedTernak.tanggal_masuk}}</span>
+                : <span style="font-weight: 300"> {{ selectedTernak.tanggal_masuk }}</span>
               </div>
             </div>
             <div class="row">
@@ -357,19 +356,18 @@ export default {
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Tanggal Keluar</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ selectedTernak.tanggal_keluar?? "-" }}</span>
+                : <span style="font-weight: 300"> {{ selectedTernak.tanggal_keluar ?? "-" }}</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Status Keluar</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ selectedTernak.status_keluar?? "-" }}</span>
+                : <span style="font-weight: 300"> {{ selectedTernak.status_keluar ?? "-" }}</span>
               </div>
             </div>
           </div>
         </template>
-        <template #footer>
-        </template>
+        <template #footer> </template>
       </modal-comp>
     </template>
   </main-layout>
