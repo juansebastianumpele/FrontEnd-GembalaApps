@@ -25,7 +25,7 @@ const useAuthStore = defineStore({
       try {
         const { id, name, role } = certDetail();
         if (!id && !name && !role) throw new Error("Tidak ada info Pengguna!");
-        this.userId = id;
+        this.id = id;
         this.name = name;
         this.role = role;
         return "User Authenticated";
