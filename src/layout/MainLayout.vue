@@ -10,10 +10,15 @@
     <div class="row">
       <div class="col-12">
         <div class="card shadow">
-          <div v-if="!disableHeaderBody || $slots.header" class="card-header">
-            <slot name="header"></slot>
+          <div v-if="$route.path !== '/dashboard/chart'">
+            <div v-if="!disableHeaderBody || $slots.header" class="card-header">
+              <slot name="header"></slot>
+            </div>
           </div>
-          <div class="card-body" :class="{ 'p-0': disablePadding }">
+          <div v-if="$route.path == '/dashboard/chart'" class="card-body" :class="{ 'p-0': disablePadding }" style="background-color: #f1f3f9">
+            <slot name="body"></slot>
+          </div>
+          <div v-else class="card-body" :class="{ 'p-0': disablePadding }">
             <slot name="body"></slot>
           </div>
           <div v-if="$slots.footer" class="card-footer">

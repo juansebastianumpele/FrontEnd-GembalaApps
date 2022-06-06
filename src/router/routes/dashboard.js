@@ -25,7 +25,13 @@ const dashboardRoutes = [
         path: "chart",
         name: "Chart",
         component: () => import("@/views/Dashboard/Chart.vue"),
-        meta: { requiresAuth: true },
+        meta: { requiresAuth: true, hideFooter: true },
+      },
+      {
+        path: "filter",
+        name: "Filter",
+        component: () => import("@/views/Dashboard/DetailFilter.vue"),
+        meta: { requiresAuth: true, hideFooter: true },
       },
     ],
   },
@@ -78,12 +84,6 @@ const dashboardRoutes = [
         component: () => import("@/views/Dashboard/MasterData/PenyakitPage.vue"),
         meta: { requireAuth: true },
       },
-      {
-        path: "kesehatan",
-        name: "Kesehatan",
-        component: () => import("@/views/Dashboard/MasterData/KesehatanPage.vue"),
-        meta: { requireAuth: true },
-      },
     ],
   },
   {
@@ -122,6 +122,12 @@ const dashboardRoutes = [
         component: () => import("@/views/Dashboard/MasterData/PakanDetail.vue"),
         meta: { requireAuth: true },
       }, */
+      {
+        path: "ternak",
+        name: "Ternak",
+        component: () => import("@/views/Dashboard/MasterData/TernakPage.vue"),
+        meta: { requireAuth: true },
+      },
       {
         path: "kawin",
         name: "Kawin",
