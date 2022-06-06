@@ -26,4 +26,4 @@ const totalJeniskelamin = (req) => baseApi.get(`${api}/${ternak}/totaljeniskelam
 const populasi = (req) => baseApi.get(`${api}/${ternak}/total/${req}`);
 const totalFase = (req) => baseApi.get(`${api}/${ternak}/totalfase/${req}`);
 
-export { listBetina, list, add, edit, del, listVarietas, listFase, listJenisKelamin, listStatusSehat, listStatusKeluar, detailKandang, detailPakan, detailTernak, totalSehat, totalJeniskelamin, populasi, totalFase };
+export { listBetina, list, add, edit, del, listVarietas, listFase, detailKandang, detailPakan, detailTernak, totalSehat, totalJeniskelamin, populasi, totalFase };

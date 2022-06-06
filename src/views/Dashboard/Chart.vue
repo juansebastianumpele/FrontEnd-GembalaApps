@@ -7,7 +7,7 @@ import HcBar from "@/components/HighCharts/Bar.vue";
 import d$chart from "@/stores/chart";
 import d$dropdowm from "@/stores/dropdown";
 import d$costumer from "../../stores/customer";
-import d$kandang from "../../stores/masterData/kandang";
+import d$kandang from "../../stores/monitoring/kandang";
 import d$pakan from "../../stores/masterData/pakan";
 
 export default {
@@ -43,16 +43,16 @@ export default {
     ...mapActions(d$pakan, ["a$totalPakan"]),
   },
   async mounted() {
-    await this.a$byPopulasi(this.userInfo.userId);
-    await this.a$byKesehatan(this.userInfo.userId);
-    await this.a$byJeniskelamin(this.userInfo.userId);
-    await this.a$byFase(this.userInfo.userId);
+    await this.a$byPopulasi(this.userInfo.id);
+    await this.a$byKesehatan(this.userInfo.id);
+    await this.a$byJeniskelamin(this.userInfo.id);
+    await this.a$byFase(this.userInfo.id);
     await this.a$listVarietas();
     await this.a$listFase();
-    await this.a$listKandang({ id: this.userInfo.userId });
-    await this.a$costumerDetail({ id: this.userInfo.userId });
-    await this.a$totalKandang({ id: this.userInfo.userId });
-    await this.a$totalPakan({ id: this.userInfo.userId });
+    await this.a$listKandang({ id: this.userInfo.id });
+    await this.a$costumerDetail({ id: this.userInfo.id });
+    await this.a$totalKandang({ id: this.userInfo.id });
+    await this.a$totalPakan({ id: this.userInfo.id });
   },
 };
 </script>
@@ -176,7 +176,7 @@ export default {
             </card-comp>
           </div>
         </div>
-        <div class="col-md-3 ">
+        <div class="col-md-3">
           <card-comp class="px-0">
             <div class="row align-items-center">
               <div class="col">
