@@ -205,26 +205,28 @@ export default {
     async editTernak() {
       try {
         const { id, rf_id, jenis_kelamin, varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, kandang, pakan, fase, tanggal_keluar, status_keluar, foto, id_ternak } = this.input;
-        const data = new FormData();
-        id;
-        data.append("rf_id", rf_id);
-        data.append("jenis_kelamin", jenis_kelamin.name);
-        data.append("id_varietas", varietas.id);
-        data.append("berat", berat_berkala);
-        data.append("suhu", suhu_berkala);
-        data.append("tanggal_lahir", tanggal_lahir);
-        data.append("tanggal_masuk", tanggal_masuk);
-        data.append("id_induk", id_induk);
-        data.append("id_pejantan", id_pejantan);
-        data.append("status_sehat", status_sehat.name);
-        data.append("id_pakan", pakan.id);
-        data.append("fase_pemeliharaan", fase.id);
-        data.append("id_kandang", kandang.id);
-        data.append("tanggal_keluar", tanggal_keluar);
-        data.append("status_keluar", status_keluar.name);
-        if (foto) data.append("foto", foto);
-        data.append("id_ternak", id);
-        // data.append("id_users", this.userInfo.id);
+        const data = {
+          id,
+          formData: new FormData(),
+        };
+        data.formData.append("rf_id", rf_id);
+        data.formData.append("jenis_kelamin", jenis_kelamin);
+        data.formData.append("id_varietas", varietas.id);
+        data.formData.append("berat", berat_berkala);
+        data.formData.append("suhu", suhu_berkala);
+        data.formData.append("tanggal_lahir", tanggal_lahir);
+        data.formData.append("tanggal_masuk", tanggal_masuk);
+        data.formData.append("id_induk", id_induk);
+        data.formData.append("id_pejantan", id_pejantan);
+        data.formData.append("status_sehat", status_sehat);
+        data.formData.append("id_pakan", pakan.id);
+        data.formData.append("fase_pemeliharaan", fase.id);
+        data.formData.append("id_kandang", kandang.id);
+        if (tanggal_keluar) data.formData.append("tanggal_keluar", tanggal_keluar);
+        if (status_keluar) data.formData.append("status_keluar", status_keluar);
+        if (foto) data.formData.append("foto", foto);
+        data.formData.append("id_ternak", id);
+        data.formData.append("id_users", this.userInfo.id);
         await this.schema.validate(this.input);
         await this.a$ternakEdit(data);
         this.modal.ubahTernak = false;

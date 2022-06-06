@@ -16,8 +16,6 @@ const u$dropdown = defineStore({
     statusKeluar: ["Jual", "Mati", "Sembelih"],
     varietas: [],
     fasePemeliharaan: [],
-    fase: [],
-    statusKeluar: [],
     kandang: [],
     pakan: [],
     // customer: [],
@@ -33,7 +31,6 @@ const u$dropdown = defineStore({
     //   { id: 3, name: "Tidak Terkirim" },
     // ],
   }),
-
   actions: {
     // async a$ddJenisKelamin() {
     //   try {
@@ -81,27 +78,6 @@ const u$dropdown = defineStore({
       }
     },
     async a$ddKandang(request) {
-      try {
-        const { data } = await s$kandang.list(request);
-        this.kandang = data;
-      } catch {
-        error;
-      }
-      {
-        this.kandang = [];
-        throw error;
-      }
-    },
-    async a$listFase() {
-      try {
-        const { data } = await s$ternak.listFase();
-        this.fase = data;
-      } catch ({ error }) {
-        this.fase = [];
-        throw error;
-      }
-    },
-    async a$listKandang(request) {
       try {
         const { data } = await s$kandang.list(request);
         this.kandang = data;
@@ -194,10 +170,6 @@ const u$dropdown = defineStore({
     g$ddFasePemeliharaan: (state) => state.fasePemeliharaan.map(({ id_fp, fase }) => ({ id: id_fp, name: fase })),
     g$ddKandang: (state) => state.kandang.map(({ id_kandang, nama_kandang }) => ({ id: id_kandang, name: nama_kandang })),
     g$ddPakan: (state) => state.pakan.map(({ id_pakan, nama_pakan }) => ({ id: id_pakan, name: nama_pakan })),
-    // Dashboard
-    g$listVarietas: (state) => state.varietas.map(({ id_varietas, nama_varietas }) => ({ id: id_varietas, name: nama_varietas })),
-    g$listFase: (state) => state.fase.map(({ id_fp, fase }) => ({ id: id_fp, name: fase })),
-    g$listKandang: (state) => state.kandang.map(({ id_kandang, nama_kandang }) => ({ id: id_kandang, name: nama_kandang })),
   },
 });
 

@@ -52,7 +52,7 @@ export default {
           th: "Komposisi",
         },
         {
-          name: "pakan",
+          name: "jumlah",
           th: "Stock Pakan (kg)",
         },
       ],
@@ -99,18 +99,18 @@ export default {
         nama_pakan: "",
         deskripsi: "",
         komposisi: "",
-        stock_pakan: "",
+        jumlah: "",
         id_users: null,
       };
     },
     async addPakan() {
       try {
-        const { nama_pakan, deskripsi, komposisi, stock_pakan, id_users } = this.input;
+        const { nama_pakan, deskripsi, komposisi, jumlah, id_users } = this.input;
         const data = {
           nama_pakan,
           deskripsi,
           komposisi,
-          stock_pakan,
+          jumlah,
           id_users: this.userInfo.id,
         };
         await this.schema.validate(data);
@@ -125,13 +125,13 @@ export default {
     },
     async editPakan() {
       try {
-        const { id, nama_pakan, deskripsi, komposisi, stock_pakan } = this.input;
+        const { id, nama_pakan, deskripsi, komposisi, jumlah } = this.input;
         const data = {
           id,
           nama_pakan,
           deskripsi,
           komposisi,
-          stock_pakan,
+          jumlah,
         };
         await this.schema.validate(data);
         await this.a$pakanEdit(data);
@@ -157,13 +157,13 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_pakan, nama_pakan, deskripsi, komposisi, stock_pakan } = row;
+        const { id_pakan, nama_pakan, deskripsi, komposisi, jumlah } = row;
         this.input = {
           id: id_pakan,
           nama_pakan,
           deskripsi,
           komposisi,
-          stock_pakan,
+          jumlah,
         };
         this.modal.ubahPakan = true;
       } catch (error) {
@@ -188,7 +188,7 @@ export default {
       try {
         const { id_pakan } = row;
         router.push({
-          name: "DetailPakan",
+          name: "Detail Pakan",
           params: {
             id: id_pakan,
           },
@@ -244,7 +244,7 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.stock_pakan" type="text" name="stock_pakan">
+                <field-form v-slot="{ field }" v-model="input.jumlah" type="text" name="jumlah">
                   <base-input v-bind="field" placeholder="Text" label="Stock Pakan"></base-input>
                 </field-form>
               </div>
@@ -284,7 +284,7 @@ export default {
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.stock_pakan" type="text" name="stock_pakan">
+                <field-form v-slot="{ field }" v-model="input.jumlah" type="text" name="jumlah">
                   <base-input v-bind="field" placeholder="Text" label="Stock Pakan"></base-input>
                 </field-form>
               </div>

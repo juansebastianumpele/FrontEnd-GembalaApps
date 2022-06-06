@@ -5,7 +5,7 @@ const { api, ternak } = subApiUrl;
 
 const list = (req) => baseApi.get(`${api}/${ternak}/byUserId/${req}`);
 const add = (req) => baseApi.post(`${api}/${ternak}`, req, { headers: { "Content-Type": "multipart/form-data" } });
-const edit = (req) => baseApi.put(`${api}/${ternak}/${req.id}`, req);
+const edit = (req) => baseApi.put(`${api}/${ternak}/${req.id}`, req.formData);
 const del = (req) => baseApi.delete(`${api}/${ternak}/${req}`);
 
 // Dropdown
