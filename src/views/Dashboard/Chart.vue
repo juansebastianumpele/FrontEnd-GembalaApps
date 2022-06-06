@@ -63,7 +63,7 @@ export default {
   }),
   computed: {
     ...mapState(d$chart, ["g$byGenderChart", "g$byKesehatan", "g$byJeniskelamin", "g$byPopulasi", "g$byFase", "g$DonutbyFase", "g$tabelKandang", "g$tabelFilter"]),
-    ...mapState(d$dropdowm, ["g$listVarietas", "g$listFase", "g$listKandang"]),
+    ...mapState(d$dropdowm, ["g$ddVarietas", "g$ddFasePemeliharaan", "g$ddKandang"]),
     ...mapState(d$costumer, ["g$costumerDetail"]),
     ...mapState(d$kandang, ["g$totalKandang"]),
     ...mapState(d$pakan, ["g$totalPakan"]),
@@ -82,12 +82,12 @@ export default {
     ...mapActions(d$chart, ["a$byKesehatan", "a$byJeniskelamin", "a$byPopulasi", "a$byFase", "a$tabelKandang", "a$tabelFilter"]),
     ...mapActions(d$costumer, ["a$costumerDetail"]),
     ...mapActions(d$kandang, ["a$totalKandang"]),
-    ...mapActions(d$dropdowm, ["a$listVarietas", "a$listFase", "a$listKandang"]),
+    ...mapActions(d$dropdowm, ["a$ddVarietas", "a$ddFasePemeliharaan", "a$ddKandang"]),
     ...mapActions(d$pakan, ["a$totalPakan"]),
     async filterTernak() {
       const { varietas, fase, kandang } = this.input;
       const data = {
-        idUser: this.userInfo.userId,
+        idUser: this.userInfo.id,
         idVarietas: varietas?.id ?? "",
         idFase: fase?.id ?? "",
         idKandang: kandang?.id ?? "",
@@ -115,9 +115,9 @@ export default {
     await this.a$byKesehatan(this.userInfo.id);
     await this.a$byJeniskelamin(this.userInfo.id);
     await this.a$byFase(this.userInfo.id);
-    await this.a$listVarietas();
-    await this.a$listFase();
-    await this.a$listKandang({ id: this.userInfo.id });
+    await this.a$ddVarietas();
+    await this.a$ddFasePemeliharaan();
+    await this.a$ddKandang(this.userInfo.id);
     await this.a$costumerDetail({ id: this.userInfo.id });
     await this.a$totalKandang({ id: this.userInfo.id });
     await this.a$totalPakan({ id: this.userInfo.id });
@@ -134,17 +134,17 @@ export default {
             <div class="row">
               <div class="col">
                 <base-input class="m-0" name="varietas" placeholder="Varietas">
-                  <multi-select v-model="input.varietas" :options="g$listVarietas" label="name" track-by="id" placeholder="Pilih Varietas" :show-labels="false" />
+                  <multi-select v-model="input.varietas" :options="g$ddVarietas" label="name" track-by="id" placeholder="Pilih Varietas" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col">
                 <base-input class="m-0" name="fase" placeholder="Fase">
-                  <multi-select v-model="input.fase" :options="g$listFase" label="name" track-by="id" placeholder="Pilih Fase Pemeliharaan" :show-labels="false" />
+                  <multi-select v-model="input.fase" :options="g$ddFasePemeliharaan" label="name" track-by="id" placeholder="Pilih Fase Pemeliharaan" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col">
                 <base-input class="m-0" name="kandang" placeholder="Kandang">
-                  <multi-select v-model="input.kandang" :options="g$listKandang" label="name" track-by="id" placeholder="Pilih Kandang" :show-labels="false" />
+                  <multi-select v-model="input.kandang" :options="g$ddKandang" label="name" track-by="id" placeholder="Pilih Kandang" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-auto">
@@ -261,7 +261,7 @@ export default {
         <template #header>
           <h3 class="modal-title">Detail Ternak Nomor {{ selectedTernak.nomor }}</h3>
         </template>
-        <template #body>
+        <template v-if="isSearch" #body>
           <div style="max-height: 450px; overflow-y: auto; overflow-x: hidden">
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Nomor Ternak</span></div>
@@ -284,7 +284,7 @@ export default {
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Jenis Kelamin</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ selectedTernak.jenis_kelamin == [0] ? "Jantan" : "Betina" }}</span>
+                : <span style="font-weight: 300"> {{ selectedTernak.jenis_kelamin[0] }}</span>
               </div>
             </div>
             <div class="row">
@@ -332,7 +332,7 @@ export default {
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Status Kesehatan</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ selectedTernak.status_sehat == [0]  }}</span>
+                : <span style="font-weight: 300"> {{ selectedTernak.status_sehat[0] }}</span>
               </div>
             </div>
             <div class="row">
