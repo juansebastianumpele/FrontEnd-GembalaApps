@@ -52,14 +52,12 @@ export default {
           name: "id_pemancek",
           th: "ID Pejantan",
         },
-      ],
-      action: [
         {
-          text: "Detail",
-          color: "info",
-          event: "",
+          name: "",
+          th: "ID Cempe",
         },
       ],
+      action: [],
     },
   }),
   computed: {

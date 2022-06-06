@@ -53,13 +53,6 @@ const dashboardRoutes = [
         component: () => import("@/views/Dashboard/MasterData/DaftarKandang.vue"),
         meta: { requireAuth: true },
       },
-      /* {
-        path: "detail-ternak-sakit/:id",
-        name: "Detail Ternak Sakit",
-        component: () => import("@/views/Dashboard/MasterData/KesehatanDetail.vue"),
-        meta: { requireAuth: true },
-      }, */
-
       {
         path: "pakan",
         name: "Pakan",
@@ -73,15 +66,15 @@ const dashboardRoutes = [
         meta: { requireAuth: true },
       },
       {
-        path: "ternak",
-        name: "Ternak",
-        component: () => import("@/views/Dashboard/MasterData/TernakPage.vue"),
-        meta: { requireAuth: true },
-      },
-      {
         path: "penyakit",
         name: "Penyakit",
         component: () => import("@/views/Dashboard/MasterData/PenyakitPage.vue"),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "ternak",
+        name: "Ternak",
+        component: () => import("@/views/Dashboard/MasterData/TernakPage.vue"),
         meta: { requireAuth: true },
       },
     ],
@@ -122,12 +115,6 @@ const dashboardRoutes = [
         component: () => import("@/views/Dashboard/MasterData/PakanDetail.vue"),
         meta: { requireAuth: true },
       }, */
-      {
-        path: "ternak",
-        name: "Ternak",
-        component: () => import("@/views/Dashboard/MasterData/TernakPage.vue"),
-        meta: { requireAuth: true },
-      },
       {
         path: "kawin",
         name: "Kawin",

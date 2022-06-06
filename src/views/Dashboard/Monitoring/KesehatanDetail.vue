@@ -33,6 +33,14 @@ export default {
           name: "nama_penyakit",
           th: "Nama Penyakit",
         },
+        {
+          name: "tgl_sakit",
+          th: "Tanggal Sakit",
+        },
+        {
+          name: "tgl_sembuh",
+          th: "Tanggal Sembuh",
+        },
       ],
       action: [
         {
