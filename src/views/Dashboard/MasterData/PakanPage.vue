@@ -51,17 +51,17 @@ export default {
           name: "komposisi",
           th: "Komposisi",
         },
-        // {
-        //   name: "pakan",
-        //   th: "Stock Pakan (kg)",
-        // },
+        {
+          name: "pakan",
+          th: "Stock Pakan (kg)",
+        },
       ],
       action: [
-        // {
-        //   text: "Detail",
-        //   color: "info",
-        //   event: "detail-pakan",
-        // },
+        {
+          text: "Detail",
+          color: "info",
+          event: "detail-pakan",
+        },
         {
           text: "Ubah",
           color: "warning",

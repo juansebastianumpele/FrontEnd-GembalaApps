@@ -67,12 +67,12 @@
               path: '/monitoring/kandang',
             }"
           />
-          <sidebar-item
+          <!-- <sidebar-item
             :link="{
               name: 'Pakan',
               path: '/monitoring/pakan',
             }"
-          />
+          /> -->
           <sidebar-item
             :link="{
               name: 'Kawin',

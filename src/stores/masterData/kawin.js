@@ -8,7 +8,7 @@ const u$kawin = defineStore({
     betina: [],
   }),
   actions: {
-    async a$kawinList(request) {
+    async a$betinaList(request) {
       try {
         const { data } = await s$kawin.list(request);
         this.kawin = data;
@@ -35,6 +35,16 @@ const u$kawin = defineStore({
       try {
         await s$kawin.del(request);
       } catch ({ error }) {
+        throw error;
+      }
+    },
+    // Get List Kawin by ID User
+    async a$kawinList(request) {
+      try {
+        const { data } = await s$kawin.listKawin(request);
+        this.kawin = data;
+      } catch ({ error }) {
+        this.kawin = [];
         throw error;
       }
     },
