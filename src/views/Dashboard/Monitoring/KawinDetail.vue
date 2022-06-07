@@ -6,7 +6,7 @@ import { object as y$object, string as y$string, ref as y$ref } from "yup";
 
 export default {
   metaInfo: () => ({
-    title: "Data Kawin",
+    title: "Riwayat Kawin",
   }),
   setup() {
     const schema = y$object({
@@ -19,7 +19,7 @@ export default {
     };
   },
   data: () => ({
-    pageTitle: "Kawin",
+    pageTitle: "Riwayat Kawin",
     // Input
     input: {
       id: null,

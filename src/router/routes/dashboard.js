@@ -123,7 +123,7 @@ const dashboardRoutes = [
       },
       {
         path: "list-kawin/:id",
-        name: "List Kawin",
+        name: "Detail Kawin",
         component: () => import("@/views/Dashboard/Monitoring/KawinDetail.vue"),
         meta: { requireAuth: true },
       },
