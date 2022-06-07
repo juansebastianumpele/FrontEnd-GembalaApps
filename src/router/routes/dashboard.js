@@ -25,9 +25,10 @@ const dashboardRoutes = [
         path: "chart",
         name: "Chart",
         component: () => import("@/views/Dashboard/Chart.vue"),
-        meta: { requiresAuth: true, hideFooter: true,  }, },
+        meta: { requiresAuth: true, hideFooter: true },
+      },
       {
-        path: "ikymkiukytrew",
+        path: "monitor",
         name: "Monitor",
         component: () => import("@/views/Dashboard/Monitor.vue"),
         meta: { requiresAuth: true, hideFooter: true, monitoring: true },
