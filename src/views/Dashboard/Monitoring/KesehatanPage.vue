@@ -10,12 +10,7 @@ export default {
     title: "Data Kesehatan",
   }),
   setup() {
-    const schema = y$object({
-      nama_penyakit: y$string().required().label("Nama Penyakit"),
-      deskripsi: y$string().nullable().label("Deskripsi"),
-      ciri_penyakit: y$string().nullable().label("Ciri-ciri"),
-      pengobatan: y$string().nullable().label("Pengobatan"),
-    });
+    const schema = y$object({});
     return {
       schema,
     };
@@ -25,17 +20,9 @@ export default {
     // Input
     input: {
       id: null,
-      nama_penyakit: "",
-      deskripsi: "",
-      ciri_penyakit: "",
-      pengobatan: "",
     },
     // UI
-    modal: {
-      addPenyakit: false,
-      ubahPenyakit: false,
-      confirm: false,
-    },
+    modal: {},
     // DataTable
     dt: {
       column: [
@@ -78,91 +65,7 @@ export default {
     clearInput() {
       this.input = {
         id: null,
-        nama_penyakit: "",
-        deskripsi: "",
-        ciri_penyakit: "",
-        pengobatan: "",
       };
-    },
-    async addKesehatan() {
-      try {
-        const { nama_penyakit, deskripsi, ciri_penyakit, pengobatan } = this.input;
-        const data = {
-          nama_penyakit,
-          deskripsi,
-          ciri_penyakit,
-          pengobatan,
-        };
-        await this.schema.validate(data);
-        await this.a$kesehatanAdd(data);
-        this.modal.addPenyakit = false;
-        this.notify(`Tambah ${this.pageTitle} Sukses !`);
-      } catch (error) {
-        this.notify(error, false);
-      } finally {
-        this.a$kesehatanList(this.userInfo.id);
-      }
-    },
-    async editPenyakit() {
-      try {
-        const { id, nama_penyakit, deskripsi, ciri_penyakit, pengobatan } = this.input;
-        const data = {
-          id,
-          nama_penyakit,
-          deskripsi,
-          ciri_penyakit,
-          pengobatan,
-        };
-        await this.schema.validate(data);
-        await this.a$kesehatanEdit(data);
-        this.modal.ubahPenyakit = false;
-        this.notify(`Edit ${this.pageTitle} Sukses !`);
-      } catch (error) {
-        this.notify(error, false);
-      } finally {
-        this.a$kesehatanList(this.userInfo.id);
-      }
-    },
-    async delPenyakit() {
-      try {
-        const { id } = this.input;
-        await this.a$kesehatanDelete(id);
-        this.modal.confirm = false;
-        this.notify(`Hapus ${this.pageTitle} Sukses !`);
-      } catch (error) {
-        this.notify(error, false);
-      } finally {
-        this.a$kesehatanList(this.userInfo.id);
-      }
-    },
-    async triggerEditModal(row) {
-      try {
-        const { id_penyakit, nama_penyakit, deskripsi, ciri_penyakit, pengobatan } = row;
-        this.input = {
-          id: id_penyakit,
-          nama_penyakit,
-          deskripsi,
-          ciri_penyakit,
-          pengobatan,
-        };
-        this.modal.ubahPenyakit = true;
-      } catch (error) {
-        this.clearInput();
-        this.notify(error, false);
-      }
-    },
-    async triggerDelete(row) {
-      try {
-        const { id_penyakit, nama_penyakit } = row;
-        this.input = {
-          id: id_penyakit,
-          nama_penyakit,
-        };
-        this.modal.confirm = true;
-      } catch (error) {
-        this.clearInput();
-        this.notify(error, false);
-      }
     },
     async triggerDetail(row) {
       try {
@@ -189,102 +92,12 @@ export default {
         <div class="col-auto">
           <h3>Daftar {{ pageTitle }}</h3>
         </div>
-        <div class="col text-right">
-          <base-button type="success" @click="modal.addPenyakit = true"> Tambah {{ pageTitle }} </base-button>
-        </div>
       </div>
     </template>
 
     <template #body>
       <empty-result v-if="!g$kesehatanList.length" :text="`${pageTitle}`" />
       <data-table v-else :index="true" :data="g$kesehatanList" :columns="dt.column" :actions="dt.action" @ubah-penyakit="triggerEditModal" @hapus-penyakit="triggerDelete" @detail-kesehatan="triggerDetail" />
-    </template>
-
-    <template #modal>
-      <modal-comp v-model:show="modal.addPenyakit" modal-classes="modal-md">
-        <template #header>
-          <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
-        </template>
-        <template #body>
-          <form-comp v-if="modal.addPenyakit" :validation-schema="schema">
-            <div class="row">
-              <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.nama_penyakit" type="text" name="nama_penyakit">
-                  <base-input v-bind="field" placeholder="Text" label="Nama Penyakit" required></base-input>
-                </field-form>
-              </div>
-              <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.deskripsi" type="text" name="deskripsi">
-                  <base-input v-bind="field" placeholder="Text" label="Deskripsi"></base-input>
-                </field-form>
-              </div>
-              <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.ciri_penyakit" type="text" name="ciri_penyakit">
-                  <base-input v-bind="field" placeholder="Text" label="Ciri-ciri"></base-input>
-                </field-form>
-              </div>
-              <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.pengobatan" type="text" name="pengobatan">
-                  <base-input v-bind="field" placeholder="Text" label="Pengobatan"></base-input>
-                </field-form>
-              </div>
-            </div>
-          </form-comp>
-        </template>
-        <template #footer>
-          <base-button type="secondary" @click="modal.addPenyakit = false"> Tutup </base-button>
-          <base-button type="primary" @click="addPenyakit()"> Tambah {{ pageTitle }} </base-button>
-        </template>
-      </modal-comp>
-      <modal-comp v-model:show="modal.ubahPenyakit" modal-classes="modal-lg">
-        <template #header>
-          <h3 class="modal-title">Detail {{ pageTitle }}</h3>
-        </template>
-        <template #body>
-          <form-comp v-if="modal.ubahPenyakit" :validation-schema="schema">
-            <div class="row">
-              <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.nama_penyakit" type="text" name="nama_penyakit">
-                  <base-input v-bind="field" placeholder="Text" label="Nama Penyakit" required></base-input>
-                </field-form>
-              </div>
-              <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.deskripsi" type="text" name="deskripsi">
-                  <base-input v-bind="field" placeholder="Text" label="Deskripsi"></base-input>
-                </field-form>
-              </div>
-              <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.ciri_penyakit" type="text" name="ciri_penyakit">
-                  <base-input v-bind="field" placeholder="Text" label="Ciri-ciri"></base-input>
-                </field-form>
-              </div>
-              <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.pengobatan" type="text" name="pengobatan">
-                  <base-input v-bind="field" placeholder="Text" label="Pengobatan"></base-input>
-                </field-form>
-              </div>
-            </div>
-          </form-comp>
-        </template>
-        <template #footer>
-          <base-button type="secondary" @click="modal.ubahPenyakit = false"> Tutup </base-button>
-          <base-button type="primary" @click="editPenyakit()"> Simpan Perubahan </base-button>
-        </template>
-      </modal-comp>
-      <modal-comp v-model:show="modal.confirm" modal-classes="modal-lg">
-        <template #header>
-          <h3 class="modal-title">Hapus {{ pageTitle }}</h3>
-        </template>
-        <template #body>
-          <p>
-            Yakin ingin menghapus {{ pageTitle }}: <strong>{{ input.nama_penyakit }}</strong>
-          </p>
-        </template>
-        <template #footer>
-          <base-button type="secondary" @click="modal.confirm = false"> Tutup </base-button>
-          <base-button type="danger" @click="delPenyakit()">Hapus</base-button>
-        </template>
-      </modal-comp>
     </template>
   </main-layout>
 </template>

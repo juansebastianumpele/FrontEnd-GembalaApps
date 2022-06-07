@@ -81,7 +81,7 @@
           />
           <sidebar-item
             :link="{
-              name: 'Kesehatan',
+              name: 'Ternak Sakit',
               path: '/monitoring/kesehatan',
             }"
           />
