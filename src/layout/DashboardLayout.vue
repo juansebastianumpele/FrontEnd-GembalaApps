@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <side-bar>
+    <side-bar v-if="!$route.meta.monitoring">
       <template #links>
         <div class="dropdown-divider mt-0" />
 
@@ -91,7 +91,7 @@
       </template>
     </side-bar>
     <div class="main-content">
-      <dashboard-navbar :type="$route.meta.navbarType"></dashboard-navbar>
+      <dashboard-navbar v-if="!$route.meta.monitoring" :type="$route.meta.navbarType"></dashboard-navbar>
 
       <main @click="$sidebar.displaySidebar(false)">
         <router-view></router-view>

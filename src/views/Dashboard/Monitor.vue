@@ -70,6 +70,7 @@ export default {
     modals() {
       return Object.values(this.modal).includes(true);
     },
+
     // },
     // watch: {
     //   modals(val) {
@@ -108,6 +109,12 @@ export default {
       this.input.kandang = null;
       this.isSearch = false;
     },
+
+    showReload: function () {
+      setInterval(function () {
+        window.location.reload();
+      }, 60000);
+    },
   },
   async mounted() {
     await this.a$tabelKandang(this.userInfo.id);
@@ -121,6 +128,7 @@ export default {
     await this.a$costumerDetail({ id: this.userInfo.id });
     await this.a$totalKandang({ id: this.userInfo.id });
     await this.a$totalPakan({ id: this.userInfo.id });
+    this.showReload();
   },
 };
 </script>
@@ -160,30 +168,31 @@ export default {
           <div class="row m-0">
             <div class="col-12 px-0">
               <card-comp>
-                <h1 class="text-black text-uppercase text-center ls-1 mt-0 mb-2" style="font-size: 12px">Grafik Populasi Domba Sembada (2022 - 2023)</h1>
-                <hc-column :height="230" :data="g$byPopulasi" :data-labels="true" :legend="true" />
+                <h1 class="text-black text-uppercase text-center ls-1 mb-4" style="font-size: 16px">Grafik Populasi Domba Sembada (2022 - 2023)</h1>
+                <hc-column :height="350" :data="g$byPopulasi" :data-labels="true" :legend="true" />
               </card-comp>
             </div>
           </div>
           <div class="row m-0">
             <div class="col-6 px-0">
               <card-comp class="m-0">
-                <h1 class="text-black text-uppercase text-center ls-1 mt-4 mb-1" style="font-size: 12px">Populasi Jenis Kelamin</h1>
-                <hc-column :height="240" :data="g$byJeniskelamin" :data-labels="true" :legend="true" />
+                <h1 class="text-black text-uppercase text-center ls-1 mb-4" style="font-size: 16px">Populasi Jenis Kelamin</h1>
+                <hc-column :height="271" :data="g$byJeniskelamin" :data-labels="true" :legend="true" />
               </card-comp>
             </div>
             <div class="col-6 pr-0">
-              <card-comp class="border" bodyClasses="p-0">
-                <base-table :height="230" thead-classes="thead-light" :index-number="false" :data="g$tabelKandang">
+              <card-comp bodyClasses="p-2">
+                <h1 class="text-black text-uppercase text-center ls-1 mb-2" style="font-size: 16px">Populasi Kandang</h1>
+                <base-table :height="319" thead-classes="thead-light" :index-number="false" :data="g$tabelKandang">
                   <template #columns>
-                    <th class="px-2">Nama Kandang</th>
-                    <th class="px-2">Populasi</th>
-                    <th class="px-2">Rata-rata</th>
+                    <th class="px-2" style="font-size: 11px">Nama Kandang</th>
+                    <th class="px-2" style="font-size: 11px">Populasi</th>
+                    <th class="px-2" style="font-size: 11px">Rata-rata</th>
                   </template>
                   <template #default="{ item }">
-                    <td class="px-2">{{ item.nama_kandang }}</td>
-                    <td class="px-2">{{ item.Jumlah_ternak }}</td>
-                    <td class="px-2">{{ item.rata_rata.toFixed(2) }}</td>
+                    <td class="px-2" style="font-size: 14px">{{ item.nama_kandang }}</td>
+                    <td class="px-2" style="font-size: 14px">{{ item.Jumlah_ternak }}</td>
+                    <td class="px-2" style="font-size: 14px">{{ item.rata_rata.toFixed(2) }}</td>
                   </template>
                 </base-table>
               </card-comp>
@@ -199,22 +208,22 @@ export default {
                     <img alt="Image placeholder" src="@/assets/images/sheep_1.jpg" class="img-fluid" />
                   </div>
                   <div class="col">
-                    <h2 class="text-center" style="font-size: 24px">{{ g$costumerDetail.jumlah_Ternak }}</h2>
-                    <h2 class="text-center" style="font-size: 12px">Ternak</h2>
+                    <h2 class="text-center" style="font-size: 28px">{{ g$costumerDetail.jumlah_Ternak }}</h2>
+                    <h2 class="text-center" style="font-size: 18px">Ternak</h2>
                   </div>
                   <div class="col">
                     <img alt="Image placeholder" src="@/assets/images/Group 127.png" class="img-fluid" />
                   </div>
                   <div class="col">
-                    <h2 class="text-center" style="font-size: 24px">{{ g$totalKandang.Jumlah_Kandang }}</h2>
-                    <h2 class="text-center" style="font-size: 12px">Kandang</h2>
+                    <h2 class="text-center" style="font-size: 28px">{{ g$totalKandang.Jumlah_Kandang }}</h2>
+                    <h2 class="text-center" style="font-size: 18px">Kandang</h2>
                   </div>
                   <div class="col">
                     <img alt="Image placeholder" src="@/assets/images/Group 128.png" class="img-fluid" />
                   </div>
                   <div class="col">
-                    <h2 class="text-center" style="font-size: 24px">{{ g$totalPakan.Jumlah_pakan }}</h2>
-                    <h2 class="text-center" style="font-size: 12px">Pakan</h2>
+                    <h2 class="text-center" style="font-size: 28px">{{ g$totalPakan.Jumlah_pakan }}</h2>
+                    <h2 class="text-center" style="font-size: 18px">Pakan</h2>
                   </div>
                 </div>
               </div>
@@ -222,10 +231,10 @@ export default {
             <card-comp class="px-0 m-0 justify-content-center">
               <div class="row align-items-center">
                 <div class="col">
-                  <h1 class="text-black text-uppercase text-center ls-1 mb-1" style="font-size: 12px">Rata-rata Berat Tiap Status Ternak</h1>
+                  <h1 class="text-black text-uppercase text-center ls-1 mb-1" style="font-size: 16px">Rata-rata Berat Tiap Status Ternak</h1>
                 </div>
               </div>
-              <hc-pie :height="455" :data="g$DonutbyFase" :data-labels="true" :legend="true" style="font-size: 14px"/>
+              <hc-pie :height="605" :data="g$DonutbyFase" :data-labels="true" :legend="true" />
             </card-comp>
           </div>
         </div>
@@ -233,18 +242,18 @@ export default {
           <card-comp class="px-0">
             <div class="row align-items-center">
               <div class="col">
-                <h1 class="text-black text-uppercase text-center ls-1 mb-1" style="font-size: 12px">Populasi Berdasarkan Status Kesehatan</h1>
+                <h1 class="text-black text-uppercase text-center ls-1 mb-2" style="font-size: 16px">Populasi Berdasarkan Status Kesehatan</h1>
               </div>
             </div>
-            <hc-pie :height="253" :data="g$byKesehatan" :data-labels="true" :legend="true" />
+            <hc-pie :height="307" :data="g$byKesehatan" :data-labels="true" :legend="true" />
           </card-comp>
           <card-comp class="m-0">
             <div class="row align-items-center">
               <div class="col">
-                <h1 class="text-black text-uppercase text-center ls-1 mb-1" style="font-size: 12px">Populasi Berdasarkan Fase Pemeliharaan</h1>
+                <h1 class="text-black text-uppercase text-center ls-1 mb-4" style="font-size: 16px">Populasi Berdasarkan Fase Pemeliharaan</h1>
               </div>
             </div>
-            <hc-bar :height="250" :data="g$byFase" :data-labels="true" :legend="true" />
+            <hc-bar :height="306" :data="g$byFase" :data-labels="true" :legend="true" />
           </card-comp>
         </div>
       </div>

@@ -12,7 +12,7 @@ export default {
 <template>
   <main-layout :title="pageTitle">
     <template #body>
-      <p class="display-3 text-center">Welcome to Argon Dashboard!</p>
+      <p class="display-3 text-center">Welcome to Gembala Apps</p>
     </template>
   </main-layout>
 </template>
