@@ -1,28 +1,16 @@
 <template>
   <div class="wrapper">
-    <side-bar>
+    <side-bar v-if="!$route.meta.monitoring">
       <template #links>
         <div class="dropdown-divider mt-0" />
 
         <sidebar-item
           :link="{
-            name: 'Pengiriman Pesanan',
-            icon: 'fas fa-shopping-cart text-success',
+            name: 'Dashboard',
+            icon: 'fas fa-square-poll-vertical text-danger',
+            path: '/dashboard/chart',
           }"
         >
-          <sidebar-item
-            :link="{
-              name: 'Pengiriman Terjadwal',
-              path: '/ticket/order',
-            }"
-          />
-
-          <sidebar-item
-            :link="{
-              name: 'Riwayat Pengiriman',
-              path: '/ticket/delivery',
-            }"
-          />
         </sidebar-item>
 
         <div class="dropdown-divider" />
@@ -35,17 +23,75 @@
         >
           <sidebar-item
             :link="{
-              name: 'Pelanggan',
-              path: '/masterData/customer',
+              name: 'Daftar Kandang',
+              path: '/masterdata/daftar-kandang',
             }"
           />
+          <sidebar-item
+            :link="{
+              name: 'Daftar Pakan',
+              path: '/masterdata/daftar-pakan',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Daftar Penyakit',
+              path: '/masterdata/daftar-penyakit',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Daftar Ternak',
+              path: '/masterdata/daftar-ternak',
+            }"
+          />
+          <!-- <sidebar-item
+            :link="{
+              name: 'Data Kesehatan',
+              path: '/masterdata/kesehatan',
+            }"
+          /> -->
         </sidebar-item>
 
         <div class="dropdown-divider" />
+
+        <sidebar-item
+          :link="{
+            name: 'Monitoring',
+            icon: 'fas fa-address-book text-primary',
+          }"
+        >
+          <sidebar-item
+            :link="{
+              name: 'Kandang',
+              path: '/monitoring/kandang',
+            }"
+          />
+          <!-- <sidebar-item
+            :link="{
+              name: 'Pakan',
+              path: '/monitoring/pakan',
+            }"
+          /> -->
+          <sidebar-item
+            :link="{
+              name: 'Kawin',
+              path: '/monitoring/kawin',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Ternak Sakit',
+              path: '/monitoring/ternak-sakit',
+            }"
+          />
+
+          <div class="dropdown-divider" />
+        </sidebar-item>
       </template>
     </side-bar>
     <div class="main-content">
-      <dashboard-navbar :type="$route.meta.navbarType"></dashboard-navbar>
+      <dashboard-navbar v-if="!$route.meta.monitoring" :type="$route.meta.navbarType"></dashboard-navbar>
 
       <main @click="$sidebar.displaySidebar(false)">
         <router-view></router-view>
@@ -56,11 +102,11 @@
 </template>
 <script>
 /* eslint-disable no-new */
-import PerfectScrollbar from 'perfect-scrollbar';
-import 'perfect-scrollbar/css/perfect-scrollbar.css';
+import PerfectScrollbar from "perfect-scrollbar";
+import "perfect-scrollbar/css/perfect-scrollbar.css";
 
-import DashboardNavbar from './DashboardNavbar.vue';
-import ContentFooter from './ContentFooter.vue';
+import DashboardNavbar from "./DashboardNavbar.vue";
+import ContentFooter from "./ContentFooter.vue";
 
 function hasElement(className) {
   return document.getElementsByClassName(className).length > 0;
@@ -87,9 +133,9 @@ export default {
   },
   methods: {
     initScrollbar() {
-      const isWindows = navigator.platform.startsWith('Win');
+      const isWindows = navigator.platform.startsWith("Win");
       if (isWindows) {
-        initScrollbar('sidenav');
+        initScrollbar("sidenav");
       }
     },
   },

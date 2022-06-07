@@ -2,7 +2,7 @@
 import { object as y$object, string as y$string } from "yup";
 
 import { inject } from "vue";
-import useAuthStore from "@/stores/auth";
+import d$auth from "@/stores/auth";
 import { useRouter } from "vue-router";
 
 export default {
@@ -12,7 +12,7 @@ export default {
   }),
   setup() {
     const router = useRouter();
-    const auth = useAuthStore();
+    const auth = d$auth();
     const notify = inject("notify");
 
     async function onSubmit(values) {
@@ -52,7 +52,7 @@ export default {
             <img :src="siteMeta.logo" height="50" />
           </div> -->
           <div class="col-md-8 px-5">
-            <h1 class="text-white">Welcome to {{ siteMeta.title }}!</h1>
+            <h1 class="text-white">Selamat Datang di {{ siteMeta.title }}!</h1>
           </div>
         </div>
       </div>
@@ -69,7 +69,7 @@ export default {
         <div class="card bg-secondary shadow border-0">
           <div class="card-header bg-transparent pb-5">
             <div class="text-muted text-center mt-2 mb-3">
-              <small>Masuk menggunakan Username dan Sandi</small>
+              <small>Silahkan Masukan Username dan Password</small>
             </div>
             <form-comp :validation-schema="schema" @submit="onSubmit">
               <base-input name="username" addon-left-icon="fas fa-user" placeholder="Username"> </base-input>
@@ -77,7 +77,7 @@ export default {
               <base-input name="password" addon-left-icon="fas fa-lock" type="password" placeholder="Password" password> </base-input>
 
               <div class="text-center">
-                <base-button type="primary" native-type="submit" class="my-4"> Sign in </base-button>
+                <base-button type="primary" native-type="submit" class="my-4"> Masuk </base-button>
               </div>
             </form-comp>
           </div>

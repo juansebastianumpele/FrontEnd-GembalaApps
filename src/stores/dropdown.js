@@ -1,95 +1,87 @@
-import { defineStore } from 'pinia';
-import * as s$customer from '@/services/customer';
-import * as s$commodity from '@/services/commodity';
-import * as s$driver from '@/services/driver';
-import * as s$device from '@/services/device';
-import * as s$unit from '@/services/unit';
+import { defineStore } from "pinia";
+import * as s$ternak from "@/services/masterData/ternak";
+import * as s$kandang from "@/services/masterData/daftarkandang";
+import * as s$pakan from "@/services/masterData/pakan";
 
 const u$dropdown = defineStore({
-  id: 'dropdown',
+  id: "dropdown",
   state: () => ({
-    customer: [],
-    commodity: [],
-    driver: [],
-    truck: [],
-    tank: [],
-    unit: [],
-    status: [
-      { id: 0, name: 'Siap Dikirim' },
-      { id: 1, name: 'Sedang Dikirim' },
-      { id: 2, name: 'Selesai' },
-      { id: 3, name: 'Tidak Terkirim' },
-    ],
+    jenisKelamin: ["Jantan", "Betina"],
+    statusSehat: ["Sehat", "Sakit", "Sembuh"],
+    statusKeluar: ["Jual", "Mati", "Sembelih"],
+    varietas: [],
+    fasePemeliharaan: [],
+    kandang: [],
+    pakan: [],
+    listBetina: [],
+    listPejantan: [],
   }),
   actions: {
-    async a$ddCustomer() {
+    async a$ddVarietas() {
       try {
-        const { data } = await s$customer.list();
-        this.customer = data;
+        const { data } = await s$ternak.listVarietas();
+        this.varietas = data;
       } catch ({ error }) {
-        this.customer = [];
+        this.varietas = [];
         throw error;
       }
     },
-    async a$ddDriver() {
+    async a$ddFasePemeliharaan() {
       try {
-        const { data } = await s$driver.list();
-        this.driver = data;
+        const { data } = await s$ternak.listFase();
+        this.fasePemeliharaan = data;
       } catch ({ error }) {
-        this.driver = [];
+        this.fasePemeliharaan = [];
         throw error;
       }
     },
-    async a$ddCommodity() {
+    async a$ddKandang(request) {
       try {
-        const { data } = await s$commodity.list();
-        this.commodity = data;
+        const { data } = await s$kandang.list(request);
+        this.kandang = data;
       } catch ({ error }) {
-        this.commodity = [];
+        this.kandang = [];
         throw error;
       }
     },
-    async a$ddTank(request) {
+    async a$ddPakan(request) {
       try {
-        if (!request) {
-          this.tank = [];
-          return;
-        }
-        const { data } = await s$customer.tank(request);
-        this.tank = data;
+        const { data } = await s$pakan.list(request);
+        this.pakan = data;
       } catch ({ error }) {
-        this.tank = [];
+        this.pakan = [];
         throw error;
       }
     },
-    async a$ddTruck() {
+    async a$ddListBetina(request) {
       try {
-        const { data } = await s$device.list();
-        this.truck = data;
+        const { data } = await s$ternak.listBetina(request);
+        this.listBetina = data;
       } catch ({ error }) {
-        this.truck = [];
+        this.listBetina = [];
         throw error;
       }
     },
-    async a$ddUnit() {
+    async a$ddListPejantan(request) {
       try {
-        const { data } = await s$unit.list();
-        this.unit = data;
+        const { data } = await s$ternak.listPejantan(request);
+        this.listPejantan = data;
       } catch ({ error }) {
-        this.unit = [];
+        this.listPejantan = [];
         throw error;
       }
     },
   },
   getters: {
-    g$ddCustomer: (state) => state.customer.map(({ id, name }) => ({ id, name })),
-    g$ddDriver: (state) => state.driver.map(({ id, name }) => ({ id, username: name })),
-    g$ddCommodity: (state) => state.commodity.map(({ id, name }) => ({ id, name })),
-    g$ddTank: (state) => state.tank.map(({ id, name, quantity }) => ({ id, name, quantity })),
-    g$ddUnit: (state) => state.unit.map(({ id, name }) => ({ id, name })),
-    g$ddStatusFalse: (state) => state.status.map(({ id, name }) => ({ id, name })).filter((obj) => obj.id <= 1),
-    g$ddStatusTrue: (state) => state.status.map(({ id, name }) => ({ id, name })).filter((obj) => obj.id >= 2),
-    g$ddTruck: (state) => state.truck.map(({ id, truckNumber }) => ({ id, name: truckNumber })),
+    g$ddJenisKelamin: (state) => state.jenisKelamin,
+    g$ddStatusSehat: (state) => state.statusSehat,
+    g$ddStatusKeluar: (state) => state.statusKeluar,
+    g$ddVarietas: (state) => state.varietas.map(({ id_varietas, nama_varietas }) => ({ id: id_varietas, name: nama_varietas })),
+    g$ddFasePemeliharaan: (state) => state.fasePemeliharaan.map(({ id_fp, fase }) => ({ id: id_fp, name: fase })),
+    g$ddKandang: (state) => state.kandang.map(({ id_kandang, nama_kandang }) => ({ id: id_kandang, name: nama_kandang })),
+    g$ddPakan: (state) => state.pakan.map(({ id_pakan, nama_pakan }) => ({ id: id_pakan, name: nama_pakan })),
+    g$ddListBetina: (state) => state.listBetina.map(({ id_ternak }) => ({ id: id_ternak, name: id_ternak })),
+    g$ddListPejantan: (state) => state.listPejantan.map(({ id_ternak }) => ({ id: id_ternak, name: id_ternak })),
   },
 });
 

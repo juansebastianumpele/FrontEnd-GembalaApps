@@ -1,4 +1,4 @@
-import parseJwt from '@/utils/parseJwt';
+import parseJwt from "@/utils/parseJwt";
 
 const setCk = function setCookie(cName, value, { hour, ms, datetime }, secure = false) {
   const d = new Date();
@@ -12,50 +12,49 @@ const setCk = function setCookie(cName, value, { hour, ms, datetime }, secure = 
 
 const getCk = function getCookie(cName, secure = false) {
   const name = `${cName}=`;
-  const ca = document.cookie.split(';');
+  const ca = document.cookie.split(";");
   for (let i = 0; i < ca.length; i += 1) {
     let c = ca[i];
-    while (c.charAt(0) === ' ') {
+    while (c.charAt(0) === " ") {
       c = c.substring(1);
     }
     if (c.indexOf(name) === 0) {
-      return secure
-        ? window.atob(c.substring(name.length, c.length))
-        : c.substring(name.length, c.length);
+      return secure ? window.atob(c.substring(name.length, c.length)) : c.substring(name.length, c.length);
     }
   }
-  return '';
+  return "";
 };
 
 const checkCk = function checkCookie(cName) {
   const user = getCk(cName);
-  if (user !== '') {
+  if (user !== "") {
     return true;
   }
   return false;
 };
 
 const delCk = function deleteCookie(cName) {
-  setCk(cName, '', -1);
+  setCk(cName, "", -1);
 };
 
 const certDetail = function getCertDetail() {
-  const token = getCk('CERT');
+  const token = getCk("CERT");
   if (token) {
-    const {
-      u, r, exp,
-    } = parseJwt(token);
-    if (u === undefined) delCk('CERT');
+    const { id, name, level, exp } = parseJwt(token);
+    if (id === undefined) delCk("CERT");
     return {
-      id: u, role: r, exp,
+      id,
+      name,
+      role: level,
+      exp,
     };
   }
   return {
-    id: '', r: '', exp: '',
+    id: "",
+    name: "",
+    r: "",
+    exp: "",
   };
 };
 
-export {
-  setCk, getCk, checkCk, delCk,
-  certDetail,
-};
+export { setCk, getCk, checkCk, delCk, certDetail };

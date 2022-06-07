@@ -1,49 +1,43 @@
 import { defineStore } from 'pinia';
-import * as s$customer from '@/services/customer';
+import * as s$costumer from '@/services/customer';
 
-const u$customer = defineStore({
-  id: 'customer',
+const u$costumer = defineStore({
+  id: 'costumer',
   state: () => ({
-    customer: [],
+    costumer: [],
     detail: {},
   }),
   actions: {
-    async a$customerList() {
+    async a$costumerList() {
       try {
-        const { data } = await s$customer.list();
-        this.customer = data;
+        const { data } = await s$costumer.list();
+        this.costumer = data;
       } catch ({ error }) {
-        this.customer = [];
+        this.costumer = [];
         throw error;
       }
     },
-    async a$customerDetail(request) {
+    async a$costumerDetail(request) {
       try {
-        const { data } = await s$customer.detail(request);
+        const { data } = await s$costumer.detail(request);
         this.detail = { ...data[0] };
       } catch ({ error }) {
         this.detail = {};
         throw error;
       }
     },
-    async a$customerAdd(request) {
+    async a$costumerEdit(request) {
       try {
-        await s$customer.add(request);
-      } catch ({ error }) {
-        throw error;
-      }
-    },
-    async a$customerEdit(request) {
-      try {
-        await s$customer.edit(request);
+        await s$costumer.edit(request);
       } catch ({ error }) {
         throw error;
       }
     },
   },
   getters: {
-    g$customerList: (state) => state.customer,
+    g$costumerList: (state) => state.costumer,
+    g$costumerDetail: (state) => state.detail,
   },
 });
 
-export default u$customer;
+export default u$costumer;

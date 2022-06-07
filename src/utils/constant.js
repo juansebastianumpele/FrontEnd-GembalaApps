@@ -1,18 +1,20 @@
 const host = import.meta.env.VITE_BASE_API_URL;
 
-const baseApiUrl = `${host}/api/`;
+const baseApiUrl = `${host}/`;
 
 const subApiUrl = {
-  admin: 'dashboard',
-  ticket: 'ticket',
-  customer: 'customer',
-  commodity: 'commodity',
-  driver: 'driver',
-  device: 'device',
-  unit: 'unit',
-  user: 'user',
+  // Base
+  auth: "auth",
+  api: "api",
+  // Sub Sub URL
+  pakan: "pakan",
+  kawin: "kawin",
+  kandang: "kandang",
+  kesehatan: "kesehatan",
+  penyakit: "penyakit",
+  ternak: "ternak",
+  costumer: "costumer",
+  total: "total",
 };
 
-export {
-  host, baseApiUrl, subApiUrl,
-};
+export { host, baseApiUrl, subApiUrl };
