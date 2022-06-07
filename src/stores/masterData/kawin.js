@@ -5,13 +5,22 @@ const u$kawin = defineStore({
   id: "kawin",
   state: () => ({
     kawin: [],
-    betina: [],
   }),
   actions: {
     // List Domba Betina (Kawin Page)
     async a$betinaList(request) {
       try {
-        const { data } = await s$kawin.list(request);
+        const { data } = await s$kawin.listBetina(request);
+        this.kawin = data;
+      } catch ({ error }) {
+        this.kawin = [];
+        throw error;
+      }
+    },
+    // List Domba Jantan (Kawin Page)
+    async a$jantanList(request) {
+      try {
+        const { data } = await s$kawin.listJantan(request);
         this.kawin = data;
       } catch ({ error }) {
         this.kawin = [];
