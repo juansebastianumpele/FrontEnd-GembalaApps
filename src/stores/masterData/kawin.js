@@ -8,9 +8,20 @@ const u$kawin = defineStore({
     betina: [],
   }),
   actions: {
+    // List Domba Betina (Kawin Page)
     async a$betinaList(request) {
       try {
         const { data } = await s$kawin.list(request);
+        this.kawin = data;
+      } catch ({ error }) {
+        this.kawin = [];
+        throw error;
+      }
+    },
+    // List Kawin by ID Ternak (Detail Kawin Page)
+    async a$kawinList(request) {
+      try {
+        const { data } = await s$kawin.listKawin(request);
         this.kawin = data;
       } catch ({ error }) {
         this.kawin = [];
@@ -35,16 +46,6 @@ const u$kawin = defineStore({
       try {
         await s$kawin.del(request);
       } catch ({ error }) {
-        throw error;
-      }
-    },
-    // Get List Kawin by ID Ternak
-    async a$kawinList(request) {
-      try {
-        const { data } = await s$kawin.listKawin(request);
-        this.kawin = data;
-      } catch ({ error }) {
-        this.kawin = [];
         throw error;
       }
     },
