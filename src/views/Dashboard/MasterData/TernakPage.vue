@@ -352,7 +352,7 @@ export default {
         this.notify(error, false);
       }
     },
-    async triggerdetailTernak(row) {
+    async triggerDetail(row) {
       try {
         this.infoTernak = { ...row };
         this.modal.detailTernak = true;
@@ -382,7 +382,7 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$ternakList.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$ternakList" :columns="dt.column" :actions="dt.action" @ubah-ternak="triggerEditModal" @hapus-ternak="triggerDelete" @detail-ternak="triggerdetailTernak" />
+      <data-table v-else :index="true" :data="g$ternakList" :columns="dt.column" :actions="dt.action" @ubah-ternak="triggerEditModal" @hapus-ternak="triggerDelete" @detail-ternak="triggerDetail" />
     </template>
 
     <template #modal>
@@ -622,118 +622,118 @@ export default {
       </modal-comp>
 
       <!-- Modal Detail Ternak -->
-      <!--  <modal-comp v-model:show="modal.detailTernak" modal-classes="modal-md">
+      <modal-comp v-model:show="modal.detailTernak" modal-classes="modal-md">
         <template #header>
           <h3 class="modal-title">Detail Ternak Nomor {{ infoTernak.nomor }}</h3>
         </template>
-        <template #body>
+        <template v-if="modal.detailTernak" #body>
           <div style="max-height: 450px; overflow-y: auto; overflow-x: hidden">
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Nomor Ternak</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ nomor }}</span>
+                : <span style="font-weight: 300"> {{ infoTernak.nomor }}</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">ID RFID</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ rf_id ?? "-" }}</span>
+                : <span style="font-weight: 300"> {{ infoTernak.rf_id ?? "-" }}</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Varietas</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ varietas.nama }}</span>
+                : <span style="font-weight: 300"> {{ infoTernak.varietas.nama }}</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Jenis Kelamin</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ jenis_kelamin }}</span>
+                : <span style="font-weight: 300"> {{ infoTernak.jenis_kelamin }}</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">ID Induk</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ id_induk }}</span>
+                : <span style="font-weight: 300"> {{ infoTernak.id_induk }}</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">ID Pemancek</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ id_pejantan }}</span>
+                : <span style="font-weight: 300"> {{ infoTernak.id_pejantan }}</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Kandang</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ nama_kandang.nama_kandang }}</span>
+                : <span style="font-weight: 300"> {{ infoTernak.nama_kandang.nama_kandang }}</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Fase Pemeliharaan</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ fase.fase }}</span>
+                : <span style="font-weight: 300"> {{ infoTernak.fase.fase }}</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Jenis Pakan</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ nama_pakan.nama_pakan }}</span>
+                : <span style="font-weight: 300"> {{ infoTernak.nama_pakan.nama_pakan }}</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Berat</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ berat_berkala }} Kg</span>
+                : <span style="font-weight: 300"> {{ infoTernak.berat_berkala }} kg</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Suhu</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ suhu_berkala }} C</span>
+                : <span style="font-weight: 300"> {{ infoTernak.suhu_berkala }} C</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Status Kesehatan</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ status_sehat }}</span>
+                : <span style="font-weight: 300"> {{ infoTernak.status_sehat }}</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Nama Penyakit</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ nama_penyakit }}</span>
+                : <span style="font-weight: 300"> {{ infoTernak.nama_penyakit }}</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Tanggal Masuk</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ tanggal_masuk }}</span>
+                : <span style="font-weight: 300"> {{ infoTernak.tanggal_masuk }}</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Umur</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ umur }} Bulan</span>
+                : <span style="font-weight: 300"> {{ infoTernak.umur }} Bulan</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Tanggal Keluar</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ tanggal_keluar ?? "-" }}</span>
+                : <span style="font-weight: 300"> {{ infoTernak.tanggal_keluar ?? "-" }}</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Status Keluar</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ status_keluar ?? "-" }}</span>
+                : <span style="font-weight: 300"> {{ infoTernak.status_keluar ?? "-" }}</span>
               </div>
             </div>
           </div>
         </template>
         <template #footer> </template>
-      </modal-comp> -->
+      </modal-comp>
     </template>
   </main-layout>
 </template>
