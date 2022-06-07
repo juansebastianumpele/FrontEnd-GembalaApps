@@ -284,7 +284,7 @@ export default {
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Jenis Kelamin</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ selectedTernak.jenis_kelamin }}</span>
+                : <span style="font-weight: 300"> {{ selectedTernak.jenis_kelamin[0] }}</span>
               </div>
             </div>
             <div class="row">
