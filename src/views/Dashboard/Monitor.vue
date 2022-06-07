@@ -205,25 +205,25 @@ export default {
               <div class="row align-items-center">
                 <div class="d-flex flex-row">
                   <div class="col">
-                    <img alt="Image placeholder" src="@/assets/images/sheep_1.jpg" class="img-fluid" />
+                    <img alt="Image placeholder" src="/images/domba.jpg" class="img-fluid" />
                   </div>
                   <div class="col">
-                    <h2 class="text-center" style="font-size: 28px">{{ g$costumerDetail.jumlah_Ternak }}</h2>
-                    <h2 class="text-center" style="font-size: 18px">Ternak</h2>
+                    <h2 class="text-center" style="font-size: 24px">{{ g$costumerDetail.jumlah_Ternak }}</h2>
+                    <h2 class="text-center" style="font-size: 12px">Ternak</h2>
                   </div>
                   <div class="col">
-                    <img alt="Image placeholder" src="@/assets/images/Group 127.png" class="img-fluid" />
+                    <img alt="Image placeholder" src="/images/kandang.png" class="img-fluid" />
                   </div>
                   <div class="col">
-                    <h2 class="text-center" style="font-size: 28px">{{ g$totalKandang.Jumlah_Kandang }}</h2>
-                    <h2 class="text-center" style="font-size: 18px">Kandang</h2>
+                    <h2 class="text-center" style="font-size: 24px">{{ g$totalKandang.Jumlah_Kandang }}</h2>
+                    <h2 class="text-center" style="font-size: 12px">Kandang</h2>
                   </div>
                   <div class="col">
-                    <img alt="Image placeholder" src="@/assets/images/Group 128.png" class="img-fluid" />
+                    <img alt="Image placeholder" src="/images/pakan.png" class="img-fluid" />
                   </div>
                   <div class="col">
-                    <h2 class="text-center" style="font-size: 28px">{{ g$totalPakan.Jumlah_pakan }}</h2>
-                    <h2 class="text-center" style="font-size: 18px">Pakan</h2>
+                    <h2 class="text-center" style="font-size: 24px">{{ g$totalPakan.Jumlah_pakan }}</h2>
+                    <h2 class="text-center" style="font-size: 12px">Pakan</h2>
                   </div>
                 </div>
               </div>
