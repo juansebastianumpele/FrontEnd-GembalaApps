@@ -57,7 +57,18 @@ export default {
           th: "ID Cempe",
         },
       ],
-      action: [],
+      action: [
+        {
+          text: "Ubah",
+          color: "warning",
+          event: "ubah-kawin",
+        },
+        {
+          text: "Hapus",
+          color: "danger",
+          event: "hapus-kawin",
+        },
+      ],
     },
   }),
   computed: {
