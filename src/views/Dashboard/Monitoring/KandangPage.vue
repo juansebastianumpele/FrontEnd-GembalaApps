@@ -65,7 +65,7 @@ export default {
     await this.a$listKandang(this.userInfo.id).catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$kandang, ["a$kandangAdd", "a$listKandang", "a$kandangDelete", "a$kandangEdit"]),
+    ...mapActions(d$kandang, ["a$listKandang", "a$kandangAdd", "a$kandangDelete", "a$kandangEdit"]),
     clearInput() {
       this.input = {
         id: null,

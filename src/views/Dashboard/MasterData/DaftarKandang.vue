@@ -1,6 +1,6 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import d$kandang from "@/stores/masterData/daftarkandang";
+import d$daftarkandang from "@/stores/masterData/daftarkandang";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 import router from "../../../router";
@@ -68,7 +68,7 @@ export default {
     },
   }),
   computed: {
-    ...mapState(d$kandang, ["g$kandangList", "g$kandangDetail"]),
+    ...mapState(d$daftarkandang, ["g$kandangList", "g$kandangDetail"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -84,7 +84,7 @@ export default {
     await this.a$kandangList(this.userInfo.id).catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$kandang, ["a$kandangAdd", "a$kandangList", "a$kandangDelete", "a$kandangEdit"]),
+    ...mapActions(d$daftarkandang, ["a$kandangAdd", "a$kandangList", "a$kandangDelete", "a$kandangEdit"]),
     clearInput() {
       this.input = {
         id: null,

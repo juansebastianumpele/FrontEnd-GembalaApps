@@ -8,7 +8,7 @@ const u$kandang = defineStore({
     totalKandang: 0,
   }),
   actions: {
-    async a$kandangList(request) {
+    async a$kandangDesc(request) {
       try {
         const { data } = await s$kandang.list(request);
         this.kandang = data;
