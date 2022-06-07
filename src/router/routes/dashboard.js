@@ -48,14 +48,14 @@ const dashboardRoutes = [
     },
     children: [
       {
-        path: "daftarkandang",
+        path: "daftar-kandang",
         name: "Daftar Kandang",
         component: () => import("@/views/Dashboard/MasterData/DaftarKandang.vue"),
         meta: { requireAuth: true },
       },
       {
-        path: "pakan",
-        name: "Pakan",
+        path: "daftar-pakan",
+        name: "Daftar Pakan",
         component: () => import("@/views/Dashboard/MasterData/PakanPage.vue"),
         meta: { requireAuth: true },
       },
@@ -66,14 +66,14 @@ const dashboardRoutes = [
         meta: { requireAuth: true },
       },
       {
-        path: "penyakit",
-        name: "Penyakit",
+        path: "daftar-penyakit",
+        name: "Daftar Penyakit",
         component: () => import("@/views/Dashboard/MasterData/PenyakitPage.vue"),
         meta: { requireAuth: true },
       },
       {
-        path: "ternak",
-        name: "Ternak",
+        path: "daftar-ternak",
+        name: "Daftar Ternak",
         component: () => import("@/views/Dashboard/MasterData/TernakPage.vue"),
         meta: { requireAuth: true },
       },
@@ -128,7 +128,7 @@ const dashboardRoutes = [
         meta: { requireAuth: true },
       },
       {
-        path: "kesehatan",
+        path: "ternak-sakit",
         name: "Ternak Sakit",
         component: () => import("@/views/Dashboard/Monitoring/KesehatanPage.vue"),
         meta: { requireAuth: true },
