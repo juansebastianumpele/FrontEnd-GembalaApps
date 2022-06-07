@@ -7,7 +7,7 @@ import router from "../../../router";
 
 export default {
   metaInfo: () => ({
-    title: "Data Kawin",
+    title: "Domba Betina",
   }),
   setup() {
     const schema = y$object({});
@@ -16,7 +16,7 @@ export default {
     };
   },
   data: () => ({
-    pageTitle: "Data Kawin",
+    pageTitle: "Domba Betina",
     // Input
     input: {
       id: null,
@@ -37,10 +37,6 @@ export default {
         {
           name: "fase",
           th: "Status Ternak",
-        },
-        {
-          name: "nama_penyakit",
-          th: "Status Kesehatan",
         },
       ],
       action: [
@@ -79,7 +75,7 @@ export default {
       try {
         const { id_ternak } = row;
         router.push({
-          name: "List Kawin",
+          name: "Detail Kawin",
           params: {
             id: id_ternak,
           },

@@ -1,16 +1,17 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import d$kawin from "@/stores/masterData/kawin";
+import d$dropdown from "@/stores/dropdown";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 
 export default {
   metaInfo: () => ({
-    title: "Data Kawin",
+    title: "Riwayat Kawin",
   }),
   setup() {
     const schema = y$object({
-      id_ternak: y$string().required().label("ID Induk"),
+      // id_ternak: y$string().required().label("ID Induk"),
       tanggal_kawin: y$string().nullable().label("Tanggal Kawin"),
       id_pemancek: y$string().nullable().label("ID Pemancek"),
     });
@@ -19,13 +20,14 @@ export default {
     };
   },
   data: () => ({
-    pageTitle: "Kawin",
+    pageTitle: "Riwayat Kawin",
     // Input
     input: {
       id: null,
-      id_ternak: "",
       tanggal_kawin: "",
+      // id_ternak: "",
       id_pemancek: "",
+      id_users: null,
     },
     // UI
     modal: {
@@ -37,33 +39,39 @@ export default {
     dt: {
       column: [
         {
+          name: "tanggal_kawin",
+          th: "Tanggal Kawin",
+        },
+        {
           name: "nomor",
-          th: "Nomor Ternak",
+          th: "Nomor Ternak Betina",
         },
         {
-          name: "nama_varietas",
-          th: "Varietas",
+          name: "id_pemancek",
+          th: "ID Pejantan",
         },
         {
-          name: "fase",
-          th: "Status Ternak",
-        },
-        {
-          name: "nama_penyakit",
-          th: "Status Kesehatan",
+          name: "",
+          th: "ID Cempe",
         },
       ],
       action: [
         {
-          text: "Detail",
-          color: "info",
-          event: "",
+          text: "Ubah",
+          color: "warning",
+          event: "ubah-kawin",
+        },
+        {
+          text: "Hapus",
+          color: "danger",
+          event: "hapus-kawin",
         },
       ],
     },
   }),
   computed: {
     ...mapState(d$kawin, ["g$kawinList"]),
+    ...mapState(d$dropdown, ["g$ddListBetina", "g$ddListPejantan"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -76,29 +84,26 @@ export default {
     },
   },
   async mounted() {
-    await this.a$kawinList(this.userInfo.id).catch((error) => this.notify(error, false));
+    await this.a$kawinList(this.$route.params.id).catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$kawin, ["a$kawinList"]),
+    ...mapActions(d$kawin, ["a$kawinList", "a$kawinAdd", "a$kawinEdit", "a$kawinDelete"]),
     clearInput() {
       this.input = {
         id: null,
-        // id_kawin: "",
-        id_ternak: "",
         tanggal_kawin: "",
+        // id_ternak: "",
         id_pemancek: "",
-        // nama_fase: "",
+        id_users: null,
       };
     },
     async addKawin() {
       try {
-        const { id_kawin, id_ternak, tanggal_kawin, id_pemancek, nama_fase } = this.input;
+        const { tanggal_kawin, id_pemancek } = this.input;
         const data = {
-          // id_kawin,
-          id_ternak,
           tanggal_kawin,
+          id_ternak: this.$route.params.id,
           id_pemancek,
-          // nama_fase,
         };
         await this.schema.validate(data);
         await this.a$kawinAdd(data);
@@ -107,19 +112,17 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$kawinList(this.userInfo.id);
+        this.a$kawinList(this.$route.params.id).catch((error) => this.notify(error, false));
       }
     },
     async editKawin() {
       try {
-        const { id, id_kawin, id_ternak, tanggal_kawin, id_pemancek, nama_fase } = this.input;
+        const { id, tanggal_kawin, id_pemancek } = this.input;
         const data = {
           id,
-          // id_kawin,
-          id_ternak,
           tanggal_kawin,
+          id_ternak: this.$route.params.id,
           id_pemancek,
-          // nama_fase,
         };
         await this.schema.validate(data);
         await this.a$kawinEdit(data);
@@ -128,7 +131,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$kawinList(this.userInfo.id);
+        this.a$kawinList(this.$route.params.id).catch((error) => this.notify(error, false));
       }
     },
     async delKawin() {
@@ -140,17 +143,15 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$kawinList(this.userInfo.id);
+        this.a$kawinList(this.$route.params.id).catch((error) => this.notify(error, false));
       }
     },
     async triggerEditModal(row) {
       try {
-        const { id_kawin, id_ternak, tanggal_kawin, nama_fase, id_pemancek } = row;
+        const { id_kawin, tanggal_kawin, id_pemancek } = row;
         this.input = {
-          id: nomor,
-          id_ternak,
+          id: id_kawin,
           tanggal_kawin,
-          // nama_fase,
           id_pemancek,
         };
         this.modal.ubahKawin = true;
@@ -202,31 +203,31 @@ export default {
         <template #body>
           <form-comp v-if="modal.addKawin" :validation-schema="schema">
             <div class="row">
-              <!-- <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.id_kawin" type="text" name="id_kawin">
-                  <base-input v-bind="field" placeholder="Text" label="ID Kawin"></base-input>
-                </field-form>
-              </div> -->
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.id_ternak" type="text" name="id_ternak">
-                  <base-input v-bind="field" placeholder="Text" label="ID Ternak" required></base-input>
-                </field-form>
-              </div>
-              <div class="col-12">
-                <base-input name="tanggal_kawin" class="my-4" placeholder="YYYY-MM-DD" label="Tanggal Kawin" required>
-                  <flat-pickr v-model.lazy="input.tanggal_kawin" :config="{ mode: 'single', allowInput: true }" class="form-control datepicker" placeholder="YYYY-MM-DD" />
+                <base-input name="tanggal_kawin" class="" placeholder="YYYY-MM-DD" label="Tanggal Kawin" required>
+                  <flat-pickr v-model.lazy="input.tanggal_kawin" :config="{ mode: 'single', allowInput: true }" class="form-control datepicker" placeholder="Pilih Tanggal Kawin" />
                 </base-input>
               </div>
               <!-- <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.nama_fase" type="text" name="nama_fase">
-                  <base-input v-bind="field" placeholder="Text" label="Status Ternak"></base-input>
+                <field-form v-slot="{ field }" v-model="input.id_ternak" type="text" name="id_ternak">
+                  <base-input v-bind="field" placeholder="Masukan ID Ternak Betina" label="ID Betina" required></base-input>
                 </field-form>
               </div> -->
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.id_pemancek" type="text" name="id_pemancek">
-                  <base-input v-bind="field" placeholder="Text" label="ID Pemancek" required></base-input>
+                  <base-input v-bind="field" placeholder="Masukan ID Ternak Pejantan" label="ID Pemancek" required></base-input>
                 </field-form>
               </div>
+              <!-- <div class="col-12">
+                <base-input name="id_ternak" placeholder="ID Betina" label="ID Betina" required>
+                  <multi-select v-model="input.id_ternak" :options="g$ddListBetina" label="name" track-by="id" placeholder="Pilih/Masukan ID Ternak Betina" :show-labels="false" />
+                </base-input>
+              </div>
+              <div class="col-12">
+                <base-input name="id_ternak" placeholder="ID Pejantan" label="ID Pejantan" required>
+                  <multi-select v-model="input.id_ternak" :options="g$ddListPejantan" label="name" track-by="id" placeholder="Pilih/Masukan ID Ternak Pejantan" :show-labels="false" />
+                </base-input>
+              </div> -->
             </div>
           </form-comp>
         </template>
@@ -242,31 +243,36 @@ export default {
         <template #body>
           <form-comp v-if="modal.ubahKawin" :validation-schema="schema">
             <div class="row">
-              <!-- <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.id_kawin" type="text" name="id_kawin">
-                  <base-input v-bind="field" placeholder="Text" label="ID Induk" required></base-input>
-                </field-form>
-              </div> -->
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.id_ternak" type="text" name="id_ternak">
-                  <base-input v-bind="field" placeholder="Text" label="ID Induk" required></base-input>
-                </field-form>
-              </div>
-              <div class="col-12">
-                <base-input name="tanggal_kawin" class="my-4" placeholder="YYYY-MM-DD" label="Tanggal Kawin">
-                  <flat-pickr v-model.lazy="filter.dateRange" :config="{ mode: 'range', allowInput: true }" class="form-control datepicker" placeholder="YYYY-MM-DD" />
+                <base-input name="tanggal_kawin" class="" placeholder="YYYY-MM-DD" label="Tanggal Kawin" required>
+                  <flat-pickr v-model.lazy="input.tanggal_kawin" :config="{ mode: 'single', allowInput: true }" class="form-control datepicker" placeholder="Pilih Tanggal Kawin" />
                 </base-input>
               </div>
               <!-- <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.nama_fase" type="text" name="nama_fase">
-                  <base-input v-bind="field" placeholder="Text" label="Status Ternak"></base-input>
+                <field-form v-slot="{ field }" v-model="input.id_ternak" type="text" name="id_ternak">
+                  <base-input v-bind="field" placeholder="Masukan ID Ternak Betina" label="ID Betina" required></base-input>
                 </field-form>
               </div> -->
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.id_pemancek" type="text" name="id_pemancek">
-                  <base-input v-bind="field" placeholder="Text" label="ID Pemancek"></base-input>
+                  <base-input v-bind="field" placeholder="Masukan ID Ternak Pejantan" label="ID Pemancek" required></base-input>
                 </field-form>
               </div>
+              <!-- <div class="col-12">
+                <base-input name="id_ternak" placeholder="ID Betina" label="ID Betina" required>
+                  <multi-select v-model="input.id_ternak" :options="g$ddListBetina" label="name" track-by="id" placeholder="Pilih/Masukan ID Ternak Betina" :show-labels="false" />
+                </base-input>
+              </div>
+              <div class="col-12">
+                <base-input name="id_ternak" placeholder="ID Pejantan" label="ID Pejantan" required>
+                  <multi-select v-model="input.id_ternak" :options="g$ddListPejantan" label="name" track-by="id" placeholder="Pilih/Masukan ID Ternak Pejantan" :show-labels="false" />
+                </base-input>
+              </div> -->
+              <!-- <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.id_cempe" type="text" name="id_cempe">
+                  <base-input v-bind="field" placeholder="Masukan ID Cempe" label="ID Cempe" required></base-input>
+                </field-form>
+              </div> -->
             </div>
           </form-comp>
         </template>

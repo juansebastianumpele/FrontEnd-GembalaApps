@@ -32,9 +32,9 @@ export default {
       fase: y$object({
         id: y$string().required().label("ID Fase"),
       }).label("Status Ternak"),
+      foto: y$array().nullable().label("Foto"),
       // tanggal_keluar: y$string().nullable().label("Tanggal Keluar"),
       // status_keluar: y$string().nullable().label("Status Keluar"),
-      foto: y$array().nullable().label("Foto"),
       // id_ternak: y$string().required().label("ID Ternak"),
       // id_users: y$string().required().label("ID Users"),
     });
@@ -60,6 +60,7 @@ export default {
       kandang: "",
       pakan: "",
       fase: "",
+      tanggal_kawin: "",
       tanggal_keluar: "",
       status_keluar: "",
       foto: null,
@@ -71,7 +72,9 @@ export default {
       addTernak: false,
       ubahTernak: false,
       confirm: false,
+      detailTernak: false,
     },
+
     // DataTable
     dt: {
       column: [
@@ -95,7 +98,7 @@ export default {
         },
         {
           name: "umur",
-          th: "Umur",
+          th: "Umur (bln)",
         },
       ],
       action: [
@@ -116,6 +119,7 @@ export default {
         },
       ],
     },
+    infoTernak: {},
   }),
   computed: {
     ...mapState(d$ternak, ["g$ternakList", "g$ternakDetail"]),
@@ -161,6 +165,7 @@ export default {
         kandang: "",
         pakan: "",
         fase: "",
+        tanggal_kawin: "",
         tanggal_keluar: "",
         status_keluar: "",
         foto: null,
@@ -171,7 +176,27 @@ export default {
     },
     async addTernak() {
       try {
-        const { rf_id, jenis_kelamin, varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, kandang, pakan, fase, tanggal_keluar, status_keluar, foto, id_ternak, id_users } = this.input;
+        const {
+          rf_id,
+          jenis_kelamin,
+          varietas,
+          berat_berkala,
+          suhu_berkala,
+          tanggal_lahir,
+          tanggal_masuk,
+          id_induk,
+          id_pejantan,
+          status_sehat,
+          kandang,
+          pakan,
+          fase,
+          tanggal_kawin,
+          foto,
+          tanggal_keluar,
+          status_keluar,
+          id_ternak,
+          id_users,
+        } = this.input;
         const data = new FormData();
         data.append("rf_id", rf_id);
         data.append("jenis_kelamin", jenis_kelamin);
@@ -189,8 +214,9 @@ export default {
         // data.append("tanggal_keluar", tanggal_keluar);
         // data.append("status_keluar", status_keluar);
         data.append("foto", foto);
-        // data.append("id_ternak", this.input.id_ternak);
         data.append("id_users", this.userInfo.id);
+        data.append("tanggal_kawin", tanggal_kawin);
+        // data.append("id_ternak", this.input.id_ternak);
         await this.schema.validate(this.input);
         await this.a$ternakAdd(data);
         this.modal.addTernak = false;
@@ -204,7 +230,8 @@ export default {
     },
     async editTernak() {
       try {
-        const { id, rf_id, jenis_kelamin, varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, kandang, pakan, fase, tanggal_keluar, status_keluar, foto, id_ternak } = this.input;
+        const { id, rf_id, jenis_kelamin, varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, kandang, pakan, fase, tanggal_keluar, status_keluar, foto, id_ternak, tanggal_kawin } =
+          this.input;
         const data = {
           id,
           formData: new FormData(),
@@ -227,6 +254,7 @@ export default {
         if (foto) data.formData.append("foto", foto);
         data.formData.append("id_ternak", id);
         data.formData.append("id_users", this.userInfo.id);
+        if (tanggal_kawin) data.formData.append("tanggal_kawin", tanggal_kawin);
         await this.schema.validate(this.input);
         await this.a$ternakEdit(data);
         this.modal.ubahTernak = false;
@@ -251,8 +279,27 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_ternak, rf_id, jenis_kelamin, varietas, berat_berkala, suhu_berkala, tanggal_lahir, tanggal_masuk, id_induk, id_pejantan, status_sehat, nama_kandang, nama_pakan, fase, tanggal_keluar, status_keluar, foto, id_users } =
-          row;
+        const {
+          id_ternak,
+          rf_id,
+          jenis_kelamin,
+          varietas,
+          berat_berkala,
+          suhu_berkala,
+          tanggal_lahir,
+          tanggal_masuk,
+          id_induk,
+          id_pejantan,
+          status_sehat,
+          nama_kandang,
+          nama_pakan,
+          fase,
+          tanggal_keluar,
+          status_keluar,
+          foto,
+          tanggal_kawin,
+          id_users,
+        } = row;
         this.input = {
           id: id_ternak,
           rf_id,
@@ -283,6 +330,7 @@ export default {
           tanggal_keluar,
           status_keluar,
           foto,
+          tanggal_kawin,
           // id_users,
         };
         this.modal.ubahTernak = true;
@@ -303,6 +351,12 @@ export default {
         this.clearInput();
         this.notify(error, false);
       }
+    },
+    async triggerDetail(row) {
+      try {
+        this.infoTernak = { ...row };
+        this.modal.detailTernak = true;
+      } catch (error) {}
     },
     handleFileUpload() {
       const file = this.$refs.foto.files[0];
@@ -328,7 +382,7 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$ternakList.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$ternakList" :columns="dt.column" :actions="dt.action" @ubah-ternak="triggerEditModal" @hapus-ternak="triggerDelete" />
+      <data-table v-else :index="true" :data="g$ternakList" :columns="dt.column" :actions="dt.action" @ubah-ternak="triggerEditModal" @hapus-ternak="triggerDelete" @detail-ternak="triggerDetail" />
     </template>
 
     <template #modal>
@@ -401,6 +455,11 @@ export default {
               </div>
               <div class="col-6">
                 <base-input name="fase" placeholder="Status Ternak" label="Status Ternak" required>
+                  <multi-select v-model="input.fase" :options="g$ddFasePemeliharaan" label="name" track-by="id" placeholder="Pilih Status Ternak" :show-labels="false" />
+                </base-input>
+              </div>
+              <div class="col-6" v-if="input.fase.name === 'Cempe'">
+                <base-input name="tanggal_kawin" placeholder="Tanggal Kawin Induk" label="Tanggal Kawin Induk" required>
                   <multi-select v-model="input.fase" :options="g$ddFasePemeliharaan" label="name" track-by="id" placeholder="Pilih Status Ternak" :show-labels="false" />
                 </base-input>
               </div>
@@ -510,6 +569,11 @@ export default {
                   <multi-select v-model="input.fase" :options="g$ddFasePemeliharaan" label="name" track-by="id" placeholder="Pilih Status Ternak" :show-labels="false" />
                 </base-input>
               </div>
+              <div class="col-6" v-if="input.fase.name === 'Cempe'">
+                <base-input name="tanggal_kawin" placeholder="Tanggal Kawin Induk" label="Tanggal Kawin Induk" required>
+                  <multi-select v-model="input.fase" :options="g$ddFasePemeliharaan" label="name" track-by="id" placeholder="Pilih Status Ternak" :show-labels="false" />
+                </base-input>
+              </div>
               <div class="col-6">
                 <base-input name="tanggal_keluar" placeholder="YYYY-MM-DD" label="Tanggal Keluar">
                   <flat-pickr v-model.lazy="input.tanggal_keluar" :config="{ mode: 'single', allowInput: true }" class="form-control datepicker" placeholder="YYYY-MM-DD" />
@@ -555,6 +619,120 @@ export default {
           <base-button type="secondary" @click="modal.confirm = false"> Tutup </base-button>
           <base-button type="danger" @click="delTernak()">Hapus</base-button>
         </template>
+      </modal-comp>
+
+      <!-- Modal Detail Ternak -->
+      <modal-comp v-model:show="modal.detailTernak" modal-classes="modal-md">
+        <template #header>
+          <h3 class="modal-title">Detail Ternak Nomor {{ infoTernak.nomor }}</h3>
+        </template>
+        <template v-if="modal.detailTernak" #body>
+          <div style="max-height: 450px; overflow-y: auto; overflow-x: hidden">
+            <div class="row">
+              <div class="col-5"><span style="font-weight: 600">Nomor Ternak</span></div>
+              <div class="col">
+                : <span style="font-weight: 300"> {{ infoTernak.nomor }}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-5"><span style="font-weight: 600">ID RFID</span></div>
+              <div class="col">
+                : <span style="font-weight: 300"> {{ infoTernak.rf_id ?? "-" }}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-5"><span style="font-weight: 600">Varietas</span></div>
+              <div class="col">
+                : <span style="font-weight: 300"> {{ infoTernak.varietas.nama }}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-5"><span style="font-weight: 600">Jenis Kelamin</span></div>
+              <div class="col">
+                : <span style="font-weight: 300"> {{ infoTernak.jenis_kelamin }}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-5"><span style="font-weight: 600">ID Induk</span></div>
+              <div class="col">
+                : <span style="font-weight: 300"> {{ infoTernak.id_induk }}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-5"><span style="font-weight: 600">ID Pemancek</span></div>
+              <div class="col">
+                : <span style="font-weight: 300"> {{ infoTernak.id_pejantan }}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-5"><span style="font-weight: 600">Kandang</span></div>
+              <div class="col">
+                : <span style="font-weight: 300"> {{ infoTernak.nama_kandang.nama_kandang }}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-5"><span style="font-weight: 600">Fase Pemeliharaan</span></div>
+              <div class="col">
+                : <span style="font-weight: 300"> {{ infoTernak.fase.fase }}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-5"><span style="font-weight: 600">Jenis Pakan</span></div>
+              <div class="col">
+                : <span style="font-weight: 300"> {{ infoTernak.nama_pakan.nama_pakan }}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-5"><span style="font-weight: 600">Berat</span></div>
+              <div class="col">
+                : <span style="font-weight: 300"> {{ infoTernak.berat_berkala }} kg</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-5"><span style="font-weight: 600">Suhu</span></div>
+              <div class="col">
+                : <span style="font-weight: 300"> {{ infoTernak.suhu_berkala }} C</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-5"><span style="font-weight: 600">Status Kesehatan</span></div>
+              <div class="col">
+                : <span style="font-weight: 300"> {{ infoTernak.status_sehat }}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-5"><span style="font-weight: 600">Nama Penyakit</span></div>
+              <div class="col">
+                : <span style="font-weight: 300"> {{ infoTernak.nama_penyakit }}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-5"><span style="font-weight: 600">Tanggal Masuk</span></div>
+              <div class="col">
+                : <span style="font-weight: 300"> {{ infoTernak.tanggal_masuk }}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-5"><span style="font-weight: 600">Umur</span></div>
+              <div class="col">
+                : <span style="font-weight: 300"> {{ infoTernak.umur }} Bulan</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-5"><span style="font-weight: 600">Tanggal Keluar</span></div>
+              <div class="col">
+                : <span style="font-weight: 300"> {{ infoTernak.tanggal_keluar ?? "-" }}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-5"><span style="font-weight: 600">Status Keluar</span></div>
+              <div class="col">
+                : <span style="font-weight: 300"> {{ infoTernak.status_keluar ?? "-" }}</span>
+              </div>
+            </div>
+          </div>
+        </template>
+        <template #footer> </template>
       </modal-comp>
     </template>
   </main-layout>

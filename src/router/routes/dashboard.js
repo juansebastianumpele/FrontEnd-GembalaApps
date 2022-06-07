@@ -53,21 +53,14 @@ const dashboardRoutes = [
     },
     children: [
       {
-        path: "daftarkandang",
+        path: "daftar-kandang",
         name: "Daftar Kandang",
         component: () => import("@/views/Dashboard/MasterData/DaftarKandang.vue"),
         meta: { requireAuth: true },
       },
-      /* {
-        path: "detail-ternak-sakit/:id",
-        name: "Detail Ternak Sakit",
-        component: () => import("@/views/Dashboard/MasterData/KesehatanDetail.vue"),
-        meta: { requireAuth: true },
-      }, */
-
       {
-        path: "pakan",
-        name: "Pakan",
+        path: "daftar-pakan",
+        name: "Daftar Pakan",
         component: () => import("@/views/Dashboard/MasterData/PakanPage.vue"),
         meta: { requireAuth: true },
       },
@@ -78,15 +71,15 @@ const dashboardRoutes = [
         meta: { requireAuth: true },
       },
       {
-        path: "ternak",
-        name: "Ternak",
-        component: () => import("@/views/Dashboard/MasterData/TernakPage.vue"),
+        path: "daftar-penyakit",
+        name: "Daftar Penyakit",
+        component: () => import("@/views/Dashboard/MasterData/PenyakitPage.vue"),
         meta: { requireAuth: true },
       },
       {
-        path: "penyakit",
-        name: "Penyakit",
-        component: () => import("@/views/Dashboard/MasterData/PenyakitPage.vue"),
+        path: "daftar-ternak",
+        name: "Daftar Ternak",
+        component: () => import("@/views/Dashboard/MasterData/TernakPage.vue"),
         meta: { requireAuth: true },
       },
     ],
@@ -128,26 +121,20 @@ const dashboardRoutes = [
         meta: { requireAuth: true },
       }, */
       {
-        path: "ternak",
-        name: "Ternak",
-        component: () => import("@/views/Dashboard/MasterData/TernakPage.vue"),
-        meta: { requireAuth: true },
-      },
-      {
         path: "kawin",
         name: "Kawin",
         component: () => import("@/views/Dashboard/Monitoring/KawinPage.vue"),
         meta: { requireAuth: true },
       },
       {
-        path: "list-kawin/:id",
-        name: "List Kawin",
+        path: "riwayat-kawin/:id",
+        name: "Detail Kawin",
         component: () => import("@/views/Dashboard/Monitoring/KawinDetail.vue"),
         meta: { requireAuth: true },
       },
       {
-        path: "kesehatan",
-        name: "Kesehatan",
+        path: "ternak-sakit",
+        name: "Ternak Sakit",
         component: () => import("@/views/Dashboard/Monitoring/KesehatanPage.vue"),
         meta: { requireAuth: true },
       },

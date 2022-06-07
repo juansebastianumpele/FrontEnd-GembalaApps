@@ -14,6 +14,7 @@ const listFase = () => baseApi.get(`${api}/${ternak}/fase`);
 
 // Jumlah Ternak
 const listBetina = (req) => baseApi.get(`${api}/${ternak}/listbetina/${req}`);
+const listPejantan = (req) => baseApi.get(`${api}/${ternak}/listjantan/${req}`);
 
 // Detail
 const detailKandang = (req) => baseApi.get(`${api}/${ternak}/listbykandang/${req}`);
@@ -28,4 +29,4 @@ const totalFase = (req) => baseApi.get(`${api}/${ternak}/totalfase/${req}`);
 const tabelKandang = (req) => baseApi.get(`${api}/${ternak}/totalberat/${req}`);
 const filterTernak = (req) => baseApi.get(`${api}/${ternak}/listFilter?${req}`);
 
-export { listBetina, list, add, edit, del, listVarietas, listFase, detailKandang, detailPakan, detailTernak, totalSehat, totalJeniskelamin, populasi, totalFase, tabelKandang, filterTernak };
+export { listBetina, listPejantan, list, add, edit, del, listVarietas, listFase, detailKandang, detailPakan, detailTernak, totalSehat, totalJeniskelamin, populasi, totalFase, tabelKandang, filterTernak };

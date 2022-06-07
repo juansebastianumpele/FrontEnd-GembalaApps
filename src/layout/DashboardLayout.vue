@@ -24,25 +24,25 @@
           <sidebar-item
             :link="{
               name: 'Daftar Kandang',
-              path: '/masterdata/daftarkandang',
+              path: '/masterdata/daftar-kandang',
             }"
           />
           <sidebar-item
             :link="{
               name: 'Daftar Pakan',
-              path: '/masterdata/pakan',
+              path: '/masterdata/daftar-pakan',
             }"
           />
           <sidebar-item
             :link="{
               name: 'Daftar Penyakit',
-              path: '/masterdata/penyakit',
+              path: '/masterdata/daftar-penyakit',
             }"
           />
           <sidebar-item
             :link="{
               name: 'Daftar Ternak',
-              path: '/masterdata/ternak',
+              path: '/masterdata/daftar-ternak',
             }"
           />
           <!-- <sidebar-item
@@ -81,8 +81,8 @@
           />
           <sidebar-item
             :link="{
-              name: 'Kesehatan',
-              path: '/monitoring/kesehatan',
+              name: 'Ternak Sakit',
+              path: '/monitoring/ternak-sakit',
             }"
           />
 
