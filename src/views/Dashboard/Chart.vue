@@ -225,7 +225,7 @@ export default {
                   <h1 class="text-black text-uppercase text-center ls-1 mb-1" style="font-size: 12px">Rata-rata Berat Tiap Status Ternak</h1>
                 </div>
               </div>
-              <hc-pie :height="455" :data="g$DonutbyFase" :data-labels="true" :legend="true" style="font-size: 14px"/>
+              <hc-pie :height="455" :data="g$DonutbyFase" :data-labels="true" :legend="true" style="font-size: 14px" />
             </card-comp>
           </div>
         </div>
