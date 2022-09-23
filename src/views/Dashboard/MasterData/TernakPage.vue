@@ -43,7 +43,7 @@ export default {
     };
   },
   data: () => ({
-    pageTitle: "Ternak",
+    pageTitle: "Data Ternak",
     // Input
     input: {
       id: null,

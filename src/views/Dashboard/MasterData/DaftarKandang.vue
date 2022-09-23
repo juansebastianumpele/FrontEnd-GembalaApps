@@ -21,7 +21,7 @@ export default {
     };
   },
   data: () => ({
-    pageTitle: "Kandang",
+    pageTitle: "Data Kandang",
     // Input
     input: {
       id: null,
@@ -47,13 +47,17 @@ export default {
           name: "blok_kandang",
           th: "Blok Kandang",
         },
+        {
+          name: "populasi",
+          th: "Jumlah Populasi Ternak",
+        },
       ],
       action: [
-        // {
-        //   text: "Detail",
-        //   color: "info",
-        //   event: "detail-kandang",
-        // },
+        {
+          text: "Detail",
+          color: "info",
+          event: "detail-kandang",
+        },
         {
           text: "Ubah",
           color: "warning",
@@ -175,7 +179,7 @@ export default {
       try {
         const { id_kandang } = row;
         router.push({
-          name: "DetailKandang",
+          name: "Detail Kandang",
           params: {
             id: id_kandang,
           },

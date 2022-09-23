@@ -8,7 +8,7 @@
           :link="{
             name: 'Dashboard',
             icon: 'fas fa-square-poll-vertical text-danger',
-            path: '/dashboard/chart',
+            path: '/dashboard/',
           }"
         >
         </sidebar-item>
@@ -17,32 +17,38 @@
 
         <sidebar-item
           :link="{
-            name: 'Master Data',
-            icon: 'fas fa-address-book text-primary',
+            name: 'Monitoring',
+            icon: 'fas fa-desktop text-primary',
           }"
         >
           <sidebar-item
             :link="{
-              name: 'Daftar Kandang',
-              path: '/masterdata/daftar-kandang',
+              name: 'Data Kandang',
+              path: '/monitoring/data-kandang',
             }"
           />
           <sidebar-item
             :link="{
-              name: 'Daftar Pakan',
-              path: '/masterdata/daftar-pakan',
+              name: 'Data Ternak',
+              path: '/monitoring/data-ternak',
             }"
           />
           <sidebar-item
             :link="{
-              name: 'Daftar Penyakit',
-              path: '/masterdata/daftar-penyakit',
+              name: 'Data Perkawinan',
+              path: '/monitoring/data-perkawinan',
             }"
           />
           <sidebar-item
             :link="{
-              name: 'Daftar Ternak',
-              path: '/masterdata/daftar-ternak',
+              name: 'Data Pakan',
+              path: '/monitoring/data-pakan',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Data Penyakit',
+              path: '/monitoring/data-penyakit',
             }"
           />
           <!-- <sidebar-item
@@ -55,7 +61,7 @@
 
         <div class="dropdown-divider" />
 
-        <sidebar-item
+        <!-- <sidebar-item
           :link="{
             name: 'Monitoring',
             icon: 'fas fa-address-book text-primary',
@@ -66,19 +72,14 @@
               name: 'Kandang',
               path: '/monitoring/kandang',
             }"
-          />
+          /> -->
           <!-- <sidebar-item
             :link="{
               name: 'Pakan',
               path: '/monitoring/pakan',
             }"
           /> -->
-          <sidebar-item
-            :link="{
-              name: 'Kawin',
-              path: '/monitoring/kawin',
-            }"
-          />
+          <!-- 
           <sidebar-item
             :link="{
               name: 'Ternak Sakit',
@@ -86,6 +87,32 @@
             }"
           />
 
+          <div class="dropdown-divider" />
+        </sidebar-item> -->
+        <sidebar-item
+          :link="{
+            name: 'Trading',
+            icon: 'fas fa-basket-shopping text-warning',
+          }"
+        >
+          <sidebar-item
+            :link="{
+              name: 'Transaksi',
+              path: '/trading/transaksi',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Harga',
+              path: '/trading/harga',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Riwayat Transaksi',
+              path: '/trading/riwayat-transaksi',
+            }"
+          />
           <div class="dropdown-divider" />
         </sidebar-item>
       </template>

@@ -21,7 +21,7 @@ export default {
     };
   },
   data: () => ({
-    pageTitle: "Pakan",
+    pageTitle: "Data Pakan",
     // Input
     input: {
       id: null,

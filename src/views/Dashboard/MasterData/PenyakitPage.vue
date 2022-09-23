@@ -21,7 +21,7 @@ export default {
     };
   },
   data: () => ({
-    pageTitle: "Penyakit",
+    pageTitle: "Data Penyakit",
     // Input
     input: {
       id: null,
