@@ -41,54 +41,19 @@
           />
           <sidebar-item
             :link="{
+              name: 'Data Kesehatan',
+              path: '/monitoring/data-kesehatan',
+            }"
+          />
+          <sidebar-item
+            :link="{
               name: 'Data Pakan',
               path: '/monitoring/data-pakan',
             }"
           />
-          <sidebar-item
-            :link="{
-              name: 'Data Penyakit',
-              path: '/monitoring/data-penyakit',
-            }"
-          />
-          <!-- <sidebar-item
-            :link="{
-              name: 'Data Kesehatan',
-              path: '/masterdata/kesehatan',
-            }"
-          /> -->
         </sidebar-item>
 
         <div class="dropdown-divider" />
-
-        <!-- <sidebar-item
-          :link="{
-            name: 'Monitoring',
-            icon: 'fas fa-address-book text-primary',
-          }"
-        >
-          <sidebar-item
-            :link="{
-              name: 'Kandang',
-              path: '/monitoring/kandang',
-            }"
-          /> -->
-          <!-- <sidebar-item
-            :link="{
-              name: 'Pakan',
-              path: '/monitoring/pakan',
-            }"
-          /> -->
-          <!-- 
-          <sidebar-item
-            :link="{
-              name: 'Ternak Sakit',
-              path: '/monitoring/ternak-sakit',
-            }"
-          />
-
-          <div class="dropdown-divider" />
-        </sidebar-item> -->
         <sidebar-item
           :link="{
             name: 'Trading',
