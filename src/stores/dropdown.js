@@ -37,7 +37,7 @@ const u$dropdown = defineStore({
     },
     async a$ddKandang(request) {
       try {
-        const { data } = await s$kandang.list(request);
+        const { data } = await s$kandang.listKandang(request);
         this.kandang = data;
       } catch ({ error }) {
         this.kandang = [];
@@ -76,12 +76,36 @@ const u$dropdown = defineStore({
     g$ddJenisKelamin: (state) => state.jenisKelamin,
     g$ddStatusSehat: (state) => state.statusSehat,
     g$ddStatusKeluar: (state) => state.statusKeluar,
-    g$ddVarietas: (state) => state.varietas.map(({ id_varietas, nama_varietas }) => ({ id: id_varietas, name: nama_varietas })),
-    g$ddFasePemeliharaan: (state) => state.fasePemeliharaan.map(({ id_fp, fase }) => ({ id: id_fp, name: fase })),
-    g$ddKandang: (state) => state.kandang.map(({ id_kandang, nama_kandang }) => ({ id: id_kandang, name: nama_kandang })),
-    g$ddPakan: (state) => state.pakan.map(({ id_pakan, nama_pakan }) => ({ id: id_pakan, name: nama_pakan })),
-    g$ddListBetina: (state) => state.listBetina.map(({ id_ternak }) => ({ id: id_ternak, name: id_ternak })),
-    g$ddListPejantan: (state) => state.listPejantan.map(({ id_ternak }) => ({ id: id_ternak, name: id_ternak })),
+    g$ddVarietas: (state) =>
+      state.varietas.map(({ id_varietas, nama_varietas }) => ({
+        id: id_varietas,
+        name: nama_varietas,
+      })),
+    g$ddFasePemeliharaan: (state) =>
+      state.fasePemeliharaan.map(({ id_fp, fase }) => ({
+        id: id_fp,
+        name: fase,
+      })),
+    g$ddKandang: (state) =>
+      state.kandang.map(({ id_kandang, nama_kandang }) => ({
+        id: id_kandang,
+        name: nama_kandang,
+      })),
+    g$ddPakan: (state) =>
+      state.pakan.map(({ id_pakan, nama_pakan }) => ({
+        id: id_pakan,
+        name: nama_pakan,
+      })),
+    g$ddListBetina: (state) =>
+      state.listBetina.map(({ id_ternak }) => ({
+        id: id_ternak,
+        name: id_ternak,
+      })),
+    g$ddListPejantan: (state) =>
+      state.listPejantan.map(({ id_ternak }) => ({
+        id: id_ternak,
+        name: id_ternak,
+      })),
   },
 });
 
