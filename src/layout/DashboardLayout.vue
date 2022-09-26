@@ -62,6 +62,12 @@
         >
           <sidebar-item
             :link="{
+              name: 'Penjualan',
+              path: '/trading/penjualan',
+            }"
+          />
+          <sidebar-item
+            :link="{
               name: 'Transaksi',
               path: '/trading/transaksi',
             }"
