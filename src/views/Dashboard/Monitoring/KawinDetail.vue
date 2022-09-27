@@ -1,6 +1,6 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import d$kawin from "@/stores/masterData/kawin";
+import d$kawin from "@/stores/monitoring/kawin";
 import d$dropdown from "@/stores/dropdown";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
@@ -84,10 +84,17 @@ export default {
     },
   },
   async mounted() {
-    await this.a$kawinList(this.$route.params.id).catch((error) => this.notify(error, false));
+    await this.a$kawinList(this.$route.params.id).catch((error) =>
+      this.notify(error, false)
+    );
   },
   methods: {
-    ...mapActions(d$kawin, ["a$kawinList", "a$kawinAdd", "a$kawinEdit", "a$kawinDelete"]),
+    ...mapActions(d$kawin, [
+      "a$kawinList",
+      "a$kawinAdd",
+      "a$kawinEdit",
+      "a$kawinDelete",
+    ]),
     clearInput() {
       this.input = {
         id: null,
@@ -112,7 +119,9 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$kawinList(this.$route.params.id).catch((error) => this.notify(error, false));
+        this.a$kawinList(this.$route.params.id).catch((error) =>
+          this.notify(error, false)
+        );
       }
     },
     async editKawin() {
@@ -131,7 +140,9 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$kawinList(this.$route.params.id).catch((error) => this.notify(error, false));
+        this.a$kawinList(this.$route.params.id).catch((error) =>
+          this.notify(error, false)
+        );
       }
     },
     async delKawin() {
@@ -143,7 +154,9 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$kawinList(this.$route.params.id).catch((error) => this.notify(error, false));
+        this.a$kawinList(this.$route.params.id).catch((error) =>
+          this.notify(error, false)
+        );
       }
     },
     async triggerEditModal(row) {
@@ -185,14 +198,24 @@ export default {
           <h3>Daftar {{ pageTitle }}</h3>
         </div>
         <div class="col text-right">
-          <base-button type="success" @click="modal.addKawin = true"> Tambah {{ pageTitle }} </base-button>
+          <base-button type="success" @click="modal.addKawin = true">
+            Tambah {{ pageTitle }}
+          </base-button>
         </div>
       </div>
     </template>
 
     <template #body>
       <empty-result v-if="!g$kawinList.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$kawinList" :columns="dt.column" :actions="dt.action" @ubah-kawin="triggerEditModal" @hapus-kawin="triggerDelete" />
+      <data-table
+        v-else
+        :index="true"
+        :data="g$kawinList"
+        :columns="dt.column"
+        :actions="dt.action"
+        @ubah-kawin="triggerEditModal"
+        @hapus-kawin="triggerDelete"
+      />
     </template>
 
     <template #modal>
@@ -204,8 +227,19 @@ export default {
           <form-comp v-if="modal.addKawin" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <base-input name="tanggal_kawin" class="" placeholder="YYYY-MM-DD" label="Tanggal Kawin" required>
-                  <flat-pickr v-model.lazy="input.tanggal_kawin" :config="{ mode: 'single', allowInput: true }" class="form-control datepicker" placeholder="Pilih Tanggal Kawin" />
+                <base-input
+                  name="tanggal_kawin"
+                  class=""
+                  placeholder="YYYY-MM-DD"
+                  label="Tanggal Kawin"
+                  required
+                >
+                  <flat-pickr
+                    v-model.lazy="input.tanggal_kawin"
+                    :config="{ mode: 'single', allowInput: true }"
+                    class="form-control datepicker"
+                    placeholder="Pilih Tanggal Kawin"
+                  />
                 </base-input>
               </div>
               <!-- <div class="col-12">
@@ -214,8 +248,18 @@ export default {
                 </field-form>
               </div> -->
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.id_pemancek" type="text" name="id_pemancek">
-                  <base-input v-bind="field" placeholder="Masukan ID Ternak Pejantan" label="ID Pemancek" required></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.id_pemancek"
+                  type="text"
+                  name="id_pemancek"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Masukan ID Ternak Pejantan"
+                    label="ID Pemancek"
+                    required
+                  ></base-input>
                 </field-form>
               </div>
               <!-- <div class="col-12">
@@ -232,8 +276,12 @@ export default {
           </form-comp>
         </template>
         <template #footer>
-          <base-button type="secondary" @click="modal.addKawin = false"> Tutup </base-button>
-          <base-button type="primary" @click="addKawin()"> Tambah {{ pageTitle }} </base-button>
+          <base-button type="secondary" @click="modal.addKawin = false">
+            Tutup
+          </base-button>
+          <base-button type="primary" @click="addKawin()">
+            Tambah {{ pageTitle }}
+          </base-button>
         </template>
       </modal-comp>
       <modal-comp v-model:show="modal.ubahKawin" modal-classes="modal-lg">
@@ -244,8 +292,19 @@ export default {
           <form-comp v-if="modal.ubahKawin" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <base-input name="tanggal_kawin" class="" placeholder="YYYY-MM-DD" label="Tanggal Kawin" required>
-                  <flat-pickr v-model.lazy="input.tanggal_kawin" :config="{ mode: 'single', allowInput: true }" class="form-control datepicker" placeholder="Pilih Tanggal Kawin" />
+                <base-input
+                  name="tanggal_kawin"
+                  class=""
+                  placeholder="YYYY-MM-DD"
+                  label="Tanggal Kawin"
+                  required
+                >
+                  <flat-pickr
+                    v-model.lazy="input.tanggal_kawin"
+                    :config="{ mode: 'single', allowInput: true }"
+                    class="form-control datepicker"
+                    placeholder="Pilih Tanggal Kawin"
+                  />
                 </base-input>
               </div>
               <!-- <div class="col-12">
@@ -254,8 +313,18 @@ export default {
                 </field-form>
               </div> -->
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.id_pemancek" type="text" name="id_pemancek">
-                  <base-input v-bind="field" placeholder="Masukan ID Ternak Pejantan" label="ID Pemancek" required></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.id_pemancek"
+                  type="text"
+                  name="id_pemancek"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Masukan ID Ternak Pejantan"
+                    label="ID Pemancek"
+                    required
+                  ></base-input>
                 </field-form>
               </div>
               <!-- <div class="col-12">
@@ -277,8 +346,12 @@ export default {
           </form-comp>
         </template>
         <template #footer>
-          <base-button type="secondary" @click="modal.ubahKawin = false"> Tutup </base-button>
-          <base-button type="primary" @click="editKawin()"> Simpan Perubahan </base-button>
+          <base-button type="secondary" @click="modal.ubahKawin = false">
+            Tutup
+          </base-button>
+          <base-button type="primary" @click="editKawin()">
+            Simpan Perubahan
+          </base-button>
         </template>
       </modal-comp>
       <modal-comp v-model:show="modal.confirm" modal-classes="modal-lg">
@@ -287,11 +360,14 @@ export default {
         </template>
         <template #body>
           <p>
-            Yakin ingin menghapus {{ pageTitle }}: <strong>{{ input.id_ternak }}</strong>
+            Yakin ingin menghapus {{ pageTitle }}:
+            <strong>{{ input.id_ternak }}</strong>
           </p>
         </template>
         <template #footer>
-          <base-button type="secondary" @click="modal.confirm = false"> Tutup </base-button>
+          <base-button type="secondary" @click="modal.confirm = false">
+            Tutup
+          </base-button>
           <base-button type="danger" @click="delKawin()">Hapus</base-button>
         </template>
       </modal-comp>

@@ -1,5 +1,8 @@
 <script>
 export default {
+  metaInfo: () => ({
+    title: "Info Pengguna",
+  }),
   data: () => ({
     pageTitle: "Data Pengguna",
     dt: {
@@ -68,7 +71,10 @@ export default {
           title-tag="button"
           title="Level Akun"
           title-classes="btn btn-success"
-        ></base-dropdown>
+        >
+          <div class="dropdown-item">test 1</div>
+          <div class="dropdown-item">test 2</div>
+        </base-dropdown>
       </div>
     </template>
     <template #body>

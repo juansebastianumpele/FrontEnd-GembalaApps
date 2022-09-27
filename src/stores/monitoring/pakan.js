@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import * as s$pakan from "@/services/masterData/pakan";
+import * as s$pakan from "@/services/monitoring/pakan";
 
 const u$pakan = defineStore({
   id: "pakan",
@@ -41,7 +41,7 @@ const u$pakan = defineStore({
     async a$totalPakan(request) {
       try {
         const { data } = await s$pakan.totalPakan(request);
-        this.totalPakan ={...data[0]}
+        this.totalPakan = { ...data[0] };
       } catch ({ error }) {
         throw error;
       }

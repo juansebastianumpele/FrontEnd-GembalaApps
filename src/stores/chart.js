@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import * as s$total from "@/services/masterData/ternak";
+import * as s$total from "@/services/monitoring/ternak";
 
 const u$total = defineStore({
   id: "chart",
@@ -102,11 +102,15 @@ const u$total = defineStore({
       length: state.chartByPopulasi.length,
     }),
     g$byJeniskelamin: (state) => ({
-      categories: state.chartJeniskelamin.map(({ jenis_kelamin }) => jenis_kelamin),
+      categories: state.chartJeniskelamin.map(
+        ({ jenis_kelamin }) => jenis_kelamin
+      ),
       series: [
         {
           name: "Jenis Kelamin",
-          data: state.chartJeniskelamin.map(({ Jumlah_ternak }) => Jumlah_ternak),
+          data: state.chartJeniskelamin.map(
+            ({ Jumlah_ternak }) => Jumlah_ternak
+          ),
         },
       ],
       length: state.chartJeniskelamin.length,
@@ -139,8 +143,8 @@ const u$total = defineStore({
       series: [
         {
           name: "Total",
-          size: '80%',
-          innerSize: '60%',
+          size: "80%",
+          innerSize: "60%",
           data: state.chartFase.map(({ fase, rata_rata }) => ({
             name: fase,
             y: rata_rata,

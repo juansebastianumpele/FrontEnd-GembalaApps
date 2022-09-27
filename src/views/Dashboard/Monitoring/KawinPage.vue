@@ -1,6 +1,6 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import d$kawin from "@/stores/masterData/kawin";
+import d$kawin from "@/stores/monitoring/kawin";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 import router from "../../../router";
@@ -62,7 +62,9 @@ export default {
     },
   },
   async mounted() {
-    await this.a$betinaList(this.userInfo.id).catch((error) => this.notify(error, false));
+    await this.a$betinaList(this.userInfo.id).catch((error) =>
+      this.notify(error, false)
+    );
   },
   methods: {
     ...mapActions(d$kawin, ["a$betinaList"]),
@@ -101,7 +103,14 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$kawinList.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$kawinList" :columns="dt.column" :actions="dt.action" @list-kawin="triggerDetail" />
+      <data-table
+        v-else
+        :index="true"
+        :data="g$kawinList"
+        :columns="dt.column"
+        :actions="dt.action"
+        @list-kawin="triggerDetail"
+      />
     </template>
   </main-layout>
 </template>

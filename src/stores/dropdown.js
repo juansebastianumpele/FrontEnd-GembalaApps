@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
-import * as s$ternak from "@/services/masterData/ternak";
-import * as s$kandang from "@/services/masterData/daftarkandang";
-import * as s$pakan from "@/services/masterData/pakan";
+import * as s$ternak from "@/services/monitoring/ternak";
+import * as s$kandang from "@/services/monitoring/daftarkandang";
+import * as s$pakan from "@/services/monitoring/pakan";
 
 const u$dropdown = defineStore({
   id: "dropdown",

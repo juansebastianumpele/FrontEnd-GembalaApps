@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import * as s$ternak from "@/services/masterData/ternak";
+import * as s$ternak from "@/services/monitoring/ternak";
 
 const u$ternak = defineStore({
   id: "ternak",
