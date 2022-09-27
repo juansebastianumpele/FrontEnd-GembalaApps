@@ -7,7 +7,7 @@ import HcBar from "@/components/HighCharts/Bar.vue";
 import d$chart from "@/stores/chart";
 import d$dropdowm from "@/stores/dropdown";
 import d$costumer from "../../../stores/customer";
-import d$kandang from "../../../stores/monitoring/kandang";
+import d$kandang from "../../../stores/monitoring/daftarkandang";
 import d$pakan from "../../../stores/monitoring/pakan";
 
 export default {
