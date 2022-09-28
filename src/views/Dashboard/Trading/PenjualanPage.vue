@@ -92,6 +92,7 @@ export default {
       "g$ddVarietas",
       "g$ddFasePemeliharaan",
       "g$ddKandang",
+      "g$ddJenisHarga",
     ]),
     ...mapState(d$costumer, ["g$costumerDetail"]),
     ...mapState(d$kandang, ["g$totalKandang"]),
@@ -147,6 +148,7 @@ export default {
         this.selectedTernak = { ...row };
         this.input.id_ternak = this.selectedTernak.id_ternak;
         this.modal.jualTernak = true;
+
       } catch (error) {}
     },
     async addJualTernak() {
@@ -158,8 +160,9 @@ export default {
         }
 
         console.log(jual);
+        console.log(d$dropdowm.g$ddJenisHarga)
         await this.schema.validate(jual);
-        // await this.a$jualAdd(jual);
+        // await this.a$jualTernak(jual);
         this.modal.jualTernak = false;
         this.notify(`Tambah ${this.pageTitle} Sukses!`);
       } catch (error) {
@@ -297,30 +300,29 @@ export default {
                 </field-form>
               </div>
               <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.harga_per"
-                  type="text"
+                <base-input
                   name="harga_per"
+                  placeholder="Jenis Harga"
+                  label="Harga Per"
                 >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Harga Per"
-                    required
-                  ></base-input>
-                </field-form>
+                  <multi-select
+                    v-model="input.harga_per"
+                    :options="g$ddJenisHarga"
+                    placeholder="Pilih Jenis Harga"
+                    :show-labels="false"
+                  />
+                </base-input>
               </div>
               <div class="col-6">
                 <field-form
                   v-slot="{ field }"
                   v-model="input.harga"
-                  type="text"
+                  type="number"
                   name="harga"
                 >
                   <base-input
                     v-bind="field"
-                    placeholder="Text"
+                    placeholder="Harga berdasarkan jenis harga"
                     label="Harga"
                     required
                   ></base-input>
