@@ -410,6 +410,7 @@ export default {
       try {
         this.infoTernak = { ...row };
         this.modal.detailTernak = true;
+        console.log(this.infoTernak);
       } catch (error) {}
     },
     handleFileUpload() {

@@ -141,6 +141,7 @@ export default {
       try {
         this.selectedTernak = { ...row };
         this.modal.detailTernak = true;
+        console.log(this.selectedTernak);
       } catch (error) {}
     },
     async triggerJualTernak(row) {
@@ -148,7 +149,6 @@ export default {
         this.selectedTernak = { ...row };
         this.input.id_ternak = this.selectedTernak.id_ternak;
         this.modal.jualTernak = true;
-
       } catch (error) {}
     },
     async addJualTernak() {
@@ -389,7 +389,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ selectedTernak.jenis_kelamin[0] }}</span
+                  {{ selectedTernak.jenis_kelamin['0'] }}</span
                 >
               </div>
             </div>
@@ -475,7 +475,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ selectedTernak.status_sehat[0] }}</span
+                  {{ selectedTernak.status_sehat['0'] }}</span
                 >
               </div>
             </div>

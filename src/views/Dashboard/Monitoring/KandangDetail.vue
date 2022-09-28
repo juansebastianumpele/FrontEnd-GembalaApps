@@ -1,6 +1,6 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import d$ternak from "@/stores/masterData/ternak";
+import d$ternak from "@/stores/monitoring/ternak";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 

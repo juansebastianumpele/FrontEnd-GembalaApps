@@ -68,20 +68,8 @@
           />
           <sidebar-item
             :link="{
-              name: 'Transaksi',
-              path: '/trading/transaksi',
-            }"
-          />
-          <sidebar-item
-            :link="{
-              name: 'Harga',
-              path: '/trading/harga',
-            }"
-          />
-          <sidebar-item
-            :link="{
-              name: 'Riwayat Transaksi',
-              path: '/trading/riwayat-transaksi',
+              name: 'Riwayat Penjualan',
+              path: '/trading/riwayat-penjualan',
             }"
           />
           <div class="dropdown-divider" />
