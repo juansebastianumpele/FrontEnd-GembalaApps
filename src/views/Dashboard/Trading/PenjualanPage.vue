@@ -1,25 +1,41 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import HcColumn from "@/components/HighCharts/Column.vue";
-import HcLine from "@/components/HighCharts/Line.vue";
-import HcPie from "@/components/HighCharts/Pie.vue";
-import HcBar from "@/components/HighCharts/Bar.vue";
 import d$chart from "@/stores/chart";
 import d$dropdowm from "@/stores/dropdown";
 import d$costumer from "../../../stores/customer";
 import d$kandang from "../../../stores/monitoring/daftarkandang";
 import d$pakan from "../../../stores/monitoring/pakan";
 
+import {
+  object as y$object,
+  array as y$array,
+  string as y$string,
+  ref as y$ref,
+} from "yup";
+
 export default {
   metaInfo: () => ({
     title: "Penjualan",
   }),
+  setup() {
+    const schema = y$object({
+      id_ternak: y$string().required().label("ID Ternak"),
+      harga_per: y$string().required().label("Harga Per"),
+      harga: y$string().required().label("Harga"),
+    });
+    return {
+      schema,
+    };
+  },
   data: () => ({
     pageTitle: "Penjualan",
     input: {
       varietas: null,
       fase: null,
       kandang: null,
+      id_ternak: "",
+      harga_per: "",
+      harga: "",
     },
     dt: {
       column: [
@@ -49,7 +65,7 @@ export default {
         {
           text: "Jual",
           color: "primary",
-          event: "",
+          event: "jual-ternak",
         },
       ],
     },
@@ -57,6 +73,7 @@ export default {
     isSearch: false,
     modal: {
       detailTernak: false,
+      jualTernak: false,
     },
     selectedTernak: {},
   }),
@@ -124,6 +141,31 @@ export default {
         this.selectedTernak = { ...row };
         this.modal.detailTernak = true;
       } catch (error) {}
+    },
+    async triggerJualTernak(row) {
+      try {
+        this.selectedTernak = { ...row };
+        this.input.id_ternak = this.selectedTernak.id_ternak;
+        this.modal.jualTernak = true;
+      } catch (error) {}
+    },
+    async addJualTernak() {
+      try {
+        const jual = {
+          id_ternak: this.input.id_ternak,
+          harga_per: this.input.harga_per,
+          harga: this.input.harga
+        }
+
+        console.log(jual);
+        await this.schema.validate(jual);
+        // await this.a$jualAdd(jual);
+        this.modal.jualTernak = false;
+        this.notify(`Tambah ${this.pageTitle} Sukses!`);
+      } catch (error) {
+        console.log(error);
+        this.notify(error, false);
+      }
     },
     clearAll() {
       this.input.varietas = null;
@@ -224,6 +266,7 @@ export default {
               :columns="dt.column"
               :actions="dt.action"
               @detail-ternak="triggerdetailTernak"
+              @jual-ternak="triggerJualTernak"
             />
           </card-comp>
         </div>
@@ -231,6 +274,71 @@ export default {
     </template>
 
     <template #modal>
+      <modal-comp v-model:show="modal.jualTernak" modal-classes="modal-lg">
+        <template #header>
+          <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
+        </template>
+        <template #body>
+          <form-comp v-if="modal.jualTernak" :validation-schema="schema">
+            <div class="row">
+              <div class="col-12">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.id_ternak"
+                  type="text"
+                  name="id_ternak"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="ID Ternak"
+                    disabled
+                  ></base-input>
+                </field-form>
+              </div>
+              <div class="col-6">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.harga_per"
+                  type="text"
+                  name="harga_per"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Harga Per"
+                    required
+                  ></base-input>
+                </field-form>
+              </div>
+              <div class="col-6">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.harga"
+                  type="text"
+                  name="harga"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Harga"
+                    required
+                  ></base-input>
+                </field-form>
+              </div>
+            </div>
+          </form-comp>
+        </template>
+        <template #footer>
+          <base-button type="secondary" @click="modal.jualTernak = false">
+            Tutup
+          </base-button>
+          <base-button type="primary" @click="addJualTernak()">
+            Tambah {{ pageTitle }}
+          </base-button>
+        </template>
+      </modal-comp>
+
       <modal-comp v-model:show="modal.detailTernak" modal-classes="modal-md">
         <template #header>
           <h3 class="modal-title">
