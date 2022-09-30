@@ -54,35 +54,6 @@
         </sidebar-item>
 
         <div class="dropdown-divider" />
-        <sidebar-item
-          :link="{
-            name: 'Trading',
-            icon: 'fas fa-basket-shopping text-warning',
-          }"
-        >
-          <sidebar-item
-            :link="{
-              name: 'Penjualan',
-              path: '/trading/penjualan',
-            }"
-          />
-          <sidebar-item
-            :link="{
-              name: 'Riwayat Penjualan',
-              path: '/trading/riwayat-penjualan',
-            }"
-          />
-          <div class="dropdown-divider" />
-        </sidebar-item>
-        
-        <div class="dropdown-divider" />
-        <sidebar-item :link="{
-          name: 'Info Pengguna',
-          icon: 'fas fa-users text-primary',
-          path: '/info-pengguna/',
-        }">
-        </sidebar-item>
-        <div class="dropdown-divider" />
       </template>
     </side-bar>
     <div class="main-content">
