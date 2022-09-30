@@ -21,6 +21,7 @@ export default {
   },
   data: () => ({
     pageTitle: "Riwayat Kawin",
+    kawin: [{ "id_kawin": 17, "id_ternak": 170, "nomor": 1, "id_varietas": 5, "nama_varietas": "Garut", "tanggal_kawin": "2022-09-20", "id_pemancek": "5", "id_cempe": [1, 2, 3] }],
     // Input
     input: {
       id: null,
@@ -51,7 +52,7 @@ export default {
           th: "ID Pejantan",
         },
         {
-          name: "",
+          name: "id_cempe",
           th: "ID Cempe",
         },
       ],
@@ -207,15 +208,8 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$kawinList.length" :text="`${pageTitle}`" />
-      <data-table
-        v-else
-        :index="true"
-        :data="g$kawinList"
-        :columns="dt.column"
-        :actions="dt.action"
-        @ubah-kawin="triggerEditModal"
-        @hapus-kawin="triggerDelete"
-      />
+      <data-table v-else :index="true" :data="kawin" :columns="dt.column" :actions="dt.action"
+        @ubah-kawin="triggerEditModal" @hapus-kawin="triggerDelete" />
     </template>
 
     <template #modal>
@@ -227,19 +221,9 @@ export default {
           <form-comp v-if="modal.addKawin" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <base-input
-                  name="tanggal_kawin"
-                  class=""
-                  placeholder="YYYY-MM-DD"
-                  label="Tanggal Kawin"
-                  required
-                >
-                  <flat-pickr
-                    v-model.lazy="input.tanggal_kawin"
-                    :config="{ mode: 'single', allowInput: true }"
-                    class="form-control datepicker"
-                    placeholder="Pilih Tanggal Kawin"
-                  />
+                <base-input name="tanggal_kawin" class="" placeholder="YYYY-MM-DD" label="Tanggal Kawin" required>
+                  <flat-pickr v-model.lazy="input.tanggal_kawin" :config="{ mode: 'single', allowInput: true }"
+                    class="form-control datepicker" placeholder="Pilih Tanggal Kawin" />
                 </base-input>
               </div>
               <!-- <div class="col-12">
@@ -248,18 +232,9 @@ export default {
                 </field-form>
               </div> -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.id_pemancek"
-                  type="text"
-                  name="id_pemancek"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Masukan ID Ternak Pejantan"
-                    label="ID Pemancek"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.id_pemancek" type="text" name="id_pemancek">
+                  <base-input v-bind="field" placeholder="Masukan ID Ternak Pejantan" label="ID Pemancek" required>
+                  </base-input>
                 </field-form>
               </div>
               <!-- <div class="col-12">
@@ -292,19 +267,9 @@ export default {
           <form-comp v-if="modal.ubahKawin" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <base-input
-                  name="tanggal_kawin"
-                  class=""
-                  placeholder="YYYY-MM-DD"
-                  label="Tanggal Kawin"
-                  required
-                >
-                  <flat-pickr
-                    v-model.lazy="input.tanggal_kawin"
-                    :config="{ mode: 'single', allowInput: true }"
-                    class="form-control datepicker"
-                    placeholder="Pilih Tanggal Kawin"
-                  />
+                <base-input name="tanggal_kawin" class="" placeholder="YYYY-MM-DD" label="Tanggal Kawin" required>
+                  <flat-pickr v-model.lazy="input.tanggal_kawin" :config="{ mode: 'single', allowInput: true }"
+                    class="form-control datepicker" placeholder="Pilih Tanggal Kawin" />
                 </base-input>
               </div>
               <!-- <div class="col-12">
@@ -313,18 +278,9 @@ export default {
                 </field-form>
               </div> -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.id_pemancek"
-                  type="text"
-                  name="id_pemancek"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Masukan ID Ternak Pejantan"
-                    label="ID Pemancek"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.id_pemancek" type="text" name="id_pemancek">
+                  <base-input v-bind="field" placeholder="Masukan ID Ternak Pejantan" label="ID Pemancek" required>
+                  </base-input>
                 </field-form>
               </div>
               <!-- <div class="col-12">
