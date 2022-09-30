@@ -36,11 +36,7 @@ export default {
         },
         {
           name: "fase",
-          th: "Fase Pemeliharaan",
-        },
-        {
-          name: "nama_kandang",
-          th: "Kode Kandang",
+          th: "Status Ternak",
         },
       ],
       action: [
