@@ -37,7 +37,7 @@ export default {
         },
         {
           name: "fase",
-          th: "Status Ternak",
+          th: "Fase Pemeliharaan",
         },
         {
           name: "berat_berkala",

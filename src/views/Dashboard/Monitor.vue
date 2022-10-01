@@ -39,7 +39,7 @@ export default {
         },
         {
           name: "fase",
-          th: "Status Ternak",
+          th: "Fase Pemeliharaan",
         },
         {
           name: "nama_kandang",
@@ -231,7 +231,7 @@ export default {
             <card-comp class="px-0 m-0 justify-content-center">
               <div class="row align-items-center">
                 <div class="col">
-                  <h1 class="text-black text-uppercase text-center ls-1 mb-1" style="font-size: 16px">Rata-rata Berat Tiap Status Ternak</h1>
+                  <h1 class="text-black text-uppercase text-center ls-1 mb-1" style="font-size: 16px">Rata-rata Berat Tiap Fase Pemeliharaan</h1>
                 </div>
               </div>
               <hc-pie :height="605" :data="g$DonutbyFase" :data-labels="true" :legend="true" />

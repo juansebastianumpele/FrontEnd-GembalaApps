@@ -39,7 +39,7 @@ export default {
         },
         {
           name: "fase",
-          th: "Status Ternak",
+          th: "Fase Pemeliharaan",
         },
         {
           name: "nama_kandang",
@@ -326,7 +326,7 @@ export default {
                     class="text-black text-uppercase text-center ls-1 mb-1"
                     style="font-size: 12px"
                   >
-                    Rata-rata Berat Tiap Status Ternak
+                    Rata-rata Berat Tiap Fase Pemeliharaan
                   </h1>
                 </div>
               </div>

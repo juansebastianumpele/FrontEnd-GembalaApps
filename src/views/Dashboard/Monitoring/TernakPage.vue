@@ -39,7 +39,7 @@ export default {
       }).label("ID Pakan"),
       fase: y$object({
         id: y$string().required().label("ID Fase"),
-      }).label("Status Ternak"),
+      }).label("Fase Pemeliharaan"),
       foto: y$array().nullable().label("Foto"),
       // tanggal_keluar: y$string().nullable().label("Tanggal Keluar"),
       // status_keluar: y$string().nullable().label("Status Keluar"),
@@ -101,7 +101,7 @@ export default {
         },
         {
           name: "fase",
-          th: "Status Ternak",
+          th: "Fase Pemeliharaan",
           render: ({ fase }) => fase.fase,
         },
         {
@@ -645,8 +645,8 @@ export default {
               <div class="col-6">
                 <base-input
                   name="fase"
-                  placeholder="Status Ternak"
-                  label="Status Ternak"
+                  placeholder="Fase Pemeliharaan"
+                  label="Fase Pemeliharaan"
                   required
                 >
                   <multi-select
@@ -654,7 +654,7 @@ export default {
                     :options="g$ddFasePemeliharaan"
                     label="name"
                     track-by="id"
-                    placeholder="Pilih Status Ternak"
+                    placeholder="Pilih Fase Pemeliharaan"
                     :show-labels="false"
                   />
                 </base-input>
@@ -671,7 +671,7 @@ export default {
                     :options="g$ddFasePemeliharaan"
                     label="name"
                     track-by="id"
-                    placeholder="Pilih Status Ternak"
+                    placeholder="Pilih Fase Pemeliharaan"
                     :show-labels="false"
                   />
                 </base-input>
@@ -916,8 +916,8 @@ export default {
               <div class="col-6">
                 <base-input
                   name="fase"
-                  placeholder="Status Ternak"
-                  label="Status Ternak"
+                  placeholder="Fase Pemeliharaan"
+                  label="Fase Pemeliharaan"
                   required
                 >
                   <multi-select
@@ -925,7 +925,7 @@ export default {
                     :options="g$ddFasePemeliharaan"
                     label="name"
                     track-by="id"
-                    placeholder="Pilih Status Ternak"
+                    placeholder="Pilih Fase Pemeliharaan"
                     :show-labels="false"
                   />
                 </base-input>
@@ -942,7 +942,7 @@ export default {
                     :options="g$ddFasePemeliharaan"
                     label="name"
                     track-by="id"
-                    placeholder="Pilih Status Ternak"
+                    placeholder="Pilih Fase Pemeliharaan"
                     :show-labels="false"
                   />
                 </base-input>
