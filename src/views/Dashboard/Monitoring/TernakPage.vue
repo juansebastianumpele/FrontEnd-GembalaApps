@@ -29,8 +29,8 @@ export default {
       suhu_berkala: y$string().required().label("Suhu Berkala"),
       tanggal_lahir: y$string().required().label("Tanggal Lahir"),
       tanggal_masuk: y$string().required().label("Tanggal Masuk"),
-      id_induk: y$string().required().label("ID Induk"),
-      id_pejantan: y$string().required().label("ID Pejantan"),
+      id_induk: y$string().required().label("ID Dam (Ibu)"),
+      id_pejantan: y$string().required().label("ID Sire (Bapak)"),
       status_sehat: y$string().required().label("Status Sehat"),
       kandang: y$object({
         id: y$string().required().label("ID Kandang"),
@@ -40,7 +40,7 @@ export default {
       }).label("ID Pakan"),
       fase: y$object({
         id: y$string().required().label("ID Fase"),
-      }).label("Status Ternak"),
+      }).label("Fase Pemeliharaan"),
       foto: y$array().nullable().label("Foto"),
       // tanggal_keluar: y$string().nullable().label("Tanggal Keluar"),
       // status_keluar: y$string().nullable().label("Status Keluar"),
@@ -665,8 +665,8 @@ export default {
               <div class="col-6">
                 <base-input
                   name="fase"
-                  placeholder="Status Ternak"
-                  label="Status Ternak"
+                  placeholder="Fase Pemeliharaan"
+                  label="Fase Pemeliharaan"
                   required
                 >
                   <multi-select
@@ -674,7 +674,7 @@ export default {
                     :options="g$ddFasePemeliharaan"
                     label="name"
                     track-by="id"
-                    placeholder="Pilih Status Ternak"
+                    placeholder="Pilih Fase Pemeliharaan"
                     :show-labels="false"
                   />
                 </base-input>
@@ -691,7 +691,7 @@ export default {
                     :options="g$ddFasePemeliharaan"
                     label="name"
                     track-by="id"
-                    placeholder="Pilih Status Ternak"
+                    placeholder="Pilih Fase Pemeliharaan"
                     :show-labels="false"
                   />
                 </base-input>

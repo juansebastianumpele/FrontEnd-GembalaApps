@@ -37,7 +37,11 @@ export default {
         },
         {
           name: "fase",
-          th: "Status Ternak",
+          th: "Fase Pemeliharaan",
+        },
+        {
+          name: "berat_berkala",
+          th: "Kebutuhan Pakan",
         },
         {
           name: "berat_berkala",
@@ -135,13 +139,13 @@ export default {
               </div>
             </div>
             <div class="row">
-              <div class="col-5"><span style="font-weight: 600">ID Induk</span></div>
+              <div class="col-5"><span style="font-weight: 600">ID Dam (Ibu)</span></div>
               <div class="col">
                 : <span style="font-weight: 300"> {{ infoTernak.id_induk }}</span>
               </div>
             </div>
             <div class="row">
-              <div class="col-5"><span style="font-weight: 600">ID Pemancek</span></div>
+              <div class="col-5"><span style="font-weight: 600">ID Sire (Bapak)</span></div>
               <div class="col">
                 : <span style="font-weight: 300"> {{ infoTernak.id_pejantan }}</span>
               </div>

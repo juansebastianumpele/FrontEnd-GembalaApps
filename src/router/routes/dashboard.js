@@ -115,47 +115,6 @@ const dashboardRoutes = [
     ],
   },
   {
-    path: "/info-pengguna",
-    component: DashboardLayout,
-    beforeEnter: (to, from, next) => {
-      const { role } = certDetail();
-      if (to.matched.some(({ meta }) => meta.requiresAuth) && role === "") {
-        next({ name: "Login" });
-      } else {
-        next();
-      }
-    },
-    children: [
-      {
-        path: "",
-        name: "Daftar Pengguna",
-        component: () =>
-          import("@/views/Dashboard/InfoPengguna/DaftarPengguna.vue"),
-        meta: { requireAuth: true },
-      },
-    ],
-  },
-  {
-    path: "/trading",
-    component: DashboardLayout,
-    beforeEnter: (to, from, next) => {
-      const { role } = certDetail();
-      if (to.matched.some(({ meta }) => meta.requiresAuth) && role === "") {
-        next({ name: "Login" });
-      } else {
-        next();
-      }
-    },
-    children: [
-      {
-        path: "penjualan",
-        name: "Penjualan",
-        component: () => import("@/views/Dashboard/Trading/PenjualanPage.vue"),
-        meta: { requireAuth: true },
-      },
-    ],
-  },
-  {
     path: "/user",
     component: DashboardLayout,
     beforeEnter: (to, from, next) => {

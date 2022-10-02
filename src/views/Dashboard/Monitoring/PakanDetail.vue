@@ -1,6 +1,7 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import d$ternak from "@/stores/monitoring/ternak";
+import d$dropdown from "@/stores/dropdown";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 
@@ -18,34 +19,34 @@ export default {
     pageTitle: "Detail Data Pakan",
     // Input
     input: {
-      id: null,
+      tanggal: "",
+      keterangan: "",
+      jumlah: "",
+      satuanPakan: "",
     },
     // UI
     modal: {
       detailTernak: false,
+      addDetailPakan: false,
     },
     // DataTable
     dt: {
       column: [
         {
-          name: "nomor",
-          th: "Nomor Ternak",
+          name: "",
+          th: "Tanggal",
         },
         {
-          name: "nama_varietas",
-          th: "Varietas",
+          name: "",
+          th: "Keterangan",
         },
         {
-          name: "fase",
-          th: "Status Ternak",
+          name: "",
+          th: "Jumlah",
         },
         {
-          name: "berat_berkala",
-          th: "Berat Ternak (kg)",
-        },
-        {
-          name: "nama_kandang",
-          th: "Kandang",
+          name: "",
+          th: "Stok",
         },
       ],
       action: [
@@ -60,6 +61,7 @@ export default {
   }),
   computed: {
     ...mapState(d$ternak, ["g$detailPakan", "g$ternakList"]),
+    ...mapState(d$dropdown, ["g$ddKeteranganDetailPakan", "g$ddSatuanPakan"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -99,6 +101,13 @@ export default {
       <div class="row align-items-center">
         <div class="col-auto">
           <h3>Daftar {{ pageTitle }}</h3>
+        </div>
+
+        <!-- Tambah detail pakan -->
+        <div class="col text-right">
+          <base-button type="success" @click="modal.addDetailPakan = true">
+            Tambah {{ pageTitle }}
+          </base-button>
         </div>
       </div>
     </template>
@@ -168,7 +177,7 @@ export default {
             </div>
             <div class="row">
               <div class="col-5">
-                <span style="font-weight: 600">ID Induk</span>
+                <span style="font-weight: 600">ID Dam (Ibu)</span>
               </div>
               <div class="col">
                 :
@@ -177,7 +186,7 @@ export default {
             </div>
             <div class="row">
               <div class="col-5">
-                <span style="font-weight: 600">ID Pemancek</span>
+                <span style="font-weight: 600">ID Sire (Bapak)</span>
               </div>
               <div class="col">
                 :
@@ -307,6 +316,83 @@ export default {
           </div>
         </template>
         <template #footer> </template>
+      </modal-comp>
+
+      <!-- Tambah detail pakan -->
+      <modal-comp v-model:show="modal.addDetailPakan" modal-classes="modal-md">
+        <template #header>
+          <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
+        </template>
+        <template #body>
+          <form-comp v-if="modal.addDetailPakan" :validation-schema="schema">
+            <div class="row">
+              <!-- Tanggal -->
+              <div class="col-12">
+                <base-input
+                  name="tanggal"
+                  class=""
+                  placeholder="YYYY-MM-DD"
+                  label="Tanggal"
+                  required
+                >
+                  <flat-pickr
+                    v-model.lazy="input.tanggal"
+                    :config="{ mode: 'single', allowInput: true }"
+                    class="form-control datepicker"
+                    placeholder="Pilih Tanggal"
+                  />
+                </base-input>
+              </div>
+
+              <!-- Keterangan -->
+              <div class="col-12">
+                <base-input
+                  name="keterangan"
+                  placeholder="Pakan masuk atau keluar?"
+                  label="Keterangan"
+                >
+                  <multi-select
+                    v-model="input.keterangan"
+                    :options="g$ddKeteranganDetailPakan"
+                    placeholder="Pakan masuk atau keluar?"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+
+              <!-- Jumlah -->
+              <div class="col-6">
+                <field-form v-slot="{ field }" v-model="input.jumlah" type="text" name="stok">
+                  <base-input v-bind="field" placeholder="Text" label="Stok"></base-input>
+                </field-form>
+              </div>
+
+              <!-- Satuan pakan -->
+              <div class="col-6">
+                <base-input
+                  name="satuan_pakan"
+                  placeholder="Satuan Pakan"
+                  label="Satuan Pakan"
+                >
+                  <multi-select
+                    v-model="input.satuanPakan"
+                    :options="g$ddSatuanPakan"
+                    placeholder="Pilih Satuan Pakan"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+            </div>
+          </form-comp>
+        </template>
+        <template #footer>
+          <base-button type="secondary" @click="modal.addDetailPakan = false">
+            Tutup
+          </base-button>
+          <base-button type="primary" @click="addDetailPakan()">
+            Tambah {{ pageTitle }}
+          </base-button>
+        </template>
       </modal-comp>
     </template>
   </main-layout>

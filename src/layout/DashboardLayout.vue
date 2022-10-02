@@ -23,12 +23,6 @@
         >
           <sidebar-item
             :link="{
-              name: 'Data Kandang',
-              path: '/monitoring/data-kandang',
-            }"
-          />
-          <sidebar-item
-            :link="{
               name: 'Data Ternak',
               path: '/monitoring/data-ternak',
             }"
@@ -49,6 +43,12 @@
             :link="{
               name: 'Data Pakan',
               path: '/monitoring/data-pakan',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Data Kandang',
+              path: '/monitoring/data-kandang',
             }"
           />
         </sidebar-item>

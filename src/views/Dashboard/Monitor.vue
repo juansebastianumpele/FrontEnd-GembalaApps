@@ -7,7 +7,7 @@ import HcBar from "@/components/HighCharts/Bar.vue";
 import d$chart from "@/stores/chart";
 import d$dropdowm from "@/stores/dropdown";
 import d$costumer from "@/stores/customer";
-import d$kandang from "@/stores/monitoring/daftarKandang";
+import d$kandang from "@/stores/monitoring/daftarkandang";
 import d$pakan from "@/stores/monitoring/pakan";
 
 export default {
@@ -39,7 +39,7 @@ export default {
         },
         {
           name: "fase",
-          th: "Status Ternak",
+          th: "Fase Pemeliharaan",
         },
         {
           name: "nama_kandang",
@@ -185,7 +185,7 @@ export default {
                 <h1 class="text-black text-uppercase text-center ls-1 mb-2" style="font-size: 16px">Populasi Kandang</h1>
                 <base-table :height="319" thead-classes="thead-light" :index-number="false" :data="g$tabelKandang">
                   <template #columns>
-                    <th class="px-2" style="font-size: 11px">Nama Kandang</th>
+                    <th class="px-2" style="font-size: 11px">Jenis Kandang</th>
                     <th class="px-2" style="font-size: 11px">Populasi</th>
                     <th class="px-2" style="font-size: 11px">Rata-rata</th>
                   </template>
@@ -231,7 +231,7 @@ export default {
             <card-comp class="px-0 m-0 justify-content-center">
               <div class="row align-items-center">
                 <div class="col">
-                  <h1 class="text-black text-uppercase text-center ls-1 mb-1" style="font-size: 16px">Rata-rata Berat Tiap Status Ternak</h1>
+                  <h1 class="text-black text-uppercase text-center ls-1 mb-1" style="font-size: 16px">Rata-rata Berat Tiap Fase Pemeliharaan</h1>
                 </div>
               </div>
               <hc-pie :height="605" :data="g$DonutbyFase" :data-labels="true" :legend="true" />
@@ -297,13 +297,13 @@ export default {
               </div>
             </div>
             <div class="row">
-              <div class="col-5"><span style="font-weight: 600">ID Induk</span></div>
+              <div class="col-5"><span style="font-weight: 600">ID Dam (Ibu)</span></div>
               <div class="col">
                 : <span style="font-weight: 300"> {{ selectedTernak.id_induk }}</span>
               </div>
             </div>
             <div class="row">
-              <div class="col-5"><span style="font-weight: 600">ID Pemancek</span></div>
+              <div class="col-5"><span style="font-weight: 600">ID Sire (Bapak)</span></div>
               <div class="col">
                 : <span style="font-weight: 300"> {{ selectedTernak.id_pejantan }}</span>
               </div>

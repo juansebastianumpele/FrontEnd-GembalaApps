@@ -11,7 +11,7 @@ export default {
   }),
   setup() {
     const schema = y$object({
-      // id_ternak: y$string().required().label("ID Induk"),
+      // id_ternak: y$string().required().label("ID Dam (Ibu)"),
       tanggal_kawin: y$string().nullable().label("Tanggal Kawin"),
       id_pemancek: y$string().nullable().label("ID Pemancek"),
     });
@@ -48,7 +48,7 @@ export default {
         },
         {
           name: "id_pemancek",
-          th: "ID Pejantan",
+          th: "ID Pemacek",
         },
         {
           name: "",
@@ -244,7 +244,7 @@ export default {
               </div>
               <!-- <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.id_ternak" type="text" name="id_ternak">
-                  <base-input v-bind="field" placeholder="Masukan ID Ternak Betina" label="ID Betina" required></base-input>
+                  <base-input v-bind="field" placeholder="Masukan ID Ternak Betina" label="ID Ternak" required></base-input>
                 </field-form>
               </div> -->
               <div class="col-12">
@@ -263,12 +263,12 @@ export default {
                 </field-form>
               </div>
               <!-- <div class="col-12">
-                <base-input name="id_ternak" placeholder="ID Betina" label="ID Betina" required>
+                <base-input name="id_ternak" placeholder="ID Ternak" label="ID Ternak" required>
                   <multi-select v-model="input.id_ternak" :options="g$ddListBetina" label="name" track-by="id" placeholder="Pilih/Masukan ID Ternak Betina" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
-                <base-input name="id_ternak" placeholder="ID Pejantan" label="ID Pejantan" required>
+                <base-input name="id_ternak" placeholder="ID Pemacek" label="ID Pemacek" required>
                   <multi-select v-model="input.id_ternak" :options="g$ddListPejantan" label="name" track-by="id" placeholder="Pilih/Masukan ID Ternak Pejantan" :show-labels="false" />
                 </base-input>
               </div> -->
@@ -309,7 +309,7 @@ export default {
               </div>
               <!-- <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.id_ternak" type="text" name="id_ternak">
-                  <base-input v-bind="field" placeholder="Masukan ID Ternak Betina" label="ID Betina" required></base-input>
+                  <base-input v-bind="field" placeholder="Masukan ID Ternak Betina" label="ID Ternak" required></base-input>
                 </field-form>
               </div> -->
               <div class="col-12">
@@ -328,12 +328,12 @@ export default {
                 </field-form>
               </div>
               <!-- <div class="col-12">
-                <base-input name="id_ternak" placeholder="ID Betina" label="ID Betina" required>
+                <base-input name="id_ternak" placeholder="ID Ternak" label="ID Ternak" required>
                   <multi-select v-model="input.id_ternak" :options="g$ddListBetina" label="name" track-by="id" placeholder="Pilih/Masukan ID Ternak Betina" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
-                <base-input name="id_ternak" placeholder="ID Pejantan" label="ID Pejantan" required>
+                <base-input name="id_ternak" placeholder="ID Pemacek" label="ID Pemacek" required>
                   <multi-select v-model="input.id_ternak" :options="g$ddListPejantan" label="name" track-by="id" placeholder="Pilih/Masukan ID Ternak Pejantan" :show-labels="false" />
                 </base-input>
               </div> -->
