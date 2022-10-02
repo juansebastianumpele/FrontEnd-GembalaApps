@@ -11,7 +11,7 @@ export default {
   }),
   setup() {
     const schema = y$object({
-      // id_ternak: y$string().required().label("ID Induk"),
+      // id_ternak: y$string().required().label("ID Dam (Ibu)"),
       tanggal_kawin: y$string().nullable().label("Tanggal Kawin"),
       id_pemancek: y$string().nullable().label("ID Pemancek"),
     });

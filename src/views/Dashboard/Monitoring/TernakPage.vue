@@ -28,8 +28,8 @@ export default {
       suhu_berkala: y$string().required().label("Suhu Berkala"),
       tanggal_lahir: y$string().required().label("Tanggal Lahir"),
       tanggal_masuk: y$string().required().label("Tanggal Masuk"),
-      id_induk: y$string().required().label("ID Induk"),
-      id_pejantan: y$string().required().label("ID Pejantan"),
+      id_induk: y$string().required().label("ID Dam (Ibu)"),
+      id_pejantan: y$string().required().label("ID Sire (Bapak)"),
       status_sehat: y$string().required().label("Status Sehat"),
       kandang: y$object({
         id: y$string().required().label("ID Kandang"),
@@ -573,7 +573,7 @@ export default {
                   <base-input
                     v-bind="field"
                     placeholder="Text"
-                    label="ID Induk"
+                    label="ID Dam (Ibu)"
                     required
                   ></base-input>
                 </field-form>
@@ -588,7 +588,7 @@ export default {
                   <base-input
                     v-bind="field"
                     placeholder="Text"
-                    label="ID Pejantan"
+                    label="ID Sire (Bapak)"
                     required
                   ></base-input>
                 </field-form>
@@ -844,7 +844,7 @@ export default {
                   <base-input
                     v-bind="field"
                     placeholder="Text"
-                    label="ID Induk"
+                    label="ID Dam (Ibu)"
                     required
                   ></base-input>
                 </field-form>
@@ -859,7 +859,7 @@ export default {
                   <base-input
                     v-bind="field"
                     placeholder="Text"
-                    label="ID Pejantan"
+                    label="ID Sire (Bapak)"
                     required
                   ></base-input>
                 </field-form>
@@ -1080,7 +1080,7 @@ export default {
             </div>
             <div class="row">
               <div class="col-5">
-                <span style="font-weight: 600">ID Induk</span>
+                <span style="font-weight: 600">ID Dam (Ibu)</span>
               </div>
               <div class="col">
                 :
@@ -1089,7 +1089,7 @@ export default {
             </div>
             <div class="row">
               <div class="col-5">
-                <span style="font-weight: 600">ID Pemancek</span>
+                <span style="font-weight: 600">ID Sire (Bapak)</span>
               </div>
               <div class="col">
                 :

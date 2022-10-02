@@ -168,7 +168,7 @@ export default {
             </div>
             <div class="row">
               <div class="col-5">
-                <span style="font-weight: 600">ID Induk</span>
+                <span style="font-weight: 600">ID Dam (Ibu)</span>
               </div>
               <div class="col">
                 :
@@ -177,7 +177,7 @@ export default {
             </div>
             <div class="row">
               <div class="col-5">
-                <span style="font-weight: 600">ID Pemancek</span>
+                <span style="font-weight: 600">ID Sire (Bapak)</span>
               </div>
               <div class="col">
                 :
