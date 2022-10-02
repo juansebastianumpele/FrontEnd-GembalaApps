@@ -1,6 +1,7 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import d$pakan from "@/stores/monitoring/pakan";
+import d$dropdown from "@/stores/dropdown";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 import router from "../../../router";
@@ -12,7 +13,7 @@ export default {
   setup() {
     const schema = y$object({
       nama_pakan: y$string().required().label("Nama Pakan"),
-      deskripsi: y$string().nullable().label("Deskripsi"),
+      deskripsi: y$string().nullable().label("Jenis Pakan"),
       komposisi: y$string().nullable().label("Komposisi"),
       // id_users: y$string().required().label("ID Users"),
     });
@@ -28,6 +29,8 @@ export default {
       nama_pakan: "",
       deskripsi: "",
       komposisi: "",
+      satuanPakan: "",
+      stokPakan: "",
       id_users: null,
     },
     // UI
@@ -45,7 +48,7 @@ export default {
         },
         {
           name: "deskripsi",
-          th: "Deskripsi",
+          th: "Jenis Pakan",
         },
         {
           name: "komposisi",
@@ -53,7 +56,7 @@ export default {
         },
         {
           name: "jumlah",
-          th: "Stock Pakan (kg)",
+          th: "Stok",
         },
       ],
       action: [
@@ -76,7 +79,8 @@ export default {
     },
   }),
   computed: {
-    ...mapState(d$pakan, ["g$pakanList", "g$pakanDetail"]),
+    ...mapState(d$pakan, ["g$pakanList", "g$pakanDetail", "g$ddSatuanPakan"]),
+    ...mapState(d$dropdown, ["g$ddSatuanPakan"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -106,19 +110,19 @@ export default {
         nama_pakan: "",
         deskripsi: "",
         komposisi: "",
-        jumlah: "",
+        stok: "",
         id_users: null,
       };
     },
     async addPakan() {
       try {
-        const { nama_pakan, deskripsi, komposisi, jumlah, id_users } =
+        const { nama_pakan, deskripsi, komposisi, stok, id_users } =
           this.input;
         const data = {
           nama_pakan,
           deskripsi,
           komposisi,
-          jumlah,
+          stok,
           id_users: this.userInfo.id,
         };
         await this.schema.validate(data);
@@ -133,13 +137,13 @@ export default {
     },
     async editPakan() {
       try {
-        const { id, nama_pakan, deskripsi, komposisi, jumlah } = this.input;
+        const { id, nama_pakan, deskripsi, komposisi, stok } = this.input;
         const data = {
           id,
           nama_pakan,
           deskripsi,
           komposisi,
-          jumlah,
+          stok,
         };
         await this.schema.validate(data);
         await this.a$pakanEdit(data);
@@ -165,13 +169,13 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_pakan, nama_pakan, deskripsi, komposisi, jumlah } = row;
+        const { id_pakan, nama_pakan, deskripsi, komposisi, stok } = row;
         this.input = {
           id: id_pakan,
           nama_pakan,
           deskripsi,
           komposisi,
-          jumlah,
+          stok,
         };
         this.modal.ubahPakan = true;
       } catch (error) {
@@ -227,16 +231,8 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$pakanList.length" :text="`${pageTitle}`" />
-      <data-table
-        v-else
-        :index="true"
-        :data="g$pakanList"
-        :columns="dt.column"
-        :actions="dt.action"
-        @ubah-pakan="triggerEditModal"
-        @hapus-pakan="triggerDelete"
-        @detail-pakan="triggerDetail"
-      />
+      <data-table v-else :index="true" :data="g$pakanList" :columns="dt.column" :actions="dt.action"
+        @ubah-pakan="triggerEditModal" @hapus-pakan="triggerDelete" @detail-pakan="triggerDetail" />
     </template>
 
     <template #modal>
@@ -248,61 +244,38 @@ export default {
           <form-comp v-if="modal.addPakan" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.nama_pakan"
-                  type="text"
-                  name="nama_pakan"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Nama Pakan"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.nama_pakan" type="text" name="nama_pakan">
+                  <base-input v-bind="field" placeholder="Text" label="Nama Pakan" required></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.deskripsi"
-                  type="text"
-                  name="deskripsi"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Deskripsi"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.deskripsi" type="text" name="deskripsi">
+                  <base-input v-bind="field" placeholder="Text" label="Jenis Pakan"></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.komposisi"
-                  type="text"
-                  name="komposisi"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Komposisi"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.komposisi" type="text" name="komposisi">
+                  <base-input v-bind="field" placeholder="Text" label="Komposisi"></base-input>
                 </field-form>
               </div>
-              <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.jumlah"
-                  type="text"
-                  name="jumlah"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Stock Pakan"
-                  ></base-input>
+              <div class="col-6">
+                <field-form v-slot="{ field }" v-model="input.stok" type="text" name="stok">
+                  <base-input v-bind="field" placeholder="Text" label="Stok"></base-input>
                 </field-form>
+              </div>
+              <div class="col-6">
+                <base-input
+                  name="satuan_pakan"
+                  placeholder="Satuan Pakan"
+                  label="Satuan Pakan"
+                >
+                  <multi-select
+                    v-model="input.satuanPakan"
+                    :options="g$ddSatuanPakan"
+                    placeholder="Pilih Satuan Pakan"
+                    :show-labels="false"
+                  />
+                </base-input>
               </div>
               <!-- <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.id_users" type="text" name="id_users">
@@ -329,60 +302,23 @@ export default {
           <form-comp v-if="modal.ubahPakan" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.nama_pakan"
-                  type="text"
-                  name="nama_pakan"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Nama Pakan"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.nama_pakan" type="text" name="nama_pakan">
+                  <base-input v-bind="field" placeholder="Text" label="Nama Pakan" required></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.deskripsi"
-                  type="text"
-                  name="deskripsi"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Deskripsi"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.deskripsi" type="text" name="deskripsi">
+                  <base-input v-bind="field" placeholder="Text" label="Jenis Pakan"></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.komposisi"
-                  type="text"
-                  name="komposisi"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Komposisi"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.komposisi" type="text" name="komposisi">
+                  <base-input v-bind="field" placeholder="Text" label="Komposisi"></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.jumlah"
-                  type="text"
-                  name="jumlah"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Stock Pakan"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.stok" type="text" name="stok">
+                  <base-input v-bind="field" placeholder="Text" label="Stok"></base-input>
                 </field-form>
               </div>
               <!-- <div class="col-12">

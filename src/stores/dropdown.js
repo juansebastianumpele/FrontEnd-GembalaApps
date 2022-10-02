@@ -7,9 +7,10 @@ const u$dropdown = defineStore({
   id: "dropdown",
   state: () => ({
     jenisKelamin: ["Jantan", "Betina"],
-    jenisHarga: ["kg", "ekor"],
     statusSehat: ["Sehat", "Sakit", "Sembuh"],
     statusKeluar: ["Jual", "Mati", "Sembelih"],
+    satuanPakan: ["Kg", "Pcs"],
+    keteranganDetailPakan: ["Masuk", "Keluar"],
     varietas: [],
     fasePemeliharaan: [],
     kandang: [],
@@ -78,6 +79,8 @@ const u$dropdown = defineStore({
     g$ddJenisHarga: (state) => state.jenisHarga,
     g$ddStatusSehat: (state) => state.statusSehat,
     g$ddStatusKeluar: (state) => state.statusKeluar,
+    g$ddSatuanPakan: (state) => state.satuanPakan,
+    g$ddKeteranganDetailPakan: (state) => state.keteranganDetailPakan,
     g$ddVarietas: (state) =>
       state.varietas.map(({ id_varietas, nama_varietas }) => ({
         id: id_varietas,
