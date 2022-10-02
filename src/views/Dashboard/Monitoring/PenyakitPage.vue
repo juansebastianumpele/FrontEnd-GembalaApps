@@ -205,7 +205,7 @@ export default {
           </li>
           <li>
             <router-link
-              class="flex-sm-fill text-sm-center nav-link"
+              class="flex-sm-fill text-sm-center nav-link ml-3"
               to="data-penyakit/data-kesehatan"
             >
               Data Ternak Sakit
