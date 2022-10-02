@@ -58,10 +58,17 @@ export default {
     },
   },
   async mounted() {
-    await this.a$kesehatanList(this.userInfo.id).catch((error) => this.notify(error, false));
+    await this.a$kesehatanList(this.userInfo.id).catch((error) =>
+      this.notify(error, false)
+    );
   },
   methods: {
-    ...mapActions(d$kesehatan, ["a$kesehatanAdd", "a$kesehatanList", "a$kesehatanDelete", "a$kesehatanEdit"]),
+    ...mapActions(d$kesehatan, [
+      "a$kesehatanAdd",
+      "a$kesehatanList",
+      "a$kesehatanDelete",
+      "a$kesehatanEdit",
+    ]),
     clearInput() {
       this.input = {
         id: null,
@@ -88,16 +95,48 @@ export default {
 <template>
   <main-layout :title="pageTitle" disable-padding>
     <template #header>
+      <nav class="nav nav-pills flex-column flex-sm-row mb-4">
+        <li>
+          <router-link
+            class="flex-sm-fill text-sm-center nav-link"
+            to="../data-penyakit"
+          >
+            Data Penyakit
+          </router-link>
+        </li>
+        <li>
+          <router-link
+            class="flex-sm-fill text-sm-center nav-link active"
+            to="data-kesehatan"
+          >
+            Data Ternak Sakit
+          </router-link>
+        </li>
+      </nav>
       <div class="row align-items-center">
         <div class="col-auto">
           <h3>Daftar {{ pageTitle }}</h3>
+        </div>
+        <div class="col text-right">
+          <base-button type="success" @click="modal.addPenyakit = true">
+            Tambah {{ pageTitle }}
+          </base-button>
         </div>
       </div>
     </template>
 
     <template #body>
       <empty-result v-if="!g$kesehatanList.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$kesehatanList" :columns="dt.column" :actions="dt.action" @ubah-penyakit="triggerEditModal" @hapus-penyakit="triggerDelete" @detail-kesehatan="triggerDetail" />
+      <data-table
+        v-else
+        :index="true"
+        :data="g$kesehatanList"
+        :columns="dt.column"
+        :actions="dt.action"
+        @ubah-penyakit="triggerEditModal"
+        @hapus-penyakit="triggerDelete"
+        @detail-kesehatan="triggerDetail"
+      />
     </template>
   </main-layout>
 </template>

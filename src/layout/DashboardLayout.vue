@@ -42,7 +42,7 @@
           <sidebar-item
             :link="{
               name: 'Data Kesehatan',
-              path: '/monitoring/data-kesehatan',
+              path: '/monitoring/data-penyakit',
             }"
           />
           <sidebar-item
@@ -74,19 +74,24 @@
           />
           <div class="dropdown-divider" />
         </sidebar-item>
-        
+
         <div class="dropdown-divider" />
-        <sidebar-item :link="{
-          name: 'Info Pengguna',
-          icon: 'fas fa-users text-primary',
-          path: '/info-pengguna/',
-        }">
+        <sidebar-item
+          :link="{
+            name: 'Info Pengguna',
+            icon: 'fas fa-users text-primary',
+            path: '/info-pengguna/',
+          }"
+        >
         </sidebar-item>
         <div class="dropdown-divider" />
       </template>
     </side-bar>
     <div class="main-content">
-      <dashboard-navbar v-if="!$route.meta.monitoring" :type="$route.meta.navbarType"></dashboard-navbar>
+      <dashboard-navbar
+        v-if="!$route.meta.monitoring"
+        :type="$route.meta.navbarType"
+      ></dashboard-navbar>
 
       <main @click="$sidebar.displaySidebar(false)">
         <router-view></router-view>

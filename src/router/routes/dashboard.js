@@ -74,13 +74,19 @@ const dashboardRoutes = [
         meta: { requireAuth: true },
       },
       {
-        path: "data-kesehatan",
+        path: "data-penyakit",
+        name: "Data Penyakit",
+        component: () =>
+          import("@/views/Dashboard/Monitoring/PenyakitPage.vue"),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "data-penyakit/data-kesehatan",
         name: "Data Kesehatan",
         component: () =>
           import("@/views/Dashboard/Monitoring/KesehatanPage.vue"),
         meta: { requireAuth: true },
       },
-
       {
         path: "detail-ternak-sakit/:id",
         name: "Detail Ternak Sakit",

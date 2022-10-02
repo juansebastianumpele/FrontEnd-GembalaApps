@@ -1,9 +1,9 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import d$penyakit from "@/stores/masterData/penyakit";
+import d$penyakit from "@/stores/monitoring/penyakit";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
-import router from "../../../router";
+// import router from "../../../router";
 
 export default {
   metaInfo: () => ({
@@ -45,15 +45,11 @@ export default {
         },
         {
           name: "deskripsi",
-          th: "Deskripsi",
-        },
-        {
-          name: "ciri_penyakit",
-          th: "Ciri-ciri",
+          th: "Gejala",
         },
         {
           name: "pengobatan",
-          th: "Pengobatan",
+          th: "Penanganan",
         },
       ],
       action: [
@@ -87,7 +83,12 @@ export default {
     await this.a$penyakitList().catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$penyakit, ["a$penyakitAdd", "a$penyakitList", "a$penyakitDelete", "a$penyakitEdit"]),
+    ...mapActions(d$penyakit, [
+      "a$penyakitAdd",
+      "a$penyakitList",
+      "a$penyakitDelete",
+      "a$penyakitEdit",
+    ]),
     clearInput() {
       this.input = {
         id: null,
@@ -99,7 +100,8 @@ export default {
     },
     async addPenyakit() {
       try {
-        const { nama_penyakit, deskripsi, ciri_penyakit, pengobatan } = this.input;
+        const { nama_penyakit, deskripsi, ciri_penyakit, pengobatan } =
+          this.input;
         const data = {
           nama_penyakit,
           deskripsi,
@@ -118,7 +120,8 @@ export default {
     },
     async editPenyakit() {
       try {
-        const { id, nama_penyakit, deskripsi, ciri_penyakit, pengobatan } = this.input;
+        const { id, nama_penyakit, deskripsi, ciri_penyakit, pengobatan } =
+          this.input;
         const data = {
           id,
           nama_penyakit,
@@ -150,7 +153,13 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_penyakit, nama_penyakit, deskripsi, ciri_penyakit, pengobatan } = row;
+        const {
+          id_penyakit,
+          nama_penyakit,
+          deskripsi,
+          ciri_penyakit,
+          pengobatan,
+        } = row;
         this.input = {
           id: id_penyakit,
           nama_penyakit,
@@ -184,19 +193,49 @@ export default {
 <template>
   <main-layout :title="pageTitle" disable-padding>
     <template #header>
+      <div>
+        <nav class="nav nav-pills flex-column flex-sm-row mb-4">
+          <li>
+            <router-link
+              class="flex-sm-fill text-sm-center nav-link active"
+              to="/monitoring/data-penyakit"
+            >
+              Data Penyakit
+            </router-link>
+          </li>
+          <li>
+            <router-link
+              class="flex-sm-fill text-sm-center nav-link"
+              to="data-penyakit/data-kesehatan"
+            >
+              Data Ternak Sakit
+            </router-link>
+          </li>
+        </nav>
+      </div>
       <div class="row align-items-center">
         <div class="col-auto">
           <h3>Daftar {{ pageTitle }}</h3>
         </div>
         <div class="col text-right">
-          <base-button type="success" @click="modal.addPenyakit = true"> Tambah {{ pageTitle }} </base-button>
+          <base-button type="success" @click="modal.addPenyakit = true">
+            Tambah {{ pageTitle }}
+          </base-button>
         </div>
       </div>
     </template>
 
     <template #body>
       <empty-result v-if="!g$penyakitList.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$penyakitList" :columns="dt.column" :actions="dt.action" @ubah-penyakit="triggerEditModal" @hapus-penyakit="triggerDelete" />
+      <data-table
+        v-else
+        :index="true"
+        :data="g$penyakitList"
+        :columns="dt.column"
+        :actions="dt.action"
+        @ubah-penyakit="triggerEditModal"
+        @hapus-penyakit="triggerDelete"
+      />
     </template>
 
     <template #modal>
@@ -208,31 +247,72 @@ export default {
           <form-comp v-if="modal.addPenyakit" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.nama_penyakit" type="text" name="nama_penyakit">
-                  <base-input v-bind="field" placeholder="Text" label="Nama Penyakit" required></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.nama_penyakit"
+                  type="text"
+                  name="nama_penyakit"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Nama Penyakit"
+                    required
+                  ></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.deskripsi" type="text" name="deskripsi">
-                  <base-input v-bind="field" placeholder="Text" label="Deskripsi"></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.deskripsi"
+                  type="text"
+                  name="deskripsi"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Deskripsi"
+                  ></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.ciri_penyakit" type="text" name="ciri_penyakit">
-                  <base-input v-bind="field" placeholder="Text" label="Ciri-ciri"></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.ciri_penyakit"
+                  type="text"
+                  name="ciri_penyakit"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Ciri-ciri"
+                  ></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.pengobatan" type="text" name="pengobatan">
-                  <base-input v-bind="field" placeholder="Text" label="Pengobatan"></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.pengobatan"
+                  type="text"
+                  name="pengobatan"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Pengobatan"
+                  ></base-input>
                 </field-form>
               </div>
             </div>
           </form-comp>
         </template>
         <template #footer>
-          <base-button type="secondary" @click="modal.addPenyakit = false"> Tutup </base-button>
-          <base-button type="primary" @click="addPenyakit()"> Tambah {{ pageTitle }} </base-button>
+          <base-button type="secondary" @click="modal.addPenyakit = false">
+            Tutup
+          </base-button>
+          <base-button type="primary" @click="addPenyakit()">
+            Tambah {{ pageTitle }}
+          </base-button>
         </template>
       </modal-comp>
       <modal-comp v-model:show="modal.ubahPenyakit" modal-classes="modal-lg">
@@ -243,31 +323,72 @@ export default {
           <form-comp v-if="modal.ubahPenyakit" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.nama_penyakit" type="text" name="nama_penyakit">
-                  <base-input v-bind="field" placeholder="Text" label="Nama Penyakit" required></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.nama_penyakit"
+                  type="text"
+                  name="nama_penyakit"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Nama Penyakit"
+                    required
+                  ></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.deskripsi" type="text" name="deskripsi">
-                  <base-input v-bind="field" placeholder="Text" label="Deskripsi"></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.deskripsi"
+                  type="text"
+                  name="deskripsi"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Deskripsi"
+                  ></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.ciri_penyakit" type="text" name="ciri_penyakit">
-                  <base-input v-bind="field" placeholder="Text" label="Ciri-ciri"></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.ciri_penyakit"
+                  type="text"
+                  name="ciri_penyakit"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Ciri-ciri"
+                  ></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.pengobatan" type="text" name="pengobatan">
-                  <base-input v-bind="field" placeholder="Text" label="Pengobatan"></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.pengobatan"
+                  type="text"
+                  name="pengobatan"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Pengobatan"
+                  ></base-input>
                 </field-form>
               </div>
             </div>
           </form-comp>
         </template>
         <template #footer>
-          <base-button type="secondary" @click="modal.ubahPenyakit = false"> Tutup </base-button>
-          <base-button type="primary" @click="editPenyakit()"> Simpan Perubahan </base-button>
+          <base-button type="secondary" @click="modal.ubahPenyakit = false">
+            Tutup
+          </base-button>
+          <base-button type="primary" @click="editPenyakit()">
+            Simpan Perubahan
+          </base-button>
         </template>
       </modal-comp>
       <modal-comp v-model:show="modal.confirm" modal-classes="modal-lg">
@@ -276,11 +397,14 @@ export default {
         </template>
         <template #body>
           <p>
-            Yakin ingin menghapus {{ pageTitle }}: <strong>{{ input.nama_penyakit }}</strong>
+            Yakin ingin menghapus {{ pageTitle }}:
+            <strong>{{ input.nama_penyakit }}</strong>
           </p>
         </template>
         <template #footer>
-          <base-button type="secondary" @click="modal.confirm = false"> Tutup </base-button>
+          <base-button type="secondary" @click="modal.confirm = false">
+            Tutup
+          </base-button>
           <base-button type="danger" @click="delPenyakit()">Hapus</base-button>
         </template>
       </modal-comp>
