@@ -11,7 +11,7 @@ export default {
   }),
   setup() {
     const schema = y$object({
-      nama_kandang: y$string().required().label("Nama Kandang"),
+      nama_kandang: y$string().required().label("Jenis Kandang"),
     });
     return {
       schema,
@@ -37,12 +37,12 @@ export default {
     dt: {
       column: [
         {
-          name: "nama_kandang",
-          th: "Nama Kandang",
+          name: "blok_kandang",
+          th: "Kode Kandang",
         },
         {
-          name: "blok_kandang",
-          th: "Blok Kandang",
+          name: "nama_kandang",
+          th: "Jenis Kandang",
         },
         {
           name: "total",
@@ -227,6 +227,7 @@ export default {
     </template>
 
     <template #modal>
+      <!-- Tambah kandang -->
       <modal-comp v-model:show="modal.addKandang" modal-classes="modal-md">
         <template #header>
           <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
@@ -234,21 +235,7 @@ export default {
         <template #body>
           <form-comp v-if="modal.addKandang" :validation-schema="schema">
             <div class="row">
-              <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.nama_kandang"
-                  type="text"
-                  name="nama_kandang"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Nama Kandang"
-                    required
-                  ></base-input>
-                </field-form>
-              </div>
+              <!-- Kode kandang -->
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
@@ -259,10 +246,28 @@ export default {
                   <base-input
                     v-bind="field"
                     placeholder="Text"
-                    label="Blok Kandang"
+                    label="Kode Kandang"
                   ></base-input>
                 </field-form>
               </div>
+
+              <!-- Jenis Kandang -->
+              <div class="col-12">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.nama_kandang"
+                  type="text"
+                  name="nama_kandang"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Jenis Kandang"
+                    required
+                  ></base-input>
+                </field-form>
+              </div>
+
             </div>
           </form-comp>
         </template>
@@ -275,6 +280,8 @@ export default {
           </base-button>
         </template>
       </modal-comp>
+
+      <!-- Ubah kandang -->
       <modal-comp v-model:show="modal.ubahKandang" modal-classes="modal-lg">
         <template #header>
           <h3 class="modal-title">Detail {{ pageTitle }}</h3>
@@ -282,21 +289,7 @@ export default {
         <template #body>
           <form-comp v-if="modal.ubahKandang" :validation-schema="schema">
             <div class="row">
-              <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.nama_kandang"
-                  type="text"
-                  name="nama_kandang"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Nama Kandang"
-                    required
-                  ></base-input>
-                </field-form>
-              </div>
+              <!-- Kode kandang -->
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
@@ -307,10 +300,28 @@ export default {
                   <base-input
                     v-bind="field"
                     placeholder="Text"
-                    label="Blok Kandang"
+                    label="Kode Kandang"
                   ></base-input>
                 </field-form>
               </div>
+
+              <!-- Jenis kandang -->
+              <div class="col-12">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.nama_kandang"
+                  type="text"
+                  name="nama_kandang"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Jenis Kandang"
+                    required
+                  ></base-input>
+                </field-form>
+              </div>
+
             </div>
           </form-comp>
         </template>
@@ -323,6 +334,8 @@ export default {
           </base-button>
         </template>
       </modal-comp>
+
+      <!-- Hapus kandang -->
       <modal-comp v-model:show="modal.confirm" modal-classes="modal-lg">
         <template #header>
           <h3 class="modal-title">Hapus {{ pageTitle }}</h3>
@@ -340,6 +353,7 @@ export default {
           <base-button type="danger" @click="delKandang()">Hapus</base-button>
         </template>
       </modal-comp>
+
     </template>
   </main-layout>
 </template>

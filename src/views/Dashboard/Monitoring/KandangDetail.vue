@@ -41,6 +41,10 @@ export default {
         },
         {
           name: "berat_berkala",
+          th: "Kebutuhan Pakan",
+        },
+        {
+          name: "berat_berkala",
           th: "Berat Ternak (kg)",
         },
       ],

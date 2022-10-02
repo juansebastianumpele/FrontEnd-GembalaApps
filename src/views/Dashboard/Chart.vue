@@ -258,7 +258,7 @@ export default {
                   :data="g$tabelKandang"
                 >
                   <template #columns>
-                    <th class="px-2">Nama Kandang</th>
+                    <th class="px-2">Jenis Kandang</th>
                     <th class="px-2">Populasi</th>
                     <th class="px-2">Rata-rata</th>
                   </template>

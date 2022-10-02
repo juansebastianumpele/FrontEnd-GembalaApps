@@ -185,7 +185,7 @@ export default {
                 <h1 class="text-black text-uppercase text-center ls-1 mb-2" style="font-size: 16px">Populasi Kandang</h1>
                 <base-table :height="319" thead-classes="thead-light" :index-number="false" :data="g$tabelKandang">
                   <template #columns>
-                    <th class="px-2" style="font-size: 11px">Nama Kandang</th>
+                    <th class="px-2" style="font-size: 11px">Jenis Kandang</th>
                     <th class="px-2" style="font-size: 11px">Populasi</th>
                     <th class="px-2" style="font-size: 11px">Rata-rata</th>
                   </template>
