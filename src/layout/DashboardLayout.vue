@@ -21,13 +21,7 @@
             icon: 'fas fa-desktop text-primary',
           }"
         >
-          <sidebar-item
-            :link="{
-              name: 'Data Kandang',
-              path: '/monitoring/data-kandang',
-            }"
-          />
-          <sidebar-item
+        <sidebar-item
             :link="{
               name: 'Data Ternak',
               path: '/monitoring/data-ternak',
@@ -41,14 +35,20 @@
           />
           <sidebar-item
             :link="{
-              name: 'Data Kesehatan',
-              path: '/monitoring/data-kesehatan',
+              name: 'Data Pakan',
+              path: '/monitoring/data-pakan',
             }"
           />
           <sidebar-item
             :link="{
-              name: 'Data Pakan',
-              path: '/monitoring/data-pakan',
+              name: 'Data Kandang',
+              path: '/monitoring/data-kandang',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Data Kesehatan',
+              path: '/monitoring/data-kesehatan',
             }"
           />
         </sidebar-item>
