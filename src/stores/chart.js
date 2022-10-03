@@ -7,6 +7,7 @@ const u$total = defineStore({
     chartByPopulasi: [],
     chartKesehatan: [],
     chartJeniskelamin: [],
+    ChartbyTimbangan: [],
     chartFase: [],
     kandang: [],
     filterResult: [],
@@ -63,6 +64,15 @@ const u$total = defineStore({
         this.chartByPopulasi = data;
       } catch ({ error }) {
         this.chartByPopulasi = [];
+        throw error;
+      }
+    },
+    async a$byTimbangan(request) {
+      try {
+        const { data } = await s$total.listTimbangan(request);
+        this.ChartbyTimbangan = data;
+      } catch ({ error }) {
+        this.ChartbyTimbangan = [];
         throw error;
       }
     },
@@ -137,6 +147,26 @@ const u$total = defineStore({
         },
       ],
       length: state.chartFase.length,
+    }),
+    g$byTimbangan: (state) => ({
+      categories: state.ChartbyTimbangan.map(({ tanggal }) => tanggal),
+      series: [
+        {
+          name: "Bobot",
+          backgroundColor: "rgb(255, 99, 132)",
+          borderColor: "rgb(255, 99, 132)",
+          data: state.ChartbyTimbangan.map(
+            ({ berat_berkala }) => berat_berkala
+          ),
+        },
+        {
+          backgroundColor: "rgb(255, 99, 132)",
+          borderColor: "rgb(255, 99, 132)",
+          name: "Suhu",
+          data: state.ChartbyTimbangan.map(({ suhu_berkala }) => suhu_berkala),
+        },
+      ],
+      length: state.ChartbyTimbangan.length,
     }),
     g$DonutbyFase: (state) => ({
       categories: state.chartFase.map(({ fase }) => fase),

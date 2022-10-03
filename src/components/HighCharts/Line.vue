@@ -70,7 +70,7 @@ export default {
           series: {
             dataLabels: {
               enabled: this.dataLabels,
-              format: "{y:,.0f} Kg",
+              format: "{y:,.0f}",
               style: {
                 fontSize: 12,
               },

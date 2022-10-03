@@ -52,16 +52,6 @@
             }"
           />
         </sidebar-item>
-
-        <div class="dropdown-divider" />
-        <sidebar-item
-          :link="{
-            name: 'Info Pengguna',
-            icon: 'fas fa-users text-primary',
-            path: '/info-pengguna/',
-          }"
-        >
-        </sidebar-item>
         <div class="dropdown-divider" />
       </template>
     </side-bar>

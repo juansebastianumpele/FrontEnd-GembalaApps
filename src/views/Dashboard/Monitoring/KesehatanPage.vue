@@ -11,7 +11,11 @@ export default {
     title: "Data Kesehatan",
   }),
   setup() {
-    const schema = y$object({});
+    const schema = y$object({
+      id_ternak: y$string().required().label("ID Ternak"),
+      nama_penyakit: y$string().required().label("Nama Penyakit"),
+      tgl_skit: y$string().required().label("Tanggal Sakit"),
+    });
     return {
       schema,
     };
@@ -21,11 +25,15 @@ export default {
     // Input
     input: {
       id: null,
+      id_ternak: "",
+      nama_penyakit: "",
+      tgl_sakit: "",
       listPenyakit: "",
     },
     // UI
     modal: {
       addTernakSakit: false,
+      editTernakSakit: false,
     },
     // DataTable
     dt: {
@@ -42,8 +50,13 @@ export default {
       action: [
         {
           text: "Lihat Ternak Sakit",
-          color: "warning",
+          color: "info",
           event: "detail-kesehatan",
+        },
+        {
+          text: "Ubah",
+          color: "warning",
+          event: "edit-kesehatan",
         },
       ],
     },
@@ -93,6 +106,25 @@ export default {
       } catch (error) {
         this.clearInput();
         this.notify(error, false);
+      }
+    },
+
+    async addTernakSakit() {
+      try {
+        const { id_ternak, nama_penyakit, tgl_sakit } = this.input;
+        const data = {
+          id_ternak,
+          nama_penyakit,
+          tgl_sakit,
+        };
+        await this.schema.validate(data);
+        await this.a$kesehatanAdd(data);
+        this.modal.addTernakSakit = false;
+        this.notify(`Tambah ${this.pageTitle} berhasil`);
+      } catch (error) {
+        this.notify(error, false);
+      } finally {
+        this.a$kesehatanList();
       }
     },
   },

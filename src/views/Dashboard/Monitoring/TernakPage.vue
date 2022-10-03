@@ -3,6 +3,8 @@ import { mapActions, mapState } from "pinia";
 import d$ternak from "@/stores/monitoring/ternak";
 import d$dropdown from "@/stores/dropdown";
 import d$kesehatan from "@/stores/monitoring/kesehatan";
+import HcLine from "@/components/HighCharts/Line.vue";
+import d$chart from "@/stores/chart";
 
 import {
   object as y$object,
@@ -10,11 +12,15 @@ import {
   string as y$string,
   ref as y$ref,
 } from "yup";
+import { RouterLink } from "vue-router";
 
 export default {
   metaInfo: () => ({
     title: "Data Ternak",
   }),
+  components: {
+    HcLine,
+  },
   setup() {
     const schema = y$object({
       rf_id: y$string().nullable().label("RF ID"),
@@ -136,6 +142,7 @@ export default {
   computed: {
     ...mapState(d$ternak, ["g$ternakList", "g$ternakDetail"]),
     ...mapState(d$kesehatan, ["g$detailKesehatan"]),
+    ...mapState(d$chart, ["g$byTimbangan"]),
     ...mapState(d$dropdown, [
       "g$ddJenisKelamin",
       "g$ddVarietas",
@@ -184,6 +191,7 @@ export default {
       "a$ddKandang",
       "a$ddPakan",
     ]),
+    ...mapActions(d$chart, ["a$byTimbangan"]),
     resetImage() {
       this.input.fotoUrl = "";
       this.input.foto = "";
@@ -415,8 +423,8 @@ export default {
       try {
         this.infoTernak = { ...row };
         this.modal.detailTernak = true;
-
-        console.log(this.infoTernak);
+        await this.a$byTimbangan(this.infoTernak.id_ternak);
+        console.log(this.g$byTimbangan);
       } catch (error) {}
     },
     handleFileUpload() {
@@ -1092,7 +1100,13 @@ export default {
           data-mdb-backdrop="true"
           data-mdb-keyboard="true"
         >
-          <h3 class="modal-title" id="exampleModalLabel">
+          <h3
+            class="modal-title"
+            id="exampleModalLabel"
+            aria-hidden="true"
+            data-mdb-backdrop="true"
+            data-mdb-keyboard="true"
+          >
             Detail Ternak Nomor {{ infoTernak.nomor }}
           </h3>
         </template>
@@ -1101,7 +1115,7 @@ export default {
           <div class="tab-content" id="ex1-content">
             <div
               class="tab-pane fade show active"
-              id="ex1-pills-1"
+              id="detail"
               role="tabpanel"
               aria-labelledby="ex1-tab-1"
             >
@@ -1299,7 +1313,7 @@ export default {
             </div>
             <div
               class="tab-pane fade"
-              id="ex1-pills-2"
+              id="riwayat"
               role="tabpanel"
               aria-labelledby="ex1-tab-2"
             >
@@ -1355,7 +1369,7 @@ export default {
             </div>
             <div
               class="tab-pane fade"
-              id="ex1-pills-3"
+              id="sop"
               role="tabpanel"
               aria-labelledby="ex1-tab-3"
             >
@@ -1367,15 +1381,17 @@ export default {
             </div>
             <div
               class="tab-pane fade"
-              id="ex1-pills-4"
+              id="grafik"
               role="tabpanel"
               aria-labelledby="ex1-tab-4"
             >
               <h3 class="my-4">Grafik ADG</h3>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Consectetur provident numquam autem dolor quibusdam voluptates.
-              </p>
+              <hc-line
+                :height="250"
+                :data="g$byTimbangan"
+                :data-labels="true"
+                :legend="true"
+              />
             </div>
           </div>
         </template>
@@ -1389,9 +1405,9 @@ export default {
                 class="nav-link active"
                 id="ex1-tab-1"
                 data-mdb-toggle="pill"
-                href="#ex1-pills-1"
+                href="#detail"
                 role="tab"
-                aria-controls="ex1-pills-1"
+                aria-controls="detail"
                 aria-selected="true"
                 >Detail</a
               >
@@ -1401,9 +1417,9 @@ export default {
                 class="nav-link"
                 id="ex1-tab-2"
                 data-mdb-toggle="pill"
-                href="#ex1-pills-2"
+                href="#riwayat"
                 role="tab"
-                aria-controls="ex1-pills-2"
+                aria-controls="riwayat"
                 aria-selected="false"
                 >Kesehatan</a
               >
@@ -1413,9 +1429,9 @@ export default {
                 class="nav-link"
                 id="ex1-tab-3"
                 data-mdb-toggle="pill"
-                href="#ex1-pills-3"
+                href="#sop"
                 role="tab"
-                aria-controls="ex1-pills-3"
+                aria-controls="sop"
                 aria-selected="false"
                 >SOP</a
               >
@@ -1425,15 +1441,14 @@ export default {
                 class="nav-link"
                 id="ex1-tab-4"
                 data-mdb-toggle="pill"
-                href="#ex1-pills-4"
+                href="#grafik"
                 role="tab"
-                aria-controls="ex1-pills-4"
+                aria-controls="grafik"
                 aria-selected="false"
                 >Grafik ADG</a
               >
             </li>
           </ul>
-          <!-- Pills navs -->
         </template>
       </modal-comp>
     </template>
