@@ -1,26 +1,26 @@
-import { createApp } from 'vue';
-import { createPinia } from 'pinia';
-import { createMetaManager, plugin as metaPlugin } from 'vue-meta';
+import { createApp } from "vue";
+import { createPinia } from "pinia";
+import { createMetaManager, plugin as metaPlugin } from "vue-meta";
 
 // theme & notification
-import theme from '@/plugins/theme';
-import Toast from 'vue-toastification';
+import theme from "@/plugins/theme";
+import Toast from "vue-toastification";
 
 // localization
-import { setLocale } from 'yup';
-import * as en from './utils/locale/en';
+import { setLocale } from "yup";
+import * as en from "./utils/locale/en";
 
 // axios
-import installAxios from './services/api';
+import installAxios from "./services/api";
 
 // init app & router & mixin
-import App from './App.vue';
-import router from './router';
-import mixin from './mixins';
+import App from "./App.vue";
+import router from "./router";
+import mixin from "./mixins";
 
-import '@/assets/vendor/toastifications.css';
+import "@/assets/vendor/toastifications.css";
 
-const options = { containerClassName: 'notification', timeout: 5000 };
+const options = { containerClassName: "notification", timeout: 5000 };
 
 setLocale(en);
 
@@ -35,4 +35,4 @@ app.use(theme);
 app.use(Toast, options);
 app.use(installAxios);
 
-app.mount('#app');
+app.mount("#app");

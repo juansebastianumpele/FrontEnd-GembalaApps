@@ -673,3 +673,13 @@
   transition-property: all;
   transition-duration: 400ms;
 }
+
+.nav-pills .nav-link {
+ background:none;
+ text-transform: none;
+ border:0
+}
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+ background-color:#3b71ca
+}
