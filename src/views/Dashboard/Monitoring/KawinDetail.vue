@@ -27,6 +27,7 @@ export default {
       tanggal_kawin: "",
       // id_ternak: "",
       id_pemancek: "",
+      fase_pemeliharaan: "",
       id_users: null,
     },
     // UI
@@ -44,11 +45,15 @@ export default {
         },
         {
           name: "nomor",
-          th: "Nomor Ternak Betina",
+          th: "ID Indukan",
         },
         {
           name: "id_pemancek",
           th: "ID Pemacek",
+        },
+        {
+          name: "",
+          th: "Fase Pemeliharaan",
         },
         {
           name: "",
@@ -71,7 +76,7 @@ export default {
   }),
   computed: {
     ...mapState(d$kawin, ["g$kawinList"]),
-    ...mapState(d$dropdown, ["g$ddListBetina", "g$ddListPejantan"]),
+    ...mapState(d$dropdown, ["g$ddListBetina", "g$ddListPejantan", "g$ddFasePemeliharaan"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -87,6 +92,7 @@ export default {
     await this.a$kawinList(this.$route.params.id).catch((error) =>
       this.notify(error, false)
     );
+    await this.a$ddFasePemeliharaan().catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$kawin, [
@@ -94,6 +100,9 @@ export default {
       "a$kawinAdd",
       "a$kawinEdit",
       "a$kawinDelete",
+    ]),
+    ...mapActions(d$dropdown, [
+      "a$ddFasePemeliharaan",
     ]),
     clearInput() {
       this.input = {
@@ -244,7 +253,7 @@ export default {
               </div>
               <!-- <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.id_ternak" type="text" name="id_ternak">
-                  <base-input v-bind="field" placeholder="Masukan ID Ternak Betina" label="ID Ternak" required></base-input>
+                  <base-input v-bind="field" placeholder="Masukan ID Indukan Betina" label="ID Indukan" required></base-input>
                 </field-form>
               </div> -->
               <div class="col-12">
@@ -256,20 +265,40 @@ export default {
                 >
                   <base-input
                     v-bind="field"
-                    placeholder="Masukan ID Ternak Pejantan"
+                    placeholder="Masukan ID Indukan Pejantan"
                     label="ID Pemancek"
                     required
                   ></base-input>
                 </field-form>
               </div>
+
+              <!-- Fase pemeliharaan -->
+              <div class="col-6">
+                <base-input
+                  name="fase"
+                  placeholder="Fase Pemeliharaan"
+                  label="Fase Pemeliharaan"
+                  required
+                >
+                  <multi-select
+                    v-model="input.fase"
+                    :options="g$ddFasePemeliharaan"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih Fase Pemeliharaan"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+
               <!-- <div class="col-12">
-                <base-input name="id_ternak" placeholder="ID Ternak" label="ID Ternak" required>
-                  <multi-select v-model="input.id_ternak" :options="g$ddListBetina" label="name" track-by="id" placeholder="Pilih/Masukan ID Ternak Betina" :show-labels="false" />
+                <base-input name="id_ternak" placeholder="ID Indukan" label="ID Indukan" required>
+                  <multi-select v-model="input.id_ternak" :options="g$ddListBetina" label="name" track-by="id" placeholder="Pilih/Masukan ID Indukan Betina" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
                 <base-input name="id_ternak" placeholder="ID Pemacek" label="ID Pemacek" required>
-                  <multi-select v-model="input.id_ternak" :options="g$ddListPejantan" label="name" track-by="id" placeholder="Pilih/Masukan ID Ternak Pejantan" :show-labels="false" />
+                  <multi-select v-model="input.id_ternak" :options="g$ddListPejantan" label="name" track-by="id" placeholder="Pilih/Masukan ID Indukan Pejantan" :show-labels="false" />
                 </base-input>
               </div> -->
             </div>
@@ -309,7 +338,7 @@ export default {
               </div>
               <!-- <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.id_ternak" type="text" name="id_ternak">
-                  <base-input v-bind="field" placeholder="Masukan ID Ternak Betina" label="ID Ternak" required></base-input>
+                  <base-input v-bind="field" placeholder="Masukan ID Indukan Betina" label="ID Indukan" required></base-input>
                 </field-form>
               </div> -->
               <div class="col-12">
@@ -321,20 +350,20 @@ export default {
                 >
                   <base-input
                     v-bind="field"
-                    placeholder="Masukan ID Ternak Pejantan"
+                    placeholder="Masukan ID Indukan Pejantan"
                     label="ID Pemancek"
                     required
                   ></base-input>
                 </field-form>
               </div>
               <!-- <div class="col-12">
-                <base-input name="id_ternak" placeholder="ID Ternak" label="ID Ternak" required>
-                  <multi-select v-model="input.id_ternak" :options="g$ddListBetina" label="name" track-by="id" placeholder="Pilih/Masukan ID Ternak Betina" :show-labels="false" />
+                <base-input name="id_ternak" placeholder="ID Indukan" label="ID Indukan" required>
+                  <multi-select v-model="input.id_ternak" :options="g$ddListBetina" label="name" track-by="id" placeholder="Pilih/Masukan ID Indukan Betina" :show-labels="false" />
                 </base-input>
               </div>
               <div class="col-12">
                 <base-input name="id_ternak" placeholder="ID Pemacek" label="ID Pemacek" required>
-                  <multi-select v-model="input.id_ternak" :options="g$ddListPejantan" label="name" track-by="id" placeholder="Pilih/Masukan ID Ternak Pejantan" :show-labels="false" />
+                  <multi-select v-model="input.id_ternak" :options="g$ddListPejantan" label="name" track-by="id" placeholder="Pilih/Masukan ID Indukan Pejantan" :show-labels="false" />
                 </base-input>
               </div> -->
               <!-- <div class="col-12">
