@@ -1,6 +1,7 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import d$kesehatan from "@/stores/monitoring/kesehatan";
+import d$dropdown from "@/stores/dropdown";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 import router from "../../../router";
@@ -20,9 +21,12 @@ export default {
     // Input
     input: {
       id: null,
+      listPenyakit: "",
     },
     // UI
-    modal: {},
+    modal: {
+      addTernakSakit: false,
+    },
     // DataTable
     dt: {
       column: [
@@ -46,6 +50,7 @@ export default {
   }),
   computed: {
     ...mapState(d$kesehatan, ["g$kesehatanList", "g$penyakitDetail"]),
+    ...mapState(d$dropdown, ["g$ddListPenyakit"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -61,6 +66,7 @@ export default {
     await this.a$kesehatanList(this.userInfo.id).catch((error) =>
       this.notify(error, false)
     );
+    await this.a$ddListPenyakit().catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$kesehatan, [
@@ -69,6 +75,7 @@ export default {
       "a$kesehatanDelete",
       "a$kesehatanEdit",
     ]),
+    ...mapActions(d$dropdown, ["a$ddListPenyakit"]),
     clearInput() {
       this.input = {
         id: null,
@@ -118,7 +125,7 @@ export default {
           <h3>Daftar {{ pageTitle }}</h3>
         </div>
         <div class="col text-right">
-          <base-button type="success" @click="modal.addPenyakit = true">
+          <base-button type="success" @click="modal.addTernakSakit = true">
             Tambah {{ pageTitle }}
           </base-button>
         </div>
@@ -137,6 +144,167 @@ export default {
         @hapus-penyakit="triggerDelete"
         @detail-kesehatan="triggerDetail"
       />
+    </template>
+    <template #modal>
+      <modal-comp v-model:show="modal.addTernakSakit" modal-classes="modal-md">
+        <template #header>
+          <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
+        </template>
+        <template #body>
+          <form-comp v-if="modal.addTernakSakit" :validation-schema="schema">
+            <div class="row">
+              <div class="col-12">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.nama_penyakit"
+                  type="text"
+                  name="nama_penyakit"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="ID Ternak"
+                    label="ID Ternak"
+                    required
+                  ></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <base-input
+                  name="listPenyakit"
+                  placeholder="Nama Penyakit"
+                  label="Nama Penyakit"
+                  required
+                >
+                  <multi-select
+                    v-model="input.listPenyakit"
+                    :options="g$ddListPenyakit"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih Penyakit"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+              <div class="col-12">
+                <base-input
+                  name="tanggal_lahir"
+                  placeholder="YYYY-MM-DD"
+                  label="Tanggal Sakit"
+                  required
+                >
+                  <flat-pickr
+                    v-model.lazy="input.tanggal_lahir"
+                    :config="{ mode: 'single', allowInput: true }"
+                    class="form-control datepicker"
+                    placeholder="YYYY-MM-DD"
+                  />
+                </base-input>
+              </div>
+            </div>
+          </form-comp>
+        </template>
+        <template #footer>
+          <base-button type="secondary" @click="modal.addPenyakit = false">
+            Tutup
+          </base-button>
+          <base-button type="primary" @click="addPenyakit()">
+            Tambah {{ pageTitle }}
+          </base-button>
+        </template>
+      </modal-comp>
+      <modal-comp v-model:show="modal.ubahPenyakit" modal-classes="modal-lg">
+        <template #header>
+          <h3 class="modal-title">Detail {{ pageTitle }}</h3>
+        </template>
+        <template #body>
+          <form-comp v-if="modal.ubahPenyakit" :validation-schema="schema">
+            <div class="row">
+              <div class="col-12">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.nama_penyakit"
+                  type="text"
+                  name="nama_penyakit"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Nama Penyakit"
+                    required
+                  ></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.deskripsi"
+                  type="text"
+                  name="deskripsi"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Deskripsi"
+                  ></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.ciri_penyakit"
+                  type="text"
+                  name="ciri_penyakit"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Ciri-ciri"
+                  ></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.pengobatan"
+                  type="text"
+                  name="pengobatan"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Pengobatan"
+                  ></base-input>
+                </field-form>
+              </div>
+            </div>
+          </form-comp>
+        </template>
+        <template #footer>
+          <base-button type="secondary" @click="modal.ubahPenyakit = false">
+            Tutup
+          </base-button>
+          <base-button type="primary" @click="editPenyakit()">
+            Simpan Perubahan
+          </base-button>
+        </template>
+      </modal-comp>
+      <modal-comp v-model:show="modal.confirm" modal-classes="modal-lg">
+        <template #header>
+          <h3 class="modal-title">Hapus {{ pageTitle }}</h3>
+        </template>
+        <template #body>
+          <p>
+            Yakin ingin menghapus {{ pageTitle }}:
+            <strong>{{ input.nama_penyakit }}</strong>
+          </p>
+        </template>
+        <template #footer>
+          <base-button type="secondary" @click="modal.confirm = false">
+            Tutup
+          </base-button>
+          <base-button type="danger" @click="delPenyakit()">Hapus</base-button>
+        </template>
+      </modal-comp>
     </template>
   </main-layout>
 </template>

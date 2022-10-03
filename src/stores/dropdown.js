@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import * as s$ternak from "@/services/monitoring/ternak";
 import * as s$kandang from "@/services/monitoring/daftarkandang";
 import * as s$pakan from "@/services/monitoring/pakan";
+import * as s$penyakit from "@/services/monitoring/penyakit";
 
 const u$dropdown = defineStore({
   id: "dropdown",
@@ -17,6 +18,7 @@ const u$dropdown = defineStore({
     pakan: [],
     listBetina: [],
     listPejantan: [],
+    listPenyakit: [],
   }),
   actions: {
     async a$ddVarietas() {
@@ -73,6 +75,15 @@ const u$dropdown = defineStore({
         throw error;
       }
     },
+    async a$ddListPenyakit() {
+      try {
+        const { data } = await s$penyakit.list();
+        this.listPenyakit = data;
+      } catch ({ error }) {
+        this.listPenyakit = [];
+        throw error;
+      }
+    },
   },
   getters: {
     g$ddJenisKelamin: (state) => state.jenisKelamin,
@@ -110,6 +121,11 @@ const u$dropdown = defineStore({
       state.listPejantan.map(({ id_ternak }) => ({
         id: id_ternak,
         name: id_ternak,
+      })),
+    g$ddListPenyakit: (state) =>
+      state.listPenyakit.map(({ id_penyakit, nama_penyakit }) => ({
+        id: id_penyakit,
+        name: nama_penyakit,
       })),
   },
 });
