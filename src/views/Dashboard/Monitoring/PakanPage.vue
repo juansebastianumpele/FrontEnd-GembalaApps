@@ -123,6 +123,7 @@ export default {
           komposisi,
           jumlah: stok,
         };
+        console.log(data);
         await this.schema.validate(data);
         await this.a$pakanAdd(data);
         this.modal.addPakan = false;
@@ -156,7 +157,11 @@ export default {
     async delPakan() {
       try {
         const { id } = this.input;
-        await this.a$pakanDelete(id);
+        const data = {
+          id,
+        };
+        console.log(data);
+        await this.a$pakanDelete(data);
         this.modal.confirm = false;
         this.notify(`Hapus ${this.pageTitle} Sukses!`);
       } catch (error) {
