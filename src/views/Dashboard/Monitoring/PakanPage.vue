@@ -30,7 +30,7 @@ export default {
       deskripsi: "",
       komposisi: "",
       satuanPakan: "",
-      stokPakan: "",
+      stok: "",
       id_users: null,
     },
     // UI
@@ -116,14 +116,12 @@ export default {
     },
     async addPakan() {
       try {
-        const { nama_pakan, deskripsi, komposisi, stok, id_users } =
-          this.input;
+        const { nama_pakan, deskripsi, komposisi, stok } = this.input;
         const data = {
           nama_pakan,
           deskripsi,
           komposisi,
-          stok,
-          id_users: this.userInfo.id,
+          jumlah: stok,
         };
         await this.schema.validate(data);
         await this.a$pakanAdd(data);
@@ -132,7 +130,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$pakanList(this.userInfo.id);
+        this.a$pakanList();
       }
     },
     async editPakan() {
@@ -143,7 +141,7 @@ export default {
           nama_pakan,
           deskripsi,
           komposisi,
-          stok,
+          jumlah: stok,
         };
         await this.schema.validate(data);
         await this.a$pakanEdit(data);
@@ -152,7 +150,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$pakanList(this.userInfo.id);
+        this.a$pakanList();
       }
     },
     async delPakan() {
@@ -164,7 +162,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$pakanList(this.userInfo.id);
+        this.a$pakanList();
       }
     },
     async triggerEditModal(row) {
@@ -231,8 +229,16 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$pakanList.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$pakanList" :columns="dt.column" :actions="dt.action"
-        @ubah-pakan="triggerEditModal" @hapus-pakan="triggerDelete" @detail-pakan="triggerDetail" />
+      <data-table
+        v-else
+        :index="true"
+        :data="g$pakanList"
+        :columns="dt.column"
+        :actions="dt.action"
+        @ubah-pakan="triggerEditModal"
+        @hapus-pakan="triggerDelete"
+        @detail-pakan="triggerDetail"
+      />
     </template>
 
     <template #modal>
@@ -244,23 +250,60 @@ export default {
           <form-comp v-if="modal.addPakan" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.nama_pakan" type="text" name="nama_pakan">
-                  <base-input v-bind="field" placeholder="Text" label="Nama Pakan" required></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.nama_pakan"
+                  type="text"
+                  name="nama_pakan"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Nama Pakan"
+                    required
+                  ></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.deskripsi" type="text" name="deskripsi">
-                  <base-input v-bind="field" placeholder="Text" label="Jenis Pakan"></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.deskripsi"
+                  type="text"
+                  name="deskripsi"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Jenis Pakan"
+                  ></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.komposisi" type="text" name="komposisi">
-                  <base-input v-bind="field" placeholder="Text" label="Komposisi"></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.komposisi"
+                  type="text"
+                  name="komposisi"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Komposisi"
+                  ></base-input>
                 </field-form>
               </div>
               <div class="col-6">
-                <field-form v-slot="{ field }" v-model="input.stok" type="text" name="stok">
-                  <base-input v-bind="field" placeholder="Text" label="Stok"></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.stok"
+                  type="text"
+                  name="stok"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Stok"
+                  ></base-input>
                 </field-form>
               </div>
               <div class="col-6">
@@ -302,23 +345,60 @@ export default {
           <form-comp v-if="modal.ubahPakan" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.nama_pakan" type="text" name="nama_pakan">
-                  <base-input v-bind="field" placeholder="Text" label="Nama Pakan" required></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.nama_pakan"
+                  type="text"
+                  name="nama_pakan"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Nama Pakan"
+                    required
+                  ></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.deskripsi" type="text" name="deskripsi">
-                  <base-input v-bind="field" placeholder="Text" label="Jenis Pakan"></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.deskripsi"
+                  type="text"
+                  name="deskripsi"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Jenis Pakan"
+                  ></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.komposisi" type="text" name="komposisi">
-                  <base-input v-bind="field" placeholder="Text" label="Komposisi"></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.komposisi"
+                  type="text"
+                  name="komposisi"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Komposisi"
+                  ></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.stok" type="text" name="stok">
-                  <base-input v-bind="field" placeholder="Text" label="Stok"></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.stok"
+                  type="text"
+                  name="stok"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Text"
+                    label="Stok"
+                  ></base-input>
                 </field-form>
               </div>
               <!-- <div class="col-12">

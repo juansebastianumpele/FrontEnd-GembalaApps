@@ -24,7 +24,7 @@ export default {
       id: null,
       id_users: null,
       nama_kandang: "",
-      blok_kandang: "",
+      blok: "",
       total: "",
     },
     // UI
@@ -37,7 +37,7 @@ export default {
     dt: {
       column: [
         {
-          name: "blok_kandang",
+          name: "blok",
           th: "Kode Kandang",
         },
         {
@@ -47,6 +47,7 @@ export default {
         {
           name: "total",
           th: "Jumlah Populasi Ternak",
+          render: ({ g$totalKandang }) => g$totalKandang,
         },
       ],
       action: [
@@ -67,9 +68,10 @@ export default {
         },
       ],
     },
+    totalKandang: 0,
   }),
   computed: {
-    ...mapState(d$daftarkandang, ["g$kandangList", "g$kandangDetail"]),
+    ...mapState(d$daftarkandang, ["g$kandangList", "g$totalKandang"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -82,9 +84,7 @@ export default {
     },
   },
   async mounted() {
-    await this.a$kandangList(this.userInfo.id).catch((error) =>
-      this.notify(error, false)
-    );
+    await this.a$kandangList().catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$daftarkandang, [
@@ -98,17 +98,17 @@ export default {
         id: null,
         id_users: "",
         nama_kandang: "",
-        blok_kandang: "",
+        blok: "",
         total: "",
       };
     },
     async addKandang() {
       try {
-        const { nama_kandang, blok_kandang } = this.input;
+        const { nama_kandang, blok } = this.input;
         const data = {
           id_users: this.userInfo.id,
           nama_kandang,
-          blok_kandang,
+          blok,
         };
         await this.schema.validate(data);
         await this.a$kandangAdd(data);
@@ -122,11 +122,11 @@ export default {
     },
     async editKandang() {
       try {
-        const { id, nama_kandang, blok_kandang } = this.input;
+        const { id, nama_kandang, blok } = this.input;
         const data = {
           id,
           nama_kandang,
-          blok_kandang,
+          blok,
         };
         await this.schema.validate(data);
         await this.a$kandangEdit(data);
@@ -152,12 +152,12 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_users, id_kandang, nama_kandang, blok_kandang, total } = row;
+        const { id_users, id_kandang, nama_kandang, blok, total } = row;
         this.input = {
           id: id_kandang,
           id_users,
           nama_kandang,
-          blok_kandang,
+          blok,
           total,
         };
         this.modal.ubahKandang = true;
@@ -239,9 +239,9 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.blok_kandang"
+                  v-model="input.blok"
                   type="text"
-                  name="blok_kandang"
+                  name="blok"
                 >
                   <base-input
                     v-bind="field"
@@ -267,7 +267,6 @@ export default {
                   ></base-input>
                 </field-form>
               </div>
-
             </div>
           </form-comp>
         </template>
@@ -293,9 +292,9 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.blok_kandang"
+                  v-model="input.blok"
                   type="text"
-                  name="blok_kandang"
+                  name="blok"
                 >
                   <base-input
                     v-bind="field"
@@ -321,7 +320,6 @@ export default {
                   ></base-input>
                 </field-form>
               </div>
-
             </div>
           </form-comp>
         </template>
@@ -353,7 +351,6 @@ export default {
           <base-button type="danger" @click="delKandang()">Hapus</base-button>
         </template>
       </modal-comp>
-
     </template>
   </main-layout>
 </template>

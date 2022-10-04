@@ -8,9 +8,9 @@ const u$pakan = defineStore({
     totalPakan: 0,
   }),
   actions: {
-    async a$pakanList(request) {
+    async a$pakanList() {
       try {
-        const { data } = await s$pakan.list(request);
+        const { data } = await s$pakan.list();
         this.pakan = data;
       } catch ({ error }) {
         this.pakan = [];

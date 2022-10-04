@@ -1100,24 +1100,17 @@ export default {
           data-mdb-backdrop="true"
           data-mdb-keyboard="true"
         >
-          <h3
-            class="modal-title"
-            id="exampleModalLabel"
-            aria-hidden="true"
-            data-mdb-backdrop="true"
-            data-mdb-keyboard="true"
-          >
+          <h3 class="modal-title" id="exampleModalLabel">
             Detail Ternak Nomor {{ infoTernak.nomor }}
           </h3>
         </template>
-
         <template v-if="modal.detailTernak" #body>
-          <div class="tab-content" id="ex1-content">
+          <div class="tab-content" id="pills-tabContent">
             <div
               class="tab-pane fade show active"
               id="detail"
               role="tabpanel"
-              aria-labelledby="ex1-tab-1"
+              aria-labelledby="detail-tab"
             >
               <div
                 style="max-height: 450px; overflow-y: auto; overflow-x: hidden"
@@ -1315,7 +1308,7 @@ export default {
               class="tab-pane fade"
               id="riwayat"
               role="tabpanel"
-              aria-labelledby="ex1-tab-2"
+              aria-labelledby="riwayat-tab"
             >
               <div
                 style="max-height: 500px; overflow-y: 800px; overflow-x: hidden"
@@ -1371,7 +1364,7 @@ export default {
               class="tab-pane fade"
               id="sop"
               role="tabpanel"
-              aria-labelledby="ex1-tab-3"
+              aria-labelledby="sop-tab"
             >
               <h3 class="my-3">SOP</h3>
               <p>
@@ -1383,7 +1376,7 @@ export default {
               class="tab-pane fade"
               id="grafik"
               role="tabpanel"
-              aria-labelledby="ex1-tab-4"
+              aria-labelledby="grafik-tab"
             >
               <h3 class="my-4">Grafik ADG</h3>
               <hc-line
@@ -1403,7 +1396,7 @@ export default {
             <li class="nav-item" role="presentation">
               <a
                 class="nav-link active"
-                id="ex1-tab-1"
+                id="detail-tab"
                 data-mdb-toggle="pill"
                 href="#detail"
                 role="tab"
@@ -1415,7 +1408,7 @@ export default {
             <li class="nav-item" role="presentation">
               <a
                 class="nav-link"
-                id="ex1-tab-2"
+                id="riwayat-tab"
                 data-mdb-toggle="pill"
                 href="#riwayat"
                 role="tab"
@@ -1427,7 +1420,7 @@ export default {
             <li class="nav-item" role="presentation">
               <a
                 class="nav-link"
-                id="ex1-tab-3"
+                id="sop-tab"
                 data-mdb-toggle="pill"
                 href="#sop"
                 role="tab"
@@ -1439,7 +1432,7 @@ export default {
             <li class="nav-item" role="presentation">
               <a
                 class="nav-link"
-                id="ex1-tab-4"
+                id="grafik-tab"
                 data-mdb-toggle="pill"
                 href="#grafik"
                 role="tab"

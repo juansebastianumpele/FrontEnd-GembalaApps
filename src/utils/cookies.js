@@ -1,6 +1,11 @@
 import parseJwt from "@/utils/parseJwt";
 
-const setCk = function setCookie(cName, value, { hour, ms, datetime }, secure = false) {
+const setCk = function setCookie(
+  cName,
+  value,
+  { hour, ms, datetime },
+  secure = false
+) {
   const d = new Date();
   if (hour) d.setTime(d.getTime() + hour * 60 * 60 * 1000);
   if (ms) d.setTime(d.getTime() + ms);
@@ -19,7 +24,9 @@ const getCk = function getCookie(cName, secure = false) {
       c = c.substring(1);
     }
     if (c.indexOf(name) === 0) {
-      return secure ? window.atob(c.substring(name.length, c.length)) : c.substring(name.length, c.length);
+      return secure
+        ? window.atob(c.substring(name.length, c.length))
+        : c.substring(name.length, c.length);
     }
   }
   return "";
@@ -40,11 +47,11 @@ const delCk = function deleteCookie(cName) {
 const certDetail = function getCertDetail() {
   const token = getCk("CERT");
   if (token) {
-    const { id, name, level, exp } = parseJwt(token);
+    const { id, username, level, exp } = parseJwt(token);
     if (id === undefined) delCk("CERT");
     return {
       id,
-      name,
+      username,
       role: level,
       exp,
     };

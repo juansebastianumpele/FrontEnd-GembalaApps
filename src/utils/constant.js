@@ -1,5 +1,5 @@
-// const host = import.meta.env.VITE_BASE_API_URL;
-const host = "https://be.gembala.sembadafarm.com/";
+const host = import.meta.env.VITE_BASE_API_URL;
+// const host = "https://be.gembala.sembadafarm.com/";
 
 const baseApiUrl = `${host}/`;
 

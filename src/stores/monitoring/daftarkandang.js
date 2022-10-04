@@ -17,10 +17,11 @@ const u$daftarkandang = defineStore({
         throw error;
       }
     },
-    async a$kandangList(request) {
+    async a$kandangList() {
       try {
-        const { data } = await s$daftarkandang.listKandang(request);
+        const { data, total } = await s$daftarkandang.listKandang();
         this.listkandang = data;
+        this.totalKandang = total;
       } catch ({ error }) {
         this.listkandang = [];
         throw error;
