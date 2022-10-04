@@ -44,7 +44,7 @@ export default {
           th: "Varietas",
         },
         {
-          name: "nama_kandang",
+          name: "",
           th: "Kode Kandang",
         },
         {
