@@ -25,12 +25,12 @@ export default {
     pageTitle: "Data Pakan",
     // Input
     input: {
-      id: null,
+      id_pakan: null,
       nama_pakan: "",
       deskripsi: "",
       komposisi: "",
       satuanPakan: "",
-      stok: "",
+      jumlah: "",
       id_users: null,
     },
     // UI
@@ -106,22 +106,22 @@ export default {
     ]),
     clearInput() {
       this.input = {
-        id: null,
+        id_pakan: null,
         nama_pakan: "",
         deskripsi: "",
         komposisi: "",
-        stok: "",
+        jumlah: "",
         id_users: null,
       };
     },
     async addPakan() {
       try {
-        const { nama_pakan, deskripsi, komposisi, stok } = this.input;
+        const { nama_pakan, deskripsi, komposisi, jumlah } = this.input;
         const data = {
           nama_pakan,
           deskripsi,
           komposisi,
-          jumlah: stok,
+          jumlah,
         };
         console.log(data);
         await this.schema.validate(data);
@@ -136,13 +136,14 @@ export default {
     },
     async editPakan() {
       try {
-        const { id, nama_pakan, deskripsi, komposisi, stok } = this.input;
+        const { id_pakan, nama_pakan, deskripsi, komposisi, jumlah } =
+          this.input;
         const data = {
-          id,
+          id_pakan,
           nama_pakan,
           deskripsi,
           komposisi,
-          jumlah: stok,
+          jumlah,
         };
         await this.schema.validate(data);
         await this.a$pakanEdit(data);
@@ -156,9 +157,9 @@ export default {
     },
     async delPakan() {
       try {
-        const { id } = this.input;
+        const { id_pakan } = this.input;
         const data = {
-          id_pakan: id,
+          id_pakan,
         };
         console.log(data);
         await this.a$pakanDelete(data);
@@ -172,13 +173,13 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_pakan, nama_pakan, deskripsi, komposisi, stok } = row;
+        const { id_pakan, nama_pakan, deskripsi, komposisi, jumlah } = row;
         this.input = {
-          id: id_pakan,
+          id_pakan,
           nama_pakan,
           deskripsi,
           komposisi,
-          stok,
+          jumlah,
         };
         this.modal.ubahPakan = true;
       } catch (error) {
@@ -190,7 +191,7 @@ export default {
       try {
         const { id_pakan, nama_pakan } = row;
         this.input = {
-          id: id_pakan,
+          id_pakan,
           nama_pakan,
         };
         this.modal.confirm = true;
@@ -300,7 +301,7 @@ export default {
               <div class="col-6">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.stok"
+                  v-model="input.jumlah"
                   type="text"
                   name="stok"
                 >
@@ -395,7 +396,7 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.stok"
+                  v-model="input.jumlah"
                   type="text"
                   name="stok"
                 >
