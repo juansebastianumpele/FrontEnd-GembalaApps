@@ -158,7 +158,7 @@ export default {
       try {
         const { id } = this.input;
         const data = {
-          id,
+          id_pakan: id,
         };
         console.log(data);
         await this.a$pakanDelete(data);
