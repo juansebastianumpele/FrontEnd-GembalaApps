@@ -24,7 +24,7 @@ const u$dropdown = defineStore({
     async a$ddVarietas() {
       try {
         const { data } = await s$ternak.listVarietas();
-        this.varietas = data;
+        this.varietas = data.list;
       } catch ({ error }) {
         this.varietas = [];
         throw error;
