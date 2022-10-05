@@ -11,7 +11,7 @@ const u$pakan = defineStore({
     async a$pakanList() {
       try {
         const { data } = await s$pakan.list();
-        this.pakan = data;
+        this.pakan = data.list;
       } catch ({ error }) {
         this.pakan = [];
         throw error;
