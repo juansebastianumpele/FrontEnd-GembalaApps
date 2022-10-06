@@ -38,7 +38,7 @@
               @click="closeModal"
             >
               <span :aria-hidden="!show">×</span>
-            </button>
+            </button> 
           </slot>
         </div>
 
