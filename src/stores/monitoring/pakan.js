@@ -8,10 +8,10 @@ const u$pakan = defineStore({
     totalPakan: 0,
   }),
   actions: {
-    async a$pakanList(request) {
+    async a$pakanList() {
       try {
-        const { data } = await s$pakan.list(request);
-        this.pakan = data;
+        const { data } = await s$pakan.list();
+        this.pakan = data.list;
       } catch ({ error }) {
         this.pakan = [];
         throw error;
@@ -34,6 +34,7 @@ const u$pakan = defineStore({
     async a$pakanDelete(request) {
       try {
         await s$pakan.del(request);
+        console.log(request);
       } catch ({ error }) {
         throw error;
       }

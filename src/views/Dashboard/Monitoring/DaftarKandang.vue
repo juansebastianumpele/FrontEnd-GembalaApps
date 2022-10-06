@@ -4,6 +4,7 @@ import d$daftarkandang from "@/stores/monitoring/daftarkandang";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 import router from "../../../router";
+import d$dropdown from "@/stores/dropdown";
 
 export default {
   metaInfo: () => ({
@@ -11,7 +12,7 @@ export default {
   }),
   setup() {
     const schema = y$object({
-      nama_kandang: y$string().required().label("Jenis Kandang"),
+      kode_kandang: y$string().required().label("Jenis Kandang"),
     });
     return {
       schema,
@@ -21,11 +22,9 @@ export default {
     pageTitle: "Data Kandang",
     // Input
     input: {
-      id: null,
-      id_users: null,
-      nama_kandang: "",
-      blok_kandang: "",
-      total: "",
+      id_kandang: null,
+      kode_kandang: "",
+      jenis_kandang: "",
     },
     // UI
     modal: {
@@ -37,16 +36,20 @@ export default {
     dt: {
       column: [
         {
-          name: "blok_kandang",
+          name: "kode_kandang",
           th: "Kode Kandang",
         },
         {
-          name: "nama_kandang",
+          name: "jenis_kandang",
           th: "Jenis Kandang",
         },
         {
           name: "total",
           th: "Jumlah Populasi Ternak",
+        },
+        {
+          name: "total",
+          th: "Kebutuhan Pakan",
         },
       ],
       action: [
@@ -67,9 +70,11 @@ export default {
         },
       ],
     },
+    totalKandang: 0,
   }),
   computed: {
-    ...mapState(d$daftarkandang, ["g$kandangList", "g$kandangDetail"]),
+    ...mapState(d$daftarkandang, ["g$kandangList", "g$totalKandang"]),
+    ...mapState(d$dropdown, ["g$ddJenisKandang"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -82,9 +87,7 @@ export default {
     },
   },
   async mounted() {
-    await this.a$kandangList(this.userInfo.id).catch((error) =>
-      this.notify(error, false)
-    );
+    await this.a$kandangList().catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$daftarkandang, [
@@ -95,20 +98,17 @@ export default {
     ]),
     clearInput() {
       this.input = {
-        id: null,
-        id_users: "",
-        nama_kandang: "",
-        blok_kandang: "",
-        total: "",
+        id_kandang: null,
+        kode_kandang: "",
+        jenis_kandang: "",
       };
     },
     async addKandang() {
       try {
-        const { nama_kandang, blok_kandang } = this.input;
+        const { kode_kandang, jenis_kandang } = this.input;
         const data = {
-          id_users: this.userInfo.id,
-          nama_kandang,
-          blok_kandang,
+          kode_kandang,
+          jenis_kandang,
         };
         await this.schema.validate(data);
         await this.a$kandangAdd(data);
@@ -117,48 +117,51 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$kandangList(this.userInfo.id);
+        this.a$kandangList();
       }
     },
     async editKandang() {
       try {
-        const { id, nama_kandang, blok_kandang } = this.input;
+        const { id_kandang, kode_kandang, jenis_kandang } = this.input;
         const data = {
-          id,
-          nama_kandang,
-          blok_kandang,
+          id_kandang,
+          kode_kandang,
+          jenis_kandang,
         };
         await this.schema.validate(data);
+        console.log(data);
         await this.a$kandangEdit(data);
         this.modal.ubahKandang = false;
         this.notify(`Edit ${this.pageTitle} Sukses!`);
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$kandangList(this.userInfo.id);
+        this.a$kandangList();
       }
     },
     async delKandang() {
       try {
-        const { id } = this.input;
-        await this.a$kandangDelete(id);
+        const { id_kandang } = this.input;
+        const data = {
+          id_kandang,
+        };
+        console.log(data);
+        await this.a$kandangDelete(data);
         this.modal.confirm = false;
         this.notify(`Hapus ${this.pageTitle} Sukses!`);
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$kandangList(this.userInfo.id);
+        this.a$kandangList();
       }
     },
     async triggerEditModal(row) {
       try {
-        const { id_users, id_kandang, nama_kandang, blok_kandang, total } = row;
+        const { id_kandang, kode_kandang, jenis_kandang } = row;
         this.input = {
-          id: id_kandang,
-          id_users,
-          nama_kandang,
-          blok_kandang,
-          total,
+          id_kandang,
+          kode_kandang,
+          jenis_kandang,
         };
         this.modal.ubahKandang = true;
       } catch (error) {
@@ -168,10 +171,10 @@ export default {
     },
     async triggerDelete(row) {
       try {
-        const { id_kandang, nama_kandang } = row;
+        const { id_kandang, kode_kandang } = row;
         this.input = {
-          id: id_kandang,
-          nama_kandang,
+          id_kandang,
+          kode_kandang,
         };
         this.modal.confirm = true;
       } catch (error) {
@@ -239,13 +242,13 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.blok_kandang"
+                  v-model="input.kode_kandang"
                   type="text"
-                  name="blok_kandang"
+                  name="kode_kandang"
                 >
                   <base-input
                     v-bind="field"
-                    placeholder="Text"
+                    placeholder="Kode Kandang"
                     label="Kode Kandang"
                   ></base-input>
                 </field-form>
@@ -253,21 +256,19 @@ export default {
 
               <!-- Jenis Kandang -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.nama_kandang"
-                  type="text"
-                  name="nama_kandang"
+                <base-input
+                  name="jenis_kandang"
+                  placeholder="Jenis Kandang"
+                  label="Jenis Kandang"
                 >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Jenis Kandang"
-                    required
-                  ></base-input>
-                </field-form>
+                  <multi-select
+                    v-model="input.jenis_kandang"
+                    :options="g$ddJenisKandang"
+                    placeholder="Pilih Jenis Kandang"
+                    :show-labels="false"
+                  />
+                </base-input>
               </div>
-
             </div>
           </form-comp>
         </template>
@@ -293,13 +294,13 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.blok_kandang"
+                  v-model="input.kode_kandang"
                   type="text"
-                  name="blok_kandang"
+                  name="kode_kandang"
                 >
                   <base-input
                     v-bind="field"
-                    placeholder="Text"
+                    placeholder="Kode Kandang"
                     label="Kode Kandang"
                   ></base-input>
                 </field-form>
@@ -307,21 +308,19 @@ export default {
 
               <!-- Jenis kandang -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.nama_kandang"
-                  type="text"
-                  name="nama_kandang"
+                <base-input
+                  name="jenis_kandang"
+                  placeholder="Jenis Kandang"
+                  label="Jenis Kandang"
                 >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Jenis Kandang"
-                    required
-                  ></base-input>
-                </field-form>
+                  <multi-select
+                    v-model="input.jenis_kandang"
+                    :options="g$ddJenisKandang"
+                    placeholder="Pilih Jenis Kandang"
+                    :show-labels="false"
+                  />
+                </base-input>
               </div>
-
             </div>
           </form-comp>
         </template>
@@ -343,7 +342,7 @@ export default {
         <template #body>
           <p>
             Yakin ingin menghapus {{ pageTitle }}:
-            <strong>{{ input.nama_kandang }}</strong>
+            <strong>{{ input.kode_kandang }}</strong>
           </p>
         </template>
         <template #footer>
@@ -353,7 +352,6 @@ export default {
           <base-button type="danger" @click="delKandang()">Hapus</base-button>
         </template>
       </modal-comp>
-
     </template>
   </main-layout>
 </template>

@@ -13,7 +13,7 @@ export default {
   setup() {
     const schema = y$object({
       nama_pakan: y$string().required().label("Nama Pakan"),
-      jenis_pakan: y$string().nullable().label("Jenis Pakan"),
+      deskripsi: y$string().nullable().label("Jenis Pakan"),
       komposisi: y$string().nullable().label("Komposisi"),
       // id_users: y$string().required().label("ID Users"),
     });
@@ -22,15 +22,16 @@ export default {
     };
   },
   data: () => ({
-    pageTitle: "Data Pakan",
+    pageTitle: "Pakan",
     // Input
     input: {
       id_pakan: null,
       nama_pakan: "",
-      jenis_pakan: "",
+      deskripsi: "",
       komposisi: "",
-      stok: "",
-      satuan: "",
+      satuanPakan: "",
+      jumlah: "",
+      id_users: null,
     },
     // UI
     modal: {
@@ -46,20 +47,8 @@ export default {
           th: "Nama Pakan",
         },
         {
-          name: "jenis_pakan",
-          th: "Jenis Pakan",
-        },
-        {
-          name: "komposisi",
-          th: "Komposisi",
-        },
-        {
-          name: "stok",
+          name: "jumlah",
           th: "Stok",
-        },
-        {
-          name: "satuan",
-          th: "Satuan",
         },
       ],
       action: [
@@ -82,7 +71,7 @@ export default {
     },
   }),
   computed: {
-    ...mapState(d$pakan, ["g$pakanList", "g$pakanDetail"]),
+    ...mapState(d$pakan, ["g$pakanList", "g$pakanDetail", "g$ddSatuanPakan"]),
     ...mapState(d$dropdown, ["g$ddSatuanPakan"]),
     modals() {
       return Object.values(this.modal).includes(true);
@@ -96,7 +85,9 @@ export default {
     },
   },
   async mounted() {
-    await this.a$pakanList().catch((error) => this.notify(error, false));
+    await this.a$pakanList(this.userInfo.id).catch((error) =>
+      this.notify(error, false)
+    );
   },
   methods: {
     ...mapActions(d$pakan, [
@@ -109,21 +100,16 @@ export default {
       this.input = {
         id_pakan: null,
         nama_pakan: "",
-        jenis_pakan: "",
-        komposisi: "",
-        jumlah: "",
+        deskripsi: "",
         id_users: null,
       };
     },
     async addPakan() {
       try {
-        const { nama_pakan, jenis_pakan, komposisi, stok, satuan } = this.input;
+        const { nama_pakan, deskripsi, komposisi, jumlah } = this.input;
         const data = {
           nama_pakan,
-          jenis_pakan,
-          komposisi,
-          stok,
-          satuan,
+          deskripsi,
         };
         console.log(data);
         await this.schema.validate(data);
@@ -138,17 +124,13 @@ export default {
     },
     async editPakan() {
       try {
-        const { id_pakan, nama_pakan, jenis_pakan, komposisi, stok, satuan } =
+        const { id_pakan, nama_pakan, deskripsi, komposisi, jumlah } =
           this.input;
         const data = {
           id_pakan,
           nama_pakan,
-          jenis_pakan,
-          komposisi,
-          stok,
-          satuan,
+          deskripsi,
         };
-        console.log(data);
         await this.schema.validate(data);
         await this.a$pakanEdit(data);
         this.modal.ubahPakan = false;
@@ -165,7 +147,6 @@ export default {
         const data = {
           id_pakan,
         };
-        console.log(data);
         await this.a$pakanDelete(data);
         this.modal.confirm = false;
         this.notify(`Hapus ${this.pageTitle} Sukses!`);
@@ -177,15 +158,11 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_pakan, nama_pakan, jenis_pakan, komposisi, stok, satuan } =
-          row;
+        const { id_pakan, nama_pakan, deskripsi, komposisi, jumlah } = row;
         this.input = {
           id_pakan,
           nama_pakan,
-          jenis_pakan,
-          komposisi,
-          stok,
-          satuan,
+          deskripsi,
         };
         this.modal.ubahPakan = true;
       } catch (error) {
@@ -210,7 +187,7 @@ export default {
       try {
         const { id_pakan } = row;
         router.push({
-          name: "Detail Bahan Pakan",
+          name: "Detail Pakan",
           params: {
             id: id_pakan,
           },
@@ -230,16 +207,16 @@ export default {
       <nav class="nav nav-pills flex-column flex-sm-row mb-4">
         <li>
           <router-link
-            class="flex-sm-fill text-sm-center nav-link"
-            to="../data-pakan"
+            class="flex-sm-fill text-sm-center nav-link active"
+            to="data-pakan"
           >
             Daftar Pakan
           </router-link>
         </li>
         <li>
           <router-link
-            class="flex-sm-fill text-sm-center nav-link active ml-3"
-            to="bahan-pakan"
+            class="flex-sm-fill text-sm-center nav-link ml-3"
+            to="data-pakan/bahan-pakan"
           >
             Daftar Bahan Pakan
           </router-link>
@@ -297,64 +274,17 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.jenis_pakan"
+                  v-model="input.deskripsi"
                   type="text"
-                  name="jenis_pakan"
+                  name="deskripsi"
                 >
                   <base-input
                     v-bind="field"
-                    placeholder="Jenis Pakan"
-                    label="Jenis Pakan"
+                    placeholder="Masukan interval"
+                    label="Interval pemberian pakan /hari"
                   ></base-input>
                 </field-form>
               </div>
-              <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.komposisi"
-                  type="text"
-                  name="komposisi"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Komposisi"
-                    label="Komposisi"
-                  ></base-input>
-                </field-form>
-              </div>
-              <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.stok"
-                  type="number"
-                  name="stok"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Stok"
-                    label="Stok"
-                  ></base-input>
-                </field-form>
-              </div>
-              <div class="col-6">
-                <base-input
-                  name="satuan"
-                  placeholder="Satuan Pakan"
-                  label="Satuan Pakan"
-                >
-                  <multi-select
-                    v-model="input.satuan"
-                    :options="g$ddSatuanPakan"
-                    placeholder="Pilih Satuan Pakan"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
-              <!-- <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.id_users" type="text" name="id_users">
-                  <base-input v-bind="field" placeholder="Text" label="ID Users"></base-input>
-                </field-form>
-              </div> -->
             </div>
           </form-comp>
         </template>
@@ -383,7 +313,7 @@ export default {
                 >
                   <base-input
                     v-bind="field"
-                    placeholder="Nama Pakan"
+                    placeholder="Text"
                     label="Nama Pakan"
                     required
                   ></base-input>
@@ -392,64 +322,17 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.jenis_pakan"
+                  v-model="input.deskripsi"
                   type="text"
-                  name="jenis_pakan"
+                  name="deskripsi"
                 >
                   <base-input
                     v-bind="field"
-                    placeholder="Jenis Pakan"
+                    placeholder="Text"
                     label="Jenis Pakan"
                   ></base-input>
                 </field-form>
               </div>
-              <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.komposisi"
-                  type="text"
-                  name="komposisi"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Komposisi"
-                    label="Komposisi"
-                  ></base-input>
-                </field-form>
-              </div>
-              <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.stok"
-                  type="number"
-                  name="stok"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Stok"
-                    label="Stok"
-                  ></base-input>
-                </field-form>
-              </div>
-              <div class="col-6">
-                <base-input
-                  name="satuan"
-                  placeholder="Satuan Pakan"
-                  label="Satuan Pakan"
-                >
-                  <multi-select
-                    v-model="input.satuan"
-                    :options="g$ddSatuanPakan"
-                    placeholder="Pilih Satuan Pakan"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
-              <!-- <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.id_users" type="text" name="id_users">
-                  <base-input v-bind="field" placeholder="Text" label="ID Users"></base-input>
-                </field-form>
-              </div> -->
             </div>
           </form-comp>
         </template>

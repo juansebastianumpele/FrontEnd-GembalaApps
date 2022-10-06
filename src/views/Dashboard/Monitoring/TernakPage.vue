@@ -1101,7 +1101,6 @@ export default {
             Detail Ternak Nomor {{ infoTernak.nomor }}
           </h3>
         </template>
-
         <template v-if="modal.detailTernak" #body>
           <div class="tab-content" id="pills-tabContent">
             <div
