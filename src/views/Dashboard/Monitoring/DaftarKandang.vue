@@ -49,6 +49,10 @@ export default {
           th: "Jumlah Populasi Ternak",
           render: ({ g$totalKandang }) => g$totalKandang,
         },
+        {
+          name: "",
+          th: "Kebutuhan Pakan",
+        },
       ],
       action: [
         {

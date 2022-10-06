@@ -422,8 +422,14 @@ export default {
         this.infoTernak = { ...row };
         this.modal.detailTernak = true;
         await this.a$byTimbangan(this.infoTernak.id_ternak);
-        console.log(this.g$byTimbangan);
-      } catch (error) {}
+      } catch (error) {
+      } finally {
+        this.a$ternakList(this.userInfo.id);
+      }
+      $('a[data-toggle="pill"]').on("shown.bs.tab", function (e) {
+        e.target; // newly activated tab
+        e.relatedTarget; // previous active tab
+      });
     },
     handleFileUpload() {
       const file = this.$refs.foto.files[0];
@@ -1088,16 +1094,7 @@ export default {
 
       <!-- Modal Detail Ternak -->
       <modal-comp v-model:show="modal.detailTernak" modal-classes="modal-md">
-        <template
-          #header
-          class="modal top fade"
-          id="exampleModal"
-          tabindex="-1"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-          data-mdb-backdrop="true"
-          data-mdb-keyboard="true"
-        >
+        <template #header>
           <h3 class="modal-title" id="exampleModalLabel">
             Detail Ternak Nomor {{ infoTernak.nomor }}
           </h3>
@@ -1106,9 +1103,9 @@ export default {
           <div class="tab-content" id="pills-tabContent">
             <div
               class="tab-pane fade show active"
-              id="detail"
+              id="pills-home"
               role="tabpanel"
-              aria-labelledby="detail-tab"
+              aria-labelledby="pills-home-tab"
             >
               <div
                 style="max-height: 450px; overflow-y: auto; overflow-x: hidden"
@@ -1304,9 +1301,9 @@ export default {
             </div>
             <div
               class="tab-pane fade"
-              id="riwayat"
+              id="pills-profile"
               role="tabpanel"
-              aria-labelledby="riwayat-tab"
+              aria-labelledby="pills-profile-tab"
             >
               <div
                 style="max-height: 500px; overflow-y: 800px; overflow-x: hidden"
@@ -1360,9 +1357,9 @@ export default {
             </div>
             <div
               class="tab-pane fade"
-              id="sop"
+              id="pills-contact"
               role="tabpanel"
-              aria-labelledby="sop-tab"
+              aria-labelledby="pills-contact-tab"
             >
               <h3 class="my-3">SOP</h3>
               <p>
@@ -1372,9 +1369,9 @@ export default {
             </div>
             <div
               class="tab-pane fade"
-              id="grafik"
+              id="pills-phone"
               role="tabpanel"
-              aria-labelledby="grafik-tab"
+              aria-labelledby="pills-phone-tab"
             >
               <h3 class="my-4">Grafik ADG</h3>
               <hc-line
@@ -1390,53 +1387,53 @@ export default {
           #footer
           class="modal-footer justify-content-center align-items-center"
         >
-          <ul class="nav nav-pills m-auto" id="ex1" role="tablist">
-            <li class="nav-item" role="presentation">
+          <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item">
               <a
                 class="nav-link active"
-                id="detail-tab"
-                data-mdb-toggle="pill"
-                href="#detail"
+                id="pills-home-tab"
+                data-toggle="pill"
+                href="#pills-home"
                 role="tab"
-                aria-controls="detail"
+                aria-controls="pills-home"
                 aria-selected="true"
                 >Detail</a
               >
             </li>
-            <li class="nav-item" role="presentation">
+            <li class="nav-item">
               <a
                 class="nav-link"
-                id="riwayat-tab"
-                data-mdb-toggle="pill"
-                href="#riwayat"
+                id="pills-profile-tab"
+                data-toggle="pill"
+                href="#pills-profile"
                 role="tab"
-                aria-controls="riwayat"
+                aria-controls="pills-profile"
                 aria-selected="false"
                 >Kesehatan</a
               >
             </li>
-            <li class="nav-item" role="presentation">
+            <li class="nav-item">
               <a
                 class="nav-link"
-                id="sop-tab"
-                data-mdb-toggle="pill"
-                href="#sop"
+                id="pills-contact-tab"
+                data-toggle="pill"
+                href="#pills-contact"
                 role="tab"
-                aria-controls="sop"
+                aria-controls="pills-contact"
                 aria-selected="false"
                 >SOP</a
               >
             </li>
-            <li class="nav-item" role="presentation">
+            <li class="nav-item">
               <a
                 class="nav-link"
-                id="grafik-tab"
-                data-mdb-toggle="pill"
-                href="#grafik"
+                id="pills-phone-tab"
+                data-toggle="pill"
+                href="#pills-phone"
                 role="tab"
-                aria-controls="grafik"
+                aria-controls="pills-phone"
                 aria-selected="false"
-                >Grafik ADG</a
+                >Grafik</a
               >
             </li>
           </ul>
