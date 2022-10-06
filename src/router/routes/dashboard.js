@@ -64,12 +64,26 @@ const dashboardRoutes = [
       {
         path: "data-pakan",
         name: "Data Pakan",
-        component: () => import("@/views/Dashboard/Monitoring/PakanPage.vue"),
+        component: () =>
+          import("@/views/Dashboard/Monitoring/JenisPakanPage.vue"),
         meta: { requireAuth: true },
       },
       {
         path: "detail-pakan/:id",
         name: "Detail Pakan",
+        component: () =>
+          import("@/views/Dashboard/Monitoring/JenisPakanDetail.vue"),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "data-pakan/bahan-pakan",
+        name: "Bahan Pakan",
+        component: () => import("@/views/Dashboard/Monitoring/PakanPage.vue"),
+        meta: { requireAuth: true },
+      },
+      {
+        path: "data-pakan/detail-bahan-pakan/:id",
+        name: "Detail Bahan Pakan",
         component: () => import("@/views/Dashboard/Monitoring/PakanDetail.vue"),
         meta: { requireAuth: true },
       },

@@ -7,7 +7,7 @@ import { object as y$object, string as y$string, ref as y$ref } from "yup";
 
 export default {
   metaInfo: () => ({
-    title: "Detail Bahan Pakan",
+    title: "Detail Data Pakan",
   }),
   setup() {
     const schema = y$object({});

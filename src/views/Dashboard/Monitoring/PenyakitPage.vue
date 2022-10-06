@@ -91,21 +91,20 @@ export default {
     ]),
     clearInput() {
       this.input = {
-        id: null,
+        id_penyakit: null,
         nama_penyakit: "",
         deskripsi: "",
-        ciri_penyakit: "",
+        ciri: "",
         pengobatan: "",
       };
     },
     async addPenyakit() {
       try {
-        const { nama_penyakit, deskripsi, ciri_penyakit, pengobatan } =
-          this.input;
+        const { nama_penyakit, deskripsi, ciri, pengobatan } = this.input;
         const data = {
           nama_penyakit,
           deskripsi,
-          ciri_penyakit,
+          ciri,
           pengobatan,
         };
         await this.schema.validate(data);
@@ -120,13 +119,13 @@ export default {
     },
     async editPenyakit() {
       try {
-        const { id, nama_penyakit, deskripsi, ciri_penyakit, pengobatan } =
+        const { id_penyakit, nama_penyakit, deskripsi, ciri, pengobatan } =
           this.input;
         const data = {
-          id,
+          id_penyakit,
           nama_penyakit,
           deskripsi,
-          ciri_penyakit,
+          ciri,
           pengobatan,
         };
         await this.schema.validate(data);
@@ -255,7 +254,7 @@ export default {
                 >
                   <base-input
                     v-bind="field"
-                    placeholder="Text"
+                    placeholder="Nama Penyakit"
                     label="Nama Penyakit"
                     required
                   ></base-input>
@@ -270,7 +269,7 @@ export default {
                 >
                   <base-input
                     v-bind="field"
-                    placeholder="Text"
+                    placeholder="Deskripsi"
                     label="Deskripsi"
                   ></base-input>
                 </field-form>
@@ -278,13 +277,13 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.ciri_penyakit"
+                  v-model="input.ciri"
                   type="text"
-                  name="ciri_penyakit"
+                  name="ciri"
                 >
                   <base-input
                     v-bind="field"
-                    placeholder="Text"
+                    placeholder="Ciri-ciri"
                     label="Ciri-ciri"
                   ></base-input>
                 </field-form>
@@ -298,7 +297,7 @@ export default {
                 >
                   <base-input
                     v-bind="field"
-                    placeholder="Text"
+                    placeholder="Pengobatan"
                     label="Pengobatan"
                   ></base-input>
                 </field-form>

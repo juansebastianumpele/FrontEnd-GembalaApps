@@ -12,6 +12,7 @@ const u$dropdown = defineStore({
     statusKeluar: ["Jual", "Mati", "Sembelih"],
     satuanPakan: ["Kg", "Pcs"],
     keteranganDetailPakan: ["Masuk", "Keluar"],
+    jenisKandang: ["Isolasi", "Kawin", "Individu", "Rekondisi"],
     varietas: [],
     fasePemeliharaan: [],
     kandang: [],
@@ -24,7 +25,7 @@ const u$dropdown = defineStore({
     async a$ddVarietas() {
       try {
         const { data } = await s$ternak.listVarietas();
-        this.varietas = data;
+        this.varietas = data.list;
       } catch ({ error }) {
         this.varietas = [];
         throw error;
@@ -92,6 +93,7 @@ const u$dropdown = defineStore({
     g$ddStatusKeluar: (state) => state.statusKeluar,
     g$ddSatuanPakan: (state) => state.satuanPakan,
     g$ddKeteranganDetailPakan: (state) => state.keteranganDetailPakan,
+    g$ddJenisKandang: (state) => state.jenisKandang,
     g$ddVarietas: (state) =>
       state.varietas.map(({ id_varietas, nama_varietas }) => ({
         id: id_varietas,

@@ -20,7 +20,7 @@ const u$daftarkandang = defineStore({
     async a$kandangList() {
       try {
         const { data, total } = await s$daftarkandang.listKandang();
-        this.listkandang = data;
+        this.listkandang = data.list;
         this.totalKandang = total;
       } catch ({ error }) {
         this.listkandang = [];

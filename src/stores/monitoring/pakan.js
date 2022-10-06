@@ -34,6 +34,7 @@ const u$pakan = defineStore({
     async a$pakanDelete(request) {
       try {
         await s$pakan.del(request);
+        console.log(request);
       } catch ({ error }) {
         throw error;
       }

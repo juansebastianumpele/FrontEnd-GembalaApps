@@ -10,7 +10,7 @@ const u$penyakit = defineStore({
     async a$penyakitList() {
       try {
         const { data } = await s$penyakit.list();
-        this.penyakit = data;
+        this.penyakit = data.list;
       } catch ({ error }) {
         this.penyakit = [];
         throw error;
