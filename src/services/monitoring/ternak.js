@@ -3,7 +3,7 @@ import { subApiUrl } from "@/utils/constant";
 
 const { api, ternak, timbangan } = subApiUrl;
 
-const list = (req) => baseApi.get(`${api}/${ternak}/byUserId/${req}`);
+const list = (req) => baseApi.get(`${api}/${ternak}`);
 const add = (req) =>
   baseApi.post(`${api}/${ternak}`, req, {
     headers: { "Content-Type": "multipart/form-data" },
@@ -12,8 +12,8 @@ const edit = (req) => baseApi.put(`${api}/${ternak}/${req.id}`, req.formData);
 const del = (req) => baseApi.delete(`${api}/${ternak}/${req}`);
 
 // Dropdown
-const listVarietas = () => baseApi.get(`${api}/${ternak}/varietas`);
-const listFase = () => baseApi.get(`${api}/${ternak}/fase`);
+const listVarietas = () => baseApi.get(`${api}/varietas`);
+const listFase = () => baseApi.get(`${api}/fase`);
 
 // Jumlah Ternak
 const listBetina = (req) => baseApi.get(`${api}/${ternak}/listbetina/${req}`);

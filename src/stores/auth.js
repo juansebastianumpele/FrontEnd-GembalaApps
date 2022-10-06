@@ -23,10 +23,11 @@ const useAuthStore = defineStore({
   actions: {
     async a$setUserInfo() {
       try {
-        const { id, name, role } = certDetail();
-        if (!id && !name && !role) throw new Error("Tidak ada info Pengguna!");
+        const { id, username, role } = certDetail();
+        if (!id && !username && !role)
+          throw new Error("Tidak ada info Pengguna!");
         this.id = id;
-        this.name = name;
+        this.name = username;
         this.role = role;
         return "User Authenticated";
       } catch ({ message }) {
@@ -48,8 +49,8 @@ const useAuthStore = defineStore({
     },
     async a$logout() {
       try {
-        const { id, role, name } = certDetail();
-        if (id || role || name) delCk("CERT");
+        const { id, role, username } = certDetail();
+        if (id || role || username) delCk("CERT");
         this.a$setUserInfo();
         return "Logout success!";
       } catch ({ error, message }) {

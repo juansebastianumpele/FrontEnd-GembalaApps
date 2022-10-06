@@ -24,7 +24,7 @@ const u$dropdown = defineStore({
     async a$ddVarietas() {
       try {
         const { data } = await s$ternak.listVarietas();
-        this.varietas = data;
+        this.varietas = data.list;
       } catch ({ error }) {
         this.varietas = [];
         throw error;
@@ -33,7 +33,7 @@ const u$dropdown = defineStore({
     async a$ddFasePemeliharaan() {
       try {
         const { data } = await s$ternak.listFase();
-        this.fasePemeliharaan = data;
+        this.fasePemeliharaan = data.list;
       } catch ({ error }) {
         this.fasePemeliharaan = [];
         throw error;
@@ -42,7 +42,7 @@ const u$dropdown = defineStore({
     async a$ddKandang(request) {
       try {
         const { data } = await s$kandang.listKandang(request);
-        this.kandang = data;
+        this.kandang = data.list;
       } catch ({ error }) {
         this.kandang = [];
         throw error;
@@ -51,7 +51,7 @@ const u$dropdown = defineStore({
     async a$ddPakan(request) {
       try {
         const { data } = await s$pakan.list(request);
-        this.pakan = data;
+        this.pakan = data.list;
       } catch ({ error }) {
         this.pakan = [];
         throw error;
@@ -60,7 +60,7 @@ const u$dropdown = defineStore({
     async a$ddListBetina(request) {
       try {
         const { data } = await s$ternak.listBetina(request);
-        this.listBetina = data;
+        this.listBetina = data.list;
       } catch ({ error }) {
         this.listBetina = [];
         throw error;
@@ -69,7 +69,7 @@ const u$dropdown = defineStore({
     async a$ddListPejantan(request) {
       try {
         const { data } = await s$ternak.listPejantan(request);
-        this.listPejantan = data;
+        this.listPejantan = data.list;
       } catch ({ error }) {
         this.listPejantan = [];
         throw error;
@@ -78,7 +78,7 @@ const u$dropdown = defineStore({
     async a$ddListPenyakit() {
       try {
         const { data } = await s$penyakit.list();
-        this.listPenyakit = data;
+        this.listPenyakit = data.list;
       } catch ({ error }) {
         this.listPenyakit = [];
         throw error;
