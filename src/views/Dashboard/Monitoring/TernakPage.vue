@@ -94,13 +94,12 @@ export default {
     dt: {
       column: [
         {
-          name: "nomor",
+          name: "id_ternak",
           th: "ID Ternak",
         },
         {
-          name: "varietas",
+          name: "nama_varietas",
           th: "Varietas",
-          render: ({ varietas }) => varietas.nama,
         },
         {
           name: "jenis_kelamin",
@@ -109,10 +108,9 @@ export default {
         {
           name: "fase",
           th: "Fase Pemeliharaan",
-          render: ({ fase }) => fase.fase,
         },
         {
-          name: "umur",
+          name: "usia",
           th: "Usia (bln)",
         },
       ],

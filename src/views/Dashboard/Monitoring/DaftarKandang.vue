@@ -51,6 +51,10 @@ export default {
           name: "total",
           th: "Kebutuhan Pakan",
         },
+        {
+          name: "",
+          th: "Kebutuhan Pakan",
+        },
       ],
       action: [
         {

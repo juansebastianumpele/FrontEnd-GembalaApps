@@ -11,7 +11,7 @@ const u$ternak = defineStore({
     async a$ternakList(request) {
       try {
         const { data } = await s$ternak.list(request);
-        this.ternak = data;
+        this.ternak = data.list;
       } catch ({ error }) {
         this.ternak = [];
         throw error;
