@@ -48,6 +48,10 @@ export default {
           name: "total",
           th: "Jumlah Populasi Ternak",
         },
+        {
+          name: "",
+          th: "Kebutuhan Pakan",
+        },
       ],
       action: [
         {
