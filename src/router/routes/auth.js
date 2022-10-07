@@ -27,7 +27,7 @@ const authRoutes = {
       path: ':pathMatch(.*)',
       alias: ':pathMatch(.*)',
       name: '404',
-      component: () => import('@/views/NotFoundView.vue'),
+      component: () => import('@/views/Dashboard/NotFoundView.vue'),
     },
   ],
 };
