@@ -1,11 +1,12 @@
-import { defineStore } from 'pinia';
-import * as s$costumer from '@/services/customer';
+import { defineStore } from "pinia";
+import * as s$costumer from "@/services/customer";
+import * as s$ternak from "@/services/monitoring/ternak";
 
 const u$costumer = defineStore({
-  id: 'costumer',
+  id: "costumer",
   state: () => ({
     costumer: [],
-    detail: {},
+    detail: [],
   }),
   actions: {
     async a$costumerList() {
@@ -17,12 +18,12 @@ const u$costumer = defineStore({
         throw error;
       }
     },
-    async a$costumerDetail(request) {
+    async a$costumerDetail() {
       try {
-        const { data } = await s$costumer.detail(request);
-        this.detail = { ...data[0] };
+        const { data } = await s$ternak.list();
+        this.detail = data.total;
       } catch ({ error }) {
-        this.detail = {};
+        this.detail = [];
         throw error;
       }
     },

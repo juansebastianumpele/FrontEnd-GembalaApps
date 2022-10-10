@@ -113,6 +113,7 @@ export default {
         {
           name: "usia",
           th: "Usia (bln)",
+          render: ({ usia }) => Math.round(usia / 30),
         },
       ],
       action: [

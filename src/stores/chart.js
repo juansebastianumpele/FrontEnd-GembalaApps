@@ -6,7 +6,8 @@ const u$total = defineStore({
   state: () => ({
     chartByPopulasi: [],
     chartKesehatan: [],
-    chartJeniskelamin: [],
+    chartJantan: [],
+    chartBetina: [],
     ChartbyTimbangan: [],
     chartFase: [],
     kandang: [],
@@ -22,15 +23,28 @@ const u$total = defineStore({
         throw error;
       }
     },
-    async a$byJeniskelamin(req) {
+
+    async a$byJantan() {
       try {
-        const { data } = await s$total.totalJeniskelamin(req);
-        this.chartJeniskelamin = data;
+        const { data } = await s$total.listPejantan();
+        this.chartJantan = data.total;
+        console.log(this.chartJantan);
       } catch ({ error }) {
-        this.chartJeniskelamin = [];
+        this.chartJantan = [];
         throw error;
       }
     },
+
+    async a$byBetina() {
+      try {
+        const { data } = await s$total.listBetina();
+        this.chartBetina = data.total;
+      } catch ({ error }) {
+        this.chartBetina = [];
+        throw error;
+      }
+    },
+
     async a$byFase(req) {
       try {
         const { data } = await s$total.totalFase(req);
@@ -112,18 +126,13 @@ const u$total = defineStore({
       length: state.chartByPopulasi.length,
     }),
     g$byJeniskelamin: (state) => ({
-      categories: state.chartJeniskelamin.map(
-        ({ jenis_kelamin }) => jenis_kelamin
-      ),
+      categories: ["Jantan", "Betina"],
       series: [
         {
           name: "Jenis Kelamin",
-          data: state.chartJeniskelamin.map(
-            ({ Jumlah_ternak }) => Jumlah_ternak
-          ),
+          data: [state.chartJantan, state.chartBetina],
         },
       ],
-      length: state.chartJeniskelamin.length,
     }),
     g$byKesehatan: (state) => ({
       categories: state.chartKesehatan.map(({ status_sehat }) => status_sehat),

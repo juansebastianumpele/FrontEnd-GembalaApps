@@ -5,7 +5,7 @@ const u$pakan = defineStore({
   id: "pakan",
   state: () => ({
     pakan: [],
-    totalPakan: 0,
+    totalPakan: [],
   }),
   actions: {
     async a$pakanList() {
@@ -39,11 +39,12 @@ const u$pakan = defineStore({
         throw error;
       }
     },
-    async a$totalPakan(request) {
+    async a$totalPakan() {
       try {
-        const { data } = await s$pakan.totalPakan(request);
-        this.totalPakan = { ...data[0] };
+        const { data } = await s$pakan.list();
+        this.totalPakan = data.total;
       } catch ({ error }) {
+        this.totalPakan = [];
         throw error;
       }
     },
