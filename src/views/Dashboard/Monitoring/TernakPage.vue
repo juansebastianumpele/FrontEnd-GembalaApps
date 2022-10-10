@@ -23,10 +23,7 @@ export default {
   setup() {
     const schema = y$object({
       rf_id: y$string().nullable().label("RF ID"),
-      jenis_kelamin: y$string()
-        .nullable()
-        .label("Jenis Kelamin")
-        .label("Jenis Kelamin"),
+      jenis_kelamin: y$string().required().label("Jenis Kelamin"),
       varietas: y$object({
         id: y$string().nullable().label("Varietas"),
       }).label("Varietas"),
@@ -34,8 +31,8 @@ export default {
       suhu: y$string().required().label("Suhu"),
       tanggal_lahir: y$string().required().label("Tanggal Lahir"),
       tanggal_masuk: y$string().required().label("Tanggal Masuk"),
-      id_induk: y$string().required().label("ID Dam (Ibu)"),
-      id_pejantan: y$string().required().label("ID Sire (Bapak)"),
+      // id_induk: y$string().required().label("ID Dam (Ibu)"),
+      // id_pejantan: y$string().required().label("ID Sire (Bapak)"),
       status_kesehatan: y$string().required().label("Status Kesehatan"),
       // kandang: y$object({
       //   id: y$string().required().label("ID Kandang"),
@@ -275,7 +272,7 @@ export default {
           tanggal_masuk,
           id_induk,
           id_pejantan,
-          status_sehat,
+          status_kesehatan,
           kandang,
           pakan,
           fase,
@@ -298,7 +295,7 @@ export default {
         data.formData.append("tanggal_masuk", tanggal_masuk);
         data.formData.append("id_induk", id_induk);
         data.formData.append("id_pejantan", id_pejantan);
-        data.formData.append("status_sehat", status_sehat);
+        data.formData.append("status_kesehatan", status_kesehatan);
         data.formData.append("id_pakan", pakan.id);
         data.formData.append("fase_pemeliharaan", fase.id);
         data.formData.append("id_kandang", kandang.id);
@@ -526,6 +523,8 @@ export default {
                   />
                 </base-input>
               </div>
+
+              <!-- Status kesehatan -->
               <div class="col-6">
                 <base-input
                   name="status_kesehatan"
@@ -541,6 +540,25 @@ export default {
                   />
                 </base-input>
               </div>
+              <!-- Jika status kesehatan = sakit, tampilkan field penyakit -->
+              <div v-if="input.status_kesehatan == 'Sakit'" class="col-6">
+                <base-input
+                  name="penyakit"
+                  placeholder="Penyakit"
+                  label="Penyakit"
+                  required
+                >
+                  <multi-select
+                    v-model="input.penyakit"
+                    :options="g$ddListPenyakit"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih Penyakit"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+
               <div class="col-6">
                 <base-input
                   name="jenis_kelamin"
@@ -581,7 +599,6 @@ export default {
                     v-bind="field"
                     placeholder="Text"
                     label="ID Sire (Bapak)"
-                    required
                   ></base-input>
                 </field-form>
               </div>
@@ -596,7 +613,6 @@ export default {
                     v-bind="field"
                     placeholder="Text"
                     label="ID Dam (Ibu)"
-                    required
                   ></base-input>
                 </field-form>
               </div>
@@ -628,23 +644,6 @@ export default {
                     label="name"
                     track-by="id"
                     placeholder="Pilih Kandang"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
-              <div class="col-6">
-                <base-input
-                  name="penyakit"
-                  placeholder="Penyakit"
-                  label="Penyakit"
-                  required
-                >
-                  <multi-select
-                    v-model="input.penyakit"
-                    :options="g$ddListPenyakit"
-                    label="name"
-                    track-by="id"
-                    placeholder="Pilih Penyakit"
                     :show-labels="false"
                   />
                 </base-input>
@@ -820,13 +819,13 @@ export default {
               </div>
               <div class="col-6">
                 <base-input
-                  name="status_sehat"
+                  name="status_kesehatan"
                   placeholder="Status Kesehatan"
                   label="Status Kesehatan"
                   required
                 >
                   <multi-select
-                    v-model="input.status_sehat"
+                    v-model="input.status_kesehatan"
                     :options="g$ddStatusSehat"
                     placeholder="Status Kesehatan"
                     :show-labels="false"
@@ -1060,7 +1059,7 @@ export default {
       <modal-comp v-model:show="modal.detailTernak" modal-classes="modal-md">
         <template #header>
           <h3 class="modal-title" id="exampleModalLabel">
-            Detail Ternak Nomor {{ infoTernak.nomor }}
+            Detail Ternak Nomor {{ infoTernak.id_ternak }}
           </h3>
         </template>
         <template v-if="modal.detailTernak" #body>
@@ -1076,12 +1075,12 @@ export default {
               >
                 <div class="row">
                   <div class="col-5">
-                    <span style="font-weight: 600">Nomor Ternak</span>
+                    <span style="font-weight: 600">ID Ternak</span>
                   </div>
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.nomor }}</span
+                      {{ infoTernak.id_ternak }}</span
                     >
                   </div>
                 </div>
@@ -1092,7 +1091,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.rf_id ?? "-" }}</span
+                      {{ infoTernak.rf_id  }}</span
                     >
                   </div>
                 </div>
@@ -1103,7 +1102,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.varietas.nama }}</span
+                      {{ infoTernak.varietas.varietas }}</span
                     >
                   </div>
                 </div>
@@ -1142,12 +1141,12 @@ export default {
                 </div>
                 <div class="row">
                   <div class="col-5">
-                    <span style="font-weight: 600">Kandang</span>
+                    <span style="font-weight: 600">Kode Kandang</span>
                   </div>
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.nama_kandang.nama_kandang }}</span
+                      {{ infoTernak.kandang.kode_kandang }}</span
                     >
                   </div>
                 </div>
@@ -1169,7 +1168,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.nama_pakan.nama_pakan }}</span
+                      {{ infoTernak.pakan.nama_pakan }}</span
                     >
                   </div>
                 </div>
@@ -1180,7 +1179,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.berat_berkala }} kg</span
+                      {{ infoTernak.berat }} Kg</span
                     >
                   </div>
                 </div>
@@ -1191,7 +1190,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.suhu_berkala }} C</span
+                      {{ infoTernak.suhu }} °C</span
                     >
                   </div>
                 </div>
@@ -1202,7 +1201,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.status_sehat }}</span
+                      {{ infoTernak.status_kesehatan }}</span
                     >
                   </div>
                 </div>
@@ -1213,7 +1212,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.nama_penyakit }}</span
+                      {{ infoTernak.penyakit }}</span
                     >
                   </div>
                 </div>
@@ -1230,12 +1229,12 @@ export default {
                 </div>
                 <div class="row">
                   <div class="col-5">
-                    <span style="font-weight: 600">Umur</span>
+                    <span style="font-weight: 600">Usia</span>
                   </div>
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.umur }} Bulan</span
+                      {{ infoTernak.usia }} Bulan</span
                     >
                   </div>
                 </div>
@@ -1246,7 +1245,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.tanggal_keluar ?? "-" }}</span
+                      {{ infoTernak.tanggal_keluar  }}</span
                     >
                   </div>
                 </div>
@@ -1257,7 +1256,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.status_keluar ?? "-" }}</span
+                      {{ infoTernak.status_keluar  }}</span
                     >
                   </div>
                 </div>
@@ -1280,7 +1279,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.status_sehat }}</span
+                      {{ infoTernak.status_kesehatan }}</span
                     >
                   </div>
                 </div>
@@ -1291,7 +1290,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.nama_penyakit }}</span
+                      {{ infoTernak.penyakit }}</span
                     >
                   </div>
                 </div>

@@ -135,12 +135,12 @@ const u$total = defineStore({
       ],
     }),
     g$byKesehatan: (state) => ({
-      categories: state.chartKesehatan.map(({ status_sehat }) => status_sehat),
+      categories: state.chartKesehatan.map(({ status_kesehatan }) => status_kesehatan),
       series: [
         {
           name: "Total",
-          data: state.chartKesehatan.map(({ status_sehat, Jumlah }) => ({
-            name: status_sehat[0],
+          data: state.chartKesehatan.map(({ status_kesehatan, Jumlah }) => ({
+            name: status_kesehatan[0],
             y: Jumlah,
           })),
         },

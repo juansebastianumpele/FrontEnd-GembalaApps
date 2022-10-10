@@ -31,7 +31,7 @@ export default {
       column: [
         {
           name: "nomor",
-          th: "Nomor Ternak",
+          th: "ID Ternak",
         },
         {
           name: "nama_varietas",
@@ -42,7 +42,7 @@ export default {
           th: "Fase Pemeliharaan",
         },
         {
-          name: "nama_kandang",
+          name: "kandang.kode_kandang",
           th: "Kandang",
         },
       ],
@@ -258,7 +258,7 @@ export default {
                     <th class="px-2">Rata-rata</th>
                   </template>
                   <template #default="{ item }">
-                    <td class="px-2">{{ item.nama_kandang }}</td>
+                    <td class="px-2">{{ item.kandang.kode_kandang }}</td>
                     <td class="px-2">{{ item.Jumlah_ternak }}</td>
                     <td class="px-2">{{ item.rata_rata.toFixed(2) }}</td>
                   </template>
@@ -401,7 +401,7 @@ export default {
           <div style="max-height: 450px; overflow-y: auto; overflow-x: hidden">
             <div class="row">
               <div class="col-5">
-                <span style="font-weight: 600">Nomor Ternak</span>
+                <span style="font-weight: 600">ID Ternak</span>
               </div>
               <div class="col">
                 :
@@ -417,7 +417,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ selectedTernak.rf_id ?? "-" }}</span
+                  {{ selectedTernak.rf_id  }}</span
                 >
               </div>
             </div>
@@ -472,7 +472,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ selectedTernak.nama_kandang }}</span
+                  {{ selectedTernak.kandang.kode_kandang }}</span
                 >
               </div>
             </div>
@@ -525,7 +525,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ selectedTernak.status_sehat[0] }}</span
+                  {{ selectedTernak.status_kesehatan[0] }}</span
                 >
               </div>
             </div>
@@ -536,7 +536,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ selectedTernak.nama_penyakit }}</span
+                  {{ selectedTernak.penyakit }}</span
                 >
               </div>
             </div>
@@ -569,7 +569,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ selectedTernak.tanggal_keluar ?? "-" }}</span
+                  {{ selectedTernak.tanggal_keluar  }}</span
                 >
               </div>
             </div>
@@ -580,7 +580,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ selectedTernak.status_keluar ?? "-" }}</span
+                  {{ selectedTernak.status_keluar  }}</span
                 >
               </div>
             </div>

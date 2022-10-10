@@ -31,7 +31,7 @@ export default {
       column: [
         {
           name: "nomor",
-          th: "Nomor Ternak",
+          th: "ID Ternak",
         },
         {
           name: "nama_varietas",
@@ -42,7 +42,7 @@ export default {
           th: "Fase Pemeliharaan",
         },
         {
-          name: "nama_kandang",
+          name: "kandang.kode_kandang",
           th: "Kandang",
         },
       ],
@@ -190,7 +190,7 @@ export default {
                     <th class="px-2" style="font-size: 11px">Rata-rata</th>
                   </template>
                   <template #default="{ item }">
-                    <td class="px-2" style="font-size: 14px">{{ item.nama_kandang }}</td>
+                    <td class="px-2" style="font-size: 14px">{{ item.kandang.kode_kandang }}</td>
                     <td class="px-2" style="font-size: 14px">{{ item.Jumlah_ternak }}</td>
                     <td class="px-2" style="font-size: 14px">{{ item.rata_rata.toFixed(2) }}</td>
                   </template>
@@ -273,7 +273,7 @@ export default {
         <template v-if="isSearch" #body>
           <div style="max-height: 450px; overflow-y: auto; overflow-x: hidden">
             <div class="row">
-              <div class="col-5"><span style="font-weight: 600">Nomor Ternak</span></div>
+              <div class="col-5"><span style="font-weight: 600">ID Ternak</span></div>
               <div class="col">
                 : <span style="font-weight: 300"> {{ selectedTernak.nomor }}</span>
               </div>
@@ -281,7 +281,7 @@ export default {
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">ID RFID</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ selectedTernak.rf_id ?? "-" }}</span>
+                : <span style="font-weight: 300"> {{ selectedTernak.rf_id  }}</span>
               </div>
             </div>
             <div class="row">
@@ -311,7 +311,7 @@ export default {
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Kandang</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ selectedTernak.nama_kandang }}</span>
+                : <span style="font-weight: 300"> {{ selectedTernak.kandang.kode_kandang }}</span>
               </div>
             </div>
             <div class="row">
@@ -341,13 +341,13 @@ export default {
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Status Kesehatan</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ selectedTernak.status_sehat[0] }}</span>
+                : <span style="font-weight: 300"> {{ selectedTernak.status_kesehatan[0] }}</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Nama Penyakit</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ selectedTernak.nama_penyakit }}</span>
+                : <span style="font-weight: 300"> {{ selectedTernak.penyakit }}</span>
               </div>
             </div>
             <div class="row">
@@ -365,13 +365,13 @@ export default {
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Tanggal Keluar</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ selectedTernak.tanggal_keluar ?? "-" }}</span>
+                : <span style="font-weight: 300"> {{ selectedTernak.tanggal_keluar  }}</span>
               </div>
             </div>
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Status Keluar</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ selectedTernak.status_keluar ?? "-" }}</span>
+                : <span style="font-weight: 300"> {{ selectedTernak.status_keluar  }}</span>
               </div>
             </div>
           </div>
