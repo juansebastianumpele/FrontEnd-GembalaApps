@@ -3,7 +3,7 @@ import { subApiUrl } from "@/utils/constant";
 
 const { api, ternak, timbangan } = subApiUrl;
 
-const list = (req) => baseApi.get(`${api}/${ternak}`);
+const list = () => baseApi.get(`${api}/${ternak}`);
 const add = (req) => baseApi.post(`${api}/${ternak}`, req);
 const edit = (req) => baseApi.put(`${api}/${ternak}/${req.id}`, req.formData);
 const del = (req) => baseApi.delete(`${api}/${ternak}/${req}`);
@@ -13,12 +13,12 @@ const listVarietas = () => baseApi.get(`${api}/varietas`);
 const listFase = () => baseApi.get(`${api}/fase`);
 
 // Jumlah Ternak
-const listBetina = (req) => baseApi.get(`${api}/${ternak}/listbetina/${req}`);
-const listPejantan = (req) => baseApi.get(`${api}/${ternak}/listjantan/${req}`);
+const listBetina = () => baseApi.get(`${api}/${ternak}?jenis_kelamin=Betina`);
+const listPejantan = () => baseApi.get(`${api}/${ternak}?jenis_kelamin=Jantan`);
 
 // Detail
 const detailKandang = (req) =>
-  baseApi.get(`${api}/${ternak}/listbykandang/${req}`);
+  baseApi.get(`${api}/${ternak}?id_kandang=${req}`);
 const detailPakan = (req) =>
   baseApi.get(`${api}/${ternak}/listternakpakan/${req}`);
 

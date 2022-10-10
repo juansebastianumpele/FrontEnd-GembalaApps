@@ -5,7 +5,7 @@ const u$daftarkandang = defineStore({
   id: "kandang",
   state: () => ({
     listkandang: [],
-    totalKandang: 0,
+    totalKandang: [],
   }),
   actions: {
     async a$kandangDesc(request) {
@@ -48,11 +48,12 @@ const u$daftarkandang = defineStore({
         throw error;
       }
     },
-    async a$totalKandang(request) {
+    async a$totalKandang() {
       try {
-        const { data } = await s$daftarkandang.totalKandang(request);
-        this.totalKandang = { ...data[0] };
+        const { data } = await s$daftarkandang.listKandang();
+        this.totalKandang = data.total;
       } catch ({ error }) {
+        this.totalKandang = [];
         throw error;
       }
     },

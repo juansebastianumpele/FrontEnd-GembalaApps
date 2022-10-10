@@ -44,12 +44,12 @@ export default {
           th: "Jenis Kandang",
         },
         {
-          name: "total",
+          name: "populasi",
           th: "Jumlah Populasi Ternak",
         },
         {
-          name: "total",
-          th: "Kebutuhan Pakan",
+          name: "kebutuhan_pakan",
+          th: "Kebutuhan Pakan (kg)",
         },
       ],
       action: [

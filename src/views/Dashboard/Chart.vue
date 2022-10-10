@@ -87,31 +87,25 @@ export default {
     modals() {
       return Object.values(this.modal).includes(true);
     },
-    // },
-    // watch: {
-    //   modals(val) {
-    //     if (!val) {
-    //       this.clearInput();
-    //     }
-    //   },
   },
   methods: {
     ...mapActions(d$chart, [
       "a$byKesehatan",
-      "a$byJeniskelamin",
       "a$byPopulasi",
       "a$byFase",
       "a$tabelKandang",
       "a$tabelFilter",
+      "a$byJantan",
+      "a$byBetina",
     ]),
     ...mapActions(d$costumer, ["a$costumerDetail"]),
     ...mapActions(d$kandang, ["a$totalKandang"]),
+    ...mapActions(d$pakan, ["a$totalPakan"]),
     ...mapActions(d$dropdowm, [
       "a$ddVarietas",
       "a$ddFasePemeliharaan",
       "a$ddKandang",
     ]),
-    ...mapActions(d$pakan, ["a$totalPakan"]),
     async filterTernak() {
       const { varietas, fase, kandang } = this.input;
       const data = {
@@ -138,17 +132,18 @@ export default {
     },
   },
   async mounted() {
+    await this.a$totalPakan().catch((error) => this.notify(error, false));
+    await this.a$totalKandang().catch((error) => this.notify(error, false));
+    await this.a$costumerDetail().catch((error) => this.notify(error, false));
+    await this.a$byJantan().catch((error) => this.notify(error, false));
+    await this.a$byBetina().catch((error) => this.notify(error, false));
     await this.a$tabelKandang(this.userInfo.id);
     await this.a$byPopulasi(this.userInfo.id);
     await this.a$byKesehatan(this.userInfo.id);
-    await this.a$byJeniskelamin(this.userInfo.id);
     await this.a$byFase(this.userInfo.id);
     await this.a$ddVarietas();
     await this.a$ddFasePemeliharaan();
     await this.a$ddKandang(this.userInfo.id);
-    await this.a$costumerDetail({ id: this.userInfo.id });
-    await this.a$totalKandang({ id: this.userInfo.id });
-    await this.a$totalPakan({ id: this.userInfo.id });
   },
 };
 </script>
@@ -235,7 +230,7 @@ export default {
                   </div>
                   <div class="col">
                     <h2 class="text-center" style="font-size: 24px">
-                      {{ g$costumerDetail.jumlah_Ternak }}
+                      {{ g$costumerDetail }}
                     </h2>
                     <h2 class="text-center" style="font-size: 12px">Ternak</h2>
                   </div>
@@ -244,7 +239,7 @@ export default {
                   </div>
                   <div class="col">
                     <h2 class="text-center" style="font-size: 24px">
-                      {{ g$totalKandang.Jumlah_Kandang }}
+                      {{ g$totalKandang }}
                     </h2>
                     <h2 class="text-center" style="font-size: 12px">Kandang</h2>
                   </div>
@@ -253,7 +248,7 @@ export default {
                   </div>
                   <div class="col">
                     <h2 class="text-center" style="font-size: 24px">
-                      {{ g$totalPakan.Jumlah_pakan }}
+                      {{ g$totalPakan }}
                     </h2>
                     <h2 class="text-center" style="font-size: 12px">Pakan</h2>
                   </div>
