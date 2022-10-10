@@ -12,7 +12,6 @@ import {
   string as y$string,
   ref as y$ref,
 } from "yup";
-import { RouterLink } from "vue-router";
 
 export default {
   metaInfo: () => ({
@@ -31,22 +30,22 @@ export default {
       varietas: y$object({
         id: y$string().nullable().label("Varietas"),
       }).label("Varietas"),
-      berat_berkala: y$string().required().label("Berat Berkala"),
-      suhu_berkala: y$string().required().label("Suhu Berkala"),
+      berat: y$string().required().label("Berat"),
+      suhu: y$string().required().label("Suhu"),
       tanggal_lahir: y$string().required().label("Tanggal Lahir"),
       tanggal_masuk: y$string().required().label("Tanggal Masuk"),
       id_induk: y$string().required().label("ID Dam (Ibu)"),
       id_pejantan: y$string().required().label("ID Sire (Bapak)"),
-      status_sehat: y$string().required().label("Status Sehat"),
-      kandang: y$object({
-        id: y$string().required().label("ID Kandang"),
-      }).label("ID Kandang"),
-      pakan: y$object({
-        id: y$string().required().label("ID Pakan"),
-      }).label("ID Pakan"),
-      fase: y$object({
-        id: y$string().required().label("ID Fase"),
-      }).label("Fase Pemeliharaan"),
+      status_kesehatan: y$string().required().label("Status Kesehatan"),
+      // kandang: y$object({
+      //   id: y$string().required().label("ID Kandang"),
+      // }).label("ID Kandang"),
+      // pakan: y$object({
+      //   id: y$string().required().label("ID Pakan"),
+      // }).label("ID Pakan"),
+      // fase: y$object({
+      //   id: y$string().required().label("ID Fase"),
+      // }).label("Fase Pemeliharaan"),
       foto: y$array().nullable().label("Foto"),
       // tanggal_keluar: y$string().nullable().label("Tanggal Keluar"),
       // status_keluar: y$string().nullable().label("Status Keluar"),
@@ -61,26 +60,26 @@ export default {
     pageTitle: "Data Ternak",
     // Input
     input: {
-      id: null,
+      id_ternak: null,
       rf_id: "",
+      foto: null,
       jenis_kelamin: "",
-      varietas: "",
-      berat_berkala: "",
-      suhu_berkala: "",
+      id_varietas: "",
+      berat: "",
+      suhu: "",
       tanggal_lahir: "",
       tanggal_masuk: "",
       id_induk: "",
       id_pejantan: "",
-      status_sehat: "",
-      kandang: "",
-      pakan: "",
-      fase: "",
-      tanggal_kawin: "",
-      tanggal_keluar: "",
-      status_keluar: "",
-      foto: null,
-      fotoUrl: null,
-      id_ternak: "",
+      status_kesehatan: "",
+      id_penyakit: "",
+      id_pakan: "",
+      id_fp: "",
+      id_kandang: "",
+      tanggal_keluar: null,
+      status_keluar: null,
+      // tanggal_kawin: "",
+      // fotoUrl: null,
     },
     // UI
     modal: {
@@ -98,8 +97,9 @@ export default {
           th: "ID Ternak",
         },
         {
-          name: "nama_varietas",
+          name: "varietas",
           th: "Varietas",
+          render: ({ varietas }) => varietas.varietas,
         },
         {
           name: "jenis_kelamin",
@@ -107,7 +107,8 @@ export default {
         },
         {
           name: "fase",
-          th: "Fase Pemeliharaan",
+          th: "Status",
+          render: ({ fase }) => fase.fase,
         },
         {
           name: "usia",
@@ -133,9 +134,6 @@ export default {
       ],
     },
     infoTernak: {},
-    infoKesehatan: {
-      tgl_sakit: "12-12-2020",
-    },
   }),
   computed: {
     ...mapState(d$ternak, ["g$ternakList", "g$ternakDetail"]),
@@ -149,6 +147,7 @@ export default {
       "g$ddStatusKeluar",
       "g$ddKandang",
       "g$ddPakan",
+      "g$ddListPenyakit",
     ]),
     modals() {
       return Object.values(this.modal).includes(true);
@@ -162,19 +161,14 @@ export default {
     },
   },
   async mounted() {
-    await this.a$ternakList(this.userInfo.id).catch((error) =>
-      this.notify(error, false)
-    );
+    await this.a$ternakList().catch((error) => this.notify(error, false));
     await this.a$ddVarietas().catch((error) => this.notify(error, false));
     await this.a$ddFasePemeliharaan().catch((error) =>
       this.notify(error, false)
     );
-    await this.a$ddKandang(this.userInfo.id).catch((error) =>
-      this.notify(error, false)
-    );
-    await this.a$ddPakan(this.userInfo.id).catch((error) =>
-      this.notify(error, false)
-    );
+    await this.a$ddKandang().catch((error) => this.notify(error, false));
+    await this.a$ddPakan().catch((error) => this.notify(error, false));
+    await this.a$ddListPenyakit().catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$ternak, [
@@ -188,6 +182,7 @@ export default {
       "a$ddFasePemeliharaan",
       "a$ddKandang",
       "a$ddPakan",
+      "a$ddListPenyakit",
     ]),
     ...mapActions(d$chart, ["a$byTimbangan"]),
     resetImage() {
@@ -196,25 +191,24 @@ export default {
     },
     clearInput() {
       this.input = {
-        id: null,
+        id_ternak: null,
         rf_id: "",
+        foto: null,
         jenis_kelamin: "",
         varietas: "",
-        berat_berkala: "",
-        suhu_berkala: "",
+        berat: "",
+        suhu: "",
         tanggal_lahir: "",
         tanggal_masuk: "",
         id_induk: "",
         id_pejantan: "",
-        status_sehat: "",
-        kandang: "",
+        status_kesehatan: "",
+        penyakit: "",
         pakan: "",
         fase: "",
-        tanggal_kawin: "",
-        tanggal_keluar: "",
-        status_keluar: "",
-        foto: null,
-        fotoUrl: null,
+        kandang: "",
+        tanggal_keluar: null,
+        status_keluar: null,
         // id_ternak: "",
         // id_users: "",
       };
@@ -223,46 +217,40 @@ export default {
       try {
         const {
           rf_id,
+          foto,
           jenis_kelamin,
           varietas,
-          berat_berkala,
-          suhu_berkala,
+          berat,
+          suhu,
           tanggal_lahir,
           tanggal_masuk,
           id_induk,
           id_pejantan,
-          status_sehat,
-          kandang,
+          status_kesehatan,
+          penyakit,
           pakan,
           fase,
-          tanggal_kawin,
-          foto,
-          tanggal_keluar,
-          status_keluar,
-          id_ternak,
-          id_users,
+          kandang,
         } = this.input;
-        const data = new FormData();
-        data.append("rf_id", rf_id);
-        data.append("jenis_kelamin", jenis_kelamin);
-        data.append("id_varietas", varietas.id);
-        data.append("berat", berat_berkala);
-        data.append("suhu", suhu_berkala);
-        data.append("tanggal_lahir", tanggal_lahir);
-        data.append("tanggal_masuk", tanggal_masuk);
-        data.append("id_induk", id_induk);
-        data.append("id_pejantan", id_pejantan);
-        data.append("status_sehat", status_sehat);
-        data.append("id_pakan", pakan.id);
-        data.append("fase_pemeliharaan", fase.id);
-        data.append("id_kandang", kandang.id);
-        // data.append("tanggal_keluar", tanggal_keluar);
-        // data.append("status_keluar", status_keluar);
-        data.append("foto", foto);
-        data.append("id_users", this.userInfo.id);
-        data.append("tanggal_kawin", tanggal_kawin);
-        data.append("id_ternak", this.input.id_ternak);
-        await this.schema.validate(this.input);
+        const data = {
+          rf_id,
+          foto,
+          jenis_kelamin,
+          id_varietas: varietas.id,
+          berat,
+          suhu,
+          tanggal_lahir,
+          tanggal_masuk,
+          id_induk,
+          id_pejantan,
+          status_kesehatan,
+          id_penyakit: penyakit.id,
+          id_pakan: pakan.id,
+          id_fp: fase.id,
+          id_kandang: kandang.id,
+        };
+        await this.schema.validate(data);
+        console.log(data);
         await this.a$ternakAdd(data);
         this.modal.addTernak = false;
         this.notify(`Tambah ${this.pageTitle} Sukses!`);
@@ -355,9 +343,9 @@ export default {
           tanggal_masuk,
           id_induk,
           id_pejantan,
-          status_sehat,
-          nama_kandang,
-          nama_pakan,
+          status_kesehatan,
+          kandang,
+          pakan,
           fase,
           tanggal_keluar,
           status_keluar,
@@ -370,8 +358,8 @@ export default {
           rf_id,
           jenis_kelamin,
           varietas: {
-            id: varietas.id,
-            name: varietas.nama,
+            id: varietas.id_varietas,
+            name: varietas.varietas,
           },
           berat_berkala,
           suhu_berkala,
@@ -379,14 +367,14 @@ export default {
           tanggal_masuk,
           id_induk,
           id_pejantan,
-          status_sehat,
+          status_kesehatan,
           kandang: {
-            id: nama_kandang.id,
-            name: nama_kandang.nama_kandang,
+            id: kandang.id,
+            name: kandang.kode_kandang,
           },
           pakan: {
-            id: nama_pakan.id,
-            name: nama_pakan.nama_pakan,
+            id: pakan.id,
+            name: pakan.nama_pakan,
           },
           fase: {
             id: fase.id,
@@ -482,35 +470,6 @@ export default {
                   v-slot="{ field }"
                   v-model="input.rf_id"
                   type="text"
-                  name="id_ternak"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="ID Ternak"
-                  ></base-input>
-                </field-form>
-              </div>
-              <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.berat_berkala"
-                  type="text"
-                  name="berat_berkala"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Bobot Berkala"
-                    required
-                  ></base-input>
-                </field-form>
-              </div>
-              <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.rf_id"
-                  type="text"
                   name="rf_id"
                 >
                   <base-input
@@ -523,14 +482,29 @@ export default {
               <div class="col-6">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.suhu_berkala"
+                  v-model="input.berat"
+                  type="text"
+                  name="berat"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Berat"
+                    label="Berat"
+                    required
+                  ></base-input>
+                </field-form>
+              </div>
+              <div class="col-6">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.suhu"
                   type="text"
                   name="suhu_berkala"
                 >
                   <base-input
                     v-bind="field"
-                    placeholder="Text"
-                    label="Suhu Berkala"
+                    placeholder="Suhu"
+                    label="Suhu"
                     required
                   ></base-input>
                 </field-form>
@@ -553,13 +527,13 @@ export default {
               </div>
               <div class="col-6">
                 <base-input
-                  name="status_sehat"
+                  name="status_kesehatan"
                   placeholder="Status Kesehatan"
                   label="Status Kesehatan"
                   required
                 >
                   <multi-select
-                    v-model="input.status_sehat"
+                    v-model="input.status_kesehatan"
                     :options="g$ddStatusSehat"
                     placeholder="Pilih Status Kesehatan"
                     :show-labels="false"
@@ -659,6 +633,23 @@ export default {
               </div>
               <div class="col-6">
                 <base-input
+                  name="penyakit"
+                  placeholder="Penyakit"
+                  label="Penyakit"
+                  required
+                >
+                  <multi-select
+                    v-model="input.penyakit"
+                    :options="g$ddListPenyakit"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih Penyakit"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+              <div class="col-6">
+                <base-input
                   name="pakan"
                   placeholder="Pakan"
                   label="Pakan"
@@ -691,7 +682,7 @@ export default {
                   />
                 </base-input>
               </div>
-              <div class="col-6" v-if="input.fase.name === 'Cempe'">
+              <!-- <div class="col-6" v-if="input.fase.name === 'Cempe'">
                 <base-input
                   name="tanggal_kawin"
                   placeholder="Tanggal Kawin Induk"
@@ -707,35 +698,7 @@ export default {
                     :show-labels="false"
                   />
                 </base-input>
-              </div>
-              <div class="col-6">
-                <base-input
-                  name="tanggal_keluar"
-                  placeholder="YYYY-MM-DD"
-                  label="Tanggal Keluar"
-                >
-                  <flat-pickr
-                    v-model.lazy="input.tanggal_keluar"
-                    :config="{ mode: 'single', allowInput: true }"
-                    class="form-control datepicker"
-                    placeholder="YYYY-MM-DD"
-                  />
-                </base-input>
-              </div>
-              <div class="col-6">
-                <base-input
-                  name="status_keluar"
-                  placeholder="Status Keluar"
-                  label="Status Keluar"
-                >
-                  <multi-select
-                    v-model="input.status_keluar"
-                    :options="g$ddStatusKeluar"
-                    placeholder="Pilih Status Keluar"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
+              </div> -->
               <div class="col-6" v-if="!this.input.foto">
                 <div class="form-group has-label">
                   <label class="form-control-label">Foto</label>

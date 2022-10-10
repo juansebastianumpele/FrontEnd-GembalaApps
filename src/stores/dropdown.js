@@ -40,9 +40,9 @@ const u$dropdown = defineStore({
         throw error;
       }
     },
-    async a$ddKandang(request) {
+    async a$ddKandang() {
       try {
-        const { data } = await s$kandang.listKandang(request);
+        const { data } = await s$kandang.listKandang();
         this.kandang = data.list;
       } catch ({ error }) {
         this.kandang = [];
@@ -95,9 +95,9 @@ const u$dropdown = defineStore({
     g$ddKeteranganDetailPakan: (state) => state.keteranganDetailPakan,
     g$ddJenisKandang: (state) => state.jenisKandang,
     g$ddVarietas: (state) =>
-      state.varietas.map(({ id_varietas, nama_varietas }) => ({
+      state.varietas.map(({ id_varietas, varietas }) => ({
         id: id_varietas,
-        name: nama_varietas,
+        name: varietas,
       })),
     g$ddFasePemeliharaan: (state) =>
       state.fasePemeliharaan.map(({ id_fp, fase }) => ({
@@ -105,9 +105,9 @@ const u$dropdown = defineStore({
         name: fase,
       })),
     g$ddKandang: (state) =>
-      state.kandang.map(({ id_kandang, nama_kandang }) => ({
+      state.kandang.map(({ id_kandang, kode_kandang }) => ({
         id: id_kandang,
-        name: nama_kandang,
+        name: kode_kandang,
       })),
     g$ddPakan: (state) =>
       state.pakan.map(({ id_pakan, nama_pakan }) => ({

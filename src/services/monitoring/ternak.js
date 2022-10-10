@@ -4,10 +4,7 @@ import { subApiUrl } from "@/utils/constant";
 const { api, ternak, timbangan } = subApiUrl;
 
 const list = (req) => baseApi.get(`${api}/${ternak}`);
-const add = (req) =>
-  baseApi.post(`${api}/${ternak}`, req, {
-    headers: { "Content-Type": "multipart/form-data" },
-  });
+const add = (req) => baseApi.post(`${api}/${ternak}`, req);
 const edit = (req) => baseApi.put(`${api}/${ternak}/${req.id}`, req.formData);
 const del = (req) => baseApi.delete(`${api}/${ternak}/${req}`);
 

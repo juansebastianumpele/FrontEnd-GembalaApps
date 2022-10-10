@@ -13,8 +13,8 @@ export default {
     const schema = y$object({
       nama_penyakit: y$string().required().label("Nama Penyakit"),
       deskripsi: y$string().nullable().label("Deskripsi"),
-      ciri_penyakit: y$string().nullable().label("Ciri-ciri"),
-      pengobatan: y$string().nullable().label("Pengobatan"),
+      gejala: y$string().nullable().label("Ciri-ciri"),
+      penanganan: y$string().nullable().label("penanganan"),
     });
     return {
       schema,
@@ -24,11 +24,10 @@ export default {
     pageTitle: "Data Penyakit",
     // Input
     input: {
-      id: null,
+      id_penyakit: null,
       nama_penyakit: "",
-      deskripsi: "",
-      ciri_penyakit: "",
-      pengobatan: "",
+      gejala: "",
+      penanganan: "",
     },
     // UI
     modal: {
@@ -44,11 +43,11 @@ export default {
           th: "Nama Penyakit",
         },
         {
-          name: "deskripsi",
+          name: "gejala",
           th: "Gejala",
         },
         {
-          name: "pengobatan",
+          name: "penanganan",
           th: "Penanganan",
         },
       ],
@@ -93,19 +92,17 @@ export default {
       this.input = {
         id_penyakit: null,
         nama_penyakit: "",
-        deskripsi: "",
-        ciri: "",
-        pengobatan: "",
+        gejala: "",
+        penanganan: "",
       };
     },
     async addPenyakit() {
       try {
-        const { nama_penyakit, deskripsi, ciri, pengobatan } = this.input;
+        const { nama_penyakit, gejala, penanganan } = this.input;
         const data = {
           nama_penyakit,
-          deskripsi,
-          ciri,
-          pengobatan,
+          gejala,
+          penanganan,
         };
         await this.schema.validate(data);
         await this.a$penyakitAdd(data);
@@ -119,14 +116,12 @@ export default {
     },
     async editPenyakit() {
       try {
-        const { id_penyakit, nama_penyakit, deskripsi, ciri, pengobatan } =
-          this.input;
+        const { id_penyakit, nama_penyakit, gejala, penanganan } = this.input;
         const data = {
           id_penyakit,
           nama_penyakit,
-          deskripsi,
-          ciri,
-          pengobatan,
+          gejala,
+          penanganan,
         };
         await this.schema.validate(data);
         await this.a$penyakitEdit(data);
@@ -152,19 +147,12 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const {
+        const { id_penyakit, nama_penyakit, gejala, penanganan } = row;
+        this.input = {
           id_penyakit,
           nama_penyakit,
-          deskripsi,
-          ciri_penyakit,
-          pengobatan,
-        } = row;
-        this.input = {
-          id: id_penyakit,
-          nama_penyakit,
-          deskripsi,
-          ciri_penyakit,
-          pengobatan,
+          gejala,
+          penanganan,
         };
         this.modal.ubahPenyakit = true;
       } catch (error) {
@@ -176,7 +164,7 @@ export default {
       try {
         const { id_penyakit, nama_penyakit } = row;
         this.input = {
-          id: id_penyakit,
+          id_penyakit,
           nama_penyakit,
         };
         this.modal.confirm = true;
@@ -263,42 +251,28 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.deskripsi"
+                  v-model="input.gejala"
                   type="text"
-                  name="deskripsi"
+                  name="gejala"
                 >
                   <base-input
                     v-bind="field"
-                    placeholder="Deskripsi"
-                    label="Deskripsi"
+                    placeholder="Gejala"
+                    label="Gejala"
                   ></base-input>
                 </field-form>
               </div>
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.ciri"
+                  v-model="input.penanganan"
                   type="text"
-                  name="ciri"
+                  name="penanganan"
                 >
                   <base-input
                     v-bind="field"
-                    placeholder="Ciri-ciri"
-                    label="Ciri-ciri"
-                  ></base-input>
-                </field-form>
-              </div>
-              <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.pengobatan"
-                  type="text"
-                  name="pengobatan"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Pengobatan"
-                    label="Pengobatan"
+                    placeholder="Penanganan"
+                    label="Penanganan"
                   ></base-input>
                 </field-form>
               </div>
@@ -339,42 +313,28 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.deskripsi"
+                  v-model="input.gejala"
                   type="text"
-                  name="deskripsi"
+                  name="gejala"
                 >
                   <base-input
                     v-bind="field"
-                    placeholder="Text"
-                    label="Deskripsi"
+                    placeholder="Gejala"
+                    label="Gejala"
                   ></base-input>
                 </field-form>
               </div>
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.ciri_penyakit"
+                  v-model="input.penanganan"
                   type="text"
-                  name="ciri_penyakit"
+                  name="penanganan"
                 >
                   <base-input
                     v-bind="field"
-                    placeholder="Text"
-                    label="Ciri-ciri"
-                  ></base-input>
-                </field-form>
-              </div>
-              <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.pengobatan"
-                  type="text"
-                  name="pengobatan"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Pengobatan"
+                    placeholder="Penanganan"
+                    label="Penanganan"
                   ></base-input>
                 </field-form>
               </div>
