@@ -236,7 +236,7 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.nama_penyakit"
+                  v-model="input.penyakit"
                   type="text"
                   name="nama_penyakit"
                 >
@@ -298,7 +298,7 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.nama_penyakit"
+                  v-model="input.penyakit"
                   type="text"
                   name="nama_penyakit"
                 >
@@ -357,7 +357,7 @@ export default {
         <template #body>
           <p>
             Yakin ingin menghapus {{ pageTitle }}:
-            <strong>{{ input.nama_penyakit }}</strong>
+            <strong>{{ input.penyakit }}</strong>
           </p>
         </template>
         <template #footer>
