@@ -202,7 +202,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoTernak.nama_kandang }}</span
+                  {{ infoTernak.kandang.kode_kandang }}</span
                 >
               </div>
             </div>

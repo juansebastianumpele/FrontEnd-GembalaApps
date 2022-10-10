@@ -153,7 +153,7 @@ export default {
             <div class="row">
               <div class="col-5"><span style="font-weight: 600">Kandang</span></div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ infoTernak.nama_kandang }}</span>
+                : <span style="font-weight: 300"> {{ infoTernak.kandang.kode_kandang }}</span>
               </div>
             </div>
             <div class="row">

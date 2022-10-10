@@ -42,7 +42,7 @@ export default {
           th: "Fase Pemeliharaan",
         },
         {
-          name: "nama_kandang",
+          name: "kandang.kode_kandang",
           th: "Kandang",
         },
       ],
@@ -263,7 +263,7 @@ export default {
                     <th class="px-2">Rata-rata</th>
                   </template>
                   <template #default="{ item }">
-                    <td class="px-2">{{ item.nama_kandang }}</td>
+                    <td class="px-2">{{ item.kandang.kode_kandang }}</td>
                     <td class="px-2">{{ item.Jumlah_ternak }}</td>
                     <td class="px-2">{{ item.rata_rata.toFixed(2) }}</td>
                   </template>
@@ -477,7 +477,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ selectedTernak.nama_kandang }}</span
+                  {{ selectedTernak.kandang.kode_kandang }}</span
                 >
               </div>
             </div>
