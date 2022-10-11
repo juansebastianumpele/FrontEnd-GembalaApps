@@ -96,7 +96,7 @@ export default {
         {
           name: "varietas",
           th: "Varietas",
-          render: ({ varietas }) => varietas.varietas,
+          render: ({ varietas }) => varietas ? varietas.varietas : '',
         },
         {
           name: "jenis_kelamin",
@@ -105,7 +105,7 @@ export default {
         {
           name: "fase",
           th: "Status",
-          render: ({ fase }) => fase.fase,
+          render: ({ fase }) => fase ? fase.fase : '',
         },
         {
           name: "usia",
