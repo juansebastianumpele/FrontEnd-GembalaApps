@@ -5,35 +5,55 @@ export default {
   name: 'Cuaca',
   data: () => ({
     cuaca: {
-      "coord":
-        { "lon": 110.3666, "lat": -7.7296 },
-      "weather": [{ "id": 500, "main": "Rain", "description": "light rain", "icon": "10d" }],
+      "coord": { "lon": 110.3666, "lat": -7.7296 },
+      "weather": [{ "id": 804, "main": "Clouds", "description": "awan mendung", "icon": "04d" }],
       "base": "stations",
-      "main": {
-        "temp": 300.7,
-        "feels_like": 303.54,
-        "temp_min": 300.7,
-        "temp_max": 300.7,
-        "pressure": 1010,
-        "humidity": 75,
-        "sea_level": 1010,
-        "grnd_level": 988
-      },
+      "main": { "temp": 26.85, "feels_like": 29.16, "temp_min": 26.85, "temp_max": 26.85, "pressure": 1013, "humidity": 77, "sea_level": 1013, "grnd_level": 992 },
       "visibility": 10000,
-      "wind": { "speed": 2.59, "deg": 187, "gust": 2.95 },
-      "rain": { "1h": 0.22 },
-      "clouds": { "all": 100 },
-      "dt": 1665388716,
-      "sys": { "country": "ID", "sunrise": 1665353915, "sunset": 1665397945 },
+      "wind": { "speed": 2.52, "deg": 168, "gust": 3.58 },
+      "clouds": { "all": 100 }, "dt": 1665452744,
+      "sys": { "country": "ID", "sunrise": 1665440286, "sunset": 1665484342 },
       "timezone": 25200,
       "id": 1635660,
       "name": "Melati",
       "cod": 200
-    }
+    },
+    latitude: -7.7296003,
+    longitude: 110.366628,
   }),
+
+  computed: {
+    tanggal() {
+      return new Intl.DateTimeFormat('id', { dateStyle: 'full', timeStyle: 'short' }).format(this.cuaca.dt * 1000);
+    },
+    gambarCuaca() {
+      return `http://openweathermap.org/img/wn/${this.cuaca.weather[0].icon}@2x.png`;
+    },
+    suhu() {
+      return `${Math.round(this.cuaca.main.temp)}°C`;
+    },
+    kelembapan() {
+      return this.cuaca.main.humidity;
+    },
+    tekanan() {
+      return this.cuaca.main.pressure;
+    },
+    kecepatanAngin() {
+      // from m/s to km/h
+      return Math.round(this.cuaca.wind.speed * 3.6);
+    },
+    deskripsi() {
+      return this.cuaca.weather[0].description;
+    },
+    maksMin() {
+      return `${Math.round(this.cuaca.main.temp_min)}°C/${Math.round(this.cuaca.main.temp_max)}°C`;
+    },
+  },
+
+    
   methods: {
     getWeather() {
-      axios.get('https://api.openweathermap.org/data/2.5/weather?lat=-7.7296003&lon=110.366628&appid=724edd4b529beb144b3986c95d678b48')
+      axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${this.latitude}&lon=${this.longitude}&units=metric&lang=id&appid=724edd4b529beb144b3986c95d678b48`)
         .then(response => {
           this.cuaca = response.data;
           console.log(this.cuaca);
@@ -48,28 +68,34 @@ export default {
 
 <template>
   <div>
-    
+
     <div>
-      <img src="http://openweathermap.org/img/wn/10d@2x.png" class="mx-auto d-block p-0" alt="...">
-      <p class="temp p-0">36 °C</p>
+      <p class="text-center p-0 m-0">{{tanggal}}</p>
+      <img :src="gambarCuaca" class="mx-auto d-block p-0" alt="...">
+      <p class="deskripsi p-0">{{deskripsi}}</p>
+      <p class="temp deskripsi p-0">{{suhu}}</p>
     </div>
 
     <ul class="list-group list-group-flush">
-      <li class="list-group-item"><i class="fa-solid fa-temperature-half"></i> Maks/Min</li>
-      <li class="list-group-item"><i class="fa-solid fa-droplet"></i> Kelembapan</li>
-      <li class="list-group-item"><i class="fa-solid fa-arrows-to-circle"></i> Tekanan</li>
-      <li class="list-group-item"><i class="fa-solid fa-wind"></i> Angin</li>
+      <li class="list-group-item"><i class="fa-solid fa-temperature-half"></i> Maks/Min: {{maksMin}}</li>
+      <li class="list-group-item"><i class="fa-solid fa-droplet"></i> Kelembapan: {{kelembapan}}%</li>
+      <li class="list-group-item"><i class="fa-solid fa-arrows-to-circle"></i> Tekanan: {{tekanan}} hPa</li>
+      <li class="list-group-item"><i class="fa-solid fa-wind"></i> Angin: {{kecepatanAngin}} Km/jam</li>
     </ul>
   </div>
 </template>
 
 <style>
-.temp {
-  font-size: 2rem;
-  font-weight: 700;
+.deskripsi {
+  text-transform: uppercase;
   margin: 0 auto;
   padding: 0 auto;
   text-align: center;
+}
+
+.temp {
+  font-size: 2rem;
+  font-weight: 700;
 }
 </style>
 
