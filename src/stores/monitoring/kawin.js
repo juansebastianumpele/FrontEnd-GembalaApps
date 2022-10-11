@@ -33,7 +33,7 @@ const u$kawin = defineStore({
     async a$kawinList(request) {
       try {
         const { data } = await s$kawin.listKawin(request);
-        this.kawin = data;
+        this.kawin = data.list;
       } catch ({ error }) {
         this.kawin = [];
         throw error;
