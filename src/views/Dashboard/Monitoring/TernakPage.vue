@@ -96,7 +96,7 @@ export default {
         {
           name: "varietas",
           th: "Varietas",
-          render: ({ varietas }) => varietas ? varietas.varietas : '',
+          render: ({ varietas }) => (varietas ? varietas.varietas : ""),
         },
         {
           name: "jenis_kelamin",
@@ -105,7 +105,7 @@ export default {
         {
           name: "fase",
           th: "Status",
-          render: ({ fase }) => fase ? fase.fase : '',
+          render: ({ fase }) => (fase ? fase.fase : ""),
         },
         {
           name: "usia",
@@ -318,8 +318,11 @@ export default {
     },
     async delTernak() {
       try {
-        const { id } = this.input;
-        await this.a$ternakDelete(id);
+        const { id_ternak } = this.input;
+        const data = {
+          id_ternak,
+        };
+        await this.a$ternakDelete(data);
         this.modal.confirm = false;
         this.notify(`Hapus ${this.pageTitle} Sukses!`);
       } catch (error) {
@@ -335,8 +338,8 @@ export default {
           rf_id,
           jenis_kelamin,
           varietas,
-          berat_berkala,
-          suhu_berkala,
+          berat,
+          suhu,
           tanggal_lahir,
           tanggal_masuk,
           id_induk,
@@ -349,34 +352,33 @@ export default {
           status_keluar,
           foto,
           tanggal_kawin,
-          id_users,
         } = row;
         this.input = {
-          id: id_ternak,
+          id_ternak,
           rf_id,
           jenis_kelamin,
           varietas: {
-            id: varietas ? varietas.id_varietas : '',
-            name: varietas ? varietas.varietas : '',
+            id: varietas ? varietas.id_varietas : "",
+            name: varietas ? varietas.varietas : "",
           },
-          berat_berkala,
-          suhu_berkala,
+          berat,
+          suhu,
           tanggal_lahir,
           tanggal_masuk,
           id_induk,
           id_pejantan,
           status_kesehatan,
           kandang: {
-            id: kandang ? kandang.id : '',
-            name: kandang ? kandang.kode_kandang : '',
+            id: kandang ? kandang.id : "",
+            name: kandang ? kandang.kode_kandang : "",
           },
           pakan: {
-            id: pakan ? pakan.id : '',
-            name: pakan ? pakan.nama_pakan : '',
+            id: pakan ? pakan.id : "",
+            name: pakan ? pakan.nama_pakan : "",
           },
           fase: {
-            id: fase ? fase.id : '',
-            name: fase ? fase.fase : '',
+            id: fase ? fase.id : "",
+            name: fase ? fase.fase : "",
           },
           tanggal_keluar,
           status_keluar,
@@ -394,7 +396,6 @@ export default {
       try {
         const { id_ternak } = row;
         this.input = {
-          id: id_ternak,
           id_ternak,
         };
         this.modal.confirm = true;
@@ -746,7 +747,7 @@ export default {
               <div class="col-6">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.rf_id"
+                  v-model="input.id_ternak"
                   type="text"
                   name="id_ternak"
                 >
@@ -760,9 +761,9 @@ export default {
               <div class="col-6">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.berat_berkala"
+                  v-model="input.berat"
                   type="text"
-                  name="berat_berkala"
+                  name="berat"
                 >
                   <base-input
                     v-bind="field"
@@ -789,9 +790,9 @@ export default {
               <div class="col-6">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.suhu_berkala"
+                  v-model="input.suhu"
                   type="text"
-                  name="suhu_berkala"
+                  name="suhu"
                 >
                   <base-input
                     v-bind="field"
@@ -1102,7 +1103,9 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.varietas ? infoTernak.varietas.varietas : '' }}</span
+                      {{
+                        infoTernak.varietas ? infoTernak.varietas.varietas : ""
+                      }}</span
                     >
                   </div>
                 </div>
@@ -1146,7 +1149,11 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.kandang ? infoTernak.kandang.kode_kandang : '' }}</span
+                      {{
+                        infoTernak.kandang
+                          ? infoTernak.kandang.kode_kandang
+                          : ""
+                      }}</span
                     >
                   </div>
                 </div>
@@ -1157,7 +1164,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.fase ? infoTernak.fase.fase : '' }}</span
+                      {{ infoTernak.fase ? infoTernak.fase.fase : "" }}</span
                     >
                   </div>
                 </div>
@@ -1168,7 +1175,9 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.pakan ? infoTernak.pakan.nama_pakan : '' }}</span
+                      {{
+                        infoTernak.pakan ? infoTernak.pakan.nama_pakan : ""
+                      }}</span
                     >
                   </div>
                 </div>

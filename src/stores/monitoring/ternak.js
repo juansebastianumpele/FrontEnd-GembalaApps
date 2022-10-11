@@ -43,7 +43,6 @@ const u$ternak = defineStore({
       try {
         const { data } = await s$ternak.detailKandang(request);
         this.detailTernak = data.list;
-        console.log(data.list);
       } catch ({ error }) {
         this.detailTernak = {};
         throw error;

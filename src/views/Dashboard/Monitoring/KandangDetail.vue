@@ -58,7 +58,7 @@ export default {
         },
       ],
     },
-    infoTernak: false,
+    infoTernak: {},
   }),
   computed: {
     ...mapState(d$ternak, ["g$detailKandang"]),
@@ -198,7 +198,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoTernak.kandang.jenis_kandang }}</span
+                  {{ infoTernak.kandang.kode_kandang }}</span
                 >
               </div>
             </div>
@@ -282,7 +282,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoTernak.umur }} Bulan</span
+                  {{ Math.round(infoTernak.usia / 30) }} Bulan</span
                 >
               </div>
             </div>

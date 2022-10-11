@@ -6,7 +6,7 @@ const { api, ternak, timbangan } = subApiUrl;
 const list = () => baseApi.get(`${api}/${ternak}`);
 const add = (req) => baseApi.post(`${api}/${ternak}`, req);
 const edit = (req) => baseApi.put(`${api}/${ternak}/${req.id}`, req.formData);
-const del = (req) => baseApi.delete(`${api}/${ternak}/${req}`);
+const del = (req) => baseApi.delete(`${api}/${ternak}/`, { data: req });
 
 // Dropdown
 const listVarietas = () => baseApi.get(`${api}/varietas`);
