@@ -356,8 +356,8 @@ export default {
           rf_id,
           jenis_kelamin,
           varietas: {
-            id: varietas.id_varietas,
-            name: varietas.varietas,
+            id: varietas ? varietas.id_varietas : '',
+            name: varietas ? varietas.varietas : '',
           },
           berat_berkala,
           suhu_berkala,
@@ -367,16 +367,16 @@ export default {
           id_pejantan,
           status_kesehatan,
           kandang: {
-            id: kandang.id,
-            name: kandang.kode_kandang,
+            id: kandang ? kandang.id : '',
+            name: kandang ? kandang.kode_kandang : '',
           },
           pakan: {
-            id: pakan.id,
-            name: pakan.nama_pakan,
+            id: pakan ? pakan.id : '',
+            name: pakan ? pakan.nama_pakan : '',
           },
           fase: {
-            id: fase.id,
-            name: fase.fase,
+            id: fase ? fase.id : '',
+            name: fase ? fase.fase : '',
           },
           tanggal_keluar,
           status_keluar,
@@ -1102,7 +1102,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.varietas.varietas }}</span
+                      {{ infoTernak.varietas ? infoTernak.varietas.varietas : '' }}</span
                     >
                   </div>
                 </div>
@@ -1146,7 +1146,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.kandang.kode_kandang }}</span
+                      {{ infoTernak.kandang ? infoTernak.kandang.kode_kandang : '' }}</span
                     >
                   </div>
                 </div>
@@ -1157,7 +1157,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.fase.fase }}</span
+                      {{ infoTernak.fase ? infoTernak.fase.fase : '' }}</span
                     >
                   </div>
                 </div>
@@ -1168,7 +1168,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.pakan.nama_pakan }}</span
+                      {{ infoTernak.pakan ? infoTernak.pakan.nama_pakan : '' }}</span
                     >
                   </div>
                 </div>
