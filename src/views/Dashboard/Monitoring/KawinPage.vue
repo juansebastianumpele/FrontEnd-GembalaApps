@@ -82,9 +82,6 @@ export default {
     await this.a$betinaList('').catch((error) =>
       this.notify(error, false)
     );
-    await this.a$jantanList('').catch((error) =>
-      this.notify(error, false)
-    );
   },
   methods: {
     ...mapActions(d$kawin, ["a$betinaList", "a$jantanList"]),
