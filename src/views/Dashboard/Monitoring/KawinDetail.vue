@@ -44,12 +44,14 @@ export default {
           th: "Tanggal Kawin",
         },
         {
-          name: "nomor",
+          name: "id_ternak",
           th: "ID Indukan",
+          render: ({ ternak }) => ternak ? ternak.id_ternak : ''
         },
         {
-          name: "id_pemancek",
+          name: "id_pemacek",
           th: "ID Pemacek",
+          render: ({ pemacek }) => pemacek ? pemacek.id_ternak : ''
         },
         {
           name: "",

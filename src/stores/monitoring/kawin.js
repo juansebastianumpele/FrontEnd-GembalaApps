@@ -5,6 +5,7 @@ const u$kawin = defineStore({
   id: "kawin",
   state: () => ({
     kawin: [],
+    betina: [],
     jantan: [],
   }),
   actions: {
@@ -12,10 +13,9 @@ const u$kawin = defineStore({
     async a$betinaList(request) {
       try {
         const { data } = await s$kawin.listBetina(request);
-        this.kawin = data;
+        this.betina = data.list;
       } catch ({ error }) {
-        this.kawin = [];
-        this.ternakBetina = [];
+        this.betina = [];
         throw error;
       }
     },
@@ -33,7 +33,7 @@ const u$kawin = defineStore({
     async a$kawinList(request) {
       try {
         const { data } = await s$kawin.listKawin(request);
-        this.kawin = data;
+        this.kawin = data.list;
       } catch ({ error }) {
         this.kawin = [];
         throw error;
@@ -63,6 +63,7 @@ const u$kawin = defineStore({
   },
   getters: {
     g$kawinList: (state) => state.kawin,
+    g$betina: (state) => state.betina,
     g$jantan: (state) => state.jantan,
   },
 });

@@ -42,14 +42,17 @@ export default {
         {
           name: "nama_varietas",
           th: "Varietas",
+          render: ({ varietas }) => varietas ? varietas.varietas : '',
         },
         {
           name: "",
           th: "Kode Kandang",
+          render: ({ kandang }) => kandang ? kandang.kode_kandang : '',
         },
         {
           name: "fase",
           th: "Fase Pemeliharaan",
+          render: ({ fase }) => fase ? fase.fase : '',
         },
       ],
       action: [
@@ -62,7 +65,7 @@ export default {
     },
   }),
   computed: {
-    ...mapState(d$kawin, ["g$kawinList", "g$jantan"]),
+    ...mapState(d$kawin, ["g$kawinList", "g$jantan", "g$betina"]),
     ...mapState(d$dropdown, ["g$ddListBetina", "g$ddListPejantan", "g$ddKandang"]),
     modals() {
       return Object.values(this.modal).includes(true);
@@ -76,10 +79,7 @@ export default {
     },
   },
   async mounted() {
-    await this.a$betinaList(this.userInfo.id).catch((error) =>
-      this.notify(error, false)
-    );
-    await this.a$jantanList(this.userInfo.id).catch((error) =>
+    await this.a$betinaList('').catch((error) =>
       this.notify(error, false)
     );
   },
@@ -119,11 +119,11 @@ export default {
     </template>
 
     <template #body>
-      <empty-result v-if="!g$kawinList.length" :text="`${pageTitle}`" />
+      <empty-result v-if="!g$betina.length" :text="`${pageTitle}`" />
       <data-table
         v-else
         :index="true"
-        :data="g$kawinList"
+        :data="g$betina"
         :columns="dt.column"
         :actions="dt.action"
         @list-kawin="triggerDetail"
