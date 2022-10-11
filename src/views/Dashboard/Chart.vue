@@ -9,6 +9,8 @@ import d$dropdowm from "@/stores/dropdown";
 import d$costumer from "../../stores/customer";
 import d$kandang from "../../stores/monitoring/daftarkandang";
 import d$pakan from "../../stores/monitoring/pakan";
+import Cuaca from "../../components/HighCharts/Cuaca.vue";
+import OpenWeatherWidget from "../../components/HighCharts/OpenWeatherWidget.vue";
 
 export default {
   metaInfo: () => ({
@@ -19,6 +21,8 @@ export default {
     HcLine,
     HcPie,
     HcBar,
+    Cuaca,
+    OpenWeatherWidget,
   },
   data: () => ({
     pageTitle: "Beranda",
@@ -375,7 +379,25 @@ export default {
             />
           </card-comp>
         </div>
+
+        <div class="row m-0">
+          <div class="col-12 px-0">
+            <card-comp>
+              <h1
+                class="text-black text-uppercase text-center ls-1 mt-0 mb-2"
+                style="font-size: 12px"
+              >
+                Cuaca hari ini di Selomartani
+              </h1>
+              <cuaca />
+            </card-comp>
+          </div>
+        </div>
+
+        <!-- oper-weather-widget -->
+        <open-weather-widget />
       </div>
+
       <div class="row" v-else>
         <div class="col">
           <card-comp bodyClasses="p-0">

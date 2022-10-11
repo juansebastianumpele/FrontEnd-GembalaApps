@@ -202,7 +202,9 @@ export default {
               </div>
               <div class="col">
                 :
-                <span style="font-weight: 300"> {{ infoTernak }}</span>
+                <span style="font-weight: 300">
+                  {{ infoTernak.kandang.kode_kandang }}</span
+                >
               </div>
             </div>
             <div class="row">
