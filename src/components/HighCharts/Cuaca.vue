@@ -11,7 +11,8 @@ export default {
       "main": { "temp": 26.85, "feels_like": 29.16, "temp_min": 26.85, "temp_max": 26.85, "pressure": 1013, "humidity": 77, "sea_level": 1013, "grnd_level": 992 },
       "visibility": 10000,
       "wind": { "speed": 2.52, "deg": 168, "gust": 3.58 },
-      "clouds": { "all": 100 }, "dt": 1665452744,
+      "clouds": { "all": 100 }, 
+      "dt": 1665452744,
       "sys": { "country": "ID", "sunrise": 1665440286, "sunset": 1665484342 },
       "timezone": 25200,
       "id": 1635660,
@@ -32,6 +33,9 @@ export default {
     suhu() {
       return `${Math.round(this.cuaca.main.temp)}°C`;
     },
+    terasaSeperti() {
+      return `${Math.round(this.cuaca.main.feels_like)}°C`;
+    },
     kelembapan() {
       return this.cuaca.main.humidity;
     },
@@ -50,7 +54,7 @@ export default {
     },
   },
 
-    
+
   methods: {
     getWeather() {
       axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${this.latitude}&lon=${this.longitude}&units=metric&lang=id&appid=724edd4b529beb144b3986c95d678b48`)
@@ -67,30 +71,31 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="row">
 
-    <div>
-      <p class="text-center p-0 m-0">{{tanggal}}</p>
+    <div class="col">
+      <p class="text-center pt-1 mt-1">{{tanggal}}</p>
       <img :src="gambarCuaca" class="mx-auto d-block p-0" alt="...">
-      <p class="deskripsi p-0">{{deskripsi}}</p>
-      <p class="temp deskripsi p-0">{{suhu}}</p>
+      <p class="text-center m-0 p-0 text-uppercase">{{deskripsi}}</p>
+      <p class="temp text-center m-0 p-0">{{suhu}}</p>
     </div>
 
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item"><i class="fa-solid fa-temperature-half"></i> Maks/Min: {{maksMin}}</li>
-      <li class="list-group-item"><i class="fa-solid fa-droplet"></i> Kelembapan: {{kelembapan}}%</li>
-      <li class="list-group-item"><i class="fa-solid fa-arrows-to-circle"></i> Tekanan: {{tekanan}} hPa</li>
-      <li class="list-group-item"><i class="fa-solid fa-wind"></i> Angin: {{kecepatanAngin}} Km/jam</li>
-    </ul>
+    <div class="col kecil">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><i class="fa-solid fa-cloud-sun"></i> Terasa seperti: {{terasaSeperti}}</li>
+        <li class="list-group-item"><i class="fa-solid fa-temperature-half"></i> Maks/Min: {{maksMin}}</li>
+        <li class="list-group-item"><i class="fa-solid fa-droplet"></i> Kelembapan: {{kelembapan}}%</li>
+        <li class="list-group-item"><i class="fa-solid fa-arrows-to-circle"></i> Tekanan: {{tekanan}} hPa</li>
+        <li class="list-group-item"><i class="fa-solid fa-wind"></i> Angin: {{kecepatanAngin}} Km/jam</li>
+      </ul>
+    </div>
+
   </div>
 </template>
 
 <style>
-.deskripsi {
-  text-transform: uppercase;
-  margin: 0 auto;
-  padding: 0 auto;
-  text-align: center;
+.kecil {
+  font-size: 0.8rem;
 }
 
 .temp {
