@@ -56,10 +56,7 @@ export default {
         {
           name: "stok",
           th: "Stok",
-        },
-        {
-          name: "satuan",
-          th: "Satuan",
+          render: ({ stok, satuan }) => stok + " " + satuan,
         },
       ],
       action: [

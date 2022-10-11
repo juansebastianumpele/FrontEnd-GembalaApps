@@ -69,7 +69,7 @@ export default {
       id_induk: "",
       id_pejantan: "",
       status_kesehatan: "",
-      id_penyakit: "",
+      id_penyakit: 27,
       id_pakan: "",
       id_fp: "",
       id_kandang: "",
@@ -201,7 +201,7 @@ export default {
         id_induk: "",
         id_pejantan: "",
         status_kesehatan: "",
-        penyakit: "",
+        penyakit: 27,
         pakan: "",
         fase: "",
         kandang: "",
@@ -247,8 +247,8 @@ export default {
           id_fp: fase.id,
           id_kandang: kandang.id,
         };
-        await this.schema.validate(data);
         console.log(data);
+        await this.schema.validate(data);
         await this.a$ternakAdd(data);
         this.modal.addTernak = false;
         this.notify(`Tambah ${this.pageTitle} Sukses!`);
@@ -1091,7 +1091,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.rf_id  }}</span
+                      {{ infoTernak.rf_id }}</span
                     >
                   </div>
                 </div>
@@ -1234,7 +1234,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.usia }} Bulan</span
+                      {{ Math.round(infoTernak.usia / 30) }} Bulan</span
                     >
                   </div>
                 </div>
@@ -1245,7 +1245,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.tanggal_keluar  }}</span
+                      {{ infoTernak.tanggal_keluar }}</span
                     >
                   </div>
                 </div>
@@ -1256,7 +1256,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.status_keluar  }}</span
+                      {{ infoTernak.status_keluar }}</span
                     >
                   </div>
                 </div>

@@ -16,13 +16,13 @@ export default {
     };
   },
   data: () => ({
-    pageTitle: "Detail Data Pakan",
+    pageTitle: "Detail Pakan",
     // Input
     input: {
-      tanggal: "",
-      keterangan: "",
-      jumlah: "",
-      satuanPakan: "",
+      id: "",
+      status: "",
+      tanggal_dibuat: "",
+      tanggal_konsumsi: "",
     },
     // UI
     modal: {
@@ -34,26 +34,26 @@ export default {
       column: [
         {
           name: "",
-          th: "Tanggal",
+          th: "ID",
         },
         {
           name: "",
-          th: "Keterangan",
+          th: "Status",
         },
         {
           name: "",
-          th: "Jumlah",
+          th: "Tanggal Dibuat",
         },
         {
           name: "",
-          th: "Stok",
+          th: "Tanggal Konsumsi",
         },
       ],
       action: [
         {
-          text: "Detail",
+          text: "Edit",
           color: "info",
-          event: "detail-ternak",
+          event: "edit-detail-pakan",
         },
       ],
     },
@@ -139,7 +139,10 @@ export default {
                 <span style="font-weight: 600">ID Ternak</span>
               </div>
               <div class="col">
-                : <span style="font-weight: 300"> {{ infoTernak.id_ternak }}</span>
+                :
+                <span style="font-weight: 300">
+                  {{ infoTernak.id_ternak }}</span
+                >
               </div>
             </div>
             <div class="row">
@@ -148,9 +151,7 @@ export default {
               </div>
               <div class="col">
                 :
-                <span style="font-weight: 300">
-                  {{ infoTernak.rf_id  }}</span
-                >
+                <span style="font-weight: 300"> {{ infoTernak.rf_id }}</span>
               </div>
             </div>
             <div class="row">
@@ -201,9 +202,7 @@ export default {
               </div>
               <div class="col">
                 :
-                <span style="font-weight: 300">
-                  {{ infoTernak. }}</span
-                >
+                <span style="font-weight: 300"> {{ infoTernak }}</span>
               </div>
             </div>
             <div class="row">
@@ -264,9 +263,7 @@ export default {
               </div>
               <div class="col">
                 :
-                <span style="font-weight: 300">
-                  {{ infoTernak.penyakit }}</span
-                >
+                <span style="font-weight: 300"> {{ infoTernak.penyakit }}</span>
               </div>
             </div>
             <div class="row">
@@ -298,7 +295,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoTernak.tanggal_keluar  }}</span
+                  {{ infoTernak.tanggal_keluar }}</span
                 >
               </div>
             </div>
@@ -309,7 +306,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoTernak.status_keluar  }}</span
+                  {{ infoTernak.status_keluar }}</span
                 >
               </div>
             </div>
@@ -326,8 +323,24 @@ export default {
         <template #body>
           <form-comp v-if="modal.addDetailPakan" :validation-schema="schema">
             <div class="row">
-              <!-- Tanggal -->
+              <!-- ID -->
               <div class="col-12">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.id"
+                  type="number"
+                  name="id"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Masukan ID"
+                    label="ID"
+                  ></base-input>
+                </field-form>
+              </div>
+
+              <!-- Tanggal -->
+              <!-- <div class="col-12">
                 <base-input
                   name="tanggal"
                   class=""
@@ -342,10 +355,10 @@ export default {
                     placeholder="Pilih Tanggal"
                   />
                 </base-input>
-              </div>
+              </div> -->
 
               <!-- Keterangan -->
-              <div class="col-12">
+              <!-- <div class="col-12">
                 <base-input
                   name="keterangan"
                   placeholder="Pakan masuk atau keluar?"
@@ -358,10 +371,10 @@ export default {
                     :show-labels="false"
                   />
                 </base-input>
-              </div>
+              </div> -->
 
               <!-- Jumlah -->
-              <div class="col-6">
+              <!-- <div class="col-6">
                 <field-form
                   v-slot="{ field }"
                   v-model="input.jumlah"
@@ -374,10 +387,10 @@ export default {
                     label="Stok"
                   ></base-input>
                 </field-form>
-              </div>
+              </div> -->
 
               <!-- Satuan pakan -->
-              <div class="col-6">
+              <!-- <div class="col-6">
                 <base-input
                   name="satuan_pakan"
                   placeholder="Satuan Pakan"
@@ -390,7 +403,7 @@ export default {
                     :show-labels="false"
                   />
                 </base-input>
-              </div>
+              </div> -->
             </div>
           </form-comp>
         </template>

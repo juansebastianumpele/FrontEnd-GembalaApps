@@ -12,6 +12,7 @@ const u$dropdown = defineStore({
     statusKeluar: ["Jual", "Mati", "Sembelih"],
     satuanPakan: ["Kg", "Pcs"],
     keteranganDetailPakan: ["Masuk", "Keluar"],
+    keteranganTambahPakan: ["Tong", "Ball"],
     jenisKandang: ["Isolasi", "Kawin", "Individu", "Rekondisi"],
     varietas: [],
     fasePemeliharaan: [],
@@ -93,6 +94,7 @@ const u$dropdown = defineStore({
     g$ddStatusKeluar: (state) => state.statusKeluar,
     g$ddSatuanPakan: (state) => state.satuanPakan,
     g$ddKeteranganDetailPakan: (state) => state.keteranganDetailPakan,
+    g$ddKeteranganTambahPakan: (state) => state.keteranganTambahPakan,
     g$ddJenisKandang: (state) => state.jenisKandang,
     g$ddVarietas: (state) =>
       state.varietas.map(({ id_varietas, varietas }) => ({

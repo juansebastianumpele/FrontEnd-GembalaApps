@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import * as s$total from "@/services/monitoring/ternak";
+import * as s$daftarkandang from "@/services/monitoring/daftarkandang";
 
 const u$total = defineStore({
   id: "chart",
@@ -28,7 +29,6 @@ const u$total = defineStore({
       try {
         const { data } = await s$total.listPejantan();
         this.chartJantan = data.total;
-        console.log(this.chartJantan);
       } catch ({ error }) {
         this.chartJantan = [];
         throw error;
@@ -45,19 +45,20 @@ const u$total = defineStore({
       }
     },
 
-    async a$byFase(req) {
+    async a$byFase() {
       try {
-        const { data } = await s$total.totalFase(req);
-        this.chartFase = data;
+        const { data } = await s$total.listFase();
+        this.chartFase = data.list;
+        console.log(data.list);
       } catch ({ error }) {
         this.chartFase = [];
         throw error;
       }
     },
-    async a$tabelKandang(req) {
+    async a$tabelKandang() {
       try {
-        const { data } = await s$total.tabelKandang(req);
-        this.kandang = data;
+        const { data } = await s$daftarkandang.listKandang();
+        this.kandang = data.list;
       } catch ({ error }) {
         this.kandang = [];
         throw error;
@@ -135,7 +136,9 @@ const u$total = defineStore({
       ],
     }),
     g$byKesehatan: (state) => ({
-      categories: state.chartKesehatan.map(({ status_kesehatan }) => status_kesehatan),
+      categories: state.chartKesehatan.map(
+        ({ status_kesehatan }) => status_kesehatan
+      ),
       series: [
         {
           name: "Total",
@@ -152,7 +155,7 @@ const u$total = defineStore({
       series: [
         {
           name: "Fase",
-          data: state.chartFase.map(({ Jumlah_ternak }) => Jumlah_ternak),
+          data: state.chartFase.map(({ populasi }) => populasi),
         },
       ],
       length: state.chartFase.length,
@@ -184,9 +187,9 @@ const u$total = defineStore({
           name: "Total",
           size: "80%",
           innerSize: "60%",
-          data: state.chartFase.map(({ fase, rata_rata }) => ({
+          data: state.chartFase.map(({ fase, berat_rata }) => ({
             name: fase,
-            y: rata_rata,
+            y: berat_rata,
           })),
         },
       ],

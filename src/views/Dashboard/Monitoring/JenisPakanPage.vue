@@ -27,11 +27,8 @@ export default {
     input: {
       id_pakan: null,
       nama_pakan: "",
-      deskripsi: "",
-      komposisi: "",
-      satuanPakan: "",
-      jumlah: "",
-      id_users: null,
+      interval: "",
+      satuan: "",
     },
     // UI
     modal: {
@@ -71,8 +68,8 @@ export default {
     },
   }),
   computed: {
-    ...mapState(d$pakan, ["g$pakanList", "g$pakanDetail", "g$ddSatuanPakan"]),
-    ...mapState(d$dropdown, ["g$ddSatuanPakan"]),
+    ...mapState(d$pakan, ["g$pakanList", "g$pakanDetail"]),
+    ...mapState(d$dropdown, ["g$ddKeteranganTambahPakan"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -100,8 +97,8 @@ export default {
       this.input = {
         id_pakan: null,
         nama_pakan: "",
-        deskripsi: "",
-        id_users: null,
+        interval: "",
+        satuan: "",
       };
     },
     async addPakan() {
@@ -256,6 +253,7 @@ export default {
         <template #body>
           <form-comp v-if="modal.addPakan" :validation-schema="schema">
             <div class="row">
+              <!-- nama pakan -->
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
@@ -271,12 +269,13 @@ export default {
                   ></base-input>
                 </field-form>
               </div>
+              <!-- interval pemberian pakan -->
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.deskripsi"
+                  v-model="input.interval"
                   type="text"
-                  name="deskripsi"
+                  name="interval"
                 >
                   <base-input
                     v-bind="field"
@@ -284,6 +283,21 @@ export default {
                     label="Interval pemberian pakan /hari"
                   ></base-input>
                 </field-form>
+              </div>
+              <!-- satuan pakan (tong/ball) -->
+              <div class="col-12">
+                <base-input
+                  name="satuan"
+                  placeholder="Satuan Pakan"
+                  label="Satuan Pakan"
+                >
+                  <multi-select
+                    v-model="input.satuan"
+                    :options="g$ddKeteranganTambahPakan"
+                    placeholder="Pilih Satuan Pakan"
+                    :show-labels="false"
+                  />
+                </base-input>
               </div>
             </div>
           </form-comp>
@@ -297,13 +311,14 @@ export default {
           </base-button>
         </template>
       </modal-comp>
-      <modal-comp v-model:show="modal.ubahPakan" modal-classes="modal-lg">
+      <modal-comp v-model:show="modal.ubahPakan" modal-classes="modal-md">
         <template #header>
           <h3 class="modal-title">Detail {{ pageTitle }}</h3>
         </template>
         <template #body>
           <form-comp v-if="modal.ubahPakan" :validation-schema="schema">
             <div class="row">
+              <!-- nama pakan -->
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
@@ -319,19 +334,35 @@ export default {
                   ></base-input>
                 </field-form>
               </div>
+              <!-- interval pemberian pakan -->
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.deskripsi"
+                  v-model="input.interval"
                   type="text"
-                  name="deskripsi"
+                  name="interval"
                 >
                   <base-input
                     v-bind="field"
-                    placeholder="Text"
+                    placeholder="Interval"
                     label="Jenis Pakan"
                   ></base-input>
                 </field-form>
+              </div>
+              <!-- satuan pakan (tong/ball) -->
+              <div class="col-12">
+                <base-input
+                  name="satuan"
+                  placeholder="Satuan Pakan"
+                  label="Satuan Pakan"
+                >
+                  <multi-select
+                    v-model="input.satuan"
+                    :options="g$ddKeteranganTambahPakan"
+                    placeholder="Pilih Satuan Pakan"
+                    :show-labels="false"
+                  />
+                </base-input>
               </div>
             </div>
           </form-comp>

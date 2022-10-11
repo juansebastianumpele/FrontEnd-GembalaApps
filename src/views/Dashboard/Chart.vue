@@ -63,11 +63,11 @@ export default {
   }),
   computed: {
     ...mapState(d$chart, [
+      "g$byFase",
       "g$byGenderChart",
       "g$byKesehatan",
       "g$byJeniskelamin",
       "g$byPopulasi",
-      "g$byFase",
       "g$DonutbyFase",
       "g$tabelKandang",
       "g$tabelFilter",
@@ -133,13 +133,15 @@ export default {
     await this.a$costumerDetail().catch((error) => this.notify(error, false));
     await this.a$byJantan().catch((error) => this.notify(error, false));
     await this.a$byBetina().catch((error) => this.notify(error, false));
-    await this.a$tabelKandang(this.userInfo.id);
+    await this.a$tabelKandang().catch((error) => this.notify(error, false));
+    await this.a$byFase().catch((error) => this.notify(error, false));
+    await this.a$ddVarietas().catch((error) => this.notify(error, false));
+    await this.a$ddFasePemeliharaan().catch((error) =>
+      this.notify(error, false)
+    );
+    await this.a$ddKandang().catch((error) => this.notify(error, false));
     await this.a$byPopulasi(this.userInfo.id);
     await this.a$byKesehatan(this.userInfo.id);
-    await this.a$byFase(this.userInfo.id);
-    await this.a$ddVarietas();
-    await this.a$ddFasePemeliharaan();
-    await this.a$ddKandang(this.userInfo.id);
   },
 };
 </script>
@@ -253,14 +255,14 @@ export default {
                   :data="g$tabelKandang"
                 >
                   <template #columns>
-                    <th class="px-2">Jenis Kandang</th>
-                    <th class="px-2">Populasi</th>
-                    <th class="px-2">Rata-rata</th>
+                    <th class="px-1">Kode Kandang</th>
+                    <th class="px-1">Populasi</th>
+                    <th class="px-1">Rata-rata</th>
                   </template>
                   <template #default="{ item }">
-                    <td class="px-2">{{ item.kandang.kode_kandang }}</td>
-                    <td class="px-2">{{ item.Jumlah_ternak }}</td>
-                    <td class="px-2">{{ item.rata_rata.toFixed(2) }}</td>
+                    <td class="px-2 pl-5">{{ item.kode_kandang }}</td>
+                    <td class="px-4">{{ item.populasi }}</td>
+                    <td class="px-3">{{ item.berat_rata.toFixed(2) }}</td>
                   </template>
                 </base-table>
               </card-comp>
@@ -417,7 +419,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ selectedTernak.rf_id  }}</span
+                  {{ selectedTernak.rf_id }}</span
                 >
               </div>
             </div>
@@ -569,7 +571,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ selectedTernak.tanggal_keluar  }}</span
+                  {{ selectedTernak.tanggal_keluar }}</span
                 >
               </div>
             </div>
@@ -580,7 +582,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ selectedTernak.status_keluar  }}</span
+                  {{ selectedTernak.status_keluar }}</span
                 >
               </div>
             </div>
