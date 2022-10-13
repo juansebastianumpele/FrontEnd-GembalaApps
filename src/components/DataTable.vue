@@ -93,7 +93,7 @@
                 {{ th.th }}
               </th>
               <!-- Display Actions If Provided -->
-              <th v-if="actions.length">Actions</th>
+              <th v-if="actions.length">Opsi</th>
             </tr>
           </thead>
           <tbody v-if="paginatedItems.length">
