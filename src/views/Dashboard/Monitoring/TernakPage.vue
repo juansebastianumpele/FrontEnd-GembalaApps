@@ -109,7 +109,7 @@ export default {
         },
         {
           name: "umur",
-          th: "Usia (bln)",
+          th: "Umur (bln)",
           render: ({ umur }) => Math.round(umur / 30),
         },
       ],
