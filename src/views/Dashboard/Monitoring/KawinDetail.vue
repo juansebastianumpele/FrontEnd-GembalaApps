@@ -46,19 +46,18 @@ export default {
         {
           name: "id_ternak",
           th: "ID Indukan",
-          render: ({ ternak }) => ternak ? ternak.id_ternak : ''
         },
         {
           name: "id_pemacek",
           th: "ID Pemacek",
-          render: ({ pemacek }) => pemacek ? pemacek.id_ternak : ''
         },
         {
-          name: "",
+          name: "fase",
           th: "Fase Pemeliharaan",
+          render: ({ fase }) => fase ? fase.fase : ''
         },
         {
-          name: "",
+          name: "id_cempe",
           th: "ID Cempe",
         },
       ],
