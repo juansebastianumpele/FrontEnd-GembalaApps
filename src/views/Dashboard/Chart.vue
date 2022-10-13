@@ -39,7 +39,7 @@ export default {
         },
         {
           name: "nama_varietas",
-          th: "Varietas",
+          th: "Bangsa",
         },
         {
           name: "fase",

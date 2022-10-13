@@ -41,7 +41,7 @@ export default {
         },
         {
           name: "nama_varietas",
-          th: "Varietas",
+          th: "Bangsa",
           render: ({ varietas }) => varietas ? varietas.varietas : '',
         },
         {

@@ -95,7 +95,7 @@ export default {
         },
         {
           name: "varietas",
-          th: "Varietas",
+          th: "Bangsa",
           render: ({ varietas }) => (varietas ? varietas.varietas : ""),
         },
         {
@@ -108,9 +108,9 @@ export default {
           render: ({ fase }) => (fase ? fase.fase : ""),
         },
         {
-          name: "usia",
+          name: "umur",
           th: "Usia (bln)",
-          render: ({ usia }) => Math.round(usia / 30),
+          render: ({ umur }) => Math.round(umur / 30),
         },
       ],
       action: [
@@ -1238,12 +1238,12 @@ export default {
                 </div>
                 <div class="row">
                   <div class="col-5">
-                    <span style="font-weight: 600">Usia</span>
+                    <span style="font-weight: 600">Umur</span>
                   </div>
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ Math.round(infoTernak.usia / 30) }} Bulan</span
+                      {{ Math.round(infoTernak.umur / 30) }} Bulan</span
                     >
                   </div>
                 </div>
