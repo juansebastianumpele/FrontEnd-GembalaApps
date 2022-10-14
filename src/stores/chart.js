@@ -15,9 +15,9 @@ const u$total = defineStore({
     filterResult: [],
   }),
   actions: {
-    async a$byKesehatan(req) {
+    async a$byKesehatan() {
       try {
-        const { data } = await s$total.totalSehat(req);
+        const { data } = await s$total.totalSehat();
         this.chartKesehatan = data;
       } catch ({ error }) {
         this.chartKesehatan = [];
@@ -49,7 +49,6 @@ const u$total = defineStore({
       try {
         const { data } = await s$total.listFase();
         this.chartFase = data.list;
-        console.log(data.list);
       } catch ({ error }) {
         this.chartFase = [];
         throw error;
@@ -76,7 +75,8 @@ const u$total = defineStore({
     async a$byPopulasi(req) {
       try {
         const { data } = await s$total.populasi(req);
-        this.chartByPopulasi = data;
+        this.chartByPopulasi = data.list.tanggal;
+        console.log(this.chartByPopulasi);
       } catch ({ error }) {
         this.chartByPopulasi = [];
         throw error;
@@ -136,16 +136,17 @@ const u$total = defineStore({
       ],
     }),
     g$byKesehatan: (state) => ({
-      categories: state.chartKesehatan.map(
-        ({ status_kesehatan }) => status_kesehatan
-      ),
+      categories: [state.chartKesehatan.sehat, state.chartKesehatan.sakit],
       series: [
         {
           name: "Total",
-          data: state.chartKesehatan.map(({ status_kesehatan, Jumlah }) => ({
-            name: status_kesehatan[0],
-            y: Jumlah,
-          })),
+          data: [
+            {
+              y: state.chartKesehatan.sehat,
+              name: "Sehat",
+            },
+            { y: state.chartKesehatan.sakit, name: "Sakit" },
+          ],
         },
       ],
       length: state.chartKesehatan.length,

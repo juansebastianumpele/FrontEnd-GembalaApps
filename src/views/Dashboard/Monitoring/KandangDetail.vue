@@ -43,11 +43,13 @@ export default {
         },
         {
           name: "kebutuhan_pakan",
-          th: "Kebutuhan Pakan (KG)",
+          th: "Kebutuhan Pakan",
+          render: ({ kebutuhan_pakan }) => kebutuhan_pakan + " KG",
         },
         {
           name: "berat",
-          th: "Berat Ternak (kg)",
+          th: "Berat Ternak",
+          render: ({ berat }) => berat + " KG",
         },
       ],
       action: [

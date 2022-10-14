@@ -10,7 +10,10 @@
     >
       <template #brand>
         <div class="navbar-wrapper text-lg-center">
-          <router-link class="navbar-brand" :to="{ name: isLoggedIn ? 'Home' : 'Login' }">
+          <router-link
+            class="navbar-brand"
+            :to="{ name: isLoggedIn ? 'Home' : 'Login' }"
+          >
             <p class="lead m-0">{{ siteMeta.title }}</p>
           </router-link>
         </div>
@@ -24,7 +27,11 @@
             </router-link>
           </div>
           <div class="col-6 collapse-close">
-            <button type="button" class="navbar-toggler" @click="showMenu = false">
+            <button
+              type="button"
+              class="navbar-toggler"
+              @click="showMenu = false"
+            >
               <span></span>
               <span></span>
             </button>
@@ -41,7 +48,7 @@
   </div>
 </template>
 <script>
-import ContentFooter from './ContentFooter.vue';
+import ContentFooter from "./ContentFooter.vue";
 
 export default {
   components: {
@@ -61,7 +68,7 @@ export default {
   props: {
     backgroundColor: {
       type: String,
-      default: 'black',
+      default: "black",
     },
   },
   data() {
@@ -70,7 +77,7 @@ export default {
       menuTransitionDuration: 250,
       pageTransitionDuration: 200,
       year: new Date().getFullYear(),
-      pageClass: 'login-page',
+      pageClass: "login-page",
     };
   },
   computed: {
@@ -91,18 +98,18 @@ export default {
   },
   methods: {
     toggleNavbar() {
-      document.body.classList.toggle('nav-open');
+      document.body.classList.toggle("nav-open");
       this.showMenu = !this.showMenu;
     },
     closeMenu() {
-      document.body.classList.remove('nav-open');
+      document.body.classList.remove("nav-open");
       this.showMenu = false;
     },
     setBackgroundColor() {
-      document.body.classList.add('bg-default');
+      document.body.classList.add("bg-default");
     },
     removeBackgroundColor() {
-      document.body.classList.remove('bg-default');
+      document.body.classList.remove("bg-default");
     },
     updateBackground() {
       if (!this.$route.meta.noBodyBackground) {

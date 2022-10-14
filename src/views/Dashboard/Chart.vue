@@ -143,9 +143,9 @@ export default {
     await this.a$ddFasePemeliharaan().catch((error) =>
       this.notify(error, false)
     );
+    await this.a$byKesehatan().catch((error) => this.notify(error, false));
     await this.a$ddKandang().catch((error) => this.notify(error, false));
     await this.a$byPopulasi(this.userInfo.id);
-    await this.a$byKesehatan(this.userInfo.id);
   },
 };
 </script>

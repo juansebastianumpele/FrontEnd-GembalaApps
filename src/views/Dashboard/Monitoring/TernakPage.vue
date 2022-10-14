@@ -31,12 +31,12 @@ export default {
       suhu: y$string().required().label("Suhu"),
       tanggal_lahir: y$string().required().label("Tanggal Lahir"),
       tanggal_masuk: y$string().required().label("Tanggal Masuk"),
-      // id_induk: y$string().required().label("ID Dam (Ibu)"),
-      // id_pejantan: y$string().required().label("ID Sire (Bapak)"),
+      // id_induk: y$string().nullable().label("ID Dam (Ibu)"),
+      // id_pejantan: y$string().nullable().label("ID Sire (Bapak)"),
       status_kesehatan: y$string().required().label("Status Kesehatan"),
-      // kandang: y$object({
-      //   id: y$string().required().label("ID Kandang"),
-      // }).label("ID Kandang"),
+      penyakit: y$object({
+        id: y$string().nullable().label("Penyakit"),
+      }).label("Penyakit"),
       // pakan: y$object({
       //   id: y$string().required().label("ID Pakan"),
       // }).label("ID Pakan"),
@@ -66,10 +66,10 @@ export default {
       suhu: "",
       tanggal_lahir: "",
       tanggal_masuk: "",
-      id_induk: "",
-      id_pejantan: "",
+      id_induk: null,
+      id_pejantan: null,
       status_kesehatan: "",
-      id_penyakit: 27,
+      id_penyakit: null,
       id_pakan: "",
       id_fp: "",
       id_kandang: "",
@@ -108,9 +108,9 @@ export default {
           render: ({ fase }) => (fase ? fase.fase : ""),
         },
         {
-          name: "usia",
-          th: "Usia (bln)",
-          render: ({ usia }) => Math.round(usia / 30),
+          name: "umur",
+          th: "umur (bln)",
+          render: ({ umur }) => Math.round(umur / 30),
         },
       ],
       action: [
@@ -146,6 +146,7 @@ export default {
       "g$ddKandang",
       "g$ddPakan",
       "g$ddListPenyakit",
+      "g$ddListBetina",
     ]),
     modals() {
       return Object.values(this.modal).includes(true);
@@ -167,6 +168,7 @@ export default {
     await this.a$ddKandang().catch((error) => this.notify(error, false));
     await this.a$ddPakan().catch((error) => this.notify(error, false));
     await this.a$ddListPenyakit().catch((error) => this.notify(error, false));
+    await this.a$ddListBetina().catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$ternak, [
@@ -181,6 +183,7 @@ export default {
       "a$ddKandang",
       "a$ddPakan",
       "a$ddListPenyakit",
+      "a$ddListBetina",
     ]),
     ...mapActions(d$chart, ["a$byTimbangan"]),
     resetImage() {
@@ -201,7 +204,7 @@ export default {
         id_induk: "",
         id_pejantan: "",
         status_kesehatan: "",
-        penyakit: 27,
+        penyakit: null,
         pakan: "",
         fase: "",
         kandang: "",
@@ -256,7 +259,7 @@ export default {
         console.log(error);
         this.notify(error, false);
       } finally {
-        this.a$ternakList(this.userInfo.id);
+        this.a$ternakList();
       }
     },
     async editTernak() {
@@ -547,7 +550,6 @@ export default {
                   name="penyakit"
                   placeholder="Penyakit"
                   label="Penyakit"
-                  required
                 >
                   <multi-select
                     v-model="input.penyakit"
@@ -603,7 +605,7 @@ export default {
                   ></base-input>
                 </field-form>
               </div>
-              <div class="col-6">
+              <!-- <div class="col-6">
                 <field-form
                   v-slot="{ field }"
                   v-model="input.id_induk"
@@ -616,6 +618,23 @@ export default {
                     label="ID Dam (Ibu)"
                   ></base-input>
                 </field-form>
+              </div> -->
+              <div class="col-6">
+                <base-input
+                  name="id_induk"
+                  placeholder="Id Induk"
+                  label="Id Induk"
+                  nullable
+                >
+                  <multi-select
+                    v-model="input.id_induk"
+                    :options="g$ddListBetina"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih ID Induk"
+                    :show-labels="false"
+                  />
+                </base-input>
               </div>
               <div class="col-6">
                 <base-input
@@ -747,14 +766,14 @@ export default {
               <div class="col-6">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.id_ternak"
+                  v-model="input.rf_id"
                   type="text"
-                  name="id_ternak"
+                  name="rf_id"
                 >
                   <base-input
                     v-bind="field"
                     placeholder="Text"
-                    label="ID Ternak"
+                    label="RFID Ternak"
                   ></base-input>
                 </field-form>
               </div>
@@ -770,20 +789,6 @@ export default {
                     placeholder="Text"
                     label="Bobot Berkala"
                     required
-                  ></base-input>
-                </field-form>
-              </div>
-              <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.rf_id"
-                  type="text"
-                  name="rf_id"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="RFID Ternak"
                   ></base-input>
                 </field-form>
               </div>
@@ -829,6 +834,24 @@ export default {
                     v-model="input.status_kesehatan"
                     :options="g$ddStatusSehat"
                     placeholder="Status Kesehatan"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+              <!-- Jika status kesehatan = sakit, tampilkan field penyakit -->
+              <div v-if="input.status_kesehatan == 'Sakit'" class="col-6">
+                <base-input
+                  name="penyakit"
+                  placeholder="Penyakit"
+                  label="Penyakit"
+                  required
+                >
+                  <multi-select
+                    v-model="input.penyakit"
+                    :options="g$ddListPenyakit"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih Penyakit"
                     :show-labels="false"
                   />
                 </base-input>
@@ -1221,7 +1244,11 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.penyakit }}</span
+                      {{
+                        infoTernak.penyakit
+                          ? infoTernak.penyakit.nama_penyakit
+                          : ""
+                      }}</span
                     >
                   </div>
                 </div>
@@ -1243,7 +1270,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ Math.round(infoTernak.usia / 30) }} Bulan</span
+                      {{ Math.round(infoTernak.umur / 30) }} Bulan</span
                     >
                   </div>
                 </div>
@@ -1299,7 +1326,11 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.penyakit }}</span
+                      {{
+                        infoTernak.penyakit
+                          ? infoTernak.penyakit.nama_penyakit
+                          : ""
+                      }}</span
                     >
                   </div>
                 </div>

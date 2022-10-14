@@ -3,12 +3,13 @@ import * as s$ternak from "@/services/monitoring/ternak";
 import * as s$kandang from "@/services/monitoring/daftarkandang";
 import * as s$pakan from "@/services/monitoring/pakan";
 import * as s$penyakit from "@/services/monitoring/penyakit";
+import * as s$kawin from "@/services/monitoring/kawin";
 
 const u$dropdown = defineStore({
   id: "dropdown",
   state: () => ({
     jenisKelamin: ["Jantan", "Betina"],
-    statusSehat: ["Sehat", "Sakit", "Sembuh"],
+    statusSehat: ["Sehat", "Sakit"],
     statusKeluar: ["Jual", "Mati", "Sembelih"],
     satuanPakan: ["Kg", "Pcs"],
     keteranganDetailPakan: ["Masuk", "Keluar"],
@@ -18,7 +19,7 @@ const u$dropdown = defineStore({
     fasePemeliharaan: [],
     kandang: [],
     pakan: [],
-    listBetina: [],
+    listBetina: [null],
     listPejantan: [],
     listPenyakit: [],
   }),
@@ -59,9 +60,9 @@ const u$dropdown = defineStore({
         throw error;
       }
     },
-    async a$ddListBetina(request) {
+    async a$ddListBetina() {
       try {
-        const { data } = await s$ternak.listBetina(request);
+        const { data } = await s$kawin.listBetina();
         this.listBetina = data.list;
       } catch ({ error }) {
         this.listBetina = [];
