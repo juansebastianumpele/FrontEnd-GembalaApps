@@ -2,7 +2,6 @@
 import { mapActions, mapState } from "pinia";
 import d$kawin from "@/stores/monitoring/kawin";
 import d$dropdown from "@/stores/dropdown";
-
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 
 export default {
@@ -23,12 +22,9 @@ export default {
     pageTitle: "Riwayat Kawin",
     // Input
     input: {
-      id: null,
       tanggal_kawin: "",
-      // id_ternak: "",
       id_pemacek: "",
       fase_pemeliharaan: "",
-      id_users: null,
     },
     // UI
     modal: {
@@ -77,8 +73,8 @@ export default {
     },
   }),
   computed: {
-    ...mapState(d$kawin, ["g$kawinList"]),
-    ...mapState(d$dropdown, ["g$ddListBetina", "g$ddListPejantan", "g$ddFasePemeliharaan"]),
+    ...mapState(d$kawin, ["g$kawinList", "g$betina", "g$jantan"]),
+    ...mapState(d$dropdown, ["g$ddFasePemeliharaan"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -94,6 +90,12 @@ export default {
     await this.a$kawinList(this.$route.params.id).catch((error) =>
       this.notify(error, false)
     );
+    await this.a$betinaList(`id_ternak=${this.$route.params.id}`).catch((error) =>
+      this.notify(error, false)
+    );
+    await this.a$jantanList(`kecuali=${this.g$betina[0].id_pejantan}`).catch((error) =>
+      this.notify(error, false)
+    );
     await this.a$ddFasePemeliharaan().catch((error) => this.notify(error, false));
   },
   methods: {
@@ -102,6 +104,8 @@ export default {
       "a$kawinAdd",
       "a$kawinEdit",
       "a$kawinDelete",
+      "a$betinaList",
+      "a$jantanList",
     ]),
     ...mapActions(d$dropdown, [
       "a$ddFasePemeliharaan",
@@ -258,24 +262,28 @@ export default {
                   <base-input v-bind="field" placeholder="Masukan ID Indukan Betina" label="ID Indukan" required></base-input>
                 </field-form>
               </div> -->
+
+              <!-- Pilih pejantan -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.id_pemacek"
-                  type="text"
-                  name="id_pemacek"
+                <base-input
+                  name="pemacek"
+                  placeholder="Pemacek"
+                  label="Pemacek"
+                  required
                 >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Masukan ID Indukan Pejantan"
-                    label="ID Pemacek"
-                    required
-                  ></base-input>
-                </field-form>
+                  <multi-select
+                    v-model="input.id_pemacek"
+                    :options="g$jantan"
+                    label="id_ternak"
+                    track-by="id_ternak"
+                    placeholder="Pilih Pemacek"
+                    :show-labels="false"
+                  />
+                </base-input>
               </div>
 
               <!-- Fase pemeliharaan -->
-              <div class="col-6">
+              <div class="col-12">
                 <base-input
                   name="fase"
                   placeholder="Fase Pemeliharaan"

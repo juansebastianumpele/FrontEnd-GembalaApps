@@ -22,8 +22,8 @@ const u$kawin = defineStore({
     // List Domba Jantan (Kawin Page)
     async a$jantanList(request) {
       try {
-        const { data } = await s$kawin.listJantan(request);
-        this.jantan = data;
+        const { data } = await s$kawin.listPejantan(request);
+        this.jantan = data.list;
       } catch ({ error }) {
         this.jantan = [];
         throw error;
