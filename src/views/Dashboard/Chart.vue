@@ -4,11 +4,13 @@ import HcColumn from "@/components/HighCharts/Column.vue";
 import HcLine from "@/components/HighCharts/Line.vue";
 import HcPie from "@/components/HighCharts/Pie.vue";
 import HcBar from "@/components/HighCharts/Bar.vue";
+
 import d$chart from "@/stores/chart";
 import d$dropdowm from "@/stores/dropdown";
-import d$costumer from "../../stores/customer";
 import d$kandang from "../../stores/monitoring/daftarkandang";
 import d$pakan from "../../stores/monitoring/pakan";
+import d$ternak from "../../stores/monitoring/ternak";
+
 import Cuaca from "../../components/HighCharts/Cuaca.vue";
 import OpenWeatherWidget from "../../components/HighCharts/OpenWeatherWidget.vue";
 
@@ -81,9 +83,9 @@ export default {
       "g$ddFasePemeliharaan",
       "g$ddKandang",
     ]),
-    ...mapState(d$costumer, ["g$costumerDetail"]),
     ...mapState(d$kandang, ["g$totalKandang"]),
     ...mapState(d$pakan, ["g$totalPakan"]),
+    ...mapState(d$ternak, ["g$totalTernak"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -98,7 +100,6 @@ export default {
       "a$byJantan",
       "a$byBetina",
     ]),
-    ...mapActions(d$costumer, ["a$costumerDetail"]),
     ...mapActions(d$kandang, ["a$totalKandang"]),
     ...mapActions(d$pakan, ["a$totalPakan"]),
     ...mapActions(d$dropdowm, [
@@ -106,6 +107,7 @@ export default {
       "a$ddFasePemeliharaan",
       "a$ddKandang",
     ]),
+    ...mapActions(d$ternak, ["a$totalTernak"]),
     async filterTernak() {
       const { varietas, fase, kandang } = this.input;
       const data = {
@@ -134,7 +136,7 @@ export default {
   async mounted() {
     await this.a$totalPakan().catch((error) => this.notify(error, false));
     await this.a$totalKandang().catch((error) => this.notify(error, false));
-    await this.a$costumerDetail().catch((error) => this.notify(error, false));
+    await this.a$totalTernak().catch((error) => this.notify(error, false));
     await this.a$byJantan().catch((error) => this.notify(error, false));
     await this.a$byBetina().catch((error) => this.notify(error, false));
     await this.a$tabelKandang().catch((error) => this.notify(error, false));
@@ -287,7 +289,7 @@ export default {
                   </div>
                   <div class="col">
                     <h2 class="text-center" style="font-size: 24px">
-                      {{ g$costumerDetail }}
+                      {{ g$totalTernak }}
                     </h2>
                     <h2 class="text-center" style="font-size: 12px">Ternak</h2>
                   </div>
