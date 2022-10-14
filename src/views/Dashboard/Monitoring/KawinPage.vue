@@ -23,7 +23,7 @@ export default {
       id: null,
       tanggal_kawin: "",
       id_ternak: "",
-      id_pemancek: "",
+      id_pemacek: "",
       id_kandang: "",
     },
     // UI
@@ -165,14 +165,14 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.id_pemancek"
+                  v-model="input.id_pemacek"
                   type="text"
-                  name="id_pemancek"
+                  name="id_pemacek"
                 >
                   <base-input
                     v-bind="field"
                     placeholder="Masukan ID Indukan Pejantan"
-                    label="ID Pemancek"
+                    label="ID Pemacek"
                     required
                   ></base-input>
                 </field-form>
@@ -185,7 +185,7 @@ export default {
                   <multi-select v-model="input.id_ternak" :options="g$kawinList" label="id_ternak" track-by="id_ternak" placeholder="Pilih/Masukan ID Indukan Betina" :show-labels="false" />
                 </base-input>
               </div>
-              <!-- Input pemacek -->
+              <!-- Input Pemacek -->
               <div class="col-12">
                 <base-input name="id_ternak" placeholder="ID Pemacek" label="ID Pemacek" required>
                   <multi-select v-model="input.id_ternak" :options="g$ddListPejantan" label="name" track-by="id" placeholder="Pilih/Masukan ID Indukan Pejantan" :show-labels="false" />
@@ -244,14 +244,14 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.id_pemancek"
+                  v-model="input.id_pemacek"
                   type="text"
-                  name="id_pemancek"
+                  name="id_pemacek"
                 >
                   <base-input
                     v-bind="field"
                     placeholder="Masukan ID Indukan Pejantan"
-                    label="ID Pemancek"
+                    label="ID Pemacek"
                     required
                   ></base-input>
                 </field-form>

@@ -1133,7 +1133,7 @@ export default {
                 </div>
                 <div class="row">
                   <div class="col-5">
-                    <span style="font-weight: 600">ID Pemancek</span>
+                    <span style="font-weight: 600">ID Pemacek</span>
                   </div>
                   <div class="col">
                     :

@@ -13,7 +13,7 @@ export default {
     const schema = y$object({
       // id_ternak: y$string().required().label("ID Dam (Ibu)"),
       tanggal_kawin: y$string().nullable().label("Tanggal Kawin"),
-      id_pemancek: y$string().nullable().label("ID Pemancek"),
+      id_pemacek: y$string().nullable().label("ID Pemacek"),
     });
     return {
       schema,
@@ -26,7 +26,7 @@ export default {
       id: null,
       tanggal_kawin: "",
       // id_ternak: "",
-      id_pemancek: "",
+      id_pemacek: "",
       fase_pemeliharaan: "",
       id_users: null,
     },
@@ -42,6 +42,7 @@ export default {
         {
           name: "tanggal_kawin",
           th: "Tanggal Kawin",
+          render: ({ tanggal_kawin }) => new Intl.DateTimeFormat('id', { dateStyle: 'full'}).format(new Date(tanggal_kawin)),
         },
         {
           name: "id_ternak",
@@ -54,7 +55,7 @@ export default {
         {
           name: "fase",
           th: "Fase Pemeliharaan",
-          render: ({ fase }) => fase ? fase.fase : ''
+          render: ({ fase  }) => fase ? fase.fase : ''
         },
         {
           name: "id_cempe",
@@ -110,17 +111,17 @@ export default {
         id: null,
         tanggal_kawin: "",
         // id_ternak: "",
-        id_pemancek: "",
+        id_pemacek: "",
         id_users: null,
       };
     },
     async addKawin() {
       try {
-        const { tanggal_kawin, id_pemancek } = this.input;
+        const { tanggal_kawin, id_pemacek } = this.input;
         const data = {
           tanggal_kawin,
           id_ternak: this.$route.params.id,
-          id_pemancek,
+          id_pemacek,
         };
         await this.schema.validate(data);
         await this.a$kawinAdd(data);
@@ -136,12 +137,12 @@ export default {
     },
     async editKawin() {
       try {
-        const { id, tanggal_kawin, id_pemancek } = this.input;
+        const { id, tanggal_kawin, id_pemacek } = this.input;
         const data = {
           id,
           tanggal_kawin,
           id_ternak: this.$route.params.id,
-          id_pemancek,
+          id_pemacek,
         };
         await this.schema.validate(data);
         await this.a$kawinEdit(data);
@@ -171,11 +172,11 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_kawin, tanggal_kawin, id_pemancek } = row;
+        const { id_kawin, tanggal_kawin, id_pemacek } = row;
         this.input = {
           id: id_kawin,
           tanggal_kawin,
-          id_pemancek,
+          id_pemacek,
         };
         this.modal.ubahKawin = true;
       } catch (error) {
@@ -260,14 +261,14 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.id_pemancek"
+                  v-model="input.id_pemacek"
                   type="text"
-                  name="id_pemancek"
+                  name="id_pemacek"
                 >
                   <base-input
                     v-bind="field"
                     placeholder="Masukan ID Indukan Pejantan"
-                    label="ID Pemancek"
+                    label="ID Pemacek"
                     required
                   ></base-input>
                 </field-form>
@@ -345,14 +346,14 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.id_pemancek"
+                  v-model="input.id_pemacek"
                   type="text"
-                  name="id_pemancek"
+                  name="id_pemacek"
                 >
                   <base-input
                     v-bind="field"
                     placeholder="Masukan ID Indukan Pejantan"
-                    label="ID Pemancek"
+                    label="ID Pemacek"
                     required
                   ></base-input>
                 </field-form>
