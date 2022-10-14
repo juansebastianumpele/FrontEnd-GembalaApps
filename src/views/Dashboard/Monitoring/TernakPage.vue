@@ -95,7 +95,7 @@ export default {
         },
         {
           name: "varietas",
-          th: "Varietas",
+          th: "Bangsa",
           render: ({ varietas }) => (varietas ? varietas.varietas : ""),
         },
         {
@@ -109,7 +109,7 @@ export default {
         },
         {
           name: "umur",
-          th: "umur (bln)",
+          th: "Umur (bln)",
           render: ({ umur }) => Math.round(umur / 30),
         },
       ],
@@ -1265,7 +1265,7 @@ export default {
                 </div>
                 <div class="row">
                   <div class="col-5">
-                    <span style="font-weight: 600">Usia</span>
+                    <span style="font-weight: 600">Umur</span>
                   </div>
                   <div class="col">
                     :

@@ -8,7 +8,7 @@ import Toast from "vue-toastification";
 
 // localization
 import { setLocale } from "yup";
-import * as en from "./utils/locale/en";
+import * as id from "./utils/locale/id";
 
 // axios
 import installAxios from "./services/api";
@@ -22,7 +22,7 @@ import "@/assets/vendor/toastifications.css";
 
 const options = { containerClassName: "notification", timeout: 5000 };
 
-setLocale(en);
+setLocale(id);
 
 const app = createApp(App);
 

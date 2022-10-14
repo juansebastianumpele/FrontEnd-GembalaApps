@@ -33,7 +33,7 @@ export default {
         },
         {
           name: "varietas",
-          th: "Varietas",
+          th: "Bangsa",
           render: ({ varietas }) => varietas.varietas,
         },
         {
@@ -284,7 +284,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ Math.round(infoTernak.usia / 30) }} Bulan</span
+                  {{ Math.round(infoTernak.umur / 30) }} Bulan</span
                 >
               </div>
             </div>
