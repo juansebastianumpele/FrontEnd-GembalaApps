@@ -42,6 +42,7 @@ export default {
         {
           name: "tanggal_kawin",
           th: "Tanggal Kawin",
+          render: ({ tanggal_kawin }) => tanggal_kawin.split("T")[0], // 2021-08-01T00:00:00.000Z
         },
         {
           name: "id_ternak",
@@ -54,7 +55,7 @@ export default {
         {
           name: "fase",
           th: "Fase Pemeliharaan",
-          render: ({ fase }) => fase ? fase.fase : ''
+          render: ({ fase }) => (fase ? fase.fase : ""),
         },
         {
           name: "id_cempe",
@@ -77,7 +78,11 @@ export default {
   }),
   computed: {
     ...mapState(d$kawin, ["g$kawinList"]),
-    ...mapState(d$dropdown, ["g$ddListBetina", "g$ddListPejantan", "g$ddFasePemeliharaan"]),
+    ...mapState(d$dropdown, [
+      "g$ddListBetina",
+      "g$ddListPejantan",
+      "g$ddFasePemeliharaan",
+    ]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -93,7 +98,9 @@ export default {
     await this.a$kawinList(this.$route.params.id).catch((error) =>
       this.notify(error, false)
     );
-    await this.a$ddFasePemeliharaan().catch((error) => this.notify(error, false));
+    await this.a$ddFasePemeliharaan().catch((error) =>
+      this.notify(error, false)
+    );
   },
   methods: {
     ...mapActions(d$kawin, [
@@ -102,9 +109,7 @@ export default {
       "a$kawinEdit",
       "a$kawinDelete",
     ]),
-    ...mapActions(d$dropdown, [
-      "a$ddFasePemeliharaan",
-    ]),
+    ...mapActions(d$dropdown, ["a$ddFasePemeliharaan"]),
     clearInput() {
       this.input = {
         id: null,

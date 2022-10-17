@@ -25,6 +25,26 @@ const authRoutes = {
       component: () => import("@/views/Auth/RegisterView.vue"),
     },
     {
+      path: "/auth/verify",
+      name: "Verify",
+      component: () => import("@/views/Auth/VerifyView.vue"),
+    },
+    {
+      path: "/auth/reset",
+      name: "Reset Password",
+      component: () => import("@/views/Auth/ResetPassword.vue"),
+    },
+    {
+      path: "/auth/success-verify",
+      name: "Verifikasi Berhasil",
+      component: () => import("@/views/Auth/SuccessVerify.vue"),
+    },
+    {
+      path: "/auth/failed-verify",
+      name: "Verifikasi Gagal",
+      component: () => import("@/views/Auth/FailedVerify.vue"),
+    },
+    {
       path: ":pathMatch(.*)",
       alias: ":pathMatch(.*)",
       name: "404",

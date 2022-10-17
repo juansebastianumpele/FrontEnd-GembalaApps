@@ -32,7 +32,7 @@ const tabelKandang = (req) => baseApi.get(`${api}/${ternak}/totalberat/${req}`);
 const filterTernak = (req) => baseApi.get(`${api}/${ternak}/listFilter?${req}`);
 
 //timbangan
-const listTimbangan = (req) => baseApi.get(`${api}/${timbangan}/list/${req}`);
+const listTimbangan = () => baseApi.get(`${api}/${timbangan}`);
 
 export {
   listBetina,

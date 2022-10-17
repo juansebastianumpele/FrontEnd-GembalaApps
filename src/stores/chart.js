@@ -82,10 +82,10 @@ const u$total = defineStore({
         throw error;
       }
     },
-    async a$byTimbangan(request) {
+    async a$byTimbangan() {
       try {
-        const { data } = await s$total.listTimbangan(request);
-        this.ChartbyTimbangan = data;
+        const { data } = await s$total.listTimbangan();
+        this.ChartbyTimbangan = data.list;
       } catch ({ error }) {
         this.ChartbyTimbangan = [];
         throw error;
@@ -162,21 +162,21 @@ const u$total = defineStore({
       length: state.chartFase.length,
     }),
     g$byTimbangan: (state) => ({
-      categories: state.ChartbyTimbangan.map(({ tanggal }) => tanggal),
+      categories: state.ChartbyTimbangan.map(
+        ({ tanggal_timbang }) => tanggal_timbang.split("T")[0]
+      ),
       series: [
         {
           name: "Bobot",
           backgroundColor: "rgb(255, 99, 132)",
           borderColor: "rgb(255, 99, 132)",
-          data: state.ChartbyTimbangan.map(
-            ({ berat_berkala }) => berat_berkala
-          ),
+          data: state.ChartbyTimbangan.map(({ berat }) => berat),
         },
         {
           backgroundColor: "rgb(255, 99, 132)",
           borderColor: "rgb(255, 99, 132)",
           name: "Suhu",
-          data: state.ChartbyTimbangan.map(({ suhu_berkala }) => suhu_berkala),
+          data: state.ChartbyTimbangan.map(({ suhu }) => suhu),
         },
       ],
       length: state.ChartbyTimbangan.length,

@@ -104,11 +104,11 @@ export default {
                 <span class="text-muted"
                   ><small>Belum Punya Akun? </small></span
                 >
-                <router-link to="/auth/register" class="text-info">
+                <router-link to="/auth/register" class="text-primary">
                   <small>Daftar Disini</small>
                 </router-link>
 
-                <router-link to="/auth/reset" class="text-info ml-7">
+                <router-link to="/auth/reset" class="text-primary ml-7">
                   <small>Lupa Password?</small>
                 </router-link>
               </div>
