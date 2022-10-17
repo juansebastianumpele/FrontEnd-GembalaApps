@@ -1,4 +1,4 @@
-# Argon Dashboard
+# Dashboard Monitoring Domba
 
 ## Docs
 - [Postman](https://documenter.getpostman.com/view/)
