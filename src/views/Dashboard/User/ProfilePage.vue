@@ -209,40 +209,71 @@ export default {
                     type="text"
                     placeholder="Nama Lengkap"
                     label="Nama Lengkap"
+                    addon-left-icon="fas fa-user"
                   ></base-input>
                 </field-form>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
+              <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.new_password"
-                  type="new_password"
-                  name="new_password"
+                  v-model="input.username"
+                  type="text"
+                  name="username"
                 >
                   <base-input
                     v-bind="field"
-                    type="password"
-                    placeholder="Sandi Baru"
-                    label="Sandi Baru"
-                    password
+                    type="text"
+                    placeholder="Username"
+                    label="Username"
+                    addon-left-icon="fas fa-user"
                   ></base-input>
                 </field-form>
               </div>
-              <div class="col-6">
+              <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.repeat_password"
-                  type="repeat_password"
-                  name="repeat_password"
+                  v-model="input.email"
+                  type="email"
+                  name="email"
                 >
                   <base-input
                     v-bind="field"
-                    type="password"
-                    placeholder="Text"
-                    label="Konfirmasi Sandi Baru"
-                    password
+                    type="email"
+                    placeholder="Email"
+                    label="Email"
+                    addon-left-icon="fas fa-envelope"
+                  ></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.no_hp"
+                  type="text"
+                  name="no_hp"
+                >
+                  <base-input
+                    v-bind="field"
+                    type="text"
+                    placeholder="No. HP"
+                    label="No. HP"
+                    addon-left-icon="fas fa-phone"
+                  ></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.alamat"
+                  type="text"
+                  name="alamat"
+                >
+                  <base-input
+                    v-bind="field"
+                    type="text"
+                    placeholder="Alamat"
+                    label="Alamat"
+                    addon-left-icon="fas fa-location-arrow"
                   ></base-input>
                 </field-form>
               </div>
@@ -275,7 +306,7 @@ export default {
                   <base-input
                     v-bind="field"
                     type="password"
-                    placeholder="Text"
+                    placeholder="Sandi Lama"
                     label="Sandi Lama"
                     password
                   ></base-input>
@@ -309,7 +340,7 @@ export default {
                   <base-input
                     v-bind="field"
                     type="password"
-                    placeholder="Text"
+                    placeholder="Konfirmasi Sandi Baru"
                     label="Konfirmasi Sandi Baru"
                     password
                   ></base-input>
