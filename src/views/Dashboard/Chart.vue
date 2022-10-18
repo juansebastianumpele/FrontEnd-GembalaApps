@@ -192,13 +192,13 @@ export default {
             </h1>
             <hc-column :height="230" :data="g$byPopulasi" :data-labels="true" :legend="true" />
           </card-comp>
-          <card-comp class="m-0">
+          <card-comp>
             <h1 class="text-black text-uppercase text-center ls-1 mt-4 mb-1" style="font-size: 12px">
               Populasi Jenis Kelamin
             </h1>
             <hc-column :height="240" :data="g$byJeniskelamin" :data-labels="true" :legend="true" />
           </card-comp>
-          <card-comp class="border" bodyClasses="p-0">
+          <card-comp>
             <base-table :height="230" thead-classes="thead-light" :index-number="false" :data="g$tabelKandang">
               <template #columns>
                 <th class="px-1">Kode Kandang</th>
@@ -216,7 +216,7 @@ export default {
 
         <!-- kolom kedua -->
         <div class="col-sm-4">
-          <card-comp header-classes="background-color: #FFFFFF">
+          <card-comp>
             <div class="row align-items-center">
               <div class="d-flex flex-row">
                 <div class="col">
@@ -249,7 +249,7 @@ export default {
               </div>
             </div>
           </card-comp>
-          <card-comp class="px-0 m-0 justify-content-center">
+          <card-comp>
             <div class="row align-items-center">
               <div class="col">
                 <h1 class="text-black text-uppercase text-center ls-1 mb-1" style="font-size: 12px">
@@ -270,7 +270,7 @@ export default {
             </h1>
             <cuaca />
           </card-comp>
-          <card-comp class="px-0">
+          <card-comp>
             <div class="row align-items-center">
               <div class="col">
                 <h1 class="text-black text-uppercase text-center ls-1 mb-1" style="font-size: 12px">
@@ -280,7 +280,7 @@ export default {
             </div>
             <hc-pie :height="253" :data="g$byKesehatan" :data-labels="true" :legend="true" />
           </card-comp>
-          <card-comp class="m-0">
+          <card-comp>
             <div class="row align-items-center">
               <div class="col">
                 <h1 class="text-black text-uppercase text-center ls-1 mb-1" style="font-size: 12px">
