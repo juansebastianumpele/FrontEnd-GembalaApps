@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-
+import * as s$auth from "@/services/auth";
 import { login } from "@/services/auth";
 import { setCk, delCk, certDetail } from "@/utils/cookies";
 
@@ -55,6 +55,14 @@ const useAuthStore = defineStore({
         return "Logout success!";
       } catch ({ error, message }) {
         throw (error || message) ?? "Logout failed!";
+      }
+    },
+    async a$register(request) {
+      try {
+        await s$auth.register(request);
+        return "Register success!";
+      } catch ({ error, message }) {
+        throw (error || message) ?? "Register failed!";
       }
     },
   },

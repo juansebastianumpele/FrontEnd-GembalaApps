@@ -107,9 +107,7 @@ export default {
       "a$betinaList",
       "a$jantanList",
     ]),
-    ...mapActions(d$dropdown, [
-      "a$ddFasePemeliharaan",
-    ]),
+    ...mapActions(d$dropdown, ["a$ddFasePemeliharaan"]),
     clearInput() {
       this.input = {
         id: null,

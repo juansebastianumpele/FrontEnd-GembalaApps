@@ -24,15 +24,15 @@ const detailPakan = (req) =>
 
 // Dashboard
 const detailTernak = (req) => baseApi.get(`${api}/${ternak}/users/${req.id}`);
-const totalSehat = (req) => baseApi.get(`${api}/${ternak}/totalsehat/${req}`);
+const totalSehat = () => baseApi.get(`${api}/dashboard/status_kesehatan`);
 const totalJeniskelamin = (req) =>
   baseApi.get(`${api}/${ternak}/totaljeniskelamin/${req}`);
-const populasi = (req) => baseApi.get(`${api}/${ternak}/total/${req}`);
+const populasi = () => baseApi.get(`${api}/dashboard/populasi`);
 const tabelKandang = (req) => baseApi.get(`${api}/${ternak}/totalberat/${req}`);
 const filterTernak = (req) => baseApi.get(`${api}/${ternak}/listFilter?${req}`);
 
 //timbangan
-const listTimbangan = (req) => baseApi.get(`${api}/${timbangan}/list/${req}`);
+const listTimbangan = () => baseApi.get(`${api}/${timbangan}`);
 
 export {
   listBetina,

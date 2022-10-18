@@ -58,7 +58,14 @@ export default {
       </div>
     </div>
     <div class="separator separator-bottom separator-skew zindex-100">
-      <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        x="0"
+        y="0"
+        viewBox="0 0 2560 100"
+        preserveAspectRatio="none"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
       </svg>
     </div>
@@ -72,12 +79,38 @@ export default {
               <small>Silahkan Masukan Username dan Password</small>
             </div>
             <form-comp :validation-schema="schema" @submit="onSubmit">
-              <base-input name="username" addon-left-icon="fas fa-user" placeholder="Username"> </base-input>
+              <base-input
+                name="username"
+                addon-left-icon="fas fa-user"
+                placeholder="Username"
+              >
+              </base-input>
 
-              <base-input name="password" addon-left-icon="fas fa-lock" type="password" placeholder="Password" password> </base-input>
+              <base-input
+                name="password"
+                addon-left-icon="fas fa-lock"
+                type="password"
+                placeholder="Password"
+                password
+              >
+              </base-input>
 
               <div class="text-center">
-                <base-button type="primary" native-type="submit" class="my-4"> Masuk </base-button>
+                <base-button type="primary" native-type="submit" class="my-4">
+                  Masuk
+                </base-button>
+              </div>
+              <div class="text-left">
+                <span class="text-muted"
+                  ><small>Belum Punya Akun? </small></span
+                >
+                <router-link to="/auth/register" class="text-primary">
+                  <small>Daftar Disini</small>
+                </router-link>
+
+                <router-link to="/auth/reset" class="text-primary ml-7">
+                  <small>Lupa Password?</small>
+                </router-link>
               </div>
             </form-comp>
           </div>

@@ -60,28 +60,20 @@ export default {
         <div class="card bg-secondary shadow border-0">
           <div class="card-header bg-transparent pb-5">
             <div class="text-center mt-2 mb-3">
-              <strong>Daftar Akun</strong>
-              <br />
+              <strong>Lupa Password</strong><br /><br />
+              <img
+                width="200"
+                style="margin: 20px 0 20px 60px"
+                src="../../../public/images/forget.svg"
+                alt="email"
+              />
             </div>
+            <small>
+              Silahkan masukan email Anda yang telah terdaftar. Kode untuk
+              mengatur ulang password akan kami kirim via email.
+            </small>
+            <br style="margin-bottom: 20px" />
             <form-comp :validation-schema="schema" @submit="onSubmit">
-              <base-input
-                name="nama_lengkap"
-                form-classes="input-group-alternative"
-                label="Nama Lengkap"
-                placeholder="Nama Lengkap"
-                addon-left-icon="fas fa-user"
-              >
-              </base-input>
-
-              <base-input
-                name="username"
-                form-classes="input-group-alternative"
-                placeholder="Nama Pengguna"
-                label="Nama Pengguna"
-                addon-left-icon="fas fa-user"
-              >
-              </base-input>
-
               <base-input
                 name="email"
                 form-classes="input-group-alternative"
@@ -92,62 +84,19 @@ export default {
               >
               </base-input>
 
-              <base-input
-                name="no_hp"
-                form-classes="input-group-alternative"
-                placeholder="Nomor Telepon"
-                label="Nomor Telepon"
-                addon-left-icon="fas fa-phone"
-                focused
-              >
-              </base-input>
-              <base-input
-                name="alamat"
-                form-classes="input-group-alternative"
-                placeholder="Alamat"
-                label="Alamat"
-                addon-left-icon="fas fa-location-arrow"
-                focused
-              >
-              </base-input>
-
-              <base-input
-                name="password"
-                form-classes="input-group-alternative"
-                placeholder="Password"
-                label="Password"
-                type="password"
-                addon-left-icon="fas fa-lock"
-                password
-              >
-              </base-input>
-
-              <base-input
-                name="repeat_password"
-                form-classes="input-group-alternative"
-                placeholder="Repeat Password"
-                label="Konfirmasi Password"
-                type="password"
-                addon-left-icon="fas fa-lock"
-                password
-              >
-              </base-input>
               <div class="text-center">
-                <base-button type="primary" class="my-4" native-type="submit">
-                  Buat Akun
+                <base-button type="primary" class="my-2" native-type="submit">
+                  Kirim Kode Verifikasi
                 </base-button>
               </div>
             </form-comp>
             <div class="row mt-3">
               <div class="col-7 text-left">
-                <small>Sudah punya akun? </small>
                 <router-link to="/auth/login" class="text-primary">
-                  <small>Masuk disini</small>
-                </router-link>
-              </div>
-              <div class="col-5 text-right">
-                <router-link to="/auth/reset" class="text-primary">
-                  <small>Lupa Password?</small>
+                  <small
+                    ><i class="fa-solid fa-arrow-left-long"></i> Kembali halaman
+                    login</small
+                  >
                 </router-link>
               </div>
             </div>

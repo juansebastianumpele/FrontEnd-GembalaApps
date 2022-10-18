@@ -1,56 +1,47 @@
 <script>
-import { mapActions, mapState } from 'pinia';
-import d$user from '@/stores/user';
+import { mapActions, mapState } from "pinia";
+import d$user from "@/stores/user";
 
-import {
-  object as y$object,
-  string as y$string,
-  ref as y$ref,
-} from 'yup';
+import { object as y$object, string as y$string, ref as y$ref } from "yup";
 
 export default {
   metaInfo: () => ({
-    title: 'Profil Pengguna',
+    title: "Profil Pengguna",
   }),
   setup() {
     const schema = y$object({
-      username: y$string().required().label('Username'),
-      password: y$object({
-        old: y$string().required().label('Sandi lama'),
-        new: y$string().label('Sandi baru').when('$pw', {
-          is: true,
-          then: y$string().required().min(8),
-          otherwise: y$string().notRequired(),
-        }),
-        newConfirm: y$string().label('Konfirmasi sandi baru').when('$pw', {
-          is: true,
-          then: y$string().oneOf([y$ref('new')], 'Konfirmasi sandi baru tidak cocok!'),
-          otherwise: y$string().notRequired(),
-        }),
-      }),
+      password: y$string().min(5).required().label("Sandi lama"),
+      new_password: y$string().min(5).required().label("Sandi Baru"),
+      repeat_password: y$string()
+        .oneOf([y$ref("new_password")], "Sandi Baru Tidak Cocok")
+        .required()
+        .label("Konfirmasi Sandi Baru"),
     });
     return {
       schema,
     };
   },
   data: () => ({
-    pageTitle: 'Profil',
+    pageTitle: "Profil",
     // Input
     input: {
-      username: '',
-      password: {
-        old: '',
-        password: '',
-        passwordConfirm: '',
-      },
+      password: "",
+      new_password: "",
+      repeat_password: "",
+      nama_lengkap: "",
+      username: "",
+      email: "",
+      no_hp: "",
+      alamat: "",
     },
     // UI
     modal: {
       changePw: false,
+      editProfile: false,
     },
   }),
   computed: {
-    ...mapState(d$user, ['g$userDetail']),
+    ...mapState(d$user, ["g$userDetail"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -65,37 +56,29 @@ export default {
     },
   },
   async mounted() {
-    await this.a$userDetail().catch((error) => this.notify(error, false));
+    // await this.a$userDetail().catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$user, [
-      'a$userDetail',
-      'a$userChangePw',
-    ]),
+    ...mapActions(d$user, ["a$userChangePw"]),
     async clearInput() {
       this.input = {
-        username: '',
-        password: {
-          old: '',
-          new: '',
-          newConfirm: '',
-        },
+        password: "",
+        new_password: "",
+        repeat_password: "",
       };
     },
     async editPassword() {
       try {
-        const {
-          username,
-          password,
-        } = this.input;
+        const { password, new_password } = this.input;
         const data = {
-          username,
           password,
+          new_password,
         };
-        await this.schema.validate(data, { context: { pw: !!password } });
+        // await this.schema.validate(data);
+        console.log(data);
         await this.a$userChangePw(data);
         this.modal.changePw = false;
-        this.notify('Edit Sandi Sukses!');
+        this.notify("Edit Sandi Sukses!");
       } catch (error) {
         this.notify(error, false);
       } finally {
@@ -114,7 +97,10 @@ export default {
           <h3>{{ pageTitle }}</h3>
         </div>
         <div class="col text-right">
-          <base-button type="success" :disabled="!g$userDetail.username" @click="modal.changePw = true">
+          <base-button type="success" @click="modal.editProfile = true">
+            Edit Profile
+          </base-button>
+          <base-button type="warning" @click="modal.changePw = true">
             Ganti Sandi
           </base-button>
         </div>
@@ -124,102 +110,77 @@ export default {
       <form-comp :validation-schema="schema">
         <div class="row">
           <div class="col-6">
-            <field-form v-slot="{ field }" v-model="g$userDetail.name" type="text" name="name">
+            <field-form
+              v-slot="{ field }"
+              v-model="g$userDetail.nama_lengkap"
+              type="text"
+              name="nama_lengkap"
+            >
               <base-input
                 v-bind="field"
-                placeholder="Text"
-                label="Nama"
+                placeholder="Nama Lengkap"
+                label="Nama Lengkap"
                 disabled
               ></base-input>
             </field-form>
           </div>
           <div class="col-6">
-            <field-form v-slot="{ field }" v-model="g$userDetail.username" type="text" name="username">
+            <field-form
+              v-slot="{ field }"
+              v-model="g$userDetail.username"
+              type="text"
+              name="username"
+            >
               <base-input
                 v-bind="field"
-                placeholder="Text"
+                placeholder="Username"
                 label="Username"
                 disabled
               ></base-input>
             </field-form>
           </div>
           <div class="col-6">
-            <field-form v-slot="{ field }" v-model.number="g$userDetail.number" type="number" name="number">
+            <field-form
+              v-slot="{ field }"
+              v-model.number="g$userDetail.emal"
+              type="email"
+              name="email"
+            >
               <base-input
                 v-bind="field"
-                placeholder="0"
-                type="number"
-                label="Nomor"
+                placeholder="Email"
+                type="email"
+                label="Email"
                 disabled
               ></base-input>
             </field-form>
           </div>
           <div class="col-6">
-            <field-form v-slot="{ field }" v-model="g$userDetail.NPWP" type="text" name="npwp">
+            <field-form
+              v-slot="{ field }"
+              v-model="g$userDetail.no_hp"
+              type="number"
+              name="no_hp"
+            >
               <base-input
                 v-bind="field"
-                placeholder="12345678"
-                label="NPWP"
-                disabled
-              ></base-input>
-            </field-form>
-          </div>
-          <div class="col-3">
-            <field-form v-slot="{ field }" v-model="g$userDetail.street1" type="text" name="street1">
-              <base-input
-                v-bind="field"
-                placeholder="Text"
-                label="Dukuh"
-                disabled
-              ></base-input>
-            </field-form>
-          </div>
-          <div class="col-3">
-            <field-form v-slot="{ field }" v-model="g$userDetail.street2" type="text" name="street2">
-              <base-input
-                v-bind="field"
-                placeholder="Text"
-                label="Desa"
-                disabled
-              ></base-input>
-            </field-form>
-          </div>
-          <div class="col-3">
-            <field-form v-slot="{ field }" v-model="g$userDetail.street3" type="text" name="street3">
-              <base-input
-                v-bind="field"
-                placeholder="Text"
-                label="Kecamatan"
-                disabled
-              ></base-input>
-            </field-form>
-          </div>
-          <div class="col-3">
-            <field-form v-slot="{ field }" v-model="g$userDetail.city" type="text" name="city">
-              <base-input
-                v-bind="field"
-                placeholder="Text"
-                label="Kota"
+                placeholder="No. HP"
+                label="No. HP"
                 disabled
               ></base-input>
             </field-form>
           </div>
           <div class="col-6">
-            <field-form v-slot="{ field }" v-model="g$userDetail.postCode" type="text" name="postCode">
+            <field-form
+              v-slot="{ field }"
+              v-model="g$userDetail.alamat"
+              type="text"
+              name="alamat"
+            >
               <base-input
                 v-bind="field"
-                placeholder="Text"
-                label="Kode Pos"
-                disabled
-              ></base-input>
-            </field-form>
-          </div>
-          <div class="col-6">
-            <field-form v-slot="{ field }" v-model="g$userDetail.country" type="text" name="country">
-              <base-input
-                v-bind="field"
-                placeholder="Text"
-                label="Negara"
+                placeholder="Alamat"
+                label="Alamat"
                 disabled
               ></base-input>
             </field-form>
@@ -229,6 +190,105 @@ export default {
     </template>
 
     <template #modal>
+      <modal-comp v-model:show="modal.editProfile" modal-classes="modal-md">
+        <template #header>
+          <h3 class="modal-title">Edit Profile</h3>
+        </template>
+        <template #body>
+          <form-comp v-if="modal.editProfile" :validation-schema="schema">
+            <div class="row">
+              <div class="col-12">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.nama_lengkap"
+                  type="text"
+                  name="nama_lengkap"
+                >
+                  <base-input
+                    v-bind="field"
+                    type="text"
+                    placeholder="Nama Lengkap"
+                    label="Nama Lengkap"
+                    addon-left-icon="fas fa-user"
+                  ></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.username"
+                  type="text"
+                  name="username"
+                >
+                  <base-input
+                    v-bind="field"
+                    type="text"
+                    placeholder="Username"
+                    label="Username"
+                    addon-left-icon="fas fa-user"
+                  ></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.email"
+                  type="email"
+                  name="email"
+                >
+                  <base-input
+                    v-bind="field"
+                    type="email"
+                    placeholder="Email"
+                    label="Email"
+                    addon-left-icon="fas fa-envelope"
+                  ></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.no_hp"
+                  type="text"
+                  name="no_hp"
+                >
+                  <base-input
+                    v-bind="field"
+                    type="text"
+                    placeholder="No. HP"
+                    label="No. HP"
+                    addon-left-icon="fas fa-phone"
+                  ></base-input>
+                </field-form>
+              </div>
+              <div class="col-12">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.alamat"
+                  type="text"
+                  name="alamat"
+                >
+                  <base-input
+                    v-bind="field"
+                    type="text"
+                    placeholder="Alamat"
+                    label="Alamat"
+                    addon-left-icon="fas fa-location-arrow"
+                  ></base-input>
+                </field-form>
+              </div>
+            </div>
+          </form-comp>
+        </template>
+        <template #footer>
+          <base-button type="secondary" @click="modal.changePw = false">
+            Tutup
+          </base-button>
+          <base-button type="primary" @click="editPassword()">
+            Simpan Perubahan
+          </base-button>
+        </template>
+      </modal-comp>
       <modal-comp v-model:show="modal.changePw" modal-classes="modal-md">
         <template #header>
           <h3 class="modal-title">Ganti Sandi</h3>
@@ -237,11 +297,16 @@ export default {
           <form-comp v-if="modal.changePw" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.password.old" type="password.old" name="password.old">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.password"
+                  type="password"
+                  name="password"
+                >
                   <base-input
                     v-bind="field"
                     type="password"
-                    placeholder="Text"
+                    placeholder="Sandi Lama"
                     label="Sandi Lama"
                     password
                   ></base-input>
@@ -250,22 +315,32 @@ export default {
             </div>
             <div class="row">
               <div class="col-6">
-                <field-form v-slot="{ field }" v-model="input.password.new" type="password.new" name="password.new">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.new_password"
+                  type="new_password"
+                  name="new_password"
+                >
                   <base-input
                     v-bind="field"
                     type="password"
-                    placeholder="Text"
+                    placeholder="Sandi Baru"
                     label="Sandi Baru"
                     password
                   ></base-input>
                 </field-form>
               </div>
               <div class="col-6">
-                <field-form v-slot="{ field }" v-model="input.password.newConfirm" type="password.newConfirm" name="password.newConfirm">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.repeat_password"
+                  type="repeat_password"
+                  name="repeat_password"
+                >
                   <base-input
                     v-bind="field"
                     type="password"
-                    placeholder="Text"
+                    placeholder="Konfirmasi Sandi Baru"
                     label="Konfirmasi Sandi Baru"
                     password
                   ></base-input>

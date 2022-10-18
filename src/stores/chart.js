@@ -15,9 +15,9 @@ const u$total = defineStore({
     filterResult: [],
   }),
   actions: {
-    async a$byKesehatan(req) {
+    async a$byKesehatan() {
       try {
-        const { data } = await s$total.totalSehat(req);
+        const { data } = await s$total.totalSehat();
         this.chartKesehatan = data;
       } catch ({ error }) {
         this.chartKesehatan = [];
@@ -49,7 +49,6 @@ const u$total = defineStore({
       try {
         const { data } = await s$total.listFase();
         this.chartFase = data.list;
-        console.log(data.list);
       } catch ({ error }) {
         this.chartFase = [];
         throw error;
@@ -76,16 +75,17 @@ const u$total = defineStore({
     async a$byPopulasi(req) {
       try {
         const { data } = await s$total.populasi(req);
-        this.chartByPopulasi = data;
+        this.chartByPopulasi = data.list.tanggal;
+        console.log(this.chartByPopulasi);
       } catch ({ error }) {
         this.chartByPopulasi = [];
         throw error;
       }
     },
-    async a$byTimbangan(request) {
+    async a$byTimbangan() {
       try {
-        const { data } = await s$total.listTimbangan(request);
-        this.ChartbyTimbangan = data;
+        const { data } = await s$total.listTimbangan();
+        this.ChartbyTimbangan = data.list;
       } catch ({ error }) {
         this.ChartbyTimbangan = [];
         throw error;
@@ -136,16 +136,17 @@ const u$total = defineStore({
       ],
     }),
     g$byKesehatan: (state) => ({
-      categories: state.chartKesehatan.map(
-        ({ status_kesehatan }) => status_kesehatan
-      ),
+      categories: [state.chartKesehatan.sehat, state.chartKesehatan.sakit],
       series: [
         {
           name: "Total",
-          data: state.chartKesehatan.map(({ status_kesehatan, Jumlah }) => ({
-            name: status_kesehatan[0],
-            y: Jumlah,
-          })),
+          data: [
+            {
+              y: state.chartKesehatan.sehat,
+              name: "Sehat",
+            },
+            { y: state.chartKesehatan.sakit, name: "Sakit" },
+          ],
         },
       ],
       length: state.chartKesehatan.length,
@@ -161,21 +162,21 @@ const u$total = defineStore({
       length: state.chartFase.length,
     }),
     g$byTimbangan: (state) => ({
-      categories: state.ChartbyTimbangan.map(({ tanggal }) => tanggal),
+      categories: state.ChartbyTimbangan.map(
+        ({ tanggal_timbang }) => tanggal_timbang.split("T")[0]
+      ),
       series: [
         {
           name: "Bobot",
           backgroundColor: "rgb(255, 99, 132)",
           borderColor: "rgb(255, 99, 132)",
-          data: state.ChartbyTimbangan.map(
-            ({ berat_berkala }) => berat_berkala
-          ),
+          data: state.ChartbyTimbangan.map(({ berat }) => berat),
         },
         {
           backgroundColor: "rgb(255, 99, 132)",
           borderColor: "rgb(255, 99, 132)",
           name: "Suhu",
-          data: state.ChartbyTimbangan.map(({ suhu_berkala }) => suhu_berkala),
+          data: state.ChartbyTimbangan.map(({ suhu }) => suhu),
         },
       ],
       length: state.ChartbyTimbangan.length,

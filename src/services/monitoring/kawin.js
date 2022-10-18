@@ -4,7 +4,7 @@ import { subApiUrl } from "@/utils/constant";
 const { api, kawin, ternak } = subApiUrl;
 
 // Get List Domba Betina
-const listBetina = (req) => baseApi.get(`${api}/${kawin}/indukan?${req}`);
+const listBetina = () => baseApi.get(`${api}/${kawin}/indukan`);
 
 // Get List Domba Jantan
 const listPejantan = (req) => baseApi.get(`${api}/${kawin}/pejantan?${req}`);
