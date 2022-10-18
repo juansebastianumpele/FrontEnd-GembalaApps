@@ -1,6 +1,6 @@
 # Dashboard Monitoring Domba
 
-## Documentation
+## Documentations
 - [Postman](https://documenter.getpostman.com/view/)
 - [BaseUrl](https://be.domain.com)
 
