@@ -18,7 +18,7 @@ export default {
     async function onSubmit(values) {
       try {
         const login = await auth.a$login(values);
-        if (login === "Login success!") {
+        if (login === "Login Berhasil!") {
           notify(login);
           router.push({ name: "Home" });
         } else {

@@ -15,6 +15,12 @@ import BaseSwitch from "@/components/BaseSwitch.vue";
 import Card from "@/components/Cards/Card.vue";
 import StatsCard from "@/components/Cards/StatsCard.vue";
 import Modal from "@/components/ModalComp.vue";
+//Tabs
+import Tabs from "@/components/Tabs/Tabs.vue";
+import Tab from "@/components/Tabs/Tab.vue";
+import TabsLayout from "@/components/Tabs/TabsLayout.vue";
+import TabPane from "@/components/Tabs/TabPane.vue";
+import PillsLayout from "@/components/Tabs/PillsLayout.vue";
 
 import BaseTable from "@/components/BaseTable.vue";
 import BaseMap from "@/components/BaseMap.vue";
@@ -55,6 +61,12 @@ const GlobalComponents = {
     app.component("DataTable", DataTable);
     app.component("MultiSelect", VueMultiselect);
     app.component("FlatPickr", VueFlatPickr);
+    // Tabs
+    app.component("Tabs", Tabs);
+    app.component("Tab", Tab);
+    app.component("TabsLayout", TabsLayout);
+    app.component("TabPane", TabPane);
+    app.component("PillsLayout", PillsLayout);
   },
 };
 

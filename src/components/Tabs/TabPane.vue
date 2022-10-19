@@ -11,24 +11,24 @@
 </template>
 <script>
 export default {
-  name: 'TabPane',
-  inject: ['addTab', 'removeTab'],
+  name: "TabPane",
+  inject: ["addTab", "removeTab"],
   props: {
     label: {
       type: String,
-      default: '',
+      default: "",
     },
     id: {
       type: String,
-      default: '',
+      default: "",
     },
     icon: {
       type: String,
-      default: '',
+      default: "",
     },
     title: {
       type: String,
-      default: '',
+      default: "",
     },
   },
   data() {

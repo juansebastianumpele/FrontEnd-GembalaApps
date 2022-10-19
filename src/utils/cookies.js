@@ -47,17 +47,17 @@ const delCk = function deleteCookie(cName) {
 const certDetail = function getCertDetail() {
   const token = getCk("CERT");
   if (token) {
-    const { id, username, level, exp } = parseJwt(token);
-    if (id === undefined) delCk("CERT");
+    const { id_users, username, level, exp } = parseJwt(token);
+    if (id_users === undefined) delCk("CERT");
     return {
-      id,
+      id_users,
       username,
       role: level,
       exp,
     };
   }
   return {
-    id: "",
+    id_users: "",
     name: "",
     r: "",
     exp: "",

@@ -253,7 +253,6 @@ export default {
           id_fp: fase.id,
           id_kandang: kandang.id,
         };
-        console.log(data);
         await this.schema.validate(data);
         await this.a$ternakAdd(data);
         this.modal.addTernak = false;
@@ -307,7 +306,6 @@ export default {
           tanggal_keluar,
           status_keluar,
         };
-        console.log(data);
         await this.schema.validate(data);
         await this.a$ternakEdit(data);
         this.modal.ubahTernak = false;
@@ -371,21 +369,24 @@ export default {
           id_pejantan,
           status_kesehatan,
           kandang: {
-            id: kandang ? kandang.id : "",
+            id: kandang ? kandang.id_kandang : "",
             name: kandang ? kandang.kode_kandang : "",
           },
-          pakan: {
-            id: pakan ? pakan.id : "",
-            name: pakan ? pakan.nama_pakan : "",
+          penyakit: {
+            id: penyakit ? penyakit.id_penyakit : "",
+            name: penyakit ? penyakit.nama_penyakit : "",
           },
           fase: {
-            id: fase ? fase.id : "",
+            id: fase ? fase.id_fp : "",
             name: fase ? fase.fase : "",
+          },
+          pakan: {
+            id: pakan ? pakan.id_pakan : "",
+            name: pakan ? pakan.nama_pakan : "",
           },
           tanggal_keluar,
           status_keluar,
           foto,
-          tanggal_kawin,
           // id_users,
         };
         this.modal.ubahTernak = true;
@@ -413,12 +414,8 @@ export default {
         await this.a$byTimbangan(this.infoTernak.id_ternak);
       } catch (error) {
       } finally {
-        this.a$ternakList(this.userInfo.id);
+        this.a$ternakList();
       }
-      $('a[data-toggle="pill"]').on("shown.bs.tab", function (e) {
-        e.target; // newly activated tab
-        e.relatedTarget; // previous active tab
-      });
     },
     handleFileUpload() {
       const file = this.$refs.foto.files[0];
@@ -459,6 +456,7 @@ export default {
     </template>
 
     <template #modal>
+      <!-- add modal -->
       <modal-comp v-model:show="modal.addTernak" modal-classes="modal-lg">
         <template #header>
           <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
@@ -873,36 +871,6 @@ export default {
                   />
                 </base-input>
               </div>
-              <!-- <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.id_pejantan"
-                  type="text"
-                  name="id_pejantan"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="ID Sire (Bapak)"
-                    required
-                  ></base-input>
-                </field-form>
-              </div>
-              <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.id_induk"
-                  type="text"
-                  name="id_induk"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="ID Dam (Ibu)"
-                    required
-                  ></base-input>
-                </field-form>
-              </div> -->
               <div class="col-6">
                 <base-input
                   name="id_pejantan"
@@ -1083,6 +1051,8 @@ export default {
           </base-button>
         </template>
       </modal-comp>
+
+      <!-- delete modal -->
       <modal-comp v-model:show="modal.confirm" modal-classes="modal-lg">
         <template #header>
           <h3 class="modal-title">Hapus {{ pageTitle }}</h3>
@@ -1104,18 +1074,13 @@ export default {
       <!-- Modal Detail Ternak -->
       <modal-comp v-model:show="modal.detailTernak" modal-classes="modal-md">
         <template #header>
-          <h3 class="modal-title" id="exampleModalLabel">
+          <h3 class="modal-title">
             Detail Ternak Nomor {{ infoTernak.id_ternak }}
           </h3>
         </template>
         <template v-if="modal.detailTernak" #body>
-          <div class="tab-content" id="pills-tabContent">
-            <div
-              class="tab-pane fade show active"
-              id="pills-home"
-              role="tabpanel"
-              aria-labelledby="pills-home-tab"
-            >
+          <tabs>
+            <tab-pane title="Detail">
               <div
                 style="max-height: 450px; overflow-y: auto; overflow-x: hidden"
               >
@@ -1319,13 +1284,8 @@ export default {
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              class="tab-pane fade"
-              id="pills-profile"
-              role="tabpanel"
-              aria-labelledby="pills-profile-tab"
-            >
+            </tab-pane>
+            <tab-pane title="Kesehatan">
               <div
                 style="max-height: 500px; overflow-y: 800px; overflow-x: hidden"
               >
@@ -1379,25 +1339,15 @@ export default {
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              class="tab-pane fade"
-              id="pills-contact"
-              role="tabpanel"
-              aria-labelledby="pills-contact-tab"
-            >
+            </tab-pane>
+            <tab-pane title="SOP">
               <h3 class="my-3">SOP</h3>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Consectetur provident numquam autem dolor quibusdam voluptates.
               </p>
-            </div>
-            <div
-              class="tab-pane fade"
-              id="pills-phone"
-              role="tabpanel"
-              aria-labelledby="pills-phone-tab"
-            >
+            </tab-pane>
+            <tab-pane title="Grafik">
               <h3 class="my-4">Grafik ADG</h3>
               <hc-line
                 :height="250"
@@ -1405,63 +1355,8 @@ export default {
                 :data-labels="true"
                 :legend="true"
               />
-            </div>
-          </div>
-        </template>
-        <template
-          #footer
-          class="modal-footer justify-content-center align-items-center"
-        >
-          <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-            <li class="nav-item">
-              <a
-                class="nav-link active"
-                id="pills-home-tab"
-                data-toggle="pill"
-                href="#pills-home"
-                role="tab"
-                aria-controls="pills-home"
-                aria-selected="true"
-                >Detail</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                id="pills-profile-tab"
-                data-toggle="pill"
-                href="#pills-profile"
-                role="tab"
-                aria-controls="pills-profile"
-                aria-selected="false"
-                >Kesehatan</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                id="pills-contact-tab"
-                data-toggle="pill"
-                href="#pills-contact"
-                role="tab"
-                aria-controls="pills-contact"
-                aria-selected="false"
-                >SOP</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                id="pills-phone-tab"
-                data-toggle="pill"
-                href="#pills-phone"
-                role="tab"
-                aria-controls="pills-phone"
-                aria-selected="false"
-                >Grafik</a
-              >
-            </li>
-          </ul>
+            </tab-pane>
+          </tabs>
         </template>
       </modal-comp>
     </template>

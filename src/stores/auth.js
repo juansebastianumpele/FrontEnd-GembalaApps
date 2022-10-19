@@ -42,7 +42,7 @@ const useAuthStore = defineStore({
         const { data } = await login(payload);
         setCk("CERT", data.token, { datetime: d(data.expiresAt) });
         this.a$setUserInfo();
-        return "Login success!";
+        return "Login Berhasil!";
       } catch ({ error, message }) {
         throw (error || message) ?? "Login failed!";
       }
@@ -52,7 +52,7 @@ const useAuthStore = defineStore({
         const { id, role, username } = certDetail();
         if (id || role || username) delCk("CERT");
         this.a$setUserInfo();
-        return "Logout success!";
+        return "Logout Berhasil!";
       } catch ({ error, message }) {
         throw (error || message) ?? "Logout failed!";
       }
@@ -60,7 +60,7 @@ const useAuthStore = defineStore({
     async a$register(request) {
       try {
         await s$auth.register(request);
-        return "Register success!";
+        return "Register Berhasil!";
       } catch ({ error, message }) {
         throw (error || message) ?? "Register failed!";
       }

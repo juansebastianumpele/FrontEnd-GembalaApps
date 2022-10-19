@@ -92,6 +92,14 @@ export default {
 <template>
   <main-layout :title="pageTitle">
     <template #header>
+      <div class="text-center">
+        <img
+          :src="siteMeta.profile"
+          alt="profile"
+          class="rounded-circle"
+          style="width: 200px; height: 200px"
+        />
+      </div>
       <div class="row align-items-center">
         <div class="col">
           <h3>{{ pageTitle }}</h3>

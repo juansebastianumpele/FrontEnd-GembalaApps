@@ -13,6 +13,6 @@
 
 <script>
 export default {
-  name: 'TabsLayout',
+  name: "TabsLayout",
 };
 </script>

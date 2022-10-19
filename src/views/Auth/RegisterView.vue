@@ -21,7 +21,7 @@ export default {
     async function onSubmit(values) {
       try {
         const register = await auth.a$register(values);
-        if (register === "Register success!") {
+        if (register === "Register Berhasil!") {
           notify(register);
           router.push({ name: "Verify" });
         } else {

@@ -41,20 +41,20 @@
 </template>
 
 <script>
-import { h } from 'vue';
+import { h } from "vue";
 
-import PillsLayout from './PillsLayout.vue';
-import TabsLayout from './TabsLayout.vue';
+import PillsLayout from "./PillsLayout.vue";
+import TabsLayout from "./TabsLayout.vue";
 
 export default {
-  name: 'TabsComp',
+  name: "TabsComp",
   components: {
     TabsLayout,
     PillsLayout,
     TabItemContent: {
-      props: ['tab'],
+      props: ["tab"],
       render() {
-        return h('div', [this.tab.$slots.title || this.tab.title]);
+        return h("div", [this.tab.$slots.title || this.tab.title]);
       },
     },
   },
@@ -67,60 +67,67 @@ export default {
   props: {
     type: {
       type: String,
-      default: '',
+      default: "",
       validator: (value) => {
-        const acceptedValues = ['', 'primary', 'info', 'success', 'warning', 'danger'];
+        const acceptedValues = [
+          "",
+          "primary",
+          "info",
+          "success",
+          "warning",
+          "danger",
+        ];
         return acceptedValues.indexOf(value) !== -1;
       },
-      description: 'Tabs type (primary|info|danger|default|warning|success)',
+      description: "Tabs type (primary|info|danger|default|warning|success)",
     },
     pills: {
       type: Boolean,
       default: true,
-      description: 'Whether tabs are pills',
+      description: "Whether tabs are pills",
     },
     circle: {
       type: Boolean,
       default: false,
-      description: 'Whether tabs are circle',
+      description: "Whether tabs are circle",
     },
     fill: {
       type: Boolean,
       default: true,
-      description: 'Whether to fill each tab',
+      description: "Whether to fill each tab",
     },
     activeTab: {
       type: String,
-      default: '',
-      description: 'Default active tab name',
+      default: "",
+      description: "Default active tab name",
     },
     tabNavWrapperClasses: {
       type: [String, Object],
-      default: '',
-      description: 'Tab Nav wrapper (div) css classes',
+      default: "",
+      description: "Tab Nav wrapper (div) css classes",
     },
     tabNavClasses: {
       type: [String, Object],
-      default: '',
-      description: 'Tab Nav (ul) css classes',
+      default: "",
+      description: "Tab Nav (ul) css classes",
     },
     tabContentClasses: {
       type: [String, Object],
-      default: '',
-      description: 'Tab content css classes',
+      default: "",
+      description: "Tab content css classes",
     },
     icons: {
       type: Boolean,
-      description: 'Whether tabs should be of icon type (small no text)',
+      description: "Whether tabs should be of icon type (small no text)",
     },
     centered: {
       type: Boolean,
-      description: 'Whether tabs are centered',
+      description: "Whether tabs are centered",
     },
     value: {
       type: String,
-      description: 'Initial value (active tab)',
-      default: '',
+      description: "Initial value (active tab)",
+      default: "",
     },
   },
   data() {
@@ -131,7 +138,7 @@ export default {
   },
   computed: {
     layoutComponent() {
-      return this.pills ? 'pills-layout' : 'tabs-layout';
+      return this.pills ? "pills-layout" : "tabs-layout";
     },
     slotData() {
       return {

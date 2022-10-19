@@ -1,5 +1,9 @@
 <template>
-  <base-nav container-classes="container-fluid" class="navbar-top border-bottom navbar-expand sticky-top" :class="{ 'bg-gradient-argon navbar-dark': type === 'default' }">
+  <base-nav
+    container-classes="container-fluid"
+    class="navbar-top border-bottom navbar-expand sticky-top"
+    :class="{ 'bg-gradient-argon navbar-dark': type === 'default' }"
+  >
     <!-- BreadCrumbs -->
     <div class="navbar-search">
       <route-breadcrumb></route-breadcrumb>
@@ -25,13 +29,24 @@
         </div>
       </li>
       <li class="nav-item d-sm-none">
-        <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
+        <a
+          class="nav-link"
+          href="#"
+          data-action="search-show"
+          data-target="#navbar-search-main"
+        >
           <i class="ni ni-zoom-split-in"></i>
         </a>
       </li>
     </ul>
     <ul class="navbar-nav align-items-center ml-auto ml-md-0">
-      <base-dropdown menu-on-right class="nav-item" tag="li" title-tag="a" title-classes="nav-link pr-0">
+      <base-dropdown
+        menu-on-right
+        class="nav-item"
+        tag="li"
+        title-tag="a"
+        title-classes="nav-link pr-0"
+      >
         <template #title-container>
           <a href="#" class="nav-link pr-0" @click.prevent>
             <div class="media align-items-center">
@@ -40,7 +55,7 @@
               </span>
               <div class="media-body ml-2 d-none d-lg-block">
                 <span class="mb-0 text-sm font-weight-bold">{{
-                  userInfo.name ?? 'User'
+                  userInfo.name ?? "User"
                 }}</span>
               </div>
             </div>
@@ -79,7 +94,8 @@ export default {
     type: {
       type: String,
       default: "default", // default|light
-      description: "Look of the dashboard navbar. Default (Green) or light (gray)",
+      description:
+        "Look of the dashboard navbar. Default (Green) or light (gray)",
     },
   },
   data() {
@@ -99,7 +115,7 @@ export default {
     ...mapActions(useAuthStore, ["a$logout"]),
     async Logout() {
       await this.a$logout();
-      this.notify("Logout success!");
+      this.notify("Logout Berhasil!");
       this.$router.push({ name: "Login" });
     },
     capitalizeFirstLetter(string) {
