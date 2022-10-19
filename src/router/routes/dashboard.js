@@ -27,12 +27,12 @@ const dashboardRoutes = [
         component: () => import("@/views/Dashboard/Monitor.vue"),
         meta: { requiresAuth: true, hideFooter: true, monitoring: true },
       },
-      {
-        path: "filter",
-        name: "Filter",
-        component: () => import("@/views/Dashboard/DetailFilter.vue"),
-        meta: { requiresAuth: true, hideFooter: true },
-      },
+      // {
+      //   path: "filter",
+      //   name: "Filter",
+      //   component: () => import("@/views/Dashboard/DetailFilter.vue"),
+      //   meta: { requiresAuth: true, hideFooter: true },
+      // },
     ],
   },
   {

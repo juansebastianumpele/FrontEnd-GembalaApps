@@ -2,7 +2,6 @@
 import { mapActions, mapState } from "pinia";
 import d$kawin from "@/stores/monitoring/kawin";
 import d$dropdown from "@/stores/dropdown";
-
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 
 export default {
@@ -13,7 +12,7 @@ export default {
     const schema = y$object({
       // id_ternak: y$string().required().label("ID Dam (Ibu)"),
       tanggal_kawin: y$string().nullable().label("Tanggal Kawin"),
-      id_pemancek: y$string().nullable().label("ID Pemancek"),
+      id_pemacek: y$string().nullable().label("ID Pemacek"),
     });
     return {
       schema,
@@ -23,12 +22,9 @@ export default {
     pageTitle: "Riwayat Kawin",
     // Input
     input: {
-      id: null,
       tanggal_kawin: "",
-      // id_ternak: "",
-      id_pemancek: "",
+      id_pemacek: "",
       fase_pemeliharaan: "",
-      id_users: null,
     },
     // UI
     modal: {
@@ -42,7 +38,7 @@ export default {
         {
           name: "tanggal_kawin",
           th: "Tanggal Kawin",
-          render: ({ tanggal_kawin }) => tanggal_kawin.split("T")[0], // 2021-08-01T00:00:00.000Z
+          render: ({ tanggal_kawin }) => new Intl.DateTimeFormat('id', { dateStyle: 'full'}).format(new Date(tanggal_kawin)),
         },
         {
           name: "id_ternak",
@@ -55,7 +51,7 @@ export default {
         {
           name: "fase",
           th: "Fase Pemeliharaan",
-          render: ({ fase }) => (fase ? fase.fase : ""),
+          render: ({ fase  }) => fase ? fase.fase : ''
         },
         {
           name: "id_cempe",
@@ -77,12 +73,8 @@ export default {
     },
   }),
   computed: {
-    ...mapState(d$kawin, ["g$kawinList"]),
-    ...mapState(d$dropdown, [
-      "g$ddListBetina",
-      "g$ddListPejantan",
-      "g$ddFasePemeliharaan",
-    ]),
+    ...mapState(d$kawin, ["g$kawinList", "g$betina", "g$jantan"]),
+    ...mapState(d$dropdown, ["g$ddFasePemeliharaan"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -98,9 +90,13 @@ export default {
     await this.a$kawinList(this.$route.params.id).catch((error) =>
       this.notify(error, false)
     );
-    await this.a$ddFasePemeliharaan().catch((error) =>
+    await this.a$betinaList(`id_ternak=${this.$route.params.id}`).catch((error) =>
       this.notify(error, false)
     );
+    await this.a$jantanList(`kecuali=${this.g$betina[0].id_pejantan}`).catch((error) =>
+      this.notify(error, false)
+    );
+    await this.a$ddFasePemeliharaan().catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$kawin, [
@@ -108,6 +104,8 @@ export default {
       "a$kawinAdd",
       "a$kawinEdit",
       "a$kawinDelete",
+      "a$betinaList",
+      "a$jantanList",
     ]),
     ...mapActions(d$dropdown, ["a$ddFasePemeliharaan"]),
     clearInput() {
@@ -115,17 +113,17 @@ export default {
         id: null,
         tanggal_kawin: "",
         // id_ternak: "",
-        id_pemancek: "",
+        id_pemacek: "",
         id_users: null,
       };
     },
     async addKawin() {
       try {
-        const { tanggal_kawin, id_pemancek } = this.input;
+        const { tanggal_kawin, id_pemacek } = this.input;
         const data = {
           tanggal_kawin,
           id_ternak: this.$route.params.id,
-          id_pemancek,
+          id_pemacek,
         };
         await this.schema.validate(data);
         await this.a$kawinAdd(data);
@@ -141,12 +139,12 @@ export default {
     },
     async editKawin() {
       try {
-        const { id, tanggal_kawin, id_pemancek } = this.input;
+        const { id, tanggal_kawin, id_pemacek } = this.input;
         const data = {
           id,
           tanggal_kawin,
           id_ternak: this.$route.params.id,
-          id_pemancek,
+          id_pemacek,
         };
         await this.schema.validate(data);
         await this.a$kawinEdit(data);
@@ -176,11 +174,11 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_kawin, tanggal_kawin, id_pemancek } = row;
+        const { id_kawin, tanggal_kawin, id_pemacek } = row;
         this.input = {
           id: id_kawin,
           tanggal_kawin,
-          id_pemancek,
+          id_pemacek,
         };
         this.modal.ubahKawin = true;
       } catch (error) {
@@ -262,24 +260,28 @@ export default {
                   <base-input v-bind="field" placeholder="Masukan ID Indukan Betina" label="ID Indukan" required></base-input>
                 </field-form>
               </div> -->
+
+              <!-- Pilih pejantan -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.id_pemancek"
-                  type="text"
-                  name="id_pemancek"
+                <base-input
+                  name="pemacek"
+                  placeholder="Pemacek"
+                  label="Pemacek"
+                  required
                 >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Masukan ID Indukan Pejantan"
-                    label="ID Pemancek"
-                    required
-                  ></base-input>
-                </field-form>
+                  <multi-select
+                    v-model="input.id_pemacek"
+                    :options="g$jantan"
+                    label="id_ternak"
+                    track-by="id_ternak"
+                    placeholder="Pilih Pemacek"
+                    :show-labels="false"
+                  />
+                </base-input>
               </div>
 
               <!-- Fase pemeliharaan -->
-              <div class="col-6">
+              <div class="col-12">
                 <base-input
                   name="fase"
                   placeholder="Fase Pemeliharaan"
@@ -350,14 +352,14 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.id_pemancek"
+                  v-model="input.id_pemacek"
                   type="text"
-                  name="id_pemancek"
+                  name="id_pemacek"
                 >
                   <base-input
                     v-bind="field"
                     placeholder="Masukan ID Indukan Pejantan"
-                    label="ID Pemancek"
+                    label="ID Pemacek"
                     required
                   ></base-input>
                 </field-form>

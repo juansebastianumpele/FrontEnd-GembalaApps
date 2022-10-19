@@ -6,7 +6,6 @@ import HcPie from "@/components/HighCharts/Pie.vue";
 import HcBar from "@/components/HighCharts/Bar.vue";
 import d$chart from "@/stores/chart";
 import d$dropdowm from "@/stores/dropdown";
-import d$costumer from "@/stores/customer";
 import d$kandang from "@/stores/monitoring/daftarkandang";
 import d$pakan from "@/stores/monitoring/pakan";
 
@@ -64,7 +63,6 @@ export default {
   computed: {
     ...mapState(d$chart, ["g$byGenderChart", "g$byKesehatan", "g$byJeniskelamin", "g$byPopulasi", "g$byFase", "g$DonutbyFase", "g$tabelKandang", "g$tabelFilter"]),
     ...mapState(d$dropdowm, ["g$ddVarietas", "g$ddFasePemeliharaan", "g$ddKandang"]),
-    ...mapState(d$costumer, ["g$costumerDetail"]),
     ...mapState(d$kandang, ["g$totalKandang"]),
     ...mapState(d$pakan, ["g$totalPakan"]),
     modals() {
@@ -81,7 +79,6 @@ export default {
   },
   methods: {
     ...mapActions(d$chart, ["a$byKesehatan", "a$byJeniskelamin", "a$byPopulasi", "a$byFase", "a$tabelKandang", "a$tabelFilter"]),
-    ...mapActions(d$costumer, ["a$costumerDetail"]),
     ...mapActions(d$kandang, ["a$totalKandang"]),
     ...mapActions(d$dropdowm, ["a$ddVarietas", "a$ddFasePemeliharaan", "a$ddKandang"]),
     ...mapActions(d$pakan, ["a$totalPakan"]),
@@ -125,7 +122,6 @@ export default {
     await this.a$ddVarietas();
     await this.a$ddFasePemeliharaan();
     await this.a$ddKandang(this.userInfo.id);
-    await this.a$costumerDetail({ id: this.userInfo.id });
     await this.a$totalKandang({ id: this.userInfo.id });
     await this.a$totalPakan({ id: this.userInfo.id });
     this.showReload();
@@ -208,7 +204,6 @@ export default {
                     <img alt="Image placeholder" src="/images/domba.jpg" class="img-fluid" />
                   </div>
                   <div class="col">
-                    <h2 class="text-center" style="font-size: 24px">{{ g$costumerDetail.jumlah_Ternak }}</h2>
                     <h2 class="text-center" style="font-size: 12px">Ternak</h2>
                   </div>
                   <div class="col">
