@@ -1234,7 +1234,7 @@ export default {
                       {{
                         infoTernak.penyakit
                           ? infoTernak.penyakit.nama_penyakit
-                          : ""
+                          : "-"
                       }}</span
                     >
                   </div>
@@ -1268,7 +1268,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.tanggal_keluar }}</span
+                      {{ infoTernak.tanggal_keluar ?? "-" }}</span
                     >
                   </div>
                 </div>
@@ -1279,7 +1279,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.status_keluar }}</span
+                      {{ infoTernak.status_keluar ?? "-" }}</span
                     >
                   </div>
                 </div>
@@ -1311,7 +1311,7 @@ export default {
                       {{
                         infoTernak.penyakit
                           ? infoTernak.penyakit.nama_penyakit
-                          : ""
+                          : "-"
                       }}</span
                     >
                   </div>

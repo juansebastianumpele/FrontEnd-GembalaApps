@@ -3,7 +3,7 @@ import { subApiUrl } from "@/utils/constant";
 
 const { api, auth } = subApiUrl;
 
-const detail = () => baseApi.get(`${user}/profile`);
+const detail = () => baseApi.get(`${api}/${auth}/profile`);
 const changePw = (req) => baseApi.post(`${api}/${auth}/update-password`, req);
 
 export { detail, changePw };

@@ -1,20 +1,10 @@
-import { defineStore } from 'pinia';
-import * as s$user from '@/services/user';
+import { defineStore } from "pinia";
+import * as s$user from "@/services/user";
 
 const u$user = defineStore({
-  id: 'user',
+  id: "user",
   state: () => ({
-    detail: {
-      username: '',
-      name: '',
-      NPWP: '',
-      street1: '',
-      street2: '',
-      street3: '',
-      city: '',
-      postCode: '',
-      country: '',
-    },
+    detail: [],
   }),
   actions: {
     // Detail
@@ -23,17 +13,6 @@ const u$user = defineStore({
         const { data } = await s$user.detail();
         this.detail = data;
       } catch ({ error }) {
-        this.detail = {
-          username: '',
-          name: '',
-          NPWP: '',
-          street1: '',
-          street2: '',
-          street3: '',
-          city: '',
-          postCode: '',
-          country: '',
-        };
         throw error;
       }
     },

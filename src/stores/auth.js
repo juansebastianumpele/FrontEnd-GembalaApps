@@ -11,6 +11,7 @@ const useAuthStore = defineStore({
     id: undefined,
     name: undefined,
     role: undefined,
+    data: [],
   }),
   getters: {
     userInfo: (state) => ({
@@ -23,20 +24,21 @@ const useAuthStore = defineStore({
   actions: {
     async a$setUserInfo() {
       try {
-        const { id, username, role } = certDetail();
-        if (!id && !username && !role)
+        const { id_user, role, nama_pengguna } = certDetail();
+        if (!id_user && !nama_pengguna && !role)
           throw new Error("Tidak ada info Pengguna!");
-        this.id = id;
-        this.name = username;
+        this.id = id_user;
+        this.name = nama_pengguna;
         this.role = role;
         return "User Authenticated";
       } catch ({ message }) {
-        this.userId = "";
+        this.id = "";
         this.name = "";
         this.role = "";
         throw message;
       }
     },
+
     async a$login(payload) {
       try {
         const { data } = await login(payload);
@@ -57,6 +59,7 @@ const useAuthStore = defineStore({
         throw (error || message) ?? "Logout failed!";
       }
     },
+
     async a$register(request) {
       try {
         await s$auth.register(request);

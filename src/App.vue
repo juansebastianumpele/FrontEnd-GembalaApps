@@ -20,9 +20,11 @@ export default {
     try {
       await this.a$setUserInfo();
       this.notify(`Welcome back, ${this.userInfo.name}!`);
-      if (this.$route.path.includes("/auth/") && this.userInfo.name) this.$router.replace({ name: "Home" });
+      if (this.$route.path.includes("/auth/") && this.userInfo.name)
+        this.$router.replace({ name: "Home" });
     } catch (error) {
-      if (!this.$route.path.includes("/auth/")) this.$router.replace({ name: "Auth" });
+      if (!this.$route.path.includes("/auth/"))
+        this.$router.replace({ name: "Auth" });
       this.notify(error, false);
     }
   },
@@ -34,13 +36,24 @@ export default {
 
 <template>
   <metainfo>
-    <template #title="{ content }">{{ content }} | {{ siteMeta.title }}</template>
+    <template #title="{ content }"
+      >{{ content }} | {{ siteMeta.title }}</template
+    >
   </metainfo>
   <router-view />
 </template>
 
 <style>
 .bg-gradient-argon {
-  background: linear-gradient(87deg, #2dce89 0, #2dcecc 100%) !important;
+  background: linear-gradient(87deg, #7eb918 0, #006329 100%) !important;
+}
+.text-success {
+  color: #006329 !important;
+}
+.btn-success1 {
+  background-color: #006329 !important;
+}
+.bg-success {
+  background-color: #006329 !important;
 }
 </style>

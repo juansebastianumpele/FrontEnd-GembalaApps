@@ -79,6 +79,8 @@ export default {
         title: {
           text: this.title,
           floating: this.floating,
+          verticalAlign: "middle",
+          y: -60,
         },
         subtitle: {
           text: this.subtitle,

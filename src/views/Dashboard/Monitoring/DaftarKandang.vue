@@ -50,7 +50,7 @@ export default {
         {
           name: "kebutuhan_pakan",
           th: "Kebutuhan Pakan (kg)",
-          render: ({ kebutuhan_pakan }) => kebutuhan_pakan.toFixed(2) + " KG",
+          render: ({ kebutuhan_pakan }) => kebutuhan_pakan.toFixed(2) + " Kg",
         },
       ],
       action: [

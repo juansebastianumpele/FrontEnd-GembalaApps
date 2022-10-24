@@ -7,7 +7,7 @@
         <sidebar-item
           :link="{
             name: 'Dashboard',
-            icon: 'fas fa-square-poll-vertical text-danger',
+            icon: 'fas fa-house text-success',
             path: '/dashboard/',
           }"
         >
@@ -18,7 +18,7 @@
         <sidebar-item
           :link="{
             name: 'Monitoring',
-            icon: 'fas fa-desktop text-primary',
+            icon: 'fas fa-square-poll-vertical text-success',
           }"
         >
           <sidebar-item
@@ -53,6 +53,63 @@
           />
         </sidebar-item>
         <div class="dropdown-divider" />
+
+        <!-- SOP -->
+        <sidebar-item
+          :link="{
+            name: 'Lembar Kerja',
+            icon: 'fas fa-users text-success',
+          }"
+        >
+          <sidebar-item
+            :link="{
+              name: 'Pemasukan',
+              path: '/sop/pemasukan',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Pemeliharaan',
+              path: '/sop/pemeliharaan',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Adaptasi',
+              path: '/sop/adaptasi',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Perkawinan',
+              path: '/sop/perkawinan',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Penanganan Penyakit',
+              path: '/sop/penanganan-penyakit',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Kebuntingan',
+              path: '/sop/kebuntingan',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Kelahiran',
+              path: '/sop/kelahiran',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Lepas Sapih',
+              path: '/sop/lepas-sapih',
+            }"
+          />
+        </sidebar-item>
       </template>
     </side-bar>
     <div class="main-content">

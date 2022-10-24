@@ -53,20 +53,21 @@ export default {
 </script>
 
 <template>
-  <div class="header bg-gradient-argon py-9 pt-md-9"></div>
+  <div class="header py-9 pt-md-9"></div>
   <div class="container">
     <div class="row mx-0 justify-content-center mt--9">
-      <div class="col-sm-2 col-sm-5 mt--6">
+      <div class="col-lg-6 col-md-6">
         <div class="card bg-secondary shadow border-0">
           <div class="card-header bg-transparent pb-5">
             <div class="text-center mt-2 mb-3">
               <strong>Lupa Password</strong><br /><br />
               <img
-                width="200"
-                style="margin: 20px 0 20px 60px"
-                src="../../../public/images/forget.svg"
+                width="100"
+                src="../../../public/images/logo.png"
                 alt="email"
               />
+              <br />
+              <br />
             </div>
             <small>
               Silahkan masukan email Anda yang telah terdaftar. Kode untuk
@@ -85,14 +86,18 @@ export default {
               </base-input>
 
               <div class="text-center">
-                <base-button type="primary" class="my-2" native-type="submit">
+                <base-button
+                  type="success1"
+                  class="my-2 text-white"
+                  native-type="submit"
+                >
                   Kirim Kode Verifikasi
                 </base-button>
               </div>
             </form-comp>
             <div class="row mt-3">
               <div class="col-7 text-left">
-                <router-link to="/auth/login" class="text-primary">
+                <router-link to="/auth/login" class="text-success">
                   <small
                     ><i class="fa-solid fa-arrow-left-long"></i> Kembali halaman
                     login</small

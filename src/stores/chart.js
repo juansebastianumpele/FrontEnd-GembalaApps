@@ -183,6 +183,10 @@ const u$total = defineStore({
     }),
     g$DonutbyFase: (state) => ({
       categories: state.chartFase.map(({ fase }) => fase),
+      title: {
+        text: "Fase",
+        align: "center",
+      },
       series: [
         {
           name: "Total",

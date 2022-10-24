@@ -28,11 +28,11 @@ export default {
       password: "",
       new_password: "",
       repeat_password: "",
-      nama_lengkap: "",
-      username: "",
+      nama_pengguna: "",
       email: "",
-      no_hp: "",
+      nomor_telepon: "",
       alamat: "",
+      nama_peterpan: "",
     },
     // UI
     modal: {
@@ -51,12 +51,12 @@ export default {
       if (!val) {
         this.clearInput();
       } else {
-        this.input.username = this.g$userDetail.username;
+        this.input.nama_pengguna = this.g$userDetail.nama_pengguna;
       }
     },
   },
   async mounted() {
-    // await this.a$userDetail().catch((error) => this.notify(error, false));
+    await this.a$userDetail().catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$user, ["a$userChangePw"]),
@@ -120,14 +120,14 @@ export default {
           <div class="col-6">
             <field-form
               v-slot="{ field }"
-              v-model="g$userDetail.nama_lengkap"
+              v-model="g$userDetail.nama_pengguna"
               type="text"
-              name="nama_lengkap"
+              name="nama_pengguna"
             >
               <base-input
                 v-bind="field"
-                placeholder="Nama Lengkap"
-                label="Nama Lengkap"
+                placeholder="Nama Pengguna"
+                label="Nama Penguna"
                 disabled
               ></base-input>
             </field-form>
@@ -135,22 +135,7 @@ export default {
           <div class="col-6">
             <field-form
               v-slot="{ field }"
-              v-model="g$userDetail.username"
-              type="text"
-              name="username"
-            >
-              <base-input
-                v-bind="field"
-                placeholder="Username"
-                label="Username"
-                disabled
-              ></base-input>
-            </field-form>
-          </div>
-          <div class="col-6">
-            <field-form
-              v-slot="{ field }"
-              v-model.number="g$userDetail.emal"
+              v-model.number="g$userDetail.email"
               type="email"
               name="email"
             >
@@ -166,14 +151,14 @@ export default {
           <div class="col-6">
             <field-form
               v-slot="{ field }"
-              v-model="g$userDetail.no_hp"
+              v-model="g$userDetail.nomor_telepon"
               type="number"
-              name="no_hp"
+              name="nomor_telepon"
             >
               <base-input
                 v-bind="field"
-                placeholder="No. HP"
-                label="No. HP"
+                placeholder="Nomor Telepon"
+                label="Nomor Telepon"
                 disabled
               ></base-input>
             </field-form>
@@ -189,6 +174,21 @@ export default {
                 v-bind="field"
                 placeholder="Alamat"
                 label="Alamat"
+                disabled
+              ></base-input>
+            </field-form>
+          </div>
+          <div class="col-6">
+            <field-form
+              v-slot="{ field }"
+              v-model="g$userDetail.nama_peternakan"
+              type="text"
+              name="nama_peternakan"
+            >
+              <base-input
+                v-bind="field"
+                placeholder="Nama Peternakan"
+                label="Nama Peternakan"
                 disabled
               ></base-input>
             </field-form>

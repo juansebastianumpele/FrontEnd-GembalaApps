@@ -106,10 +106,10 @@ export default {
       this.showMenu = false;
     },
     setBackgroundColor() {
-      document.body.classList.add("bg-default");
+      document.body.classList.add("bg-white");
     },
     removeBackgroundColor() {
-      document.body.classList.remove("bg-default");
+      document.body.classList.remove("bg-white");
     },
     updateBackground() {
       if (!this.$route.meta.noBodyBackground) {
