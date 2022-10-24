@@ -7,5 +7,6 @@ const list = () => baseApi.get(`${api}/${pakan}`);
 const add = (req) => baseApi.post(`${api}/${pakan}`, req);
 const edit = (req) => baseApi.put(`${api}/${pakan}`, req);
 const del = (req) => baseApi.delete(`${api}/${pakan}`, { data: req });
+const listJenis = () => baseApi.get(`${api}/${pakan}/jenis`);
 
-export { list, add, edit, del };
+export { list, add, edit, del, listJenis };

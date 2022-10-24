@@ -29,6 +29,7 @@ const u$dropdown = defineStore({
     listBetina: [null],
     listPejantan: [],
     listPenyakit: [],
+    listJenisPakan: [],
   }),
   actions: {
     async a$ddVarietas() {
@@ -94,6 +95,15 @@ const u$dropdown = defineStore({
         throw error;
       }
     },
+    async a$ddListJenisPakan() {
+      try {
+        const { data } = await s$pakan.listJenis();
+        this.listJenisPakan = data.list;
+      } catch ({ error }) {
+        this.listJenisPakan = [];
+        throw error;
+      }
+    },
   },
   getters: {
     g$ddJenisKelamin: (state) => state.jenisKelamin,
@@ -138,6 +148,11 @@ const u$dropdown = defineStore({
       state.listPenyakit.map(({ id_penyakit, nama_penyakit }) => ({
         id: id_penyakit,
         name: nama_penyakit,
+      })),
+    g$ddListJenisPakan: (state) =>
+      state.listJenisPakan.map(({ id_jenis_pakan, jenis_pakan }) => ({
+        id: id_jenis_pakan,
+        name: jenis_pakan,
       })),
   },
 });

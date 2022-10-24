@@ -33,6 +33,8 @@ export default {
       nomor_telepon: "",
       alamat: "",
       nama_peternakan: "",
+      foto: "",
+      fotoUrl: "",
     },
     // UI
     modal: {
@@ -52,6 +54,10 @@ export default {
         this.clearInput();
       } else {
         this.input.nama_pengguna = this.g$userDetail.nama_pengguna;
+        this.input.email = this.g$userDetail.email;
+        this.input.nomor_telepon = this.g$userDetail.nomor_telepon;
+        this.input.alamat = this.g$userDetail.alamat;
+        this.input.nama_peternakan = this.g$userDetail.nama_peternakan;
       }
     },
   },
@@ -59,7 +65,11 @@ export default {
     await this.a$userDetail().catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$user, ["a$userChangePw", "a$userDetail"]),
+    ...mapActions(d$user, [
+      "a$userChangePw",
+      "a$userDetail",
+      "a$userChangeProfile",
+    ]),
     async clearInput() {
       this.input = {
         password: "",
@@ -67,6 +77,11 @@ export default {
         repeat_password: "",
       };
     },
+    resetImage() {
+      this.input.fotoUrl = "";
+      this.input.foto = "";
+    },
+    //edit password
     async editPassword() {
       try {
         const { password, new_password, repeat_password } = this.input;
@@ -85,6 +100,34 @@ export default {
       } finally {
         this.a$userDetail();
       }
+    },
+    //edit profile
+    async editProfile() {
+      try {
+        const { nama_pengguna, email, nomor_telepon, alamat, nama_peternakan } =
+          this.input;
+        const data = {
+          nama_pengguna,
+          email,
+          nomor_telepon,
+          alamat,
+          nama_peternakan,
+        };
+        // await this.schema.validate(data);
+        await this.a$userChangeProfile(data);
+        console.log(data);
+        this.modal.editProfile = false;
+        this.notify("Edit Profil Sukses!");
+      } catch (error) {
+        this.notify(error, false);
+      } finally {
+        this.a$userDetail();
+      }
+    },
+    handleFileUpload() {
+      const file = this.$refs.foto.files[0];
+      this.input.foto = file;
+      this.input.fotoUrl = URL.createObjectURL(this.input.foto);
     },
   },
 };
@@ -209,31 +252,15 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.nama_lengkap"
+                  v-model="input.nama_pengguna"
                   type="text"
-                  name="nama_lengkap"
+                  name="nama_pengguna"
                 >
                   <base-input
                     v-bind="field"
                     type="text"
-                    placeholder="Nama Lengkap"
-                    label="Nama Lengkap"
-                    addon-left-icon="fas fa-user"
-                  ></base-input>
-                </field-form>
-              </div>
-              <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.username"
-                  type="text"
-                  name="username"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="text"
-                    placeholder="Username"
-                    label="Username"
+                    placeholder="Nama Pengguna"
+                    label="Nama Penguna"
                     addon-left-icon="fas fa-user"
                   ></base-input>
                 </field-form>
@@ -257,15 +284,15 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.no_hp"
+                  v-model="input.nomor_telepon"
                   type="text"
-                  name="no_hp"
+                  name="nomo_telepon"
                 >
                   <base-input
                     v-bind="field"
                     type="text"
-                    placeholder="No. HP"
-                    label="No. HP"
+                    placeholder="Nomor Telepon"
+                    label="Nomor Telepon"
                     addon-left-icon="fas fa-phone"
                   ></base-input>
                 </field-form>
@@ -286,14 +313,53 @@ export default {
                   ></base-input>
                 </field-form>
               </div>
+              <div class="col-12">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.nama_peternakan"
+                  type="text"
+                  name="nama_peternakan"
+                >
+                  <base-input
+                    v-bind="field"
+                    type="text"
+                    placeholder="Nama Peternakan"
+                    label="Nama Peternakan"
+                    addon-left-icon="fas fa-user"
+                  ></base-input>
+                </field-form>
+              </div>
+              <div class="col-12" v-if="!this.input.foto">
+                <div class="form-group has-label">
+                  <label class="form-control-label">Foto</label>
+                  <input
+                    class="form-control file"
+                    id="foto"
+                    type="file"
+                    ref="foto"
+                    accept="image/*"
+                    @change="handleFileUpload()"
+                  />
+                </div>
+              </div>
+              <div class="col-6" v-if="this.input.fotoUrl">
+                <div class="text-center pb-2">
+                  <base-button type="danger" size="sm" @click="resetImage()">
+                    Reset Image
+                  </base-button>
+                </div>
+                <div class="text-center">
+                  <img width="250" v-if="input.fotoUrl" :src="input.fotoUrl" />
+                </div>
+              </div>
             </div>
           </form-comp>
         </template>
         <template #footer>
-          <base-button type="secondary" @click="modal.changePw = false">
+          <base-button type="secondary" @click="modal.editProfile = false">
             Tutup
           </base-button>
-          <base-button type="primary" @click="editPassword()">
+          <base-button type="primary" @click="editProfile()">
             Simpan Perubahan
           </base-button>
         </template>

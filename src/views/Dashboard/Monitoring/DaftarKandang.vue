@@ -25,6 +25,7 @@ export default {
       id_kandang: null,
       kode_kandang: "",
       jenis_kandang: "",
+      jenis_pakan: "",
     },
     // UI
     modal: {
@@ -46,6 +47,12 @@ export default {
         {
           name: "populasi",
           th: "Jumlah Populasi Ternak",
+        },
+        {
+          name: "jenis_pakan",
+          th: "Jenis Pakan",
+          render: ({ jenis_pakan }) =>
+            jenis_pakan ? jenis_pakan.jenis_pakan : "",
         },
         {
           name: "kebutuhan_pakan",
@@ -75,7 +82,7 @@ export default {
   }),
   computed: {
     ...mapState(d$daftarkandang, ["g$kandangList", "g$totalKandang"]),
-    ...mapState(d$dropdown, ["g$ddJenisKandang"]),
+    ...mapState(d$dropdown, ["g$ddJenisKandang", "g$ddListJenisPakan"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -89,6 +96,7 @@ export default {
   },
   async mounted() {
     await this.a$kandangList().catch((error) => this.notify(error, false));
+    await this.a$ddListJenisPakan().catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$daftarkandang, [
@@ -97,6 +105,7 @@ export default {
       "a$kandangDelete",
       "a$kandangEdit",
     ]),
+    ...mapActions(d$dropdown, ["a$ddListJenisPakan"]),
     clearInput() {
       this.input = {
         id_kandang: null,
@@ -266,6 +275,24 @@ export default {
                     v-model="input.jenis_kandang"
                     :options="g$ddJenisKandang"
                     placeholder="Pilih Jenis Kandang"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+              <!-- jenis pakan -->
+              <div class="col-12">
+                <base-input
+                  name="listJenisPakan"
+                  placeholder="Jenis Pakan"
+                  label="Jenis Pakan"
+                  required
+                >
+                  <multi-select
+                    v-model="input.jenis_pakan"
+                    :options="g$ddListJenisPakan"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih Jenis Pakan"
                     :show-labels="false"
                   />
                 </base-input>

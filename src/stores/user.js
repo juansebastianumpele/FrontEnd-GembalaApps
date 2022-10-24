@@ -24,6 +24,15 @@ const u$user = defineStore({
         throw error;
       }
     },
+
+    // Edit Profile
+    async a$userChangeProfile(request) {
+      try {
+        await s$user.changeProfile(request);
+      } catch ({ error }) {
+        throw error;
+      }
+    },
   },
   getters: {
     g$userDetail: (state) => state.detail,
