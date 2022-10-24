@@ -290,6 +290,8 @@ export default {
           </base-button>
         </template>
       </modal-comp>
+
+      <!-- Ubah penyakit -->
       <modal-comp v-model:show="modal.ubahPenyakit" modal-classes="modal-lg">
         <template #header>
           <h3 class="modal-title">Detail {{ pageTitle }}</h3>
@@ -300,7 +302,7 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.penyakit"
+                  v-model="input.nama_penyakit"
                   type="text"
                   name="nama_penyakit"
                 >
@@ -352,6 +354,8 @@ export default {
           </base-button>
         </template>
       </modal-comp>
+
+      <!-- Hapus penyakit -->
       <modal-comp v-model:show="modal.confirm" modal-classes="modal-lg">
         <template #header>
           <h3 class="modal-title">Hapus {{ pageTitle }}</h3>
@@ -369,6 +373,7 @@ export default {
           <base-button type="danger" @click="delPenyakit()">Hapus</base-button>
         </template>
       </modal-comp>
+
     </template>
   </main-layout>
 </template>
