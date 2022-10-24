@@ -97,6 +97,11 @@ export default {
     async addPenyakit() {
       try {
         const { nama_penyakit, gejala, penanganan } = this.input;
+        const data = {
+          nama_penyakit,
+          gejala,
+          penanganan,
+        };
         await this.schema.validate(data);
         await this.a$penyakitAdd(data);
         this.modal.addPenyakit = false;
