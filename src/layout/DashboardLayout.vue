@@ -54,7 +54,53 @@
         </sidebar-item>
         <div class="dropdown-divider" />
 
-        <!-- SOP -->
+        <!-- Fase -->
+        <sidebar-item
+          :link="{
+            name: 'Fase',
+            icon: 'fas fa-solid fa-arrows-spin text-success',
+          }"
+        >
+          <sidebar-item
+            :link="{
+              name: 'Pemasukan',
+              path: '/fase/pemasukan',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Adaptasi',
+              path: '/fase/adaptasi',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Perkawinan',
+              path: '/fase/perkawinan',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Kebuntingan',
+              path: '/fase/kebuntingan',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Kelahiran',
+              path: '/fase/kelahiran',
+            }"
+          />
+          <sidebar-item
+            :link="{
+              name: 'Lepas Sapih',
+              path: '/fase/lepas-sapih',
+            }"
+          />
+        </sidebar-item>
+        <div class="dropdown-divider" />
+
+        <!-- Lembar kerja -->
         <sidebar-item
           :link="{
             name: 'Lembar Kerja',
@@ -63,50 +109,14 @@
         >
           <sidebar-item
             :link="{
-              name: 'Pemasukan',
-              path: '/sop/pemasukan',
-            }"
-          />
-          <sidebar-item
-            :link="{
               name: 'Pemeliharaan',
-              path: '/sop/pemeliharaan',
-            }"
-          />
-          <sidebar-item
-            :link="{
-              name: 'Adaptasi',
-              path: '/sop/adaptasi',
-            }"
-          />
-          <sidebar-item
-            :link="{
-              name: 'Perkawinan',
-              path: '/sop/perkawinan',
+              path: '/lembar-kerja/pemeliharaan',
             }"
           />
           <sidebar-item
             :link="{
               name: 'Penanganan Penyakit',
-              path: '/sop/penanganan-penyakit',
-            }"
-          />
-          <sidebar-item
-            :link="{
-              name: 'Kebuntingan',
-              path: '/sop/kebuntingan',
-            }"
-          />
-          <sidebar-item
-            :link="{
-              name: 'Kelahiran',
-              path: '/sop/kelahiran',
-            }"
-          />
-          <sidebar-item
-            :link="{
-              name: 'Lepas Sapih',
-              path: '/sop/lepas-sapih',
+              path: '/lembar-kerja/penanganan-penyakit',
             }"
           />
         </sidebar-item>
