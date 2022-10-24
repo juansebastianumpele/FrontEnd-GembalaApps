@@ -32,7 +32,7 @@ export default {
       email: "",
       nomor_telepon: "",
       alamat: "",
-      nama_peterpan: "",
+      nama_peternakan: "",
     },
     // UI
     modal: {
@@ -59,7 +59,7 @@ export default {
     await this.a$userDetail().catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$user, ["a$userChangePw"]),
+    ...mapActions(d$user, ["a$userChangePw", "a$userDetail"]),
     async clearInput() {
       this.input = {
         password: "",
@@ -69,20 +69,21 @@ export default {
     },
     async editPassword() {
       try {
-        const { password, new_password } = this.input;
+        const { password, new_password, repeat_password } = this.input;
         const data = {
-          password,
-          new_password,
+          kata_sandi: password,
+          kata_sandi_baru: new_password,
+          ulangi_kata_sandi_baru: repeat_password,
         };
         // await this.schema.validate(data);
-        console.log(data);
         await this.a$userChangePw(data);
+        console.log(data);
         this.modal.changePw = false;
         this.notify("Edit Sandi Sukses!");
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$customerList();
+        this.a$userDetail();
       }
     },
   },
