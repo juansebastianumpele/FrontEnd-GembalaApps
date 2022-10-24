@@ -3,7 +3,6 @@ import { mapActions, mapState } from "pinia";
 import d$penyakit from "@/stores/monitoring/penyakit";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
-// import router from "../../../router";
 
 export default {
   metaInfo: () => ({
@@ -12,9 +11,8 @@ export default {
   setup() {
     const schema = y$object({
       nama_penyakit: y$string().required().label("Nama Penyakit"),
-      deskripsi: y$string().nullable().label("Deskripsi"),
-      gejala: y$string().nullable().label("Ciri-ciri"),
-      penanganan: y$string().nullable().label("penanganan"),
+      gejala: y$string().nullable().label("Gejala"),
+      penanganan: y$string().nullable().label("Penanganan"),
     });
     return {
       schema,
@@ -99,11 +97,6 @@ export default {
     async addPenyakit() {
       try {
         const { nama_penyakit, gejala, penanganan } = this.input;
-        const data = {
-          nama_penyakit,
-          gejala,
-          penanganan,
-        };
         await this.schema.validate(data);
         await this.a$penyakitAdd(data);
         this.modal.addPenyakit = false;
@@ -135,12 +128,16 @@ export default {
     },
     async delPenyakit() {
       try {
-        const { id } = this.input;
-        await this.a$penyakitDelete(id);
+        const { id_penyakit } = this.input;
+        const data = {
+          id_penyakit,
+        };
+        await this.a$penyakitDelete(data);
         this.modal.confirm = false;
         this.notify(`Hapus ${this.pageTitle} Sukses !`);
       } catch (error) {
-        this.notify(error, false);
+        this.notify(error.message, false);
+        console.log(error);
       } finally {
         this.a$penyakitList();
       }
@@ -236,7 +233,7 @@ export default {
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
-                  v-model="input.penyakit"
+                  v-model="input.nama_penyakit"
                   type="text"
                   name="nama_penyakit"
                 >
@@ -357,7 +354,7 @@ export default {
         <template #body>
           <p>
             Yakin ingin menghapus {{ pageTitle }}:
-            <strong>{{ input.penyakit }}</strong>
+            <strong>{{ input.nama_penyakit }}</strong>
           </p>
         </template>
         <template #footer>
