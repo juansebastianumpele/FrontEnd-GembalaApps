@@ -29,7 +29,13 @@ import { Field, Form } from "vee-validate";
 
 import DataTable from "@/components/DataTable.vue";
 import VueMultiselect from "vue-multiselect";
+
+import flatpickr from "flatpickr";
+import { Indonesian } from "flatpickr/dist/l10n/id.js";
+flatpickr.localize(Indonesian);
 import VueFlatPickr from "vue-flatpickr-component";
+
+
 
 const GlobalComponents = {
   install(app) {
