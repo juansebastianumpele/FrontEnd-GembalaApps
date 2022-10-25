@@ -12,7 +12,7 @@ const u$total = defineStore({
     ChartbyTimbangan: [],
     chartFase: [],
     kandang: [],
-    filterResult: [],
+    
   }),
   actions: {
     async a$byKesehatan() {

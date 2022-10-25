@@ -185,20 +185,18 @@ export default {
       <div>
         <nav class="nav nav-pills flex-column flex-sm-row mb-4">
           <li>
-            <router-link
-              class="flex-sm-fill text-sm-center nav-link active"
-              to="/monitoring/data-penyakit"
-            >
-              Data Penyakit
-            </router-link>
+            <base-button type="success1" class="btn-lg">
+              <router-link to="/monitoring/data-penyakit" class="text-white">
+                Data Penyakit
+              </router-link>
+            </base-button>
           </li>
           <li>
-            <router-link
-              class="flex-sm-fill text-sm-center nav-link ml-3"
-              to="data-penyakit/data-kesehatan"
-            >
-              Data Ternak Sakit
-            </router-link>
+            <base-button type="secondary" class="btn-lg ml-3">
+              <router-link to="data-penyakit/data-kesehatan" class="text-dark">
+                Data Ternak Sakit
+              </router-link>
+            </base-button>
           </li>
         </nav>
       </div>
@@ -373,7 +371,6 @@ export default {
           <base-button type="danger" @click="delPenyakit()">Hapus</base-button>
         </template>
       </modal-comp>
-
     </template>
   </main-layout>
 </template>

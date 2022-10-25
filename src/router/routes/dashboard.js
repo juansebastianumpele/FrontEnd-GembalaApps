@@ -166,6 +166,12 @@ const dashboardRoutes = [
         component: () => import("@/views/Dashboard/Fase/Pemasukan.vue"),
         meta: { requireAuth: true },
       },
+      {
+        path: "pemasukan/langkah-kerja",
+        name: "Langkah Kerja Pemasukan",
+        component: () => import("@/views/Dashboard/Fase/LK_Pemasukan.vue"),
+        meta: { requireAuth: true },
+      },
     ],
   },
 ];
