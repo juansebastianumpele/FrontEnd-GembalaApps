@@ -1,6 +1,6 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import d$ternak from "@/stores/monitoring/ternak";
+import d$pakan from "@/stores/monitoring/pakan";
 import d$dropdown from "@/stores/dropdown";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
@@ -60,7 +60,7 @@ export default {
     infoTernak: {},
   }),
   computed: {
-    ...mapState(d$ternak, ["g$detailPakan", "g$ternakList"]),
+    ...mapState(d$pakan, ["g$detailPakan"]),
     ...mapState(d$dropdown, ["g$ddKeteranganDetailPakan", "g$ddSatuanPakan"]),
     modals() {
       return Object.values(this.modal).includes(true);
@@ -79,7 +79,7 @@ export default {
     );
   },
   methods: {
-    ...mapActions(d$ternak, ["a$pakanDetail", "a$ternakList"]),
+    ...mapActions(d$pakan, ["a$pakanDetail"]),
     clearInput() {
       this.input = {
         id: null,

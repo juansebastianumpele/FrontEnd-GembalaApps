@@ -1,6 +1,6 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import d$pakan from "@/stores/monitoring/pakan";
+import d$bahanPakan from "@/stores/monitoring/bahanPakan";
 import d$dropdown from "@/stores/dropdown";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
@@ -96,7 +96,7 @@ export default {
     await this.a$pakanList().catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$pakan, [
+    ...mapActions(d$bahanPakan, [
       "a$pakanAdd",
       "a$pakanList",
       "a$pakanDelete",
@@ -205,11 +205,11 @@ export default {
     },
     async triggerDetail(row) {
       try {
-        const { id_pakan } = row;
+        const { id_jenis_pakan } = row;
         router.push({
           name: "Detail Bahan Pakan",
           params: {
-            id: id_pakan,
+            id: id_jenis_pakan,
           },
         });
       } catch (error) {
