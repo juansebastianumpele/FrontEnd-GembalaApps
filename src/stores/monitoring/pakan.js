@@ -6,11 +6,14 @@ const u$pakan = defineStore({
   state: () => ({
     pakan: [],
     totalPakan: [],
+    detailPakan: [],
+    bahanPakan: [],
   }),
   actions: {
-    async a$pakanList() {
+    // Pakan
+    async a$pakanList(request) {
       try {
-        const { data } = await s$pakan.list();
+        const { data } = await s$pakan.listJenis(request);
         this.pakan = data.list;
       } catch ({ error }) {
         this.pakan = [];
@@ -48,9 +51,56 @@ const u$pakan = defineStore({
         throw error;
       }
     },
+
+    // Detail Pakan
+    async a$pakanDetail(req) {
+      try {
+        const { data } = await s$pakan.listPakan(req);
+        this.detailPakan = data.list;
+      } catch ({ error }) {
+        this.pakan = [];
+        throw error;
+      }
+    },
+    async a$tambahPakan(req) {
+      try {
+        await s$pakan.tambahPakan(req);
+      } catch ({ error }) {
+        throw error;
+      }
+    },
+    async a$kosongkanPakan(req) {
+      try {
+        await s$pakan.kosongkanPakan(req);
+      } catch (error) {
+        throw error;
+      }
+    },
+    async a$isiPakan(req) {
+      try {
+        await s$pakan.isiPakan(req);
+      } catch (error) {
+        throw error;
+      }
+    },
+    async a$ubahPakan(req) {
+      try {
+        await s$pakan.ubahPakan(req);
+      } catch (error) {
+        throw error;
+      }
+    },
+    async a$deletePakan(req) {
+      try {
+        await s$pakan.deletePakan(req);
+      } catch (error) {
+        throw error;
+      }
+    },
   },
   getters: {
     g$pakanList: (state) => state.pakan,
+    g$detailPakan: (state) => state.detailPakan,
     g$totalPakan: (state) => state.totalPakan,
   },
 });

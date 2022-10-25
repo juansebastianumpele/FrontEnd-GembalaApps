@@ -3,7 +3,7 @@ import { mapActions, mapState } from "pinia";
 import d$pakan from "@/stores/monitoring/pakan";
 import d$dropdown from "@/stores/dropdown";
 
-import { object as y$object, string as y$string, ref as y$ref } from "yup";
+import { object as y$object, string as y$string, number as y$number, ref as y$ref } from "yup";
 import router from "../../../router";
 
 export default {
@@ -12,10 +12,11 @@ export default {
   }),
   setup() {
     const schema = y$object({
-      nama_pakan: y$string().required().label("Nama Pakan"),
-      deskripsi: y$string().nullable().label("Jenis Pakan"),
-      komposisi: y$string().nullable().label("Komposisi"),
-      // id_users: y$string().required().label("ID Users"),
+      jenis_pakan: y$string().required().label("Nama Pakan"),
+      interval_pakan: y$number().required().label("Interval"),
+      satuan: y$string().required().label("Satuan"),
+      komposisi: y$string().required().label("Komposisi"),
+      nutrien: y$string().required().label("Nutrien"),
     });
     return {
       schema,
@@ -25,10 +26,12 @@ export default {
     pageTitle: "Pakan",
     // Input
     input: {
-      id_pakan: null,
-      nama_pakan: "",
-      interval: "",
+      id_jenis_pakan: null,
+      jenis_pakan: "",
+      interval_pakan: "",
       satuan: "",
+      komposisi: "",
+      nutrien: "",
     },
     // UI
     modal: {
@@ -40,12 +43,31 @@ export default {
     dt: {
       column: [
         {
-          name: "nama_pakan",
+          name: "jenis_pakan",
           th: "Nama Pakan",
         },
         {
-          name: "jumlah",
-          th: "Stok",
+          name: "komposisi",
+          th: "Komposisi",
+        },
+        {
+          name: "nutrien",
+          th: "Kandungan Nutrien",
+        },
+        {
+          name: "interval_pakan",
+          th: "Interval",
+          render: ({ interval_pakan }) => interval_pakan + " Hari",
+        },
+        {
+          name: "stok_siap",
+          th: "Stok Sudah Siap",
+          render: ({ stok_siap, satuan }) => stok_siap + " " + satuan,
+        },
+        {
+          name: "stok_belum_siap",
+          th: "Stok Belum Siap",
+          render: ({ stok_belum_siap, satuan }) => stok_belum_siap + " " + satuan,
         },
       ],
       action: [
@@ -82,7 +104,7 @@ export default {
     },
   },
   async mounted() {
-    await this.a$pakanList(this.userInfo.id).catch((error) =>
+    await this.a$pakanList('').catch((error) =>
       this.notify(error, false)
     );
   },
@@ -95,18 +117,23 @@ export default {
     ]),
     clearInput() {
       this.input = {
-        id_pakan: null,
-        nama_pakan: "",
-        interval: "",
+        id_jenis_pakan: null,
+        jenis_pakan: "",
+        interval_pakan: "",
         satuan: "",
+        komposisi: "",
+        nutrien: "",
       };
     },
     async addPakan() {
       try {
-        const { nama_pakan, deskripsi, komposisi, jumlah } = this.input;
+        const { jenis_pakan, interval_pakan, satuan, komposisi, nutrien } = this.input;
         const data = {
-          nama_pakan,
-          deskripsi,
+          jenis_pakan,
+          interval_pakan,
+          satuan,
+          komposisi,
+          nutrien,
         };
         console.log(data);
         await this.schema.validate(data);
@@ -140,9 +167,9 @@ export default {
     },
     async delPakan() {
       try {
-        const { id_pakan } = this.input;
+        const { id_jenis_pakan } = this.input;
         const data = {
-          id_pakan,
+          id_jenis_pakan,
         };
         await this.a$pakanDelete(data);
         this.modal.confirm = false;
@@ -155,11 +182,14 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_pakan, nama_pakan, deskripsi, komposisi, jumlah } = row;
+        const { id_jenis_pakan, jenis_pakan, interval_pakan, satuan, komposisi, nutrien } = row;
         this.input = {
-          id_pakan,
-          nama_pakan,
-          deskripsi,
+          id_jenis_pakan,
+          jenis_pakan,
+          interval_pakan,
+          satuan,
+          komposisi,
+          nutrien,
         };
         this.modal.ubahPakan = true;
       } catch (error) {
@@ -169,10 +199,10 @@ export default {
     },
     async triggerDelete(row) {
       try {
-        const { id_pakan, nama_pakan } = row;
+        const { id_jenis_pakan, jenis_pakan } = row;
         this.input = {
-          id_pakan,
-          nama_pakan,
+          id_jenis_pakan,
+          jenis_pakan,
         };
         this.modal.confirm = true;
       } catch (error) {
@@ -182,11 +212,11 @@ export default {
     },
     async triggerDetail(row) {
       try {
-        const { id_pakan } = row;
+        const { id_jenis_pakan } = row;
         router.push({
           name: "Detail Pakan",
           params: {
-            id: id_pakan,
+            id: id_jenis_pakan,
           },
         });
       } catch (error) {
@@ -203,18 +233,12 @@ export default {
     <template #header>
       <nav class="nav nav-pills flex-column flex-sm-row mb-4">
         <li>
-          <router-link
-            class="flex-sm-fill text-sm-center nav-link active"
-            to="data-pakan"
-          >
+          <router-link class="flex-sm-fill text-sm-center nav-link active" to="data-pakan">
             Daftar Pakan
           </router-link>
         </li>
         <li>
-          <router-link
-            class="flex-sm-fill text-sm-center nav-link ml-3"
-            to="data-pakan/bahan-pakan"
-          >
+          <router-link class="flex-sm-fill text-sm-center nav-link ml-3" to="data-pakan/bahan-pakan">
             Daftar Bahan Pakan
           </router-link>
         </li>
@@ -233,16 +257,8 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$pakanList.length" :text="`${pageTitle}`" />
-      <data-table
-        v-else
-        :index="true"
-        :data="g$pakanList"
-        :columns="dt.column"
-        :actions="dt.action"
-        @ubah-pakan="triggerEditModal"
-        @hapus-pakan="triggerDelete"
-        @detail-pakan="triggerDetail"
-      />
+      <data-table v-else :index="true" :data="g$pakanList" :columns="dt.column" :actions="dt.action"
+        @ubah-pakan="triggerEditModal" @hapus-pakan="triggerDelete" @detail-pakan="triggerDetail" />
     </template>
 
     <template #modal>
@@ -253,53 +269,48 @@ export default {
         <template #body>
           <form-comp v-if="modal.addPakan" :validation-schema="schema">
             <div class="row">
+
               <!-- nama pakan -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.nama_pakan"
-                  type="text"
-                  name="nama_pakan"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Nama Pakan"
-                    label="Nama Pakan"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.jenis_pakan" type="text" name="jenis_pakan">
+                  <base-input v-bind="field" placeholder="Nama Pakan" label="Nama Pakan" required></base-input>
                 </field-form>
               </div>
+
               <!-- interval pemberian pakan -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.interval"
-                  type="text"
-                  name="interval"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Masukan interval"
-                    label="Interval pemberian pakan /hari"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.interval_pakan" type="number" name="interval">
+                  <base-input v-bind="field" placeholder="Masukan interval dalam hari"
+                    label="Interval Pemberian Pakan (Hari)" type="number" required>
+                  </base-input>
                 </field-form>
               </div>
+
               <!-- satuan pakan (tong/ball) -->
               <div class="col-12">
-                <base-input
-                  name="satuan"
-                  placeholder="Satuan Pakan"
-                  label="Satuan Pakan"
-                >
-                  <multi-select
-                    v-model="input.satuan"
-                    :options="g$ddKeteranganTambahPakan"
-                    placeholder="Pilih Satuan Pakan"
-                    :show-labels="false"
-                  />
+                <base-input name="satuan" placeholder="Satuan Pakan" label="Satuan Pakan">
+                  <multi-select v-model="input.satuan" :options="g$ddKeteranganTambahPakan"
+                    placeholder="Pilih Satuan Pakan" :show-labels="false" required />
                 </base-input>
               </div>
+
+              <!-- Komposisi -->
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.komposisi" type="text" name="komposisi">
+                  <base-input v-bind="field" placeholder="Contoh: Bongkol Jagung 15%, Premix 0,1%, Jagung 60%"
+                    label="Komposisi" required></base-input>
+                </field-form>
+              </div>
+
+              <!-- Nutrien -->
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.nutrien" type="text" name="nutrien">
+                  <base-input v-bind="field" placeholder="Contoh: BK: 87%; PK 21%; LK 24%" label="Nutrien" required>
+                  </base-input>
+                </field-form>
+              </div>
             </div>
+
           </form-comp>
         </template>
         <template #footer>
@@ -311,6 +322,7 @@ export default {
           </base-button>
         </template>
       </modal-comp>
+      
       <modal-comp v-model:show="modal.ubahPakan" modal-classes="modal-md">
         <template #header>
           <h3 class="modal-title">Detail {{ pageTitle }}</h3>
@@ -320,49 +332,42 @@ export default {
             <div class="row">
               <!-- nama pakan -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.nama_pakan"
-                  type="text"
-                  name="nama_pakan"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Nama Pakan"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.jenis_pakan" type="text" name="jenis_pakan">
+                  <base-input v-bind="field" placeholder="Nama Pakan" label="Nama Pakan" required></base-input>
                 </field-form>
               </div>
+
               <!-- interval pemberian pakan -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.interval"
-                  type="text"
-                  name="interval"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Interval"
-                    label="Jenis Pakan"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.interval_pakan" type="number" name="interval">
+                  <base-input v-bind="field" placeholder="Masukan interval dalam hari"
+                    label="Interval Pemberian Pakan (Hari)" type="number" required>
+                  </base-input>
                 </field-form>
               </div>
+
               <!-- satuan pakan (tong/ball) -->
               <div class="col-12">
-                <base-input
-                  name="satuan"
-                  placeholder="Satuan Pakan"
-                  label="Satuan Pakan"
-                >
-                  <multi-select
-                    v-model="input.satuan"
-                    :options="g$ddKeteranganTambahPakan"
-                    placeholder="Pilih Satuan Pakan"
-                    :show-labels="false"
-                  />
+                <base-input name="satuan" placeholder="Satuan Pakan" label="Satuan Pakan">
+                  <multi-select v-model="input.satuan" :options="g$ddKeteranganTambahPakan"
+                    placeholder="Pilih Satuan Pakan" :show-labels="false" required />
                 </base-input>
+              </div>
+
+              <!-- Komposisi -->
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.komposisi" type="text" name="komposisi">
+                  <base-input v-bind="field" placeholder="Contoh: Bongkol Jagung 15%, Premix 0,1%, Jagung 60%"
+                    label="Komposisi" required></base-input>
+                </field-form>
+              </div>
+
+              <!-- Nutrien -->
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.nutrien" type="text" name="nutrien">
+                  <base-input v-bind="field" placeholder="Contoh: BK: 87%; PK 21%; LK 24%" label="Nutrien" required>
+                  </base-input>
+                </field-form>
               </div>
             </div>
           </form-comp>
@@ -383,7 +388,7 @@ export default {
         <template #body>
           <p>
             Yakin ingin menghapus {{ pageTitle }}:
-            <strong>{{ input.nama_pakan }}</strong>
+            <strong>{{ input.jenis_pakan }}</strong>
           </p>
         </template>
         <template #footer>
