@@ -1,17 +1,17 @@
 import { defineStore } from "pinia";
-import * as s$bahanPakan from "@/services/monitoring/pakan";
+import * as s$bahanPakan from "@/services/monitoring/bahanPakan";
 
-const u$pakan = defineStore({
+const u$bahanPakan = defineStore({
   id: "bahanPakan",
   state: () => ({
     bahanPakan: [],
     detailBahanPakan: [],
   }),
   actions: {
-    // Pakan
+    // Bahan pakan
     async a$bahanPakanList(request) {
       try {
-        const { data } = await s$bahanPakan.listJenis(request);
+        const { data } = await s$bahanPakan.listJenisBahanPakan(request);
         this.bahanPakan = data.list;
       } catch ({ error }) {
         this.pakan = [];
@@ -41,22 +41,28 @@ const u$pakan = defineStore({
       }
     },
 
-    // Detail Pakan
+    // Detail bahan pakan
     async a$bahanPakanDetail(req) {
       try {
-        const { data } = await s$pakan.listPakan(req);
-        this.detailPakan = data.list;
+        const { data } = await s$bahanPakan.listBahanPakan(req);
+        this.detailBahanPakan = data.list;
       } catch ({ error }) {
         this.pakan = [];
         throw error;
       }
     },
+    async a$bahanPakanDetailAdd(request) {
+      try {
+        await s$bahanPakan.tambahBahanPakan(request);
+      } catch ({ error }) {
+        throw error;
+      }
+    },
   },
   getters: {
-    g$pakanList: (state) => state.pakan,
-    g$detailPakan: (state) => state.detailPakan,
-    g$totalPakan: (state) => state.totalPakan,
+    g$bahanPakanList: (state) => state.bahanPakan,
+    g$detailBahanPakan: (state) => state.detailBahanPakan,
   },
 });
 
-export default u$pakan;
+export default u$bahanPakan;

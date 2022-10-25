@@ -7,9 +7,10 @@ const { api } = subApiUrl;
 const add = (req) => baseApi.post(`${api}/bahan-pakan/jenis`, req);
 const edit = (req) => baseApi.put(`${api}/bahan-pakan/jenis`, req);
 const del = (req) => baseApi.delete(`${api}/bahan-pakan/jenis`, { data: req });
-const listJenis = (req) => baseApi.get(`${api}/bahan-pakan/jenis${req}`);
+const listJenisBahanPakan = (req) => baseApi.get(`${api}/bahan-pakan/jenis${req}`);
 
 // Detail pakan
-const listPakan = (req) => baseApi.get(`${api}/bahan-pakan/?id_jenis_pakan=${req}`);
+const listBahanPakan = (req) => baseApi.get(`${api}/bahan-pakan?id_jenis_bahan_pakan=${req}`);
+const tambahBahanPakan = (req) => baseApi.post(`${api}/bahan-pakan`, req);
 
-export { add, edit, del, listJenis, listPakan };
+export { add, edit, del, listJenisBahanPakan, listBahanPakan, tambahBahanPakan };

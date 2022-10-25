@@ -1,28 +1,21 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import d$pakan from "@/stores/monitoring/pakan";
+import d$bahanPakan from "@/stores/monitoring/bahanPakan";
 import d$dropdown from "@/stores/dropdown";
-
-import { object as y$object, string as y$string, ref as y$ref } from "yup";
+import { ubahTanggal } from "@/utils/locale/ubahTanggal";
 
 export default {
   metaInfo: () => ({
     title: "Detail Bahan Pakan",
   }),
-  setup() {
-    const schema = y$object({});
-    return {
-      schema,
-    };
-  },
   data: () => ({
-    pageTitle: "Detail Data Pakan",
+    pageTitle: "Detail Bahan Pakan",
     // Input
     input: {
+      id_bahan_pakan: null,
       tanggal: "",
       keterangan: "",
       jumlah: "",
-      satuanPakan: "",
     },
     // UI
     modal: {
@@ -33,34 +26,24 @@ export default {
     dt: {
       column: [
         {
-          name: "",
+          name: "tanggal",
           th: "Tanggal",
+          render: ({ tanggal }) => ubahTanggal(tanggal),
         },
         {
-          name: "",
+          name: "keterangan",
           th: "Keterangan",
         },
         {
-          name: "",
+          name: "jumlah",
           th: "Jumlah",
         },
-        {
-          name: "",
-          th: "Stok",
-        },
       ],
-      action: [
-        {
-          text: "Detail",
-          color: "info",
-          event: "detail-ternak",
-        },
-      ],
+      action: [],
     },
-    infoTernak: {},
   }),
   computed: {
-    ...mapState(d$pakan, ["g$detailPakan"]),
+    ...mapState(d$bahanPakan, ["g$detailBahanPakan"]),
     ...mapState(d$dropdown, ["g$ddKeteranganDetailPakan", "g$ddSatuanPakan"]),
     modals() {
       return Object.values(this.modal).includes(true);
@@ -74,24 +57,38 @@ export default {
     },
   },
   async mounted() {
-    await this.a$pakanDetail(this.$route.params.id).catch((error) =>
+    await this.a$bahanPakanDetail(this.$route.params.id).catch((error) =>
       this.notify(error, false)
     );
   },
   methods: {
-    ...mapActions(d$pakan, ["a$pakanDetail"]),
+    ...mapActions(d$bahanPakan, [
+      "a$bahanPakanDetail",
+      "a$bahanPakanDetailAdd",
+    ]),
     clearInput() {
       this.input = {
         id: null,
       };
     },
-    async triggerDetail(row) {
-      try {
-        this.infoTernak = { ...row };
-        this.modal.detailTernak = true;
-      } catch (error) {}
+    async addDetailPakan() {
+      const id_jenis_bahan_pakan = this.$route.params.id;
+      const { tanggal, keterangan, jumlah } = this.input;
+      const data = {
+        id_jenis_bahan_pakan,
+        tanggal,
+        keterangan,
+        jumlah,
+      };
+      await this.a$bahanPakanDetailAdd(data).catch((error) =>
+        this.notify(error, false)
+      );
+      await this.a$bahanPakanDetail(this.$route.params.id).catch((error) =>
+        this.notify(error, false)
+      );
+      this.modal.addDetailPakan = false;
     },
-  },
+  }
 };
 </script>
 
@@ -113,283 +110,41 @@ export default {
     </template>
 
     <template #body>
-      <empty-result v-if="!g$detailPakan.length" :text="`${pageTitle}`" />
-      <data-table
-        v-else
-        :index="true"
-        :data="g$detailPakan"
-        :columns="dt.column"
-        :actions="dt.action"
-        @detail-ternak="triggerDetail"
-      />
+      <empty-result v-if="!g$detailBahanPakan.length" :text="`${pageTitle}`" />
+      <data-table v-else :index="true" :data="g$detailBahanPakan" :columns="dt.column" :actions="dt.action" />
     </template>
 
-    <!-- Modal Detail Ternak -->
     <template #modal>
-      <modal-comp v-model:show="modal.detailTernak" modal-classes="modal-md">
-        <template #header>
-          <h3 class="modal-title">
-            Detail Ternak Nomor {{ infoTernak.id_ternak }}
-          </h3>
-        </template>
-        <template v-if="modal.detailTernak" #body>
-          <div style="max-height: 450px; overflow-y: auto; overflow-x: hidden">
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">ID Ternak</span>
-              </div>
-              <div class="col">
-                : <span style="font-weight: 300"> {{ infoTernak.id_ternak }}</span>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">ID RFID</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.rf_id  }}</span
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Varietas</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.nama_varietas }}</span
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Jenis Kelamin</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.jenis_kelamin[0] }}</span
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">ID Dam (Ibu)</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300"> {{ infoTernak.id_induk }}</span>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">ID Sire (Bapak)</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.id_pejantan }}</span
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Kandang</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.kandang.kode_kandang }}</span
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Fase Pemeliharaan</span>
-              </div>
-              <div class="col">
-                : <span style="font-weight: 300"> {{ infoTernak.fase }}</span>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Jenis Pakan</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.nama_pakan }}</span
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Berat</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.berat_berkala }} kg</span
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Suhu</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.suhu_berkala }}&deg;C</span
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Status Kesehatan</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.status_kesehatan[0] }}</span
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Nama Penyakit</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.penyakit }}</span
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Tanggal Masuk</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.tanggal_masuk }}</span
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Umur</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.umur }} Bulan</span
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Tanggal Keluar</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.tanggal_keluar  }}</span
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Status Keluar</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.status_keluar  }}</span
-                >
-              </div>
-            </div>
-          </div>
-        </template>
-        <template #footer> </template>
-      </modal-comp>
-
       <!-- Tambah detail pakan -->
-      <modal-comp v-model:show="modal.addDetailPakan" modal-classes="modal-md">
+      <modal-comp v-model:show="modal.addDetailPakan" modal-classes="modal-sm">
         <template #header>
           <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
         </template>
         <template #body>
-          <form-comp v-if="modal.addDetailPakan" :validation-schema="schema">
+          <form-comp v-if="modal.addDetailPakan">
             <div class="row">
               <!-- Tanggal -->
               <div class="col-12">
-                <base-input
-                  name="tanggal"
-                  class=""
-                  placeholder="YYYY-MM-DD"
-                  label="Tanggal"
-                  required
-                >
-                  <flat-pickr
-                    v-model.lazy="input.tanggal"
-                    :config="{ mode: 'single', allowInput: true }"
-                    class="form-control datepicker"
-                    placeholder="Pilih Tanggal"
-                  />
+                <base-input name="tanggal" class="" placeholder="YYYY-MM-DD" label="Tanggal" required>
+                  <flat-pickr v-model.lazy="input.tanggal" :config="{ mode: 'single', allowInput: true }"
+                    class="form-control datepicker" placeholder="Pilih tanggal" />
                 </base-input>
               </div>
 
               <!-- Keterangan -->
               <div class="col-12">
-                <base-input
-                  name="keterangan"
-                  placeholder="Pakan masuk atau keluar?"
-                  label="Keterangan"
-                >
-                  <multi-select
-                    v-model="input.keterangan"
-                    :options="g$ddKeteranganDetailPakan"
-                    placeholder="Pakan masuk atau keluar?"
-                    :show-labels="false"
-                  />
+                <base-input name="keterangan" placeholder="Pakan masuk atau keluar?" label="Keterangan">
+                  <multi-select v-model="input.keterangan" :options="g$ddKeteranganDetailPakan"
+                    placeholder="Masuk atau keluar" :show-labels="false" />
                 </base-input>
               </div>
 
               <!-- Jumlah -->
-              <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.jumlah"
-                  type="text"
-                  name="stok"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Stok"
-                  ></base-input>
+              <div class="col-12">
+                <field-form v-slot="{ field }" v-model="input.jumlah" type="number" name="jumlah">
+                  <base-input v-bind="field" placeholder="Jumlah dalam satuan" label="Jumlah" type="number">
+                  </base-input>
                 </field-form>
-              </div>
-
-              <!-- Satuan pakan -->
-              <div class="col-6">
-                <base-input
-                  name="satuan_pakan"
-                  placeholder="Satuan Pakan"
-                  label="Satuan Pakan"
-                >
-                  <multi-select
-                    v-model="input.satuanPakan"
-                    :options="g$ddSatuanPakan"
-                    placeholder="Pilih Satuan Pakan"
-                    :show-labels="false"
-                  />
-                </base-input>
               </div>
             </div>
           </form-comp>
@@ -398,7 +153,7 @@ export default {
           <base-button type="secondary" @click="modal.addDetailPakan = false">
             Tutup
           </base-button>
-          <base-button type="primary" @click="addDetailPakan()">
+          <base-button type="primary" @click="addDetailPakan">
             Tambah {{ pageTitle }}
           </base-button>
         </template>
