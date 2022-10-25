@@ -78,7 +78,6 @@ export default {
         )
         .then((response) => {
           this.cuaca = response.data;
-          console.log(this.cuaca);
         });
     },
   },

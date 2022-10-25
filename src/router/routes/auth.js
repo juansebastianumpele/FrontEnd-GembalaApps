@@ -8,6 +8,8 @@ const authRoutes = {
   component: AuthLayout,
   beforeEnter: (to, from, next) => {
     const { role } = certDetail();
+    // if (to.matched.some(({ path }) => path.includes("verify")) && !role) {
+    //   next({ name: "Success" });
     if (!to.matched.some(({ path }) => path.includes("auth")) && !role)
       next({ name: "Login" });
     else if (to.path === "/" && role !== "") next({ name: "Home" });
@@ -35,13 +37,13 @@ const authRoutes = {
       component: () => import("@/views/Auth/ResetPassword.vue"),
     },
     {
-      path: "/auth/success-verify",
-      name: "Verifikasi Berhasil",
+      path: "/verify/success-verify",
+      name: "Success",
       component: () => import("@/views/Auth/SuccessVerify.vue"),
     },
     {
-      path: "/auth/failed-verify",
-      name: "Verifikasi Gagal",
+      path: "/verify/failed-verify",
+      name: "Failed",
       component: () => import("@/views/Auth/FailedVerify.vue"),
     },
     {

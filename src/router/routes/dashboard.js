@@ -148,6 +148,26 @@ const dashboardRoutes = [
       },
     ],
   },
+  {
+    path: "/fase",
+    component: DashboardLayout,
+    beforeEnter: (to, from, next) => {
+      const { role } = certDetail();
+      if (to.matched.some(({ meta }) => meta.requiresAuth) && role === "") {
+        next({ name: "Login" });
+      } else {
+        next();
+      }
+    },
+    children: [
+      {
+        path: "pemasukan",
+        name: "Pemasukan",
+        component: () => import("@/views/Dashboard/Fase/Pemasukan.vue"),
+        meta: { requireAuth: true },
+      },
+    ],
+  },
 ];
 
 export default dashboardRoutes;
