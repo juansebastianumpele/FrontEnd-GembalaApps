@@ -46,7 +46,7 @@ const useAuthStore = defineStore({
         this.a$setUserInfo();
         return "Login Berhasil!";
       } catch ({ error, message }) {
-        throw (error || message) ?? "Login failed!";
+        throw (error || message) ?? "Login Gagal!";
       }
     },
     async a$logout() {
@@ -56,7 +56,7 @@ const useAuthStore = defineStore({
         this.a$setUserInfo();
         return "Logout Berhasil!";
       } catch ({ error, message }) {
-        throw (error || message) ?? "Logout failed!";
+        throw (error || message) ?? "Logout Gagal!";
       }
     },
 
@@ -65,7 +65,7 @@ const useAuthStore = defineStore({
         await s$auth.register(request);
         return "Register Berhasil!";
       } catch ({ error, message }) {
-        throw (error || message) ?? "Register failed!";
+        throw (error || message) ?? "Register Gagal!";
       }
     },
   },
