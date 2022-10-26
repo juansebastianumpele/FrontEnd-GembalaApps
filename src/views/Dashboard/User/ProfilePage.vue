@@ -179,6 +179,21 @@ export default {
           <div class="col-6">
             <field-form
               v-slot="{ field }"
+              v-model="g$userDetail.nama_peternakan"
+              type="text"
+              name="nama_peternakan"
+            >
+              <base-input
+                v-bind="field"
+                placeholder="Nama Peternakan"
+                label="Nama Peternakan"
+                disabled
+              ></base-input>
+            </field-form>
+          </div>
+          <div class="col-6">
+            <field-form
+              v-slot="{ field }"
               v-model.number="g$userDetail.email"
               type="email"
               name="email"
@@ -207,7 +222,7 @@ export default {
               ></base-input>
             </field-form>
           </div>
-          <div class="col-6">
+          <div class="col-12">
             <field-form
               v-slot="{ field }"
               v-model="g$userDetail.alamat"
@@ -218,21 +233,6 @@ export default {
                 v-bind="field"
                 placeholder="Alamat"
                 label="Alamat"
-                disabled
-              ></base-input>
-            </field-form>
-          </div>
-          <div class="col-6">
-            <field-form
-              v-slot="{ field }"
-              v-model="g$userDetail.nama_peternakan"
-              type="text"
-              name="nama_peternakan"
-            >
-              <base-input
-                v-bind="field"
-                placeholder="Nama Peternakan"
-                label="Nama Peternakan"
                 disabled
               ></base-input>
             </field-form>

@@ -25,7 +25,8 @@ export default {
       id_kandang: null,
       kode_kandang: "",
       jenis_kandang: "",
-      jenis_pakan: "",
+      jenispakan: "",
+      persentase_kebutuhan_pakan: 5,
     },
     // UI
     modal: {
@@ -51,8 +52,8 @@ export default {
         {
           name: "jenis_pakan",
           th: "Jenis Pakan",
-          render: ({ jenis_pakan }) =>
-            jenis_pakan ? jenis_pakan.jenis_pakan : "",
+          render: ({ jenispakan }) =>
+            jenispakan ? jenispakan.jenis_pakan : "",
         },
         {
           name: "kebutuhan_pakan",
@@ -72,7 +73,7 @@ export default {
           event: "ubah-kandang",
         },
         {
-          text: "Delete",
+          text: "Hapus",
           color: "danger",
           event: "hapus-kandang",
         },
@@ -115,10 +116,17 @@ export default {
     },
     async addKandang() {
       try {
-        const { kode_kandang, jenis_kandang } = this.input;
+        const {
+          kode_kandang,
+          jenis_kandang,
+          jenispakan,
+          persentase_kebutuhan_pakan,
+        } = this.input;
         const data = {
           kode_kandang,
           jenis_kandang,
+          id_jenis_pakan: jenispakan.id,
+          persentase_kebutuhan_pakan,
         };
         await this.schema.validate(data);
         await this.a$kandangAdd(data);
@@ -132,14 +140,21 @@ export default {
     },
     async editKandang() {
       try {
-        const { id_kandang, kode_kandang, jenis_kandang } = this.input;
+        const {
+          id_kandang,
+          kode_kandang,
+          jenis_kandang,
+          jenispakan,
+          persentase_kebutuhan_pakan,
+        } = this.input;
         const data = {
           id_kandang,
           kode_kandang,
           jenis_kandang,
+          id_jenis_pakan: jenispakan.id,
+          persentase_kebutuhan_pakan,
         };
         await this.schema.validate(data);
-        console.log(data);
         await this.a$kandangEdit(data);
         this.modal.ubahKandang = false;
         this.notify(`Edit ${this.pageTitle} Sukses!`);
@@ -167,11 +182,22 @@ export default {
     },
     async triggerEditModal(row) {
       try {
-        const { id_kandang, kode_kandang, jenis_kandang } = row;
+        const {
+          id_kandang,
+          kode_kandang,
+          jenis_kandang,
+          jenispakan,
+          persentase_kebutuhan_pakan,
+        } = row;
         this.input = {
           id_kandang,
           kode_kandang,
           jenis_kandang,
+          jenispakan: {
+            id: jenispakan ? jenispakan.id_jenis_pakan : "",
+            name: jenispakan ? jenispakan.jenis_pakan : "",
+          },
+          persentase_kebutuhan_pakan,
         };
         this.modal.ubahKandang = true;
       } catch (error) {
@@ -279,16 +305,17 @@ export default {
                   />
                 </base-input>
               </div>
+
               <!-- jenis pakan -->
               <div class="col-12">
                 <base-input
-                  name="listJenisPakan"
+                  name="jenispakan"
                   placeholder="Jenis Pakan"
                   label="Jenis Pakan"
                   required
                 >
                   <multi-select
-                    v-model="input.jenis_pakan"
+                    v-model="input.jenispakan"
                     :options="g$ddListJenisPakan"
                     label="name"
                     track-by="id"
@@ -296,6 +323,23 @@ export default {
                     :show-labels="false"
                   />
                 </base-input>
+              </div>
+
+              <!-- persentase kebutuhan pakan -->
+              <div class="col-6">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.persentase_kebutuhan_pakan"
+                  type="number"
+                  name="persentase_kebutuhan_pakan"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Persentase Kebutuhan Pakan"
+                    label="Persentase Kebutuhan Pakan"
+                    value="5"
+                  ></base-input>
+                </field-form>
               </div>
             </div>
           </form-comp>
@@ -311,7 +355,7 @@ export default {
       </modal-comp>
 
       <!-- Ubah kandang -->
-      <modal-comp v-model:show="modal.ubahKandang" modal-classes="modal-lg">
+      <modal-comp v-model:show="modal.ubahKandang" modal-classes="modal-md">
         <template #header>
           <h3 class="modal-title">Detail {{ pageTitle }}</h3>
         </template>
@@ -348,6 +392,41 @@ export default {
                     :show-labels="false"
                   />
                 </base-input>
+              </div>
+
+              <!-- jenis pakan -->
+              <div class="col-12">
+                <base-input
+                  name="jenispakan"
+                  placeholder="Jenis Pakan"
+                  label="Jenis Pakan"
+                  required
+                >
+                  <multi-select
+                    v-model="input.jenispakan"
+                    :options="g$ddListJenisPakan"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih Jenis Pakan"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+
+              <!-- persentase kebutuhan pakan -->
+              <div class="col-6">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.persentase_kebutuhan_pakan"
+                  type="number"
+                  name="persentase_kebutuhan_pakan"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Persentase Kebutuhan Pakan"
+                    label="Persentase Kebutuhan Pakan"
+                  ></base-input>
+                </field-form>
               </div>
             </div>
           </form-comp>

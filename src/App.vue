@@ -45,7 +45,7 @@ export default {
 
 <style>
 .bg-gradient-argon {
-  background: linear-gradient(87deg, #7eb918 0, #006329 100%) !important;
+  background: linear-gradient(87deg, #006329 0, #7eb918 100%) !important;
 }
 .text-success {
   color: #006329 !important;

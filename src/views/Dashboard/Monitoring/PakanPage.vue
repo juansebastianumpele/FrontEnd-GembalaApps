@@ -70,7 +70,7 @@ export default {
     },
   },
   async mounted() {
-    await this.a$bahanPakanList('').catch((error) => this.notify(error, false));
+    await this.a$bahanPakanList("").catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$bahanPakan, [
@@ -101,7 +101,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$bahanPakanList('');
+        this.a$bahanPakanList("");
       }
     },
     async ubahBahanPakan() {
@@ -110,7 +110,7 @@ export default {
         const data = {
           id_jenis_bahan_pakan,
           jenis_bahan_pakan,
-          satuan
+          satuan,
         };
         console.log(data);
         await this.a$bahanPakanEdit(data);
@@ -119,7 +119,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$bahanPakanList('');
+        this.a$bahanPakanList("");
       }
     },
     async delPakan() {
@@ -134,13 +134,12 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$bahanPakanList('');
+        this.a$bahanPakanList("");
       }
     },
     async triggerEdit(row) {
       try {
-        const { id_jenis_bahan_pakan, jenis_bahan_pakan, satuan } =
-          row;
+        const { id_jenis_bahan_pakan, jenis_bahan_pakan, satuan } = row;
         this.input = {
           id_jenis_bahan_pakan,
           jenis_bahan_pakan,
@@ -188,20 +187,18 @@ export default {
     <template #header>
       <nav class="nav nav-pills flex-column flex-sm-row mb-4">
         <li>
-          <router-link
-            class="flex-sm-fill text-sm-center nav-link"
-            to="../data-pakan"
-          >
-            Daftar Pakan
-          </router-link>
+          <base-button type="secondary" class="btn-lg">
+            <router-link to="../data-pakan" class="text-dark">
+              Daftar Pakan
+            </router-link>
+          </base-button>
         </li>
         <li>
-          <router-link
-            class="flex-sm-fill text-sm-center nav-link active ml-3"
-            to="bahan-pakan"
-          >
-            Daftar Bahan Pakan
-          </router-link>
+          <base-button type="success1" class="btn-lg ml-3">
+            <router-link to="bahan-pakan" class="text-white">
+              Daftar Bahan Pakan
+            </router-link>
+          </base-button>
         </li>
       </nav>
       <div class="row align-items-center">
@@ -229,7 +226,6 @@ export default {
         @detail-pakan="triggerDetail"
       />
     </template>
-
 
     <template #modal>
       <!-- Tambah bahan pakan -->
