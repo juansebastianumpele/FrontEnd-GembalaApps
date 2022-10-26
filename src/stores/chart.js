@@ -12,7 +12,6 @@ const u$total = defineStore({
     ChartbyTimbangan: [],
     chartFase: [],
     kandang: [],
-    
   }),
   actions: {
     async a$byKesehatan() {
@@ -136,7 +135,6 @@ const u$total = defineStore({
       ],
     }),
     g$byKesehatan: (state) => ({
-      categories: [state.chartKesehatan.sehat, state.chartKesehatan.sakit],
       series: [
         {
           name: "Total",
