@@ -44,6 +44,11 @@ const useAuthStore = defineStore({
         const { data } = await login(payload);
         setCk("CERT", data.token, { datetime: d(data.expiresAt) });
         this.a$setUserInfo();
+
+        if (this.userInfo.role == 'superadmin') {
+          return "Login Superadmin Berhasil!"
+        }
+
         return "Login Berhasil!";
       } catch ({ error, message }) {
         throw (error || message) ?? "Login Gagal!";

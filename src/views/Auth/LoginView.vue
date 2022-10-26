@@ -18,9 +18,13 @@ export default {
     async function onSubmit(values) {
       try {
         const login = await auth.a$login(values);
+
         if (login === "Login Berhasil!") {
           notify(login);
           router.push({ name: "Home" });
+        } else if (login === "Login Superadmin Berhasil!") {
+          notify(login);
+          router.push({ name: "Superadmin" });
         } else {
           throw new Error(login);
         }
@@ -51,11 +55,7 @@ export default {
           <div class="col-md-8 px-5">
             <h1 class="text-black">Selamat Datang di {{ siteMeta.title }}!</h1>
             <br />
-            <img
-              style="width: 100px"
-              src="../../../public/images/logo.png"
-              alt=""
-            />
+            <img style="width: 100px" src="../../../public/images/logo.png" alt="" />
           </div>
         </div>
       </div>
@@ -70,28 +70,15 @@ export default {
               <small>Silahkan Masukan Username dan Password</small>
             </div>
             <form-comp :validation-schema="schema" @submit="onSubmit">
-              <base-input
-                name="email"
-                addon-left-icon="fas fa-envelope"
-                placeholder="Email"
-              >
+              <base-input name="email" addon-left-icon="fas fa-envelope" placeholder="Email">
               </base-input>
 
-              <base-input
-                name="kata_sandi"
-                addon-left-icon="fas fa-lock"
-                type="password"
-                placeholder="Kata Sandi"
-                password
-              >
+              <base-input name="kata_sandi" addon-left-icon="fas fa-lock" type="password" placeholder="Kata Sandi"
+                password>
               </base-input>
 
               <div class="text-center">
-                <base-button
-                  type="success1"
-                  native-type="submit"
-                  class="my-2 btn-lg px-6 rounded-lg text-white"
-                >
+                <base-button type="success1" native-type="submit" class="my-2 btn-lg px-6 rounded-lg text-white">
                   Masuk
                 </base-button>
               </div>

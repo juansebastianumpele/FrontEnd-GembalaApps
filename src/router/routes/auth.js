@@ -8,11 +8,10 @@ const authRoutes = {
   component: AuthLayout,
   beforeEnter: (to, from, next) => {
     const { role } = certDetail();
-    // if (to.matched.some(({ path }) => path.includes("verify")) && !role) {
-    //   next({ name: "Success" });
     if (!to.matched.some(({ path }) => path.includes("auth")) && !role)
       next({ name: "Login" });
-    else if (to.path === "/" && role !== "") next({ name: "Home" });
+    else if (to.path === "/" && role === "admin") next({ name: "Home" });
+    else if (to.path === "/" && role === "superadmin") next({ name: "Superadmin" });
     else next();
   },
   children: [

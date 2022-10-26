@@ -18,8 +18,12 @@ router.beforeEach((to, from, next) => {
     next({ name: "Success" });
   } else if (to.matched.some(({ meta }) => meta.requireAuth) && role === "") {
     next({ name: "Login" });
-  } else if (to.matched.some(({ path }) => path.includes("auth")) && role) {
+  } else if (to.matched.some(({path}) => path.includes("superadmin")) && role !== "superadmin") {
+    next({ name: "Login" });
+  } else if (to.matched.some(({ path }) => path.includes("auth")) && role === "admin") {
     next({ name: "Home" });
+  } else if (to.matched.some(({ path }) => path.includes("auth")) && role === "superadmin") {
+    next({ name: "Superadmin" });
   } else {
     next();
   }
