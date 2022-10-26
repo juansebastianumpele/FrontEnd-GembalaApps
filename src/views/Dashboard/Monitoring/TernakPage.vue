@@ -134,7 +134,7 @@ export default {
     infoTernak: {},
   }),
   computed: {
-    ...mapState(d$ternak, ["g$ternakList", "g$ternakDetail"]),
+    ...mapState(d$ternak, ["g$ternakList"]),
     ...mapState(d$kesehatan, ["g$detailKesehatan"]),
     ...mapState(d$chart, ["g$byTimbangan"]),
     ...mapState(d$dropdown, [
