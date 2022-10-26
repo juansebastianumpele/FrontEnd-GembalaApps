@@ -1,7 +1,7 @@
 <script>
 export default {
   metaInfo: () => ({
-    title: "Data Penyakit",
+    title: "Fase Pemasukan",
   }),
   data: () => ({
     pageTitle: "Langkah Kerja",
@@ -30,11 +30,39 @@ export default {
           </li>
         </nav>
       </div>
+      <div>
+        <h3>Langkah Kerja Fase Pemasukan :</h3>
+      </div>
     </template>
 
     <template #body>
       <div>
-        <h1>TEST</h1>
+        <card-comp>
+          <ol>
+            <li>
+              Periksa domba secara visual untuk mendapatkan identitas ternak
+              yang terdiri dari bangsa dan jenis kelamin.
+            </li>
+            <li>
+              Periksa kondisi ternak, apakah terdapat cacat atau sakit yang
+              berpotensi mempersulit proses budidaya. Pengecekan terdiri dari
+              cek poel, cek mulut, cek telinga, kuku kaki, cek kondisi fisik
+              lainnya, dan BCS domba tersebut.
+            </li>
+            <li>
+              Apabila domba dalam kondisi baik dan memenuhi kriteria, domba akan
+              diterima.
+            </li>
+            <li>
+              Pasangkan kalung RFID dan daftarkan menggunakan RFID mobile.
+              Selanjutnya akan terbentuk ID ternak yang baru.
+            </li>
+            <li>
+              Buka SOP pemasukan pada mobile apps untuk melengkapi data ternak
+              yang baru saja dimasukkan sesuai indikator yang ditetapkan.
+            </li>
+          </ol>
+        </card-comp>
       </div>
     </template>
   </main-layout>

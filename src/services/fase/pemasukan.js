@@ -3,10 +3,6 @@ import { subApiUrl } from "@/utils/constant";
 
 const { api } = subApiUrl;
 
-const listTotal = () => baseApi.get(`${api}/lk-pemasukan/ternak-baru`);
-const listJantan = () =>
-  baseApi.get(`${api}/lk-pemasukan/ternak-baru?jenis_kelamin=Jantan`);
-const listBetina = () =>
-  baseApi.get(`${api}/lk-pemasukan/ternak-baru?jenis_kelamin=Betina`);
+const list = () => baseApi.get(`${api}/lk-pemasukan`);
 
-export { listTotal, listJantan, listBetina };
+export { list };
