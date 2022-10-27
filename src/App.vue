@@ -19,7 +19,6 @@ export default {
   async created() {
     try {
       await this.a$setUserInfo();
-      this.$router.replace({ name: "Login" });
     } catch (error) {
       this.notify(error, false);
     }

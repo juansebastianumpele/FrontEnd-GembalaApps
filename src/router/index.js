@@ -14,14 +14,8 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const { role } = certDetail();
 
-  if (to.matched.some(({ meta }) => meta.requireAuth) && role === "") {
+  if (to.matched.some(({ meta }) => meta.requiresAuth) && !role) {
     next({ name: "Login" });
-  } else if (to.matched.some(({path}) => path.includes("superadmin")) && role !== "superadmin") {
-    next({ name: "Login" });
-  } else if (to.matched.some(({ path }) => path.includes("auth")) && role === "admin") {
-    next({ name: "Home" });
-  } else if (to.matched.some(({ path }) => path.includes("auth")) && role === "superadmin") {
-    next({ name: "Superadmin" });
   } else {
     next();
   }
