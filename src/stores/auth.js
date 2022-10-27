@@ -25,8 +25,6 @@ const useAuthStore = defineStore({
     async a$setUserInfo() {
       try {
         const { id_user, role, nama_pengguna } = certDetail();
-        if (!id_user && !nama_pengguna && !role)
-          throw new Error("Tidak ada info Pengguna!");
         this.id = id_user;
         this.name = nama_pengguna;
         this.role = role;
