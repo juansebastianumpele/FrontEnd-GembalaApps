@@ -90,32 +90,65 @@ export default {
 <template>
   <div class="row">
     <div class="col">
-      <p class="text-center pt-1 mt-1">{{ tanggal }}</p>
-      <img :src="gambarCuaca" class="mx-auto d-block p-0" alt="..." />
-      <p class="text-center m-0 p-0 text-uppercase">{{ deskripsi }}</p>
-      <p class="temp text-center m-0 p-0">{{ suhu }}</p>
+      <p class="text-left text-white pt-1 mt-1 ml-3" style="font-size: small">
+        {{ tanggal }}
+      </p>
     </div>
-
+  </div>
+  <div class="row mt--4">
+    <div class="col-6">
+      <img
+        style="width: 80px"
+        :src="gambarCuaca"
+        class="d-block p-0 m-0"
+        alt="..."
+      />
+      <p
+        class="text-left text-white ml-2 mt--3 m-0 p-0 text-capitalize"
+        style="font-size: small"
+      >
+        {{ deskripsi }}
+      </p>
+    </div>
+    <div class="col-4">
+      <p
+        class="temp text-white text-left ml--7 mt-2 mb-0 p-0"
+        style="font-size: 32px"
+      >
+        {{ suhu }}
+      </p>
+    </div>
+    <div class="col-2">
+      <p
+        class="text-left text-white ml--8 mt-3 mb-0 p-0"
+        style="font-size: 12px"
+      >
+        Terasa Seperti <br />
+        {{ terasaSeperti }}
+      </p>
+    </div>
+  </div>
+  <div class="row mt-3">
     <div class="col kecil">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          <i class="fa-solid fa-cloud-sun"></i> Terasa seperti:
-          {{ terasaSeperti }}
-        </li>
-        <li class="list-group-item">
-          <i class="fa-solid fa-temperature-half"></i> Maks/Min: {{ maksMin }}
-        </li>
-        <li class="list-group-item">
+      <div class="row">
+        <div class="col-6 text-white">
+          <i class="fa-solid fa-temperature-half"></i> Maks/Min:
+          {{ maksMin }}
+        </div>
+        <div class="col-6 text-white">
           <i class="fa-solid fa-droplet"></i> Kelembapan: {{ kelembapan }}%
-        </li>
-        <li class="list-group-item">
+        </div>
+      </div>
+      <hr class="bg-white m-2 mr-4 ml--2" />
+      <div class="row">
+        <div class="col-6 text-white">
           <i class="fa-solid fa-arrows-to-circle"></i> Tekanan:
           {{ tekanan }} hPa
-        </li>
-        <li class="list-group-item">
+        </div>
+        <div class="col-6 text-white">
           <i class="fa-solid fa-wind"></i> Angin: {{ kecepatanAngin }} Km/jam
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>

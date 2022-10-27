@@ -24,7 +24,7 @@ export default {
     input: {
       id_kandang: null,
       kode_kandang: "",
-      jenis_kandang: "",
+      jeniskandang: "",
       jenispakan: "",
       persentase_kebutuhan_pakan: 5,
     },
@@ -42,15 +42,17 @@ export default {
           th: "Kode Kandang",
         },
         {
-          name: "jenis_kandang",
+          name: "jeniskandang",
           th: "Jenis Kandang",
+          render: ({ jeniskandang }) =>
+            jeniskandang ? jeniskandang.jenis_kandang : "-",
         },
         {
           name: "populasi",
           th: "Jumlah Populasi Ternak",
         },
         {
-          name: "jenis_pakan",
+          name: "jenispakan",
           th: "Jenis Pakan",
           render: ({ jenispakan }) =>
             jenispakan ? jenispakan.jenis_pakan : "",
@@ -97,7 +99,10 @@ export default {
   },
   async mounted() {
     await this.a$kandangList().catch((error) => this.notify(error, false));
-    await this.a$ddListJenisPakan().catch((error) => this.notify(error, false));
+    await this.a$ddListJenisPakan("").catch((error) =>
+      this.notify(error, false)
+    );
+    await this.a$ddJenisKandang().catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$daftarkandang, [
@@ -106,25 +111,24 @@ export default {
       "a$kandangDelete",
       "a$kandangEdit",
     ]),
-    ...mapActions(d$dropdown, ["a$ddListJenisPakan"]),
+    ...mapActions(d$dropdown, ["a$ddListJenisPakan", "a$ddJenisKandang"]),
     clearInput() {
       this.input = {
         id_kandang: null,
         kode_kandang: "",
-        jenis_kandang: "",
       };
     },
     async addKandang() {
       try {
         const {
           kode_kandang,
-          jenis_kandang,
+          jeniskandang,
           jenispakan,
           persentase_kebutuhan_pakan,
         } = this.input;
         const data = {
           kode_kandang,
-          jenis_kandang,
+          id_jenis_kandang: jeniskandang.id,
           id_jenis_pakan: jenispakan.id,
           persentase_kebutuhan_pakan,
         };
@@ -143,14 +147,14 @@ export default {
         const {
           id_kandang,
           kode_kandang,
-          jenis_kandang,
+          jeniskandang,
           jenispakan,
           persentase_kebutuhan_pakan,
         } = this.input;
         const data = {
           id_kandang,
           kode_kandang,
-          jenis_kandang,
+          id_jenis_kandang: jeniskandang.id,
           id_jenis_pakan: jenispakan.id,
           persentase_kebutuhan_pakan,
         };
@@ -185,14 +189,17 @@ export default {
         const {
           id_kandang,
           kode_kandang,
-          jenis_kandang,
+          jeniskandang,
           jenispakan,
           persentase_kebutuhan_pakan,
         } = row;
         this.input = {
           id_kandang,
           kode_kandang,
-          jenis_kandang,
+          jeniskandang: {
+            id: jeniskandang ? jeniskandang.id_jenis_kandang : "",
+            name: jeniskandang ? jeniskandang.jenis_kandang : "",
+          },
           jenispakan: {
             id: jenispakan ? jenispakan.id_jenis_pakan : "",
             name: jenispakan ? jenispakan.jenis_pakan : "",
@@ -293,13 +300,15 @@ export default {
               <!-- Jenis Kandang -->
               <div class="col-12">
                 <base-input
-                  name="jenis_kandang"
+                  name="jeniskandang"
                   placeholder="Jenis Kandang"
                   label="Jenis Kandang"
                 >
                   <multi-select
-                    v-model="input.jenis_kandang"
+                    v-model="input.jeniskandang"
                     :options="g$ddJenisKandang"
+                    label="name"
+                    track-by="id"
                     placeholder="Pilih Jenis Kandang"
                     :show-labels="false"
                   />
@@ -381,13 +390,15 @@ export default {
               <!-- Jenis kandang -->
               <div class="col-12">
                 <base-input
-                  name="jenis_kandang"
+                  name="jeniskandang"
                   placeholder="Jenis Kandang"
                   label="Jenis Kandang"
                 >
                   <multi-select
-                    v-model="input.jenis_kandang"
+                    v-model="input.jeniskandang"
                     :options="g$ddJenisKandang"
+                    label="name"
+                    track-by="id"
                     placeholder="Pilih Jenis Kandang"
                     :show-labels="false"
                   />

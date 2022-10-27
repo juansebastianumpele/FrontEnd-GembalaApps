@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import basicOptions from './config';
+import basicOptions from "./config";
 
 export default {
-  name: 'HcAreaspline',
+  name: "HcAreaspline",
   props: {
     categories: {
       type: Array,
@@ -45,7 +45,7 @@ export default {
     options() {
       return {
         chart: {
-          type: 'areaspline',
+          type: "areaspline",
           height: this.height,
         },
         ...basicOptions,

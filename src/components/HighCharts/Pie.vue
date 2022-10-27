@@ -1,5 +1,5 @@
 <template>
-  <highcharts :options="options"></highcharts>
+  <highcharts :options="options" class="ml--2"></highcharts>
 </template>
 
 <script>
@@ -80,7 +80,7 @@ export default {
           text: this.title,
           floating: this.floating,
           verticalAlign: "middle",
-          y: -20,
+          y: 1,
           style: {
             fontSize: "35px",
             fontWeight: "bold",

@@ -28,7 +28,6 @@ const u$dashboard = defineStore({
       try {
         const { data } = await s$dashboard.totalTernakByFase();
         this.totalByFase = data;
-        console.log(data);
       } catch ({ error }) {
         this.totalByFase = [];
         throw error;
@@ -90,7 +89,6 @@ const u$dashboard = defineStore({
     g$totalByFase: (state) => state.totalByFase,
     g$totalByKandang: (state) => state.totalByKandang,
     g$totalByStatusKeluar: (state) => state.totalByStatusKeluar,
-    g$totalAdgCempe: (state) => state.totalAdgCempe,
     g$totalKandang: (state) => state.totalKandang,
     g$totalTernak: (state) => state.totalTernak,
     g$totalByStatus: (state) => ({
@@ -132,6 +130,14 @@ const u$dashboard = defineStore({
         },
       ],
       length: state.totalByStatus.length,
+    }),
+    g$totalAdgCempe: (state) => ({
+      series: [
+        {
+          name: "Bobot",
+          data: [1, 2, 3, 4, 5],
+        },
+      ],
     }),
   },
 });

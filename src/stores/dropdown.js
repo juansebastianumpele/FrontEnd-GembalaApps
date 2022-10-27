@@ -14,14 +14,7 @@ const u$dropdown = defineStore({
     satuanPakan: ["Kg", "Pcs"],
     keteranganDetailPakan: ["Masuk", "Keluar"],
     keteranganTambahPakan: ["Tong", "Ball"],
-    jenisKandang: [
-      "Rekondisi",
-      "Kawin",
-      "Lepas Sapih",
-      "Bunting",
-      "Laktasi",
-      "Isolasi",
-    ],
+    jenisKandang: [],
     varietas: [],
     fasePemeliharaan: [],
     kandang: [],
@@ -32,6 +25,7 @@ const u$dropdown = defineStore({
     listJenisPakan: [],
   }),
   actions: {
+    // Varietas
     async a$ddVarietas() {
       try {
         const { data } = await s$ternak.listVarietas();
@@ -41,6 +35,8 @@ const u$dropdown = defineStore({
         throw error;
       }
     },
+
+    // Fase Pemeliharaan
     async a$ddFasePemeliharaan() {
       try {
         const { data } = await s$ternak.listFase();
@@ -50,6 +46,8 @@ const u$dropdown = defineStore({
         throw error;
       }
     },
+
+    // Kandang
     async a$ddKandang() {
       try {
         const { data } = await s$kandang.listKandang();
@@ -59,6 +57,8 @@ const u$dropdown = defineStore({
         throw error;
       }
     },
+
+    // Pakan
     async a$ddPakan(request) {
       try {
         const { data } = await s$pakan.list(request);
@@ -68,6 +68,8 @@ const u$dropdown = defineStore({
         throw error;
       }
     },
+
+    // List Betina
     async a$ddListBetina() {
       try {
         const { data } = await s$kawin.listBetina();
@@ -77,6 +79,8 @@ const u$dropdown = defineStore({
         throw error;
       }
     },
+
+    // List Pejantan
     async a$ddListPejantan(request) {
       try {
         const { data } = await s$ternak.listPejantan(request);
@@ -86,6 +90,8 @@ const u$dropdown = defineStore({
         throw error;
       }
     },
+
+    // List Penyakit
     async a$ddListPenyakit() {
       try {
         const { data } = await s$penyakit.list();
@@ -95,12 +101,25 @@ const u$dropdown = defineStore({
         throw error;
       }
     },
-    async a$ddListJenisPakan() {
+
+    // List Jenis Pakan
+    async a$ddListJenisPakan(request) {
       try {
-        const { data } = await s$pakan.listJenis();
+        const { data } = await s$pakan.listJenis(request);
         this.listJenisPakan = data.list;
       } catch ({ error }) {
         this.listJenisPakan = [];
+        throw error;
+      }
+    },
+
+    // Jenis Kandang
+    async a$ddJenisKandang() {
+      try {
+        const { data } = await s$kandang.jenisKandang();
+        this.jenisKandang = data.list;
+      } catch ({ error }) {
+        this.jenisKandang = [];
         throw error;
       }
     },
@@ -113,7 +132,11 @@ const u$dropdown = defineStore({
     g$ddSatuanPakan: (state) => state.satuanPakan,
     g$ddKeteranganDetailPakan: (state) => state.keteranganDetailPakan,
     g$ddKeteranganTambahPakan: (state) => state.keteranganTambahPakan,
-    g$ddJenisKandang: (state) => state.jenisKandang,
+    g$ddJenisKandang: (state) =>
+      state.jenisKandang.map(({ id_jenis_kandang, jenis_kandang }) => ({
+        id: id_jenis_kandang,
+        name: jenis_kandang,
+      })),
     g$ddVarietas: (state) =>
       state.varietas.map(({ id_varietas, varietas }) => ({
         id: id_varietas,
