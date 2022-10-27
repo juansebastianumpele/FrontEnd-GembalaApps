@@ -8,11 +8,15 @@ const authRoutes = {
   component: AuthLayout,
   beforeEnter: (to, from, next) => {
     const { role } = certDetail();
-    if (!to.matched.some(({ path }) => path.includes("auth")) && !role)
+    if (!to.matched.some(({ path }) => path.includes("auth")) && !role) {
       next({ name: "Login" });
-    else if (to.path === "/" && role === "admin") next({ name: "Home" });
-    else if (to.path === "/" && role === "superadmin") next({ name: "Superadmin" });
-    else next();
+    } else if (to.path === "/" && role === "admin") {
+      next({ name: "Home" });
+    } else if (to.path === "/" && role === "superadmin") {
+      next({ name: "Superadmin" });
+    } else {
+      next();
+    }
   },
   children: [
     {
@@ -26,24 +30,9 @@ const authRoutes = {
       component: () => import("@/views/Auth/RegisterView.vue"),
     },
     {
-      path: "/auth/verify",
-      name: "Verify",
-      component: () => import("@/views/Auth/VerifyView.vue"),
-    },
-    {
       path: "/auth/reset",
       name: "Reset Password",
       component: () => import("@/views/Auth/ResetPassword.vue"),
-    },
-    {
-      path: "/verify/success-verify",
-      name: "Success",
-      component: () => import("@/views/Auth/SuccessVerify.vue"),
-    },
-    {
-      path: "/verify/failed-verify",
-      name: "Failed",
-      component: () => import("@/views/Auth/FailedVerify.vue"),
     },
     {
       path: ":pathMatch(.*)",
