@@ -80,7 +80,11 @@ export default {
           text: this.title,
           floating: this.floating,
           verticalAlign: "middle",
-          y: -60,
+          y: -20,
+          style: {
+            fontSize: "35px",
+            fontWeight: "bold",
+          },
         },
         subtitle: {
           text: this.subtitle,
