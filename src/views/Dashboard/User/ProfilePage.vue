@@ -166,7 +166,7 @@ export default {
         </div>
         <div class="col text-right">
           <base-button type="primary" @click="modal.daftarBod = true">
-            Daftar BOD
+            Daftarkan Akun BoD
           </base-button>
           <base-button type="success" @click="modal.editProfile = true">
             Edit Profile
