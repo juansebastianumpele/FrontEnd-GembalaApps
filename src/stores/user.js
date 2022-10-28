@@ -33,6 +33,15 @@ const u$user = defineStore({
         throw error;
       }
     },
+
+    // Register BOD
+    async a$userRegisterBod(request) {
+      try {
+        await s$user.registerBod(request);
+      } catch ({ error }) {
+        throw error;
+      }
+    }
   },
   getters: {
     g$userDetail: (state) => state.detail,

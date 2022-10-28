@@ -15,7 +15,9 @@
 
         <div class="dropdown-divider" />
 
+        <!-- Monitoring -->
         <sidebar-item
+          v-if="userInfo.role !== 'bod'"
           :link="{
             name: 'Monitoring',
             icon: 'fas fa-square-poll-vertical text-success',
@@ -52,7 +54,7 @@
             }"
           />
         </sidebar-item>
-        <div class="dropdown-divider" />
+        <div v-if="userInfo.role !== 'bod'" class="dropdown-divider" />
 
         <!-- Fase -->
         <sidebar-item
@@ -101,7 +103,7 @@
         <div class="dropdown-divider" />
 
         <!-- Lembar kerja -->
-        <sidebar-item
+        <sidebar-item v-if="userInfo.role !== 'bod'"
           :link="{
             name: 'Lembar Kerja',
             icon: 'fas fa-users text-success',
@@ -143,6 +145,9 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 import DashboardNavbar from "./DashboardNavbar.vue";
 import ContentFooter from "./ContentFooter.vue";
 
+import { mapState } from "pinia";
+import useAuthStore from "@/stores/auth";
+
 function hasElement(className) {
   return document.getElementsByClassName(className).length > 0;
 }
@@ -173,6 +178,9 @@ export default {
         initScrollbar("sidenav");
       }
     },
+  },
+  computed: {
+    ...mapState(useAuthStore, ["userInfo"]),
   },
 };
 </script>

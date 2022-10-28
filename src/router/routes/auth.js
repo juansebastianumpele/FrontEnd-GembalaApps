@@ -12,6 +12,8 @@ const authRoutes = {
       next({ name: "Login" });
     } else if (to.path === "/" && role === "admin") {
       next({ name: "Home" });
+    } else if (to.path === "/" && role === "bod") {
+      next({ name: "Home" });
     } else if (to.path === "/" && role === "superadmin") {
       next({ name: "Superadmin" });
     } else {

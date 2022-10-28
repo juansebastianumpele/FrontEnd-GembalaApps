@@ -40,6 +40,7 @@ export default {
     modal: {
       changePw: false,
       editProfile: false,
+      daftarBod: false,
     },
   }),
   computed: {
@@ -69,6 +70,7 @@ export default {
       "a$userChangePw",
       "a$userDetail",
       "a$userChangeProfile",
+      "a$userRegisterBod",
     ]),
     async clearInput() {
       this.input = {
@@ -81,6 +83,20 @@ export default {
       this.input.fotoUrl = "";
       this.input.foto = "";
     },
+    // Daftar akun BoD
+    async registerBod() {
+      const { email } = this.input;
+      const data = {
+        email,
+      };
+      await this.a$userRegisterBod(data)
+        .then(() => {
+          this.notify("Masuk sebagai BoD dengan email dan password yang ada pada pesan email", true);
+          this.modal.daftarBod = false;
+        })
+        .catch((error) => this.notify(error, false));
+    },
+
     //edit password
     async editPassword() {
       try {
@@ -149,6 +165,9 @@ export default {
           <h3>{{ pageTitle }}</h3>
         </div>
         <div class="col text-right">
+          <base-button type="primary" @click="modal.daftarBod = true">
+            Daftar BOD
+          </base-button>
           <base-button type="success" @click="modal.editProfile = true">
             Edit Profile
           </base-button>
@@ -242,6 +261,46 @@ export default {
     </template>
 
     <template #modal>
+      <!-- Daftar BoD -->
+      <modal-comp v-model:show="modal.daftarBod" modal-classes="modal-md">
+        <template #header>
+          <h3 class="modal-title">Daftar Akun Board of Directors</h3>
+        </template>
+        <template #body>
+          <form-comp v-if="modal.daftarBod" :validation-schema="schema">
+            <div class="row">
+              <!-- Email BoD -->
+              <div class="col-12">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.email"
+                  type="email"
+                  name="email"
+                >
+                  <base-input
+                    v-bind="field"
+                    type="email"
+                    placeholder="Email"
+                    label="Email Akun Board of Directors"
+                    addon-left-icon="fas fa-envelope"
+                    required
+                  ></base-input>
+                </field-form>
+              </div>
+            </div>
+          </form-comp>
+        </template>
+        <template #footer>
+          <base-button type="secondary" @click="modal.daftarBod = false">
+            Tutup
+          </base-button>
+          <base-button type="primary" @click="registerBod()">
+            Daftarkan
+          </base-button>
+        </template>
+      </modal-comp>
+
+      <!-- Edit profil -->
       <modal-comp v-model:show="modal.editProfile" modal-classes="modal-md">
         <template #header>
           <h3 class="modal-title">Edit Profile</h3>
@@ -364,6 +423,8 @@ export default {
           </base-button>
         </template>
       </modal-comp>
+
+      <!-- Ganti sandi -->
       <modal-comp v-model:show="modal.changePw" modal-classes="modal-md">
         <template #header>
           <h3 class="modal-title">Ganti Sandi</h3>
