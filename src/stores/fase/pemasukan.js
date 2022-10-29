@@ -6,6 +6,7 @@ const u$pemasukan = defineStore({
   state: () => ({
     pemasukan: [],
     pemasukanThisMonth: [],
+    populasiThisMonth: [],
     kandang: [],
     kandangSlice: [],
     kandangSlice1: [],
@@ -27,7 +28,8 @@ const u$pemasukan = defineStore({
       try {
         const { data } = await s$pemasukan.listThisMonth();
         this.kandang = data.total_by_kandang;
-        this.pemasukanThisMonth = data;
+        this.pemasukanThisMonth = data.list;
+        this.populasiThisMonth = data;
 
         function splitIntoChunk(arr, chunk) {
           let tempArray = [];
@@ -36,12 +38,10 @@ const u$pemasukan = defineStore({
           }
           return tempArray;
         }
-        const chunk = 5;
+        const chunk = 10;
         this.kandangSlice = splitIntoChunk(this.kandang, chunk);
         this.kandangSlice1 = this.kandangSlice[0];
         this.kandangSlice.splice(0, 1);
-        console.log("ini header", this.kandangSlice1);
-        console.log("ini body", this.kandangSlice);
       } catch ({ error }) {
         this.kandang = [];
         throw error;
@@ -55,6 +55,21 @@ const u$pemasukan = defineStore({
     g$kandang: (state) => state.kandang,
     g$kandangSlice: (state) => state.kandangSlice,
     g$kandangSlice1: (state) => state.kandangSlice1,
+    g$byPopulasi: (state) => ({
+      categories: ["Total", "Jantan", "Betina", "Unknown"],
+      series: [
+        {
+          name: "Populasi",
+          color: "#006329",
+          data: [
+            state.populasiThisMonth.total,
+            state.populasiThisMonth.total_jantan,
+            state.populasiThisMonth.total_betina,
+            state.populasiThisMonth.totalJenisKelaminUnknown,
+          ],
+        },
+      ],
+    }),
   },
 });
 

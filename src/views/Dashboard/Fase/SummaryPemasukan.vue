@@ -2,17 +2,69 @@
 import { mapActions, mapState } from "pinia";
 import useAuthStore from "@/stores/auth";
 import d$pemasukan from "@/stores/fase/pemasukan";
+import { ubahTanggal } from "@/utils/locale/ubahTanggal";
+import HcBar from "@/components/HighCharts/Bar.vue";
 
 export default {
   metaInfo: () => ({
     title: "Fase Pemasukan",
   }),
+  components: {
+    HcBar,
+  },
   data: () => ({
     pageTitle: "Summary",
+    //UI
+    modal: {
+      detailPemasukan: false,
+    },
+    // DataTable
+    dt: {
+      column: [
+        {
+          name: "createdAt",
+          th: "Tanggal",
+          render: ({ createdAt }) => ubahTanggal(createdAt),
+        },
+        {
+          name: "id_ternak",
+          th: "ID Ternak",
+        },
+        {
+          name: "bangsa",
+          th: "Bangsa",
+          render: ({ bangsa }) => bangsa.bangsa,
+        },
+        {
+          name: "jenis_kelamin",
+          th: "Jenis Kelamin",
+        },
+        {
+          name: "kandang",
+          th: "Kode Kandang",
+          render: ({ kandang }) => kandang.kode_kandang,
+        },
+        {
+          name: "status_ternak",
+          th: "Status",
+          render: ({ status_ternak }) => status_ternak.status_ternak,
+        },
+        {
+          name: "cek_bcs",
+          th: "BCS",
+        },
+      ],
+    },
+    infoPemasukan: {},
   }),
   computed: {
     ...mapState(useAuthStore, ["userInfo"]),
-    ...mapState(d$pemasukan, ["g$kandangSlice", "g$kandangSlice1"]),
+    ...mapState(d$pemasukan, [
+      "g$kandangSlice",
+      "g$kandangSlice1",
+      "g$pemasukanThisMonth",
+      "g$byPopulasi",
+    ]),
   },
 
   async mounted() {
@@ -84,8 +136,8 @@ export default {
               </div>
             </div>
             <hc-bar
-              :height="306"
-              :data="g$byFase"
+              :height="215"
+              :data="g$byPopulasi"
               :data-labels="true"
               :legend="true"
             />
@@ -148,37 +200,24 @@ export default {
           </button>
         </div>
       </div>
+      <div class="row ml-1">
+        <h1 class="font-weight-bolder text-success">
+          Daftar Ternak Fase Pemasukan
+        </h1>
+      </div>
     </template>
 
     <template #body>
-      <div>
-        <card-comp>
-          <ol>
-            <li>
-              Periksa domba secara visual untuk mendapatkan identitas ternak
-              yang terdiri dari bangsa dan jenis kelamin.
-            </li>
-            <li>
-              Periksa kondisi ternak, apakah terdapat cacat atau sakit yang
-              berpotensi mempersulit proses budidaya. Pengecekan terdiri dari
-              cek poel, cek mulut, cek telinga, kuku kaki, cek kondisi fisik
-              lainnya, dan BCS domba tersebut.
-            </li>
-            <li>
-              Apabila domba dalam kondisi baik dan memenuhi kriteria, domba akan
-              diterima.
-            </li>
-            <li>
-              Pasangkan kalung RFID dan daftarkan menggunakan RFID mobile.
-              Selanjutnya akan terbentuk ID ternak yang baru.
-            </li>
-            <li>
-              Buka SOP pemasukan pada mobile apps untuk melengkapi data ternak
-              yang baru saja dimasukkan sesuai indikator yang ditetapkan.
-            </li>
-          </ol>
-        </card-comp>
-      </div>
+      <empty-result
+        v-if="!g$pemasukanThisMonth.length"
+        :text="`${pageTitle}`"
+      />
+      <data-table
+        v-else
+        :index="true"
+        :data="g$pemasukanThisMonth"
+        :columns="dt.column"
+      />
     </template>
   </main-layout>
 </template>
