@@ -94,6 +94,7 @@ const u$dashboard = defineStore({
     g$totalByStatus: (state) => ({
       series: [
         {
+          name: "Total",
           innerSize: "50%",
           data: [
             {

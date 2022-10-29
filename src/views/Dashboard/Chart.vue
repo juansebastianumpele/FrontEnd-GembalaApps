@@ -328,7 +328,7 @@ export default {
             <div class="row align-items-center">
               <div class="col">
                 <h1
-                  class="text-white text-uppercase text-center ls-1 mb-1"
+                  class="text-white text-uppercase text-center ls-1 mb-2"
                   style="font-size: 12px"
                 >
                   Grafik ADG Cempe

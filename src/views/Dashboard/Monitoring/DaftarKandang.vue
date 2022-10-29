@@ -24,8 +24,8 @@ export default {
     input: {
       id_kandang: null,
       kode_kandang: "",
-      jeniskandang: "",
-      jenispakan: "",
+      jenis_kandang: "",
+      jenis_pakan: "",
       persentase_kebutuhan_pakan: 5,
     },
     // UI
@@ -44,8 +44,8 @@ export default {
         {
           name: "jeniskandang",
           th: "Jenis Kandang",
-          render: ({ jeniskandang }) =>
-            jeniskandang ? jeniskandang.jenis_kandang : "-",
+          render: ({ jenis_kandang }) =>
+            jenis_kandang ? jenis_kandang.jenis_kandang : "-",
         },
         {
           name: "populasi",
@@ -54,8 +54,8 @@ export default {
         {
           name: "jenispakan",
           th: "Jenis Pakan",
-          render: ({ jenispakan }) =>
-            jenispakan ? jenispakan.jenis_pakan : "",
+          render: ({ jenis_pakan }) =>
+            jenis_pakan ? jenis_pakan.jenis_pakan : "",
         },
         {
           name: "kebutuhan_pakan",
@@ -122,14 +122,14 @@ export default {
       try {
         const {
           kode_kandang,
-          jeniskandang,
-          jenispakan,
+          jenis_kandang,
+          jenis_pakan,
           persentase_kebutuhan_pakan,
         } = this.input;
         const data = {
           kode_kandang,
-          id_jenis_kandang: jeniskandang.id,
-          id_jenis_pakan: jenispakan.id,
+          id_jenis_kandang: jenis_kandang.id,
+          id_jenis_pakan: jenis_pakan.id,
           persentase_kebutuhan_pakan,
         };
         await this.schema.validate(data);
@@ -147,15 +147,15 @@ export default {
         const {
           id_kandang,
           kode_kandang,
-          jeniskandang,
-          jenispakan,
+          jenis_kandang,
+          jenis_pakan,
           persentase_kebutuhan_pakan,
         } = this.input;
         const data = {
           id_kandang,
           kode_kandang,
-          id_jenis_kandang: jeniskandang.id,
-          id_jenis_pakan: jenispakan.id,
+          id_jenis_kandang: jenis_kandang.id,
+          id_jenis_pakan: jenis_pakan.id,
           persentase_kebutuhan_pakan,
         };
         await this.schema.validate(data);
@@ -189,20 +189,20 @@ export default {
         const {
           id_kandang,
           kode_kandang,
-          jeniskandang,
-          jenispakan,
+          jenis_kandang,
+          jenis_pakan,
           persentase_kebutuhan_pakan,
         } = row;
         this.input = {
           id_kandang,
           kode_kandang,
-          jeniskandang: {
-            id: jeniskandang ? jeniskandang.id_jenis_kandang : "",
-            name: jeniskandang ? jeniskandang.jenis_kandang : "",
+          jenis_kandang: {
+            id: jenis_kandang ? jenis_kandang.id_jenis_kandang : "",
+            name: jenis_kandang ? jenis_kandang.jenis_kandang : "",
           },
-          jenispakan: {
-            id: jenispakan ? jenispakan.id_jenis_pakan : "",
-            name: jenispakan ? jenispakan.jenis_pakan : "",
+          jenis_pakan: {
+            id: jenis_pakan ? jenis_pakan.id_jenis_pakan : "",
+            name: jenis_pakan ? jenis_pakan.jenis_pakan : "",
           },
           persentase_kebutuhan_pakan,
         };
@@ -395,7 +395,7 @@ export default {
                   label="Jenis Kandang"
                 >
                   <multi-select
-                    v-model="input.jeniskandang"
+                    v-model="input.jenis_kandang"
                     :options="g$ddJenisKandang"
                     label="name"
                     track-by="id"
@@ -414,7 +414,7 @@ export default {
                   required
                 >
                   <multi-select
-                    v-model="input.jenispakan"
+                    v-model="input.jenis_pakan"
                     :options="g$ddListJenisPakan"
                     label="name"
                     track-by="id"

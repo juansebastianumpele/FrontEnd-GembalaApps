@@ -130,7 +130,13 @@ const dashboardRoutes = [
     children: [
       {
         path: "pemasukan",
-        name: "Pemasukan",
+        name: "Summary Pemasukan",
+        component: () => import("@/views/Dashboard/Fase/SummaryPemasukan.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "pemasukan/data-pemasukan",
+        name: "Fase Pemasukan",
         component: () => import("@/views/Dashboard/Fase/Pemasukan.vue"),
         meta: { requiresAuth: true },
       },

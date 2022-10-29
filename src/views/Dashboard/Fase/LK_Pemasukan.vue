@@ -17,6 +17,13 @@ export default {
           <li>
             <base-button type="secondary" class="btn-lg">
               <router-link to="../pemasukan" class="text-dark">
+                Summary
+              </router-link>
+            </base-button>
+          </li>
+          <li>
+            <base-button type="secondary" class="ml-3 btn-lg">
+              <router-link to="data-pemasukan" class="text-dark">
                 Fase Pemasukan
               </router-link>
             </base-button>

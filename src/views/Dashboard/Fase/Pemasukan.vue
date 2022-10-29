@@ -5,7 +5,7 @@ import { ubahTanggal } from "@/utils/locale/ubahTanggal";
 
 export default {
   metaInfo: () => ({
-    title: "Data Penyakit",
+    title: "Fase Pemasukan",
   }),
   data: () => ({
     pageTitle: "Fase Pemasukan",
@@ -88,15 +88,22 @@ export default {
       <div>
         <nav class="nav nav-pills flex-column flex-sm-row mb-4">
           <li>
-            <base-button type="success1" class="btn-lg">
-              <router-link to="/fase/pemasukan" class="text-white">
+            <base-button type="secondary" class="btn-lg">
+              <router-link to="../pemasukan" class="text-dark">
+                Summary
+              </router-link>
+            </base-button>
+          </li>
+          <li>
+            <base-button type="success1" class="ml-3 btn-lg">
+              <router-link to="data-pemasukan" class="text-white">
                 Fase Pemasukan
               </router-link>
             </base-button>
           </li>
           <li>
             <base-button type="secondary" class="ml-3 btn-lg">
-              <router-link to="pemasukan/langkah-kerja" class="text-dark">
+              <router-link to="langkah-kerja" class="text-dark">
                 Langkah Kerja
               </router-link>
             </base-button>
@@ -151,7 +158,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.id_bangsa }}</span
+                  {{ infoPemasukan.bangsa.bangsa }}</span
                 >
               </div>
             </div>
@@ -239,7 +246,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.status }}</span
+                  {{ infoPemasukan.status_ternak.status_ternak }}</span
                 >
               </div>
             </div>
@@ -261,7 +268,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.id_kandang }}</span
+                  {{ infoPemasukan.kandang.kode_kandang }}</span
                 >
               </div>
             </div>
