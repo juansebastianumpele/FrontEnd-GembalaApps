@@ -51,4 +51,17 @@ export default {
 .bg-success {
   background-color: #006329 !important;
 }
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #006329 !important;
+}
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: #fff !important;
+}
+
+.nav-pills .nav-link {
+  color: #525f7f !important;
+}
 </style>
