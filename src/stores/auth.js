@@ -11,6 +11,8 @@ const useAuthStore = defineStore({
     id: undefined,
     name: undefined,
     role: undefined,
+    status: undefined,
+    id_peternakan: undefined,
     data: [],
   }),
   getters: {
@@ -18,21 +20,27 @@ const useAuthStore = defineStore({
       id: state.id,
       name: state.name,
       role: state.role,
+      status: state.status,
+      id_peternakan: state.id_peternakan,
     }),
     isLoggedIn: (state) => !!state.id,
   },
   actions: {
     async a$setUserInfo() {
       try {
-        const { id_user, role, nama_pengguna } = certDetail();
+        const { id_user, role, nama_pengguna, status, id_peternakan } = certDetail();
         this.id = id_user;
         this.name = nama_pengguna;
         this.role = role;
+        this.status = status;
+        this.id_peternakan = id_peternakan;
         return "User Authenticated";
       } catch ({ message }) {
         this.id = "";
         this.name = "";
         this.role = "";
+        this.status = "";
+        this.id_peternakan = "";
         throw message;
       }
     },
