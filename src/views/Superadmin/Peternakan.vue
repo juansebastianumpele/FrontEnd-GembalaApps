@@ -17,17 +17,23 @@ export default {
         {
           name: "nama_peternakan",
           th: "Nama Peternakan",
+          render: ({ peternakan }) => peternakan ? peternakan.nama_peternakan : null,
         },
         {
           name: "nama_pengguna",
           th: "Admin",
         },
+        {
+          name: "alamat_peternakan",
+          th: "ALamat Peternakan",
+          render: ({ peternakan }) => peternakan ? peternakan.alamat : null,
+        },
       ],
       action: [
         {
           text: "Lihat",
-          color: "info",
-          event: "lihat-kandang",
+          color: "primary",
+          event: "lihat-peternakan",
         },
       ],
     },
@@ -40,7 +46,7 @@ export default {
   },
   methods: {
     ...mapActions(useAuthStore, ["a$logout"]),
-    ...mapActions(d$superadmin, ["a$getDataUsers"]),
+    ...mapActions(d$superadmin, ["a$getDataUsers", "a$getNewToken"]),
     ...mapActions(d$auth, ["a$login"]),
     async logout() {
       await this.a$logout();
@@ -48,14 +54,18 @@ export default {
       this.$router.push({ name: "Login" });
     },
     async triggerLihat(row) {
+      const { peternakan } = row;
+      const { nama_peternakan, id_peternakan } = peternakan;
+      const data = {
+        id_peternakan,
+      };
       try {
-        const login = await this.a$login();
+        const login = await this.a$getNewToken(data);
         if (login === "Login Berhasil!") {
-          notify(login);
+          this.notify(`Lihat ${nama_peternakan} berhasil!`);
           router.push({ name: "Home" });
         }
       } catch (error) {
-        this.clearInput();
         this.notify(error, false);
       }
     },
