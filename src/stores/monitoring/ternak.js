@@ -6,6 +6,8 @@ const u$ternak = defineStore({
   state: () => ({
     ternak: [],
     detailTernak: [],
+    statusTernak: [],
+    bangsa: [],
     totalTernak: 0,
   }),
   actions: {
@@ -68,12 +70,35 @@ const u$ternak = defineStore({
         throw error;
       }
     },
+    // Get status ternak
+    async a$statusTernak() {
+      try {
+        const { data } = await s$ternak.statusTernak();
+        this.statusTernak = data.list;
+      } catch ({ error }) {
+        this.statusTernak = [];
+        throw error;
+      }
+    },
+
+    // Get bangsa
+    async a$bangsa() {
+      try {
+        const { data } = await s$ternak.listBangsa();
+        this.bangsa = data.list;
+      } catch ({ error }) {
+        this.bangsa = [];
+        throw error;
+      }
+    },
   },
   getters: {
     g$ternakList: (state) => state.ternak,
     g$detailKandang: (state) => state.detailTernak,
     g$detailPakan: (state) => state.detailTernak,
     g$totalTernak: (state) => state.totalTernak,
+    g$statusTernak: (state) => state.statusTernak,
+    g$bangsa: (state) => state.bangsa,
   },
 });
 

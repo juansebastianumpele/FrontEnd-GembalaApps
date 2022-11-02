@@ -9,6 +9,7 @@ const u$pemasukan = defineStore({
     kandang: [],
     kandangSlice: [],
     kandangSlice1: [],
+    ternakBaru: [],
   }),
   actions: {
     // Pemasukan
@@ -47,6 +48,26 @@ const u$pemasukan = defineStore({
         throw error;
       }
     },
+
+    // Get ternak baru yang belum diinputkan
+    async a$getTernakBaru() {
+      try {
+        const { data } = await s$pemasukan.getTernakBaru();
+        this.ternakBaru = data.list;
+      } catch ({ error }) {
+        this.ternakBaru = [];
+        throw error;
+      }
+    },
+
+    // Create LK Pemasukan
+    async a$createLkPemasukan(request) {
+      try {
+        await s$pemasukan.createLkPemasukan(request);
+      } catch ({ error }) {
+        throw error;
+      }
+    },
   },
 
   getters: {
@@ -55,6 +76,7 @@ const u$pemasukan = defineStore({
     g$kandang: (state) => state.kandang,
     g$kandangSlice: (state) => state.kandangSlice,
     g$kandangSlice1: (state) => state.kandangSlice1,
+    g$ternakBaru: (state) => state.ternakBaru,
   },
 });
 

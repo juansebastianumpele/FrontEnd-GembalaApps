@@ -9,8 +9,9 @@ const edit = (req) => baseApi.put(`${api}/${ternak}/${req.id}`, req.formData);
 const del = (req) => baseApi.delete(`${api}/${ternak}/`, { data: req });
 
 // Dropdown
-const listVarietas = () => baseApi.get(`${api}/varietas`);
+const listBangsa = () => baseApi.get(`${api}/bangsa`);
 const listFase = () => baseApi.get(`${api}/fase`);
+const statusTernak = () => baseApi.get(`${api}/status-ternak`);
 
 // Jumlah Ternak
 const listBetina = () => baseApi.get(`${api}/${ternak}?jenis_kelamin=Betina`);
@@ -41,7 +42,7 @@ export {
   add,
   edit,
   del,
-  listVarietas,
+  listBangsa,
   listFase,
   detailKandang,
   detailPakan,
@@ -52,4 +53,5 @@ export {
   tabelKandang,
   filterTernak,
   listTimbangan,
+  statusTernak,
 };

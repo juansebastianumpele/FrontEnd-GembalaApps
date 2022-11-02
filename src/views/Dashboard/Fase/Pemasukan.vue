@@ -1,6 +1,9 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import d$pemasukan from "@/stores/fase/pemasukan";
+import d$dropdown from "@/stores/dropdown";
+import d$daftarkandang from "@/stores/monitoring/daftarkandang";
+import d$ternak from "@/stores/monitoring/ternak";
 import { ubahTanggal } from "@/utils/locale/ubahTanggal";
 
 export default {
@@ -12,6 +15,7 @@ export default {
     //UI
     modal: {
       detailPemasukan: false,
+      createPemasukan: false,
     },
     // DataTable
     dt: {
@@ -38,7 +42,7 @@ export default {
           th: "Telinga",
         },
         {
-          name: "cek_kuku_kaki",
+          name: "cek_telinga",
           th: "Kuku Kaki",
         },
         {
@@ -59,16 +63,40 @@ export default {
       ],
     },
     infoPemasukan: {},
+    input: {
+      ternakBaru: null,
+      rf_id: "",
+      bangsa: null,
+      jenis_kelamin: "Betina",
+      cek_poel: 0,
+      cek_mulut: "Sehat",
+      cek_telinga: "Sehat",
+      cek_kuku_kaki: "Sehat",
+      cek_kondisi_fisik_lain: "Sehat",
+      status_ternak: null,
+      status_kesehatan: "Sehat",
+      cek_bcs: 3,
+      kandang: null,
+    },
   }),
   computed: {
-    ...mapState(d$pemasukan, ["g$pemasukan"]),
+    ...mapState(d$pemasukan, ["g$pemasukan", "g$ternakBaru"]),
+    ...mapState(d$dropdown, ["g$ddbangsa", "g$ddJenisKelamin"]),
+    ...mapState(d$daftarkandang, ["g$kandangList"]),
+    ...mapState(d$ternak, ["g$statusTernak", "g$bangsa"]),
   },
 
   async mounted() {
     await this.a$pemasukanList().catch((error) => this.notify(error, false));
+    await this.a$kandangList().catch((error) => this.notify(error, false));
+    await this.a$statusTernak().catch((error) => this.notify(error, false));
+    await this.a$bangsa().catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$pemasukan, ["a$pemasukanList"]),
+    ...mapActions(d$pemasukan, ["a$pemasukanList", "a$getTernakBaru", "a$createLkPemasukan"]),
+    ...mapActions(d$dropdown, ["a$ddBangsa", "a$ddKandang"]),
+    ...mapActions(d$daftarkandang, ["a$kandangList"]),
+    ...mapActions(d$ternak, ["a$statusTernak", "a$bangsa"]),
     async triggerDetail(row) {
       try {
         this.infoPemasukan = { ...row };
@@ -77,6 +105,68 @@ export default {
       } finally {
         this.a$pemasukanList().catch((error) => this.notify(error, false));
       }
+    },
+    async triggerCreate() {
+      this.modal.createPemasukan = true;
+      await this.a$getTernakBaru().catch((error) => this.notify(error, false));
+    },
+    async createLkPemasukan() {
+      try {
+        const {
+          ternakBaru,
+          bangsa,
+          jenis_kelamin,
+          cek_poel,
+          cek_mulut,
+          cek_telinga,
+          cek_kuku_kaki,
+          cek_kondisi_fisik_lain,
+          status_ternak,
+          status_kesehatan,
+          cek_bcs,
+          kandang
+        } = this.input;
+        const data = {
+          id_ternak: ternakBaru.id_ternak,
+          rf_id: ternakBaru.rf_id,
+          id_bangsa: bangsa.id_bangsa,
+          jenis_kelamin,
+          cek_poel,
+          cek_mulut,
+          cek_telinga,
+          cek_kuku_kaki,
+          cek_kondisi_fisik_lain,
+          id_status_ternak: status_ternak.id_status_ternak,
+          status_kesehatan,
+          cek_bcs,
+          id_kandang: kandang.id_kandang,
+        };
+        await this.a$createLkPemasukan(data)
+        this.modal.createPemasukan = false;
+        this.notify(`Berhasil menambahkan data ${this.pageTitle}`, true);
+      } catch (error) {
+        this.notify(error, false);
+      } finally {
+        this.clearInput();
+        this.a$pemasukanList().catch((error) => this.notify(error, false));
+      }
+    },
+    clearInput() {
+      this.input = {
+        ternak: null,
+        rf_id: "00e2001a83191322050669e0c1ff",
+        bangsa: null,
+        jenis_kelamin: "Betina",
+        cek_poel: 1,
+        cek_mulut: "cek mulut",
+        cek_telinga: "cek_telinga",
+        cek_kuku_kaki: "cek kuku kaki",
+        cek_kondisi_fisik_lain: "cek kondisi fisik lain",
+        status_ternak: null,
+        status_kesehatan: "sehat",
+        cek_bcs: 4,
+        kandang: null,
+      };
     },
   },
 };
@@ -114,19 +204,18 @@ export default {
         <div class="col-auto">
           <h3>Daftar {{ pageTitle }}</h3>
         </div>
+        <div class="col text-right">
+          <base-button type="success" @click="triggerCreate">
+            Tambah {{ pageTitle }}
+          </base-button>
+        </div>
       </div>
     </template>
 
     <template #body>
       <empty-result v-if="!g$pemasukan.length" :text="`${pageTitle}`" />
-      <data-table
-        v-else
-        :index="true"
-        :data="g$pemasukan"
-        :columns="dt.column"
-        :actions="dt.action"
-        @detail-pemasukan="triggerDetail"
-      />
+      <data-table v-else :index="true" :data="g$pemasukan" :columns="dt.column" :actions="dt.action"
+        @detail-pemasukan="triggerDetail" />
     </template>
 
     <template #modal>
@@ -147,8 +236,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.id_ternak }}</span
-                >
+                  {{ infoPemasukan.id_ternak }}</span>
               </div>
             </div>
             <div class="row">
@@ -158,8 +246,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.bangsa.bangsa }}</span
-                >
+                  {{ infoPemasukan.bangsa.bangsa }}</span>
               </div>
             </div>
             <div class="row">
@@ -169,8 +256,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.jenis_kelamin }}</span
-                >
+                  {{ infoPemasukan.jenis_kelamin }}</span>
               </div>
             </div>
             <div class="row">
@@ -180,8 +266,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.cek_poel }}</span
-                >
+                  {{ infoPemasukan.cek_poel }}</span>
               </div>
             </div>
             <div class="row">
@@ -191,8 +276,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.cek_mulut }}</span
-                >
+                  {{ infoPemasukan.cek_mulut }}</span>
               </div>
             </div>
             <div class="row">
@@ -202,8 +286,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.cek_telinga }}</span
-                >
+                  {{ infoPemasukan.cek_telinga }}</span>
               </div>
             </div>
             <div class="row">
@@ -213,8 +296,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.cek_kuku_kaki }}</span
-                >
+                  {{ infoPemasukan.cek_kuku_kaki }}</span>
               </div>
             </div>
             <div class="row">
@@ -224,8 +306,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.cek_kondisi_fisik_lain }}</span
-                >
+                  {{ infoPemasukan.cek_kondisi_fisik_lain }}</span>
               </div>
             </div>
             <div class="row">
@@ -235,8 +316,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.cek_bcs }}</span
-                >
+                  {{ infoPemasukan.cek_bcs }}</span>
               </div>
             </div>
             <div class="row">
@@ -246,8 +326,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.status_ternak.status_ternak }}</span
-                >
+                  {{ infoPemasukan.status_ternak.status_ternak }}</span>
               </div>
             </div>
             <div class="row">
@@ -257,8 +336,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.status_kesehatan }}</span
-                >
+                  {{ infoPemasukan.status_kesehatan }}</span>
               </div>
             </div>
             <div class="row">
@@ -268,11 +346,126 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.kandang.kode_kandang }}</span
-                >
+                  {{ infoPemasukan.kandang.kode_kandang }}</span>
               </div>
             </div>
           </div>
+        </template>
+      </modal-comp>
+
+      <!-- Create LK pemasukan -->
+      <modal-comp v-model:show="modal.createPemasukan" modal-classes="modal-lg">
+        <template #header>
+          <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
+        </template>
+        <template #body>
+          <form-comp v-if="modal.createPemasukan">
+            <div class="row">
+              <!-- ID Ternak -->
+              <div class="col-6">
+                <base-input name="id_ternak" label="ID Ternak">
+                  <multi-select v-model="input.ternakBaru" :options="g$ternakBaru" track-by="id_ternak"
+                    label="id_ternak" placeholder="Pilih ID Ternak" :show-labels="false" />
+                </base-input>
+              </div>
+
+              <!-- Bangsa -->
+              <div class="col-6">
+                <base-input name="bangsa" label="Bangsa">
+                  <multi-select v-model="input.bangsa" :options="g$bangsa" label="bangsa" track-by="id_bangsa"
+                    placeholder="Pilih bangsa" :show-labels="false" :preselectFirst="true" />
+                </base-input>
+              </div>
+
+              <!-- Kandang -->
+              <div class="col-6">
+                <base-input name="kandang" label="Kandang">
+                  <multi-select v-model="input.kandang" :options="g$kandangList" label="kode_kandang" track-by="id"
+                    placeholder="Pilih Kandang" :show-labels="false" />
+                </base-input>
+              </div>
+
+              <!-- Jenis kelamin -->
+              <div class="col-6">
+                <base-input name="jenis_kelamin" placeholder="Jenis Kelamin" label="Jenis Kelamin">
+                  <multi-select v-model="input.jenis_kelamin" :options="g$ddJenisKelamin"
+                    placeholder="Pilih Jenis Kelamin" :show-labels="false" />
+                </base-input>
+              </div>
+
+
+              <!-- Status ternak -->
+              <div class="col-6">
+                <base-input name="status_ternak" label="Status Ternak">
+                  <multi-select v-model="input.status_ternak" :options="g$statusTernak" label="status_ternak"
+                    track-by="id_status_ternak" placeholder="Pilih status ternak" :show-labels="false"
+                    :preselectFirst="true" />
+                </base-input>
+              </div>
+
+              <!-- Status kesehatan -->
+              <div class="col-6">
+                <field-form v-slot="{ field }" v-model="input.status_kesehatan" name="status_kesehatan">
+                  <base-input v-bind="field" placeholder="Status kesehatan" label="Status Kesehatan" type="text">
+                  </base-input>
+                </field-form>
+              </div>
+
+              <!-- Cek bcs -->
+              <div class="col-6">
+                <field-form v-slot="{ field }" v-model="input.cek_bcs" name="cek_bcs">
+                  <base-input v-bind="field" placeholder="Kondisi bcs" label="Cek BCS" type="number"></base-input>
+                </field-form>
+              </div>
+
+              <!-- Cek poel -->
+              <div class="col-6">
+                <field-form v-slot="{ field }" v-model="input.cek_poel" name="cek_poel">
+                  <base-input v-bind="field" placeholder="Jumlah poel" label="Cek Poel" type="number"></base-input>
+                </field-form>
+              </div>
+
+              <!-- Cek mulut -->
+              <div class="col-6">
+                <field-form v-slot="{ field }" v-model="input.cek_mulut" name="cek_mulut">
+                  <base-input v-bind="field" placeholder="Kondisi mulut" label="Cek Mulut" type="text"></base-input>
+                </field-form>
+              </div>
+
+              <!-- Cek telinga -->
+              <div class="col-6">
+                <field-form v-slot="{ field }" v-model="input.cek_telinga" name="cek_telinga">
+                  <base-input v-bind="field" placeholder="Kondisi telinga" label="Cek Telinga" type="text">
+                  </base-input>
+                </field-form>
+              </div>
+
+              <!-- Cek kuku kaki -->
+              <div class="col-6">
+                <field-form v-slot="{ field }" v-model="input.cek_kuku_kaki" name="cek_kuku_kaki">
+                  <base-input v-bind="field" placeholder="Kondisi kuku kai" label="Cek Kuku Kaki" type="text">
+                  </base-input>
+                </field-form>
+              </div>
+
+              <!-- Cek kondisi fisik lain -->
+              <div class="col-6">
+                <field-form v-slot="{ field }" v-model="input.cek_kondisi_fisik_lain" name="cek_kondisi_fisik_lain">
+                  <base-input v-bind="field" placeholder="Kondisi fisik lain" label="Cek Kondisi Fisik Lain"
+                    type="text"></base-input>
+                </field-form>
+              </div>
+
+            </div>
+          </form-comp>
+        </template>
+        <template #footer>
+          <base-button type="secondary" @click="modal.createPemasukan = false">
+            Tutup
+          </base-button>
+          <base-button type="primary" @click="createLkPemasukan">
+            Tambah {{ pageTitle }}
+          </base-button>
         </template>
       </modal-comp>
     </template>
