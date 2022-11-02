@@ -7,7 +7,7 @@ import HcBar from "@/components/HighCharts/Bar.vue";
 
 export default {
   metaInfo: () => ({
-    title: "Fase Pemasukan",
+    title: "Fase Perkawinan",
   }),
   components: {
     HcBar,
@@ -86,13 +86,13 @@ export default {
     <template #header>
       <div class="row">
         <div class="col-8">
-          <h1 class="font-weight-bolder text-success">Fase Pemasukan</h1>
+          <h1 class="font-weight-bolder text-success">Fase Perkawinan</h1>
         </div>
         <div class="col-4">
           <nav class="nav nav-pills flex-column flex-sm-row mb-4">
             <li>
               <base-button type="success1" class="btn-lg">
-                <router-link to="/fase/pemasukan" class="text-white">
+                <router-link to="/fase/perkawinan" class="text-white">
                   Summary
                 </router-link>
               </base-button>
@@ -103,8 +103,8 @@ export default {
                 type="secondary"
                 class="ml-3 btn-lg"
               >
-                <router-link to="pemasukan/data-pemasukan" class="text-dark">
-                  Fase Pemasukan
+                <router-link to="perkawinan/data-perkawinan" class="text-dark">
+                  Fase Perkawinan
                 </router-link>
               </base-button>
             </li>
@@ -114,7 +114,7 @@ export default {
                 type="secondary"
                 class="ml-3 btn-lg"
               >
-                <router-link to="pemasukan/langkah-kerja" class="text-dark">
+                <router-link to="perkawinan/langkah-kerja" class="text-dark">
                   Langkah Kerja
                 </router-link>
               </base-button>
@@ -131,7 +131,7 @@ export default {
                   class="text-success text-left ls-1 mb-4"
                   style="font-size: 16px"
                 >
-                  Populasi Fase Pemasukan
+                  Populasi Fase Perkawinan
                 </h1>
               </div>
             </div>
@@ -149,7 +149,7 @@ export default {
           data-ride="carousel"
         >
           <card-comp class="carousel-inner">
-            <div class="row carousel-item active">
+            <div class="row carousel-item active ml-3">
               <div class="row">
                 <div
                   class="col-2 bg-success text-center rounded m-2"
@@ -179,25 +179,33 @@ export default {
                 </div>
               </div>
             </div>
+            <div class="row">
+              <button
+                class="carousel-control-prev active"
+                type="button"
+                data-target="#carouselExampleControls"
+                data-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="sr-only">Previous</span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-target="#carouselExampleControls"
+                data-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="sr-only">Next</span>
+              </button>
+            </div>
           </card-comp>
-          <button
-            class="carousel-control-prev"
-            type="button"
-            data-target="#carouselExampleControls"
-            data-slide="prev"
-          >
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </button>
-          <button
-            class="carousel-control-next"
-            type="button"
-            data-target="#carouselExampleControls"
-            data-slide="next"
-          >
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </button>
         </div>
       </div>
       <div class="row ml-1">

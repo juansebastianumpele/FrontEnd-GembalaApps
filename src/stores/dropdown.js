@@ -3,7 +3,6 @@ import * as s$ternak from "@/services/monitoring/ternak";
 import * as s$kandang from "@/services/monitoring/daftarkandang";
 import * as s$pakan from "@/services/monitoring/pakan";
 import * as s$penyakit from "@/services/monitoring/penyakit";
-import * as s$kawin from "@/services/monitoring/kawin";
 
 const u$dropdown = defineStore({
   id: "dropdown",
@@ -72,7 +71,7 @@ const u$dropdown = defineStore({
     // List Betina
     async a$ddListBetina() {
       try {
-        const { data } = await s$kawin.listBetina();
+        const { data } = await s$ternak.listBetina();
         this.listBetina = data.list;
       } catch ({ error }) {
         this.listBetina = [];

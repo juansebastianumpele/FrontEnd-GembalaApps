@@ -131,19 +131,63 @@ const dashboardRoutes = [
       {
         path: "pemasukan",
         name: "Summary Pemasukan",
-        component: () => import("@/views/Dashboard/Fase/SummaryPemasukan.vue"),
+        component: () =>
+          import("@/views/Dashboard/Fase/Pemasukan/SummaryPemasukan.vue"),
         meta: { requiresAuth: true },
       },
       {
         path: "pemasukan/data-pemasukan",
         name: "Fase Pemasukan",
-        component: () => import("@/views/Dashboard/Fase/Pemasukan.vue"),
+        component: () =>
+          import("@/views/Dashboard/Fase/Pemasukan/Pemasukan.vue"),
         meta: { requiresAuth: true },
       },
       {
         path: "pemasukan/langkah-kerja",
         name: "Langkah Kerja Pemasukan",
-        component: () => import("@/views/Dashboard/Fase/LK_Pemasukan.vue"),
+        component: () =>
+          import("@/views/Dashboard/Fase/Pemasukan/LK_Pemasukan.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "adaptasi",
+        name: "Summary Adaptasi",
+        component: () =>
+          import("@/views/Dashboard/Fase/Adaptasi/SummaryAdaptasi.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "adaptasi/data-adaptasi",
+        name: "Fase Adaptasi",
+        component: () => import("@/views/Dashboard/Fase/Adaptasi/Adaptasi.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "adaptasi/langkah-kerja",
+        name: "Langkah Kerja Adaptasi",
+        component: () =>
+          import("@/views/Dashboard/Fase/Adaptasi/LK_Adaptasi.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "perkawinan",
+        name: "Summary Perkawinan",
+        component: () =>
+          import("@/views/Dashboard/Fase/Perkawinan/SummaryPerkawinan.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "perkawinan/data-perkawinan",
+        name: "Fase Perkawinan",
+        component: () =>
+          import("@/views/Dashboard/Fase/Perkawinan/Perkawinan.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "perkawinan/langkah-kerja",
+        name: "Langkah Kerja Perkawinan",
+        component: () =>
+          import("@/views/Dashboard/Fase/Perkawinan/LK_Perkawinan.vue"),
         meta: { requiresAuth: true },
       },
     ],

@@ -78,9 +78,9 @@ export default {
         ...basicOptions,
         title: {
           text: this.title,
-          floating: this.floating,
           verticalAlign: "middle",
-          y: 1,
+          align: "center",
+          y: 0,
           style: {
             fontSize: "35px",
             fontWeight: "bold",

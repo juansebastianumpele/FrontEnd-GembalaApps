@@ -23,27 +23,27 @@ export default {
   setup() {
     const schema = y$object({
       rf_id: y$string().nullable().label("RF ID"),
-      jenis_kelamin: y$string().required().label("Jenis Kelamin"),
-      varietas: y$object({
-        id: y$string().nullable().label("Varietas"),
-      }).label("Varietas"),
-      berat: y$string().required().label("Berat"),
-      suhu: y$string().required().label("Suhu"),
-      tanggal_lahir: y$string().required().label("Tanggal Lahir"),
-      tanggal_masuk: y$string().required().label("Tanggal Masuk"),
-      // id_induk: y$string().nullable().label("ID Dam (Ibu)"),
-      // id_pejantan: y$string().nullable().label("ID Sire (Bapak)"),
-      status_kesehatan: y$string().required().label("Status Kesehatan"),
-      penyakit: y$object({
-        id: y$string().nullable().label("Penyakit"),
-      }).label("Penyakit"),
+      // jenis_kelamin: y$string().required().label("Jenis Kelamin"),
+      // bangsa: y$object({
+      //   id: y$string().nullable().label("Bangsa"),
+      // }).label("bangsa"),
+      // berat: y$string().required().label("Berat"),
+      // suhu: y$string().required().label("Suhu"),
+      // tanggal_lahir: y$string().required().label("Tanggal Lahir"),
+      // tanggal_masuk: y$string().required().label("Tanggal Masuk"),
+      // // id_dam: y$string().nullable().label("ID Dam (Ibu)"),
+      // // id_sire: y$string().nullable().label("ID Sire (Bapak)"),
+      // status_kesehatan: y$string().required().label("Status Kesehatan"),
+      // penyakit: y$object({
+      //   id: y$string().nullable().label("Penyakit"),
+      // }).label("Penyakit"),
       // pakan: y$object({
       //   id: y$string().required().label("ID Pakan"),
       // }).label("ID Pakan"),
       // fase: y$object({
       //   id: y$string().required().label("ID Fase"),
       // }).label("Fase Pemeliharaan"),
-      foto: y$array().nullable().label("Foto"),
+      // image: y$array().nullable().label("image"),
       // tanggal_keluar: y$string().nullable().label("Tanggal Keluar"),
       // status_keluar: y$string().nullable().label("Status Keluar"),
       // id_ternak: y$string().required().label("ID Ternak"),
@@ -59,15 +59,15 @@ export default {
     input: {
       id_ternak: null,
       rf_id: "",
-      foto: null,
+      image: null,
       jenis_kelamin: "",
-      id_varietas: "",
+      id_bangsa: "",
       berat: "",
       suhu: "",
       tanggal_lahir: "",
       tanggal_masuk: "",
-      id_induk: null,
-      id_pejantan: null,
+      id_dam: null,
+      id_sire: null,
       status_kesehatan: "",
       id_penyakit: null,
       id_pakan: "",
@@ -76,7 +76,7 @@ export default {
       tanggal_keluar: null,
       status_keluar: null,
       // tanggal_kawin: "",
-      // fotoUrl: null,
+      // imageUrl: null,
     },
     // UI
     modal: {
@@ -94,9 +94,9 @@ export default {
           th: "ID Ternak",
         },
         {
-          name: "varietas",
+          name: "bangsa",
           th: "Bangsa",
-          render: ({ varietas }) => (varietas ? varietas.varietas : ""),
+          render: ({ bangsa }) => (bangsa ? bangsa.bangsa : ""),
         },
         {
           name: "jenis_kelamin",
@@ -139,7 +139,7 @@ export default {
     ...mapState(d$chart, ["g$byTimbangan"]),
     ...mapState(d$dropdown, [
       "g$ddJenisKelamin",
-      "g$ddVarietas",
+      "g$ddBangsa",
       "g$ddStatusSehat",
       "g$ddFasePemeliharaan",
       "g$ddStatusKeluar",
@@ -162,12 +162,12 @@ export default {
   },
   async mounted() {
     await this.a$ternakList().catch((error) => this.notify(error, false));
-    await this.a$ddVarietas().catch((error) => this.notify(error, false));
+    await this.a$ddBangsa().catch((error) => this.notify(error, false));
     await this.a$ddFasePemeliharaan().catch((error) =>
       this.notify(error, false)
     );
     await this.a$ddKandang().catch((error) => this.notify(error, false));
-    await this.a$ddPakan().catch((error) => this.notify(error, false));
+    // await this.a$ddPakan().catch((error) => this.notify(error, false));
     await this.a$ddListPenyakit().catch((error) => this.notify(error, false));
     await this.a$ddListBetina().catch((error) => this.notify(error, false));
     await this.a$ddListPejantan().catch((error) => this.notify(error, false));
@@ -180,7 +180,7 @@ export default {
       "a$ternakEdit",
     ]),
     ...mapActions(d$dropdown, [
-      "a$ddVarietas",
+      "a$ddBangsa",
       "a$ddFasePemeliharaan",
       "a$ddKandang",
       "a$ddPakan",
@@ -190,22 +190,22 @@ export default {
     ]),
     ...mapActions(d$chart, ["a$byTimbangan"]),
     resetImage() {
-      this.input.fotoUrl = "";
-      this.input.foto = "";
+      this.input.imageUrl = "";
+      this.input.image = "";
     },
     clearInput() {
       this.input = {
         id_ternak: null,
         rf_id: "",
-        foto: null,
+        image: null,
         jenis_kelamin: "",
-        varietas: "",
+        bangsa: "",
         berat: "",
         suhu: "",
         tanggal_lahir: "",
         tanggal_masuk: "",
-        id_induk: "",
-        id_pejantan: "",
+        id_dam: "",
+        id_sire: "",
         status_kesehatan: "",
         penyakit: null,
         pakan: "",
@@ -221,15 +221,15 @@ export default {
       try {
         const {
           rf_id,
-          foto,
+          image,
           jenis_kelamin,
-          varietas,
+          bangsa,
           berat,
           suhu,
           tanggal_lahir,
           tanggal_masuk,
-          id_induk,
-          id_pejantan,
+          id_dam,
+          id_sire,
           status_kesehatan,
           penyakit,
           pakan,
@@ -238,15 +238,15 @@ export default {
         } = this.input;
         const data = {
           rf_id,
-          foto,
+          image,
           jenis_kelamin,
-          id_varietas: varietas.id,
+          id_bangsa: bangsa.id,
           berat,
           suhu,
           tanggal_lahir,
           tanggal_masuk,
-          id_induk,
-          id_pejantan,
+          id_dam,
+          id_sire,
           status_kesehatan,
           id_penyakit: penyakit.id,
           id_pakan: pakan.id,
@@ -269,18 +269,16 @@ export default {
         const {
           id_ternak,
           rf_id,
-          foto,
+          image,
           jenis_kelamin,
-          varietas,
+          bangsa,
           berat,
           suhu,
           tanggal_lahir,
           tanggal_masuk,
-          id_induk,
-          id_pejantan,
-          status_kesehatan,
+          id_dam,
+          id_sire,
           penyakit,
-          pakan,
           fase,
           kandang,
           tanggal_keluar,
@@ -289,24 +287,23 @@ export default {
         const data = {
           id_ternak,
           rf_id,
-          foto,
+          image,
           jenis_kelamin,
-          id_varietas: varietas.id,
+          id_bangsa: bangsa.id,
           berat,
           suhu,
           tanggal_lahir,
           tanggal_masuk,
-          id_induk,
-          id_pejantan,
-          status_kesehatan,
+          id_dam,
+          id_sire,
           id_penyakit: penyakit.id,
-          id_pakan: pakan.id,
           id_fp: fase.id,
           id_kandang: kandang.id,
           tanggal_keluar,
           status_keluar,
         };
         await this.schema.validate(data);
+        console.log(data);
         await this.a$ternakEdit(data);
         this.modal.ubahTernak = false;
         this.notify(`Edit ${this.pageTitle} Sukses!`);
@@ -318,11 +315,14 @@ export default {
     },
     async delTernak() {
       try {
-        const { id_ternak } = this.input;
+        const { id_ternak, status_keluar } = this.input;
         const data = {
           id_ternak,
+          status_keluar,
+          tanggal_keluar: new Date(),
         };
         await this.a$ternakDelete(data);
+        console.log(data);
         this.modal.confirm = false;
         this.notify(`Hapus ${this.pageTitle} Sukses!`);
       } catch (error) {
@@ -336,18 +336,16 @@ export default {
         const {
           id_ternak,
           rf_id,
-          foto,
+          image,
           jenis_kelamin,
-          varietas,
+          bangsa,
           berat,
           suhu,
           tanggal_lahir,
           tanggal_masuk,
-          id_induk,
-          id_pejantan,
-          status_kesehatan,
+          id_dam,
+          id_sire,
           penyakit,
-          pakan,
           fase,
           kandang,
           tanggal_keluar,
@@ -357,17 +355,16 @@ export default {
           id_ternak,
           rf_id,
           jenis_kelamin,
-          varietas: {
-            id: varietas ? varietas.id_varietas : "",
-            name: varietas ? varietas.varietas : "",
+          bangsa: {
+            id: bangsa ? bangsa.id_bangsa : "",
+            name: bangsa ? bangsa.bangsa : "",
           },
           berat,
           suhu,
           tanggal_lahir,
           tanggal_masuk,
-          id_induk,
-          id_pejantan,
-          status_kesehatan,
+          id_dam,
+          id_sire,
           kandang: {
             id: kandang ? kandang.id_kandang : "",
             name: kandang ? kandang.kode_kandang : "",
@@ -380,13 +377,9 @@ export default {
             id: fase ? fase.id_fp : "",
             name: fase ? fase.fase : "",
           },
-          pakan: {
-            id: pakan ? pakan.id_pakan : "",
-            name: pakan ? pakan.nama_pakan : "",
-          },
           tanggal_keluar,
           status_keluar,
-          foto,
+          image,
           // id_users,
         };
         this.modal.ubahTernak = true;
@@ -397,9 +390,10 @@ export default {
     },
     async triggerDelete(row) {
       try {
-        const { id_ternak } = row;
+        const { id_ternak, status_keluar } = row;
         this.input = {
           id_ternak,
+          status_keluar,
         };
         this.modal.confirm = true;
       } catch (error) {
@@ -418,9 +412,9 @@ export default {
       }
     },
     handleFileUpload() {
-      const file = this.$refs.foto.files[0];
-      this.input.foto = file;
-      this.input.fotoUrl = URL.createObjectURL(this.input.foto);
+      const file = this.$refs.image.files[0];
+      this.input.image = file;
+      this.input.imageUrl = URL.createObjectURL(this.input.image);
     },
   },
 };
@@ -509,17 +503,13 @@ export default {
                 </field-form>
               </div>
               <div class="col-6">
-                <base-input
-                  name="varietas"
-                  placeholder="Varietas"
-                  label="Varietas"
-                >
+                <base-input name="bangsa" placeholder="Bangsa" label="Bangsa">
                   <multi-select
-                    v-model="input.varietas"
-                    :options="g$ddVarietas"
+                    v-model="input.bangsa"
+                    :options="g$ddBangsa"
                     label="name"
                     track-by="id"
-                    placeholder="Pilih Varietas"
+                    placeholder="Pilih bangsa"
                     :show-labels="false"
                   />
                 </base-input>
@@ -590,13 +580,13 @@ export default {
               </div>
               <div class="col-6">
                 <base-input
-                  name="id_pejantan"
+                  name="id_sire"
                   placeholder="Id Pejantan"
                   label="ID Pejantan"
                   nullable
                 >
                   <multi-select
-                    v-model="input.id_pejantan"
+                    v-model="input.id_sire"
                     :options="g$ddListPejantan"
                     label="name"
                     track-by="id"
@@ -607,13 +597,13 @@ export default {
               </div>
               <div class="col-6">
                 <base-input
-                  name="id_induk"
+                  name="id_dam"
                   placeholder="Id Induk"
                   label="ID Induk"
                   nullable
                 >
                   <multi-select
-                    v-model="input.id_induk"
+                    v-model="input.id_dam"
                     :options="g$ddListBetina"
                     label="name"
                     track-by="id"
@@ -705,27 +695,31 @@ export default {
                   />
                 </base-input>
               </div> -->
-              <div class="col-6" v-if="!this.input.foto">
+              <div class="col-6" v-if="!this.input.image">
                 <div class="form-group has-label">
-                  <label class="form-control-label">Foto</label>
+                  <label class="form-control-label">image</label>
                   <input
                     class="form-control file"
-                    id="foto"
+                    id="image"
                     type="file"
-                    ref="foto"
+                    ref="image"
                     accept="image/*"
                     @change="handleFileUpload()"
                   />
                 </div>
               </div>
-              <div class="col-6" v-if="this.input.fotoUrl">
+              <div class="col-6" v-if="this.input.imageUrl">
                 <div class="text-center pb-2">
                   <base-button type="danger" size="sm" @click="resetImage()">
                     Reset Image
                   </base-button>
                 </div>
                 <div class="text-center">
-                  <img width="250" v-if="input.fotoUrl" :src="input.fotoUrl" />
+                  <img
+                    width="250"
+                    v-if="input.imageUrl"
+                    :src="input.imageUrl"
+                  />
                 </div>
               </div>
             </div>
@@ -794,22 +788,18 @@ export default {
                 </field-form>
               </div>
               <div class="col-6">
-                <base-input
-                  name="varietas"
-                  placeholder="Varietas"
-                  label="Varietas"
-                >
+                <base-input name="bangsa" placeholder="Bangsa" label="Bangsa">
                   <multi-select
-                    v-model="input.varietas"
-                    :options="g$ddVarietas"
+                    v-model="input.bangsa"
+                    :options="g$ddBangsa"
                     label="name"
                     track-by="id"
-                    placeholder="Pilih Varietas"
+                    placeholder="Pilih bangsa"
                     :show-labels="false"
                   />
                 </base-input>
               </div>
-              <div class="col-6">
+              <!-- <div class="col-6">
                 <base-input
                   name="status_kesehatan"
                   placeholder="Status Kesehatan"
@@ -823,9 +813,9 @@ export default {
                     :show-labels="false"
                   />
                 </base-input>
-              </div>
+              </div> -->
               <!-- Jika status kesehatan = sakit, tampilkan field penyakit -->
-              <div v-if="input.status_kesehatan == 'Sakit'" class="col-6">
+              <!-- <div v-if="input.status_kesehatan == 'Sakit'" class="col-6">
                 <base-input
                   name="penyakit"
                   placeholder="Penyakit"
@@ -841,7 +831,7 @@ export default {
                     :show-labels="false"
                   />
                 </base-input>
-              </div>
+              </div> -->
               <div class="col-6">
                 <base-input
                   name="jenis_kelamin"
@@ -873,13 +863,13 @@ export default {
               </div>
               <div class="col-6">
                 <base-input
-                  name="id_pejantan"
+                  name="id_sire"
                   placeholder="Id Pejantan"
                   label="ID Pejantan"
                   nullable
                 >
                   <multi-select
-                    v-model="input.id_pejantan"
+                    v-model="input.id_sire"
                     :options="g$ddListPejantan"
                     label="name"
                     track-by="id"
@@ -890,13 +880,13 @@ export default {
               </div>
               <div class="col-6">
                 <base-input
-                  name="id_induk"
+                  name="id_dam"
                   placeholder="Id Induk"
                   label="ID Induk"
                   nullable
                 >
                   <multi-select
-                    v-model="input.id_induk"
+                    v-model="input.id_dam"
                     :options="g$ddListBetina"
                     label="name"
                     track-by="id"
@@ -937,7 +927,7 @@ export default {
                   />
                 </base-input>
               </div>
-              <div class="col-6">
+              <!-- <div class="col-6">
                 <base-input
                   name="pakan"
                   placeholder="Pakan"
@@ -953,7 +943,7 @@ export default {
                     :show-labels="false"
                   />
                 </base-input>
-              </div>
+              </div> -->
               <div class="col-6">
                 <base-input
                   name="fase"
@@ -988,7 +978,7 @@ export default {
                   />
                 </base-input>
               </div> -->
-              <div class="col-6">
+              <!-- <div class="col-6">
                 <base-input
                   name="tanggal_keluar"
                   placeholder="YYYY-MM-DD"
@@ -1015,28 +1005,32 @@ export default {
                     :show-labels="false"
                   />
                 </base-input>
-              </div>
-              <div class="col-6" v-if="!this.input.foto">
+              </div> -->
+              <div class="col-6" v-if="!this.input.image">
                 <div class="form-group has-label">
-                  <label class="form-control-label">Foto</label>
+                  <label class="form-control-label">image</label>
                   <input
                     class="form-control file"
-                    id="foto"
+                    id="image"
                     type="file"
-                    ref="foto"
+                    ref="image"
                     accept="image/*"
                     @change="handleFileUpload()"
                   />
                 </div>
               </div>
-              <div class="col-6" v-if="this.input.fotoUrl">
+              <div class="col-6" v-if="this.input.imageUrl">
                 <div class="text-center pb-2">
                   <base-button type="danger" size="sm" @click="resetImage()">
                     Reset Image
                   </base-button>
                 </div>
                 <div class="text-center">
-                  <img width="250" v-if="input.fotoUrl" :src="input.fotoUrl" />
+                  <img
+                    width="250"
+                    v-if="input.imageUrl"
+                    :src="input.imageUrl"
+                  />
                 </div>
               </div>
             </div>
@@ -1058,10 +1052,22 @@ export default {
           <h3 class="modal-title">Hapus {{ pageTitle }}</h3>
         </template>
         <template #body>
-          <p>
-            Yakin ingin menghapus {{ pageTitle }}:
-            <strong>{{ input.id_ternak }}</strong>
-          </p>
+          <div class="col-12">
+            <base-input
+              name="status_keluar"
+              label="Pilih Alasan Untuk Menghapus Data Ternak ini"
+            >
+              <multi-select
+                v-model="input.status_keluar"
+                :options="g$ddStatusKeluar"
+                placeholder="Pilih Alasan Hapus"
+                :show-labels="false"
+              />
+            </base-input>
+            <p class="mt--4 text-danger text-sm">
+              Setelah dihapus, Anda tidak dapat memulihkan data ini!
+            </p>
+          </div>
         </template>
         <template #footer>
           <base-button type="secondary" @click="modal.confirm = false">
@@ -1108,13 +1114,13 @@ export default {
                 </div>
                 <div class="row">
                   <div class="col-5">
-                    <span style="font-weight: 600">Varietas</span>
+                    <span style="font-weight: 600">Bangsa</span>
                   </div>
                   <div class="col">
                     :
                     <span style="font-weight: 300">
                       {{
-                        infoTernak.varietas ? infoTernak.varietas.varietas : ""
+                        infoTernak.bangsa ? infoTernak.bangsa.bangsa : ""
                       }}</span
                     >
                   </div>
@@ -1137,7 +1143,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.id_induk }}</span
+                      {{ infoTernak.id_dam }}</span
                     >
                   </div>
                 </div>
@@ -1148,7 +1154,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.id_pejantan }}</span
+                      {{ infoTernak.id_sire }}</span
                     >
                   </div>
                 </div>

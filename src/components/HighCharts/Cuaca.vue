@@ -96,7 +96,7 @@ export default {
     </div>
   </div>
   <div class="row mt--4">
-    <div class="col-6">
+    <div class="col-5">
       <img
         style="width: 80px"
         :src="gambarCuaca"
@@ -110,22 +110,18 @@ export default {
         {{ deskripsi }}
       </p>
     </div>
-    <div class="col-4">
-      <p
-        class="temp text-white text-left ml--7 mt-2 mb-0 p-0"
-        style="font-size: 32px"
-      >
-        {{ suhu }}
-      </p>
-    </div>
-    <div class="col-2">
-      <p
-        class="text-left text-white ml--8 mt-3 mb-0 p-0"
-        style="font-size: 12px"
-      >
-        Terasa Seperti <br />
-        {{ terasaSeperti }}
-      </p>
+    <div class="col-7 mt-3">
+      <div class="row">
+        <div class="col-12">
+          <p class="temp text-white text-sm-left">
+            {{ suhu }}
+          </p>
+          <p class="kecil text-sm-left text-white mt--3">
+            Terasa Seperti
+            {{ terasaSeperti }}
+          </p>
+        </div>
+      </div>
     </div>
   </div>
   <div class="row mt-3">
@@ -155,11 +151,11 @@ export default {
 
 <style>
 .kecil {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 }
 
 .temp {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 700;
 }
 </style>

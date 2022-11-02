@@ -99,32 +99,32 @@ const u$dashboard = defineStore({
           data: [
             {
               y: state.totalByStatus.total_ternak_pejantan,
-              name: "Total Pejantan",
+              name: "Pejantan",
               color: "#006329",
             },
             {
               y: state.totalByStatus.total_ternak_jantan,
-              name: "Total Jantan",
+              name: "Jantan",
               color: "#7EB918",
             },
             {
               y: state.totalByStatus.total_ternak_indukan,
-              name: "Total Indukan",
+              name: "Indukan",
               color: "#008BD0",
             },
             {
               y: state.totalByStatus.total_ternak_betina,
-              name: "Total Betina",
+              name: "Betina",
               color: "#776EAD",
             },
             {
               y: state.totalByStatus.total_ternak_cempe_betina,
-              name: "Total Cempe Betina",
+              name: "Cempe Betina",
               color: "#E40044",
             },
             {
               y: state.totalByStatus.total_ternak_cempe_jantan,
-              name: "Total Cempe Jantan",
+              name: "Cempe Jantan",
               color: "#F07C00",
             },
           ],
