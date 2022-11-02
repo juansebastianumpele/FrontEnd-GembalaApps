@@ -85,19 +85,19 @@ export default {
   <main-layout :title="pageTitle" is-full style="background: transparent">
     <template #header>
       <div class="row">
-        <div class="col-sm-7">
+        <div class="col-sm-8">
           <h1 class="font-weight-bolder text-success">Fase Pemasukan</h1>
         </div>
-        <div class="col-sm-5">
+        <div class="col-sm-4">
           <div class="row">
-            <div class="col-sm-4 text-center">
+            <span class="text-center m-2">
               <base-button type="success1" class="btn-lg">
                 <router-link to="/fase/pemasukan" class="text-white">
                   Summary
                 </router-link>
               </base-button>
-            </div>
-            <div class="col-sm-4 text-center">
+            </span>
+            <span class="text-center m-2">
               <base-button
                 v-if="userInfo.role !== 'bod'"
                 type="secondary"
@@ -107,8 +107,8 @@ export default {
                   Fase Pemasukan
                 </router-link>
               </base-button>
-            </div>
-            <div class="col-sm-4 text-center">
+            </span>
+            <span class="text-center m-2">
               <base-button
                 v-if="userInfo.role !== 'bod'"
                 type="secondary"
@@ -118,7 +118,7 @@ export default {
                   Langkah Kerja
                 </router-link>
               </base-button>
-            </div>
+            </span>
           </div>
         </div>
       </div>

@@ -12,30 +12,30 @@ export default {
 <template>
   <main-layout :title="pageTitle" disable-padding>
     <template #header>
-      <div>
-        <nav class="nav nav-pills flex-column flex-sm-row mb-4">
-          <li>
+      <div class="col-sm">
+        <div class="row">
+          <span class="text-center m-2">
             <base-button type="secondary" class="btn-lg">
               <router-link to="../pemasukan" class="text-dark">
                 Summary
               </router-link>
             </base-button>
-          </li>
-          <li>
-            <base-button type="secondary" class="ml-3 btn-lg">
+          </span>
+          <span class="text-center m-2">
+            <base-button type="secondary" class="btn-lg">
               <router-link to="data-pemasukan" class="text-dark">
                 Fase Pemasukan
               </router-link>
             </base-button>
-          </li>
-          <li>
-            <base-button type="success1" class="ml-3 btn-lg">
+          </span>
+          <span class="text-center m-2">
+            <base-button type="success1" class="btn-lg">
               <router-link to="langkah-kerja" class="text-white">
                 Langkah Kerja
               </router-link>
             </base-button>
-          </li>
-        </nav>
+          </span>
+        </div>
       </div>
       <div>
         <h3>Langkah Kerja Fase Pemasukan :</h3>
