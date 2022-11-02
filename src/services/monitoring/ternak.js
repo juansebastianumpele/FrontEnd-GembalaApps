@@ -11,6 +11,7 @@ const del = (req) => baseApi.put(`${api}/${ternak}/keluar`, req);
 // Dropdown
 const listBangsa = () => baseApi.get(`${api}/bangsa`);
 const listFase = () => baseApi.get(`${api}/fase`);
+const statusTernak = () => baseApi.get(`${api}/status-ternak`);
 
 // Jumlah Ternak
 const listBetina = () => baseApi.get(`${api}/${ternak}?jenis_kelamin=Betina`);
@@ -52,4 +53,5 @@ export {
   tabelKandang,
   filterTernak,
   listTimbangan,
+  statusTernak,
 };

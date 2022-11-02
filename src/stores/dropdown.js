@@ -24,13 +24,13 @@ const u$dropdown = defineStore({
     listJenisPakan: [],
   }),
   actions: {
-    // Varietas
+    // bangsa
     async a$ddBangsa() {
       try {
-        const { data } = await s$ternak.listBangsa();
+        const { data } = await s$ternak.listbangsa();
         this.bangsa = data.list;
       } catch ({ error }) {
-        this.varietas = [];
+        this.bangsa = [];
         throw error;
       }
     },
