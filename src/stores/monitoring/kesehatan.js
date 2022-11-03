@@ -8,10 +8,10 @@ const u$kesehatan = defineStore({
     detailKesehatan: [],
   }),
   actions: {
-    async a$kesehatanList(request) {
+    async a$kesehatanList() {
       try {
-        const { data } = await s$kesehatan.list(request);
-        this.kesehatan = data.list;
+        const { data } = await s$kesehatan.list();
+        this.kesehatan = data;
       } catch ({ error }) {
         this.kesehatan = [];
         throw error;
@@ -42,7 +42,7 @@ const u$kesehatan = defineStore({
     async a$penyakitDetail(request) {
       try {
         const { data } = await s$kesehatan.detailKesehatan(request);
-        this.detailKesehatan = data;
+        this.detailKesehatan = data.list;
       } catch ({ error }) {
         this.detailKesehatan = {};
         throw error;

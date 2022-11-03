@@ -3,11 +3,10 @@ import { subApiUrl } from "@/utils/constant";
 
 const { api, kesehatan, ternak } = subApiUrl;
 
-const list = (req) => baseApi.get(`${api}/${ternak}/totalternaksakit/${req}`);
-const add = (req) => baseApi.post(`${api}/${kesehatan}`, req);
+const list = () => baseApi.get(`${api}/riwayat-kesehatan/total-sakit-by-penyakit/`);
+const add = (req) => baseApi.post(`${api}/riwayat-kesehatan`, req);
 const edit = (req) => baseApi.put(`${api}/${kesehatan}/${req.id}`, req);
 const del = (req) => baseApi.delete(`${api}/${kesehatan}/${req}`);
-const detailKesehatan = (req) => baseApi.get(`${api}/${kesehatan}/listkesehatanpenyakit/${req}`);
-// const detailTernakSakit = (req) => baseApi.get(`${api}/${kesehatan}/listusers/${req}`);
+const detailKesehatan = (req) => baseApi.get(`${api}/riwayat-kesehatan?id_penyakit=${req}`);
 
 export { list, add, edit, del, detailKesehatan };

@@ -1,6 +1,7 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import d$kesehatan from "@/stores/monitoring/kesehatan";
+import { ubahTanggal } from "@/utils/locale/ubahTanggal";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 
@@ -29,28 +30,32 @@ export default {
     dt: {
       column: [
         {
-          name: "nomor",
+          name: "id_ternak",
           th: "ID Ternak",
+          render: ({ ternak }) => ternak ? ternak.id_ternak : null,
         },
         {
           name: "nama_penyakit",
           th: "Nama Penyakit",
+          render: ({ penyakit }) => penyakit ? penyakit.nama_penyakit : null,
         },
         {
-          name: "tgl_sakit",
+          name: "tanggal_sakit",
           th: "Tanggal Sakit",
+          render: ({ tanggal_sakit }) => tanggal_sakit ? ubahTanggal(tanggal_sakit) : null,
         },
         {
-          name: "tgl_sembuh",
+          name: "tanggal_sembuh",
           th: "Tanggal Sembuh",
+          render: ({ tanggal_sembuh }) => tanggal_sembuh ? ubahTanggal(tanggal_sembuh) : null,
         },
       ],
       action: [
-        {
-          text: "Detail",
-          color: "info",
-          event: "detail-ternak-sakit",
-        },
+        // {
+        //   text: "Detail",
+        //   color: "info",
+        //   event: "detail-ternak-sakit",
+        // },
         {
           text: "Ubah",
           color: "success",
