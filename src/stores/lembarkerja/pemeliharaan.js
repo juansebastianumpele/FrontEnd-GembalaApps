@@ -30,6 +30,16 @@ const u$pemeliharaan = defineStore({
         throw error;
       }
     },
+
+    // Create pemeliharaan
+    async a$createLkPemeliharaan(request) {
+      try {
+        await s$pemeliharaan.createPemeliharaan(request);
+      } catch ({ error }) {
+        throw error;
+      }
+    },
+
   },
 
   getters: {
