@@ -33,6 +33,9 @@ import VueMultiselect from "vue-multiselect";
 import flatpickr from "flatpickr";
 import { Indonesian } from "flatpickr/dist/l10n/id.js";
 flatpickr.localize(Indonesian);
+flatpickr.setDefaults({
+  altInput: true, altFormat: 'l, j F Y', dateFormat: 'Y-m-d'
+});
 import VueFlatPickr from "vue-flatpickr-component";
 
 
