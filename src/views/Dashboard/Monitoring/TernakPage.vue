@@ -567,7 +567,7 @@ export default {
               <div class="col-6">
                 <base-input
                   name="tanggal_lahir"
-                  placeholder="YYYY-MM-DD"
+                  placeholder="Pilih tanggal"
                   label="Tanggal Lahir"
                   required
                 >
@@ -575,7 +575,7 @@ export default {
                     v-model.lazy="input.tanggal_lahir"
                     :config="{ mode: 'single', allowInput: true }"
                     class="form-control datepicker"
-                    placeholder="YYYY-MM-DD"
+                    placeholder="Pilih tanggal"
                   />
                 </base-input>
               </div>
@@ -616,7 +616,7 @@ export default {
               <div class="col-6">
                 <base-input
                   name="tanggal_masuk"
-                  placeholder="YYYY-MM-DD"
+                  placeholder="Pilih tanggal"
                   label="Tanggal Masuk"
                   required
                 >
@@ -624,7 +624,7 @@ export default {
                     v-model.lazy="input.tanggal_masuk"
                     :config="{ mode: 'single', allowInput: true }"
                     class="form-control datepicker"
-                    placeholder="YYYY-MM-DD"
+                    placeholder="Pilih tanggal"
                   />
                 </base-input>
               </div>
@@ -850,7 +850,7 @@ export default {
               <div class="col-6">
                 <base-input
                   name="tanggal_lahir"
-                  placeholder="YYYY-MM-DD"
+                  placeholder="Pilih tanggal"
                   label="Tanggal Lahir"
                   required
                 >
@@ -858,7 +858,7 @@ export default {
                     v-model.lazy="input.tanggal_lahir"
                     :config="{ mode: 'single', allowInput: true }"
                     class="form-control datepicker"
-                    placeholder="YYYY-MM-DD"
+                    placeholder="Pilih tanggal"
                   />
                 </base-input>
               </div>
@@ -899,7 +899,7 @@ export default {
               <div class="col-6">
                 <base-input
                   name="tanggal_masuk"
-                  placeholder="YYYY-MM-DD"
+                  placeholder="Pilih tanggal"
                   label="Tanggal Masuk"
                   required
                 >
@@ -907,7 +907,7 @@ export default {
                     v-model.lazy="input.tanggal_masuk"
                     :config="{ mode: 'single', allowInput: true }"
                     class="form-control datepicker"
-                    placeholder="YYYY-MM-DD"
+                    placeholder="Pilih tanggal"
                   />
                 </base-input>
               </div>
@@ -982,14 +982,14 @@ export default {
               <!-- <div class="col-6">
                 <base-input
                   name="tanggal_keluar"
-                  placeholder="YYYY-MM-DD"
+                  placeholder="Pilih tanggal"
                   label="Tanggal Keluar"
                 >
                   <flat-pickr
                     v-model.lazy="input.tanggal_keluar"
                     :config="{ mode: 'single', allowInput: true }"
                     class="form-control datepicker"
-                    placeholder="YYYY-MM-DD"
+                    placeholder="Pilih tanggal"
                   />
                 </base-input>
               </div>

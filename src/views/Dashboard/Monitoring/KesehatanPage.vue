@@ -209,9 +209,9 @@ export default {
 
               <!-- Tanggal sakit -->
               <div class="col-12">
-                <base-input name="tanggal_sakit" placeholder="YYYY-MM-DD" label="Tanggal Sakit" required>
+                <base-input name="tanggal_sakit" placeholder="Pilih tanggal" label="Tanggal Sakit" required>
                   <flat-pickr v-model.lazy="input.tanggal_sakit" :config="{ mode: 'single', allowInput: true }"
-                    class="form-control datepicker" placeholder="YYYY-MM-DD" />
+                    class="form-control datepicker" placeholder="Pilih tanggal" />
                 </base-input>
               </div>
 

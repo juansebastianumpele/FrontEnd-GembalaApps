@@ -143,7 +143,7 @@ export default {
                 <base-input
                   name="tanggal_kawin"
                   class=""
-                  placeholder="YYYY-MM-DD"
+                  placeholder="Pilih tanggal"
                   label="Tanggal Kawin"
                   required
                 >
@@ -223,7 +223,7 @@ export default {
                 <base-input
                   name="tanggal_kawin"
                   class=""
-                  placeholder="YYYY-MM-DD"
+                  placeholder="Pilih tanggal"
                   label="Tanggal Kawin"
                   required
                 >

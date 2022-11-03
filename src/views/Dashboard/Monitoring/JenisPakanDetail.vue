@@ -479,7 +479,7 @@ export default {
                 <base-input
                   name="tanggal"
                   class=""
-                  placeholder="YYYY-MM-DD"
+                  placeholder="Pilih tanggal"
                   label="Tanggal"
                   required
                 >
