@@ -69,7 +69,7 @@ fieldset[disabled] .multiselect {
   opacity: 0.6;
 }
 .multiselect--active {
-  z-index: 1;
+  z-index: 10;
 }
 .multiselect--active:not(.multiselect--above) .multiselect__current,
 .multiselect--active:not(.multiselect--above) .multiselect__input,
