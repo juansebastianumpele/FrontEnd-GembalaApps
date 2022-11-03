@@ -192,6 +192,26 @@ const dashboardRoutes = [
       },
     ],
   },
+  {
+    path: "/lembar-kerja",
+    component: DashboardLayout,
+    children: [
+      {
+        path: "pemeliharaan",
+        name: "Lembar Kerja Pemeliharaan",
+        component: () =>
+          import("@/views/Dashboard/LembarKerja/Pemeliharaan.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "pemeliharaan/langkah-kerja",
+        name: "Langkah Kerja Pemeliharaan",
+        component: () =>
+          import("@/views/Dashboard/LembarKerja/LangkahKerja.vue"),
+        meta: { requiresAuth: true },
+      },
+    ],
+  },
 ];
 
 export default dashboardRoutes;

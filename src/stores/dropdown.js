@@ -27,7 +27,7 @@ const u$dropdown = defineStore({
     // bangsa
     async a$ddBangsa() {
       try {
-        const { data } = await s$ternak.listbangsa();
+        const { data } = await s$ternak.listBangsa();
         this.bangsa = data.list;
       } catch ({ error }) {
         this.bangsa = [];

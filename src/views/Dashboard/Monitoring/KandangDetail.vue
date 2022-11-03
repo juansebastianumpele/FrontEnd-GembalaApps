@@ -32,9 +32,9 @@ export default {
           th: "Nomor Ternak",
         },
         {
-          name: "varietas",
+          name: "bangsa",
           th: "Bangsa",
-          render: ({ varietas }) => varietas.varietas,
+          render: ({ bangsa }) => bangsa.bangsa,
         },
         {
           name: "fase",
@@ -158,7 +158,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoTernak.varietas.varietas }}</span
+                  {{ infoTernak.bangsa.bangsa }}</span
                 >
               </div>
             </div>
@@ -179,7 +179,9 @@ export default {
               </div>
               <div class="col">
                 :
-                <span style="font-weight: 300"> {{ infoTernak.id_induk }}</span>
+                <span style="font-weight: 300">
+                  {{ infoTernak.id_dam ?? "-" }}</span
+                >
               </div>
             </div>
             <div class="row">
@@ -189,7 +191,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoTernak.id_pejantan }}</span
+                  {{ infoTernak.id_sire ?? "-" }}</span
                 >
               </div>
             </div>
@@ -222,7 +224,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoTernak.pakan.nama_pakan }}</span
+                  {{ infoTernak.kandang.jenis_pakan.jenis_pakan }}</span
                 >
               </div>
             </div>
@@ -263,7 +265,9 @@ export default {
               </div>
               <div class="col">
                 :
-                <span style="font-weight: 300"> {{ infoTernak.penyakit }}</span>
+                <span style="font-weight: 300">
+                  {{ infoTernak.penyakit ?? "-" }}</span
+                >
               </div>
             </div>
             <div class="row">

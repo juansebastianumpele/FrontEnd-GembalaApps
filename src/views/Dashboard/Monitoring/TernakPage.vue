@@ -5,6 +5,7 @@ import d$dropdown from "@/stores/dropdown";
 import d$kesehatan from "@/stores/monitoring/kesehatan";
 import HcLine from "@/components/HighCharts/Line.vue";
 import d$chart from "@/stores/chart";
+import { ubahTanggal } from "@/utils/locale/ubahTanggal";
 
 import {
   object as y$object,
@@ -1143,7 +1144,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.id_dam }}</span
+                      {{ infoTernak.id_dam ?? "-" }}</span
                     >
                   </div>
                 </div>
@@ -1154,7 +1155,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.id_sire }}</span
+                      {{ infoTernak.id_sire ?? "-" }}</span
                     >
                   </div>
                 </div>
@@ -1192,7 +1193,9 @@ export default {
                     :
                     <span style="font-weight: 300">
                       {{
-                        infoTernak.pakan ? infoTernak.pakan.nama_pakan : ""
+                        infoTernak.kandang.jenis_pakan.jenis_pakan
+                          ? infoTernak.kandang.jenis_pakan.jenis_pakan
+                          : ""
                       }}</span
                     >
                   </div>

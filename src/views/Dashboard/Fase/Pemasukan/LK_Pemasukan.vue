@@ -46,25 +46,25 @@ export default {
       <div>
         <card-comp>
           <ol>
-            <li>
+            <li class="mb-1">
               Periksa domba secara visual untuk mendapatkan identitas ternak
               yang terdiri dari bangsa dan jenis kelamin.
             </li>
-            <li>
+            <li class="mb-1">
               Periksa kondisi ternak, apakah terdapat cacat atau sakit yang
               berpotensi mempersulit proses budidaya. Pengecekan terdiri dari
               cek poel, cek mulut, cek telinga, kuku kaki, cek kondisi fisik
               lainnya, dan BCS domba tersebut.
             </li>
-            <li>
+            <li class="mb-1">
               Apabila domba dalam kondisi baik dan memenuhi kriteria, domba akan
               diterima.
             </li>
-            <li>
+            <li class="mb-1">
               Pasangkan kalung RFID dan daftarkan menggunakan RFID mobile.
               Selanjutnya akan terbentuk ID ternak yang baru.
             </li>
-            <li>
+            <li class="mb-1">
               Buka SOP pemasukan pada mobile apps untuk melengkapi data ternak
               yang baru saja dimasukkan sesuai indikator yang ditetapkan.
             </li>
