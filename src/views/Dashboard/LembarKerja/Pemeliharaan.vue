@@ -34,6 +34,7 @@ export default {
         {
           name: "jumlah_pakan",
           th: "Jumlah Pakan",
+          render: ({ jumlah_pakan }) => `${jumlah_pakan} Kg`,
         },
         {
           name: "pembersihan_kandang",
@@ -207,7 +208,7 @@ export default {
               <!-- Jumlah pakan -->
               <div class="col-6">
                 <field-form v-slot="{ field }" v-model="input.jumlah_pakan" name="jumlah_pakan">
-                  <base-input v-bind="field" placeholder="Jumlah pakan" label="Jumlah Pakan" type="number"></base-input>
+                  <base-input v-bind="field" placeholder="Jumlah pakan dalam kg" label="Jumlah Pakan (Kg)" type="number"></base-input>
                 </field-form>
               </div>
 

@@ -55,7 +55,7 @@ export default {
           name: "jenispakan",
           th: "Jenis Pakan",
           render: ({ jenis_pakan }) =>
-            jenis_pakan ? jenis_pakan.jenis_pakan : "",
+            jenis_pakan ? jenis_pakan.jenis_pakan : null,
         },
         {
           name: "kebutuhan_pakan",
@@ -197,12 +197,12 @@ export default {
           id_kandang,
           kode_kandang,
           jenis_kandang: {
-            id: jenis_kandang ? jenis_kandang.id_jenis_kandang : "",
-            name: jenis_kandang ? jenis_kandang.jenis_kandang : "",
+            id: jenis_kandang ? jenis_kandang.id_jenis_kandang : null,
+            name: jenis_kandang ? jenis_kandang.jenis_kandang : null,
           },
           jenis_pakan: {
-            id: jenis_pakan ? jenis_pakan.id_jenis_pakan : "",
-            name: jenis_pakan ? jenis_pakan.jenis_pakan : "",
+            id: jenis_pakan ? jenis_pakan.id_jenis_pakan : null,
+            name: jenis_pakan ? jenis_pakan.jenis_pakan : null,
           },
           persentase_kebutuhan_pakan,
         };

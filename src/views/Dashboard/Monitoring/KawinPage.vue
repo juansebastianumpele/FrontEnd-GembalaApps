@@ -42,17 +42,17 @@ export default {
         {
           name: "nama_varietas",
           th: "Bangsa",
-          render: ({ varietas }) => varietas ? varietas.varietas : '',
+          render: ({ varietas }) => varietas ? varietas.varietas : null,
         },
         {
           name: "",
           th: "Kode Kandang",
-          render: ({ kandang }) => kandang ? kandang.kode_kandang : '',
+          render: ({ kandang }) => kandang ? kandang.kode_kandang : null,
         },
         {
           name: "fase",
           th: "Fase Pemeliharaan",
-          render: ({ fase }) => fase ? fase.fase : '',
+          render: ({ fase }) => fase ? fase.fase : null,
         },
       ],
       action: [

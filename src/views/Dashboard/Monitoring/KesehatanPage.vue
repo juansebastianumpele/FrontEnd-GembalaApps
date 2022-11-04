@@ -56,7 +56,7 @@ export default {
     },
   }),
   computed: {
-    ...mapState(d$kesehatan, ["g$kesehatanList", "g$kesehatanDetail", "g$penyakitDetail"]),
+    ...mapState(d$kesehatan, ["g$kesehatanList", "g$kesehatanDetail", "g$penyakitDetail", "g$totalSakit"]),
     ...mapState(d$dropdown, ["g$ddListPenyakit", "g$ddKandang"]),
     ...mapState(d$ternak, ["g$ternakList"]),
     modals() {
@@ -75,6 +75,7 @@ export default {
     await this.a$ddListPenyakit().catch((error) => this.notify(error, false));
     await this.a$ternakList().catch((error) => this.notify(error, false));
     await this.a$ddKandang().catch((error) => this.notify(error, false));
+    await this.a$totalSakit().catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$kesehatan, [
@@ -82,6 +83,7 @@ export default {
       "a$kesehatanList",
       "a$kesehatanDelete",
       "a$kesehatanEdit",
+      "a$totalSakit",
     ]),
     ...mapActions(d$dropdown, ["a$ddListPenyakit", "a$ddKandang"]),
     clearInput() {
@@ -117,10 +119,9 @@ export default {
         await this.a$kesehatanAdd(data);
         this.modal.addTernakSakit = false;
         this.notify(`Tambah ${this.pageTitle} berhasil`);
+        await this.a$totalSakit().catch((error) => this.notify(error, false));
       } catch (error) {
         this.notify(error, false);
-      } finally {
-        this.a$kesehatanList();
       }
     },
     async editTernakSakit() {
@@ -178,8 +179,8 @@ export default {
     </template>
 
     <template #body>
-      <empty-result v-if="!g$kesehatanList.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$kesehatanList" :columns="dt.column" :actions="dt.action"
+      <empty-result v-if="!g$totalSakit.length" :text="`${pageTitle}`" />
+      <data-table v-else :index="true" :data="g$totalSakit" :columns="dt.column" :actions="dt.action"
         @ubah-penyakit="triggerEditModal" @hapus-penyakit="triggerDelete" @detail-kesehatan="triggerDetail" />
     </template>
     <template #modal>
@@ -210,7 +211,7 @@ export default {
               <!-- Tanggal sakit -->
               <div class="col-12">
                 <base-input name="tanggal_sakit" placeholder="Pilih tanggal" label="Tanggal Sakit" required>
-                  <flat-pickr v-model.lazy="input.tanggal_sakit" :config="{ mode: 'single', allowInput: true }"
+                  <flat-pickr v-model.lazy="input.tanggal_sakit" :config="{ mode: 'single', allowInput: true, maxDate: 'today' }"
                     class="form-control datepicker" placeholder="Pilih tanggal" />
                 </base-input>
               </div>
@@ -226,7 +227,7 @@ export default {
           </form-comp>
         </template>
         <template #footer>
-          <base-button type="secondary" @click="modal.addPenyakit = false">
+          <base-button type="secondary" @click="modal.addTernakSakit = false">
             Tutup
           </base-button>
           <base-button type="primary" @click="addTernakSakit">

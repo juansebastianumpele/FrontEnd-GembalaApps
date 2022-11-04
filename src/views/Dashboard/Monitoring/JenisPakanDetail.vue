@@ -47,12 +47,12 @@ export default {
         {
           name: "tanggal_pembuatan",
           th: "Tanggal Pembuatan",
-          render: ({ tanggal_pembuatan }) => tanggal_pembuatan ? ubahTanggal(tanggal_pembuatan) : '',
+          render: ({ tanggal_pembuatan }) => tanggal_pembuatan ? ubahTanggal(tanggal_pembuatan) : null,
         },
         {
           name: "tanggal_konsumsi",
           th: "Tanggal Konsumsi",
-          render: ({ tanggal_konsumsi }) => tanggal_konsumsi ? ubahTanggal(tanggal_konsumsi) : '',
+          render: ({ tanggal_konsumsi }) => tanggal_konsumsi ? ubahTanggal(tanggal_konsumsi) : null,
         },
       ],
       action: [
