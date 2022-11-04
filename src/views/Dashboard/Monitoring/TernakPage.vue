@@ -135,7 +135,7 @@ export default {
   }),
   computed: {
     ...mapState(d$ternak, ["g$ternakList", "g$perlakuan"]),
-    ...mapState(d$kesehatan, ["g$detailKesehatan"]),
+    ...mapState(d$kesehatan, ["g$riwayatKesehatan"]),
     ...mapState(d$chart, ["g$byTimbangan"]),
     ...mapState(d$dropdown, [
       "g$ddJenisKelamin",
@@ -190,6 +190,7 @@ export default {
       "a$ddListPejantan",
     ]),
     ...mapActions(d$chart, ["a$byTimbangan"]),
+    ...mapActions(d$kesehatan, ["a$riwayatKesehatan"]),
     resetImage() {
       this.input.imageUrl = "";
       this.input.image = "";
@@ -406,8 +407,9 @@ export default {
       try {
         this.infoTernak = { ...row };
         this.modal.detailTernak = true;
-        await this.a$perlakuan(this.infoTernak.id_ternak);
-        await this.a$byTimbangan(this.infoTernak.id_ternak);
+        this.a$riwayatKesehatan(this.infoTernak.id_ternak);
+        this.a$perlakuan(this.infoTernak.id_ternak);
+        this.a$byTimbangan(this.infoTernak.id_ternak);
       } catch (error) {
       } finally {
         this.a$ternakList();
@@ -1309,58 +1311,55 @@ export default {
                 style="max-height: 500px; overflow-y: 800px; overflow-x: hidden"
               >
                 <h3 class="my-3">Riwayat Kesehatan</h3>
-                <div class="row">
-                  <div class="col-5">
-                    <span style="font-weight: 600">Status Kesehatan</span>
+                <empty-result
+                  v-if="!g$riwayatKesehatan.length"
+                  :text="`Kesehatan`"
+                />
+                <div class="m-3" v-for="item in g$riwayatKesehatan">
+                  <hr class="m-0" />
+                  <div class="row">
+                    <div class="col-5">
+                      <span style="font-weight: 400">Nama Penyakit</span>
+                    </div>
+                    <div class="col">
+                      :
+                      <span style="font-weight: 200">{{
+                        item.penyakit.nama_penyakit
+                      }}</span>
+                    </div>
                   </div>
-                  <div class="col">
-                    :
-                    <span style="font-weight: 300">
-                      {{ infoTernak.status_kesehatan }}</span
-                    >
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-5">
-                    <span style="font-weight: 600">Nama Penyakit</span>
-                  </div>
-                  <div class="col">
-                    :
-                    <span style="font-weight: 300">
-                      {{
-                        infoTernak.penyakit
-                          ? infoTernak.penyakit.nama_penyakit
+                  <div class="row">
+                    <div class="col-5">
+                      <span style="font-weight: 400">Tanggal Sakit</span>
+                    </div>
+                    <div class="col">
+                      :
+                      <span style="font-weight: 200">{{
+                        item.tanggal_sakit
+                          ? ubahTanggal(item.tanggal_sakit)
                           : "-"
-                      }}</span
-                    >
+                      }}</span>
+                    </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-5">
-                    <span style="font-weight: 600">Tanggal Sakit</span>
-                  </div>
-                  <div class="col">
-                    :
-                    <span style="font-weight: 300">
-                      {{ g$detailKesehatan.tgl_sakit }}</span
-                    >
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-5">
-                    <span style="font-weight: 600">Tanggal Sembuh</span>
-                  </div>
-                  <div class="col">
-                    :
-                    <span style="font-weight: 300">
-                      {{ g$detailKesehatan.tgl_sakit }}</span
-                    >
+                  <div class="row">
+                    <div class="col-5">
+                      <span style="font-weight: 400">Tanggal Sembuh</span>
+                    </div>
+                    <div class="col">
+                      :
+                      <span style="font-weight: 200">{{
+                        item.tanggal_sembuh
+                          ? ubahTanggal(item.tanggal_sakit)
+                          : "-"
+                      }}</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </tab-pane>
             <tab-pane title="Perlakuan">
               <h3 class="my-3">Perlakuan yang telah diberikan</h3>
+              <empty-result v-if="!g$perlakuan.length" :text="`Perlakuan`" />
               <div v-for="item in g$perlakuan">
                 <hr class="m-0" />
                 <div class="row">
