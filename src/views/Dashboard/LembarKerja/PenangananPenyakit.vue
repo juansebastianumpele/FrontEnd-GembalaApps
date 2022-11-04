@@ -20,7 +20,7 @@ export default {
         {
           name: "tanggal_sakit",
           th: "Tanggal Sakit",
-          render: ({ tanggal_sakit }) => tanggal_sakit ? ubahTanggal(tanggal_sakit) : "",
+          render: ({ tanggal_sakit }) => tanggal_sakit ? ubahTanggal(tanggal_sakit) : null,
         },
         {
           name: "id_ternak",
@@ -30,22 +30,22 @@ export default {
         {
           name: "kandang",
           th: "Kode Kandang",
-          render: ({ kandang }) => kandang ? kandang.kode_kandang : "",
+          render: ({ kandang }) => kandang ? kandang.kode_kandang : null,
         },
         {
           name: "gejala",
           th: "Gejala",
-          render: ({ gejala }) => gejala ? gejala : "",
+          render: ({ gejala }) => gejala ? gejala : null,
         },
         {
           name: "penanganan",
           th: "Penaganan",
-          render: ({ penanganan }) => penanganan ? penanganan : "",
+          render: ({ penanganan }) => penanganan ? penanganan : null,
         },
         {
           name: "tanggal_sembuh",
           th: "Tanggal Sembuh",
-          render: ({ tanggal_sembuh }) => tanggal_sembuh ? ubahTanggal(tanggal_sembuh) : "",
+          render: ({ tanggal_sembuh }) => tanggal_sembuh ? ubahTanggal(tanggal_sembuh) : null,
         },
       ],
       actions: [

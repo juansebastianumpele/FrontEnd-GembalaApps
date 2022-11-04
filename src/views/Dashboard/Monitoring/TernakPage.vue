@@ -357,8 +357,8 @@ export default {
           rf_id,
           jenis_kelamin,
           bangsa: {
-            id: bangsa ? bangsa.id_bangsa : "",
-            name: bangsa ? bangsa.bangsa : "",
+            id: bangsa ? bangsa.id_bangsa : null,
+            name: bangsa ? bangsa.bangsa : null,
           },
           berat,
           suhu,
@@ -367,16 +367,16 @@ export default {
           id_dam,
           id_sire,
           kandang: {
-            id: kandang ? kandang.id_kandang : "",
-            name: kandang ? kandang.kode_kandang : "",
+            id: kandang ? kandang.id_kandang : null,
+            name: kandang ? kandang.kode_kandang : null,
           },
           penyakit: {
-            id: penyakit ? penyakit.id_penyakit : "",
-            name: penyakit ? penyakit.nama_penyakit : "",
+            id: penyakit ? penyakit.id_penyakit : null,
+            name: penyakit ? penyakit.nama_penyakit : null,
           },
           fase: {
-            id: fase ? fase.id_fp : "",
-            name: fase ? fase.fase : "",
+            id: fase ? fase.id_fp : null,
+            name: fase ? fase.fase : null,
           },
           tanggal_keluar,
           status_keluar,
