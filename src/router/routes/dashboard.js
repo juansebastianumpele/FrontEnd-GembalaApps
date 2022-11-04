@@ -210,6 +210,20 @@ const dashboardRoutes = [
           import("@/views/Dashboard/LembarKerja/LangkahKerja.vue"),
         meta: { requiresAuth: true },
       },
+      {
+        path: "penanganan-penyakit",
+        name: "Lembar Kerja Penanganan Penyakit",
+        component: () =>
+          import("@/views/Dashboard/LembarKerja/PenangananPenyakit.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "penanganan-penyakit/langkah-kerja",
+        name: "Langkah Kerja Penanganan Penyakit",
+        component: () =>
+          import("@/views/Dashboard/LembarKerja/LangkahKerjaPenangananPenyakit.vue"),
+        meta: { requiresAuth: true },
+      },
     ],
   },
 ];
