@@ -8,6 +8,9 @@ const add = (req) => baseApi.post(`${api}/${ternak}`, req);
 const edit = (req) => baseApi.put(`${api}/${ternak}`, req);
 const del = (req) => baseApi.put(`${api}/${ternak}/keluar`, req);
 
+//perlakuan
+const listPerlakuan = (req) => baseApi.get(`${api}/adaptasi?id_ternak=${req}`);
+
 // Dropdown
 const listBangsa = () => baseApi.get(`${api}/bangsa`);
 const listFase = () => baseApi.get(`${api}/fase`);
@@ -54,4 +57,5 @@ export {
   filterTernak,
   listTimbangan,
   statusTernak,
+  listPerlakuan,
 };

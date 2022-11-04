@@ -1,7 +1,7 @@
 <script>
 export default {
   metaInfo: () => ({
-    title: "Fase Pemasukan",
+    title: "Fase Adaptasi",
   }),
   data: () => ({
     pageTitle: "Langkah Kerja",
@@ -12,33 +12,33 @@ export default {
 <template>
   <main-layout :title="pageTitle" disable-padding>
     <template #header>
-      <div>
-        <nav class="nav nav-pills flex-column flex-sm-row mb-4">
-          <li>
+      <div class="col-sm">
+        <div class="row">
+          <span class="text-center m-2">
             <base-button type="secondary" class="btn-lg">
               <router-link to="../adaptasi" class="text-dark">
                 Summary
               </router-link>
             </base-button>
-          </li>
-          <li>
-            <base-button type="secondary" class="ml-3 btn-lg">
+          </span>
+          <span class="text-center m-2">
+            <base-button type="secondary" class="btn-lg">
               <router-link to="data-adaptasi" class="text-dark">
                 Fase Adaptasi
               </router-link>
             </base-button>
-          </li>
-          <li>
-            <base-button type="success1" class="ml-3 btn-lg">
+          </span>
+          <span class="text-center m-2">
+            <base-button type="success1" class="btn-lg">
               <router-link to="langkah-kerja" class="text-white">
-                Langkah Kerja
+                {{ pageTitle }}
               </router-link>
             </base-button>
-          </li>
-        </nav>
+          </span>
+        </div>
       </div>
       <div>
-        <h3>Langkah Kerja Fase Pemasukan :</h3>
+        <h3>{{ pageTitle }} Fase Adaptasi :</h3>
       </div>
     </template>
 
@@ -46,28 +46,16 @@ export default {
       <div>
         <card-comp>
           <ol>
-            <li>
-              Periksa domba secara visual untuk mendapatkan identitas ternak
-              yang terdiri dari bangsa dan jenis kelamin.
+            <li class="mb-1">
+              Pastikan seluruh domba terseleksi dengan baik kemudian masukkan ke
+              kandang umbaran.
             </li>
-            <li>
-              Periksa kondisi ternak, apakah terdapat cacat atau sakit yang
-              berpotensi mempersulit proses budidaya. Pengecekan terdiri dari
-              cek poel, cek mulut, cek telinga, kuku kaki, cek kondisi fisik
-              lainnya, dan BCS domba tersebut.
+            <li class="mb-1">Isi form pada aplikasi.</li>
+            <li class="mb-1">
+              Berikan perlakukan sesuai dengan arahan dan centang jika sudah
+              memberikan perlakuan.
             </li>
-            <li>
-              Apabila domba dalam kondisi baik dan memenuhi kriteria, domba akan
-              diterima.
-            </li>
-            <li>
-              Pasangkan kalung RFID dan daftarkan menggunakan RFID mobile.
-              Selanjutnya akan terbentuk ID ternak yang baru.
-            </li>
-            <li>
-              Buka SOP pemasukan pada mobile apps untuk melengkapi data ternak
-              yang baru saja dimasukkan sesuai indikator yang ditetapkan.
-            </li>
+            <li class="mb-1">Submit data.</li>
           </ol>
         </card-comp>
       </div>

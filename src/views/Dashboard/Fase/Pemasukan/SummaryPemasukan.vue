@@ -13,7 +13,7 @@ export default {
     HcBar,
   },
   data: () => ({
-    pageTitle: "Summary",
+    pageTitle: "Fase Pemasukan",
     //UI
     modal: {
       detailPemasukan: false,
@@ -86,7 +86,7 @@ export default {
     <template #header>
       <div class="row">
         <div class="col-sm-8">
-          <h1 class="font-weight-bolder text-success">Fase Pemasukan</h1>
+          <h1 class="font-weight-bolder text-success">{{ pageTitle }}</h1>
         </div>
         <div class="col-sm-4">
           <div class="row">
@@ -104,7 +104,7 @@ export default {
                 class="btn-lg"
               >
                 <router-link to="pemasukan/data-pemasukan" class="text-dark">
-                  Fase Pemasukan
+                  {{ pageTitle }}
                 </router-link>
               </base-button>
             </span>
@@ -131,7 +131,7 @@ export default {
                   class="text-success text-left ls-1 mb-4"
                   style="font-size: 16px"
                 >
-                  Populasi Fase Pemasukan
+                  Populasi {{ pageTitle }}
                 </h1>
               </div>
             </div>
@@ -210,7 +210,7 @@ export default {
       </div>
       <div class="row ml-1">
         <h1 class="font-weight-bolder text-success">
-          Daftar Ternak Fase Pemasukan
+          Daftar Ternak {{ pageTitle }}
         </h1>
       </div>
     </template>

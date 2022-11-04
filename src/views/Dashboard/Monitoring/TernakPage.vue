@@ -5,7 +5,6 @@ import d$dropdown from "@/stores/dropdown";
 import d$kesehatan from "@/stores/monitoring/kesehatan";
 import HcLine from "@/components/HighCharts/Line.vue";
 import d$chart from "@/stores/chart";
-import { ubahTanggal } from "@/utils/locale/ubahTanggal";
 
 import {
   object as y$object,
@@ -135,7 +134,7 @@ export default {
     infoTernak: {},
   }),
   computed: {
-    ...mapState(d$ternak, ["g$ternakList"]),
+    ...mapState(d$ternak, ["g$ternakList", "g$perlakuan"]),
     ...mapState(d$kesehatan, ["g$detailKesehatan"]),
     ...mapState(d$chart, ["g$byTimbangan"]),
     ...mapState(d$dropdown, [
@@ -179,6 +178,7 @@ export default {
       "a$ternakList",
       "a$ternakDelete",
       "a$ternakEdit",
+      "a$perlakuan",
     ]),
     ...mapActions(d$dropdown, [
       "a$ddBangsa",
@@ -406,6 +406,7 @@ export default {
       try {
         this.infoTernak = { ...row };
         this.modal.detailTernak = true;
+        await this.a$perlakuan(this.infoTernak.id_ternak);
         await this.a$byTimbangan(this.infoTernak.id_ternak);
       } catch (error) {
       } finally {
@@ -416,6 +417,15 @@ export default {
       const file = this.$refs.image.files[0];
       this.input.image = file;
       this.input.imageUrl = URL.createObjectURL(this.input.image);
+    },
+    ubahTanggal(tanggal) {
+      const date = new Date(tanggal);
+      const options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      };
+      return date.toLocaleDateString("id-ID", options);
     },
   },
 };
@@ -1349,12 +1359,23 @@ export default {
                 </div>
               </div>
             </tab-pane>
-            <tab-pane title="SOP">
-              <h3 class="my-3">SOP</h3>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Consectetur provident numquam autem dolor quibusdam voluptates.
-              </p>
+            <tab-pane title="Perlakuan">
+              <h3 class="my-3">Perlakuan yang telah diberikan</h3>
+              <div v-for="item in g$perlakuan">
+                <hr class="m-0" />
+                <div class="row">
+                  <div class="col-8">
+                    <small class="text-sm m-0">
+                      {{ item.treatment.treatment }}
+                    </small>
+                  </div>
+                  <div class="col-4">
+                    <small>
+                      {{ ubahTanggal(item.tanggal_adaptasi) }}
+                    </small>
+                  </div>
+                </div>
+              </div>
             </tab-pane>
             <tab-pane title="Grafik">
               <h3 class="my-4">Grafik ADG</h3>
