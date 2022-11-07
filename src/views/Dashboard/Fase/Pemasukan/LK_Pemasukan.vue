@@ -37,7 +37,7 @@ export default {
           </span>
         </div>
       </div>
-      <div>
+      <div class="mt-3">
         <h3>Langkah Kerja Fase Pemasukan :</h3>
       </div>
     </template>

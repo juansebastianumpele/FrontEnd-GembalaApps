@@ -305,7 +305,6 @@ export default {
           status_keluar,
         };
         await this.schema.validate(data);
-        console.log(data);
         await this.a$ternakEdit(data);
         this.modal.ubahTernak = false;
         this.notify(`Edit ${this.pageTitle} Sukses!`);

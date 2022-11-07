@@ -30,7 +30,7 @@ export default {
           th: "ID Ternak",
         },
         {
-          name: "cek_poel",
+          name: "kode_kandang",
           th: "Poel",
         },
         {
@@ -204,9 +204,46 @@ export default {
           </span>
         </div>
       </div>
-      <div class="row align-items-center">
+      <div class="row align-items-center mt-3">
         <div class="col-auto">
           <h3>Daftar {{ pageTitle }}</h3>
+        </div>
+        <div class="col-auto">
+          <span class="text-center m-2">
+            <base-button type="success1" class="btn-sm">
+              <router-link to="data-adaptasi" class="text-white">
+                Hari ke-1
+              </router-link>
+            </base-button>
+          </span>
+          <span class="text-center m-2">
+            <base-button type="secondary" class="btn-sm">
+              <router-link to="data-adaptasi-2" class="text-dark">
+                Hari ke-2
+              </router-link>
+            </base-button>
+          </span>
+          <span class="text-center m-2">
+            <base-button type="secondary" class="btn-sm">
+              <router-link to="data-adaptasi-3" class="text-dark">
+                Hari ke-3
+              </router-link>
+            </base-button>
+          </span>
+          <span class="text-center m-2">
+            <base-button type="secondary" class="btn-sm">
+              <router-link to="data-adaptasi-4" class="text-dark">
+                Hari ke-4
+              </router-link>
+            </base-button>
+          </span>
+          <span class="text-center m-2">
+            <base-button type="secondary" class="btn-sm">
+              <router-link to="data-adaptasi-5" class="text-dark">
+                Hari ke-5
+              </router-link>
+            </base-button>
+          </span>
         </div>
         <div class="col text-right">
           <base-button type="success" @click="triggerCreate">

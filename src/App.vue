@@ -64,4 +64,7 @@ export default {
 .nav-pills .nav-link {
   color: #525f7f !important;
 }
+.vueperslides__bullets--outside {
+  position: absolute !important;
+}
 </style>

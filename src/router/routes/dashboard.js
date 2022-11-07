@@ -158,8 +158,36 @@ const dashboardRoutes = [
       },
       {
         path: "adaptasi/data-adaptasi",
-        name: "Fase Adaptasi",
+        name: "Fase Adaptasi Hari 1",
         component: () => import("@/views/Dashboard/Fase/Adaptasi/Adaptasi.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "adaptasi/data-adaptasi-2",
+        name: "Fase Adaptasi Hari 2",
+        component: () =>
+          import("@/views/Dashboard/Fase/Adaptasi/AdaptasiH2.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "adaptasi/data-adaptasi-3",
+        name: "Fase Adaptasi Hari 3",
+        component: () =>
+          import("@/views/Dashboard/Fase/Adaptasi/AdaptasiH3.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "adaptasi/data-adaptasi-4",
+        name: "Fase Adaptasi Hari 4",
+        component: () =>
+          import("@/views/Dashboard/Fase/Adaptasi/AdaptasiHari4.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "adaptasi/data-adaptasi-5",
+        name: "Fase Adaptasi Hari 5",
+        component: () =>
+          import("@/views/Dashboard/Fase/Adaptasi/AdaptasiHari5.vue"),
         meta: { requiresAuth: true },
       },
       {
@@ -221,7 +249,9 @@ const dashboardRoutes = [
         path: "penanganan-penyakit/langkah-kerja",
         name: "Langkah Kerja Penanganan Penyakit",
         component: () =>
-          import("@/views/Dashboard/LembarKerja/LangkahKerjaPenangananPenyakit.vue"),
+          import(
+            "@/views/Dashboard/LembarKerja/LangkahKerjaPenangananPenyakit.vue"
+          ),
         meta: { requiresAuth: true },
       },
     ],
