@@ -28,11 +28,6 @@ export default {
           render: ({ ternak }) => ternak.id_ternak,
         },
         {
-          name: "kandang",
-          th: "Kode Kandang",
-          render: ({ kandang }) => kandang ? kandang.kode_kandang : null,
-        },
-        {
           name: "gejala",
           th: "Gejala",
           render: ({ gejala }) => gejala ? gejala : null,
@@ -81,6 +76,7 @@ export default {
       addLkPenangananPenyakit: false,
       editLkPenangananPenyakit: false,
       hapusLkPenangananPenyakit: false,
+      sembuhLkPenangananPenyakit: false,
     },
   }),
   computed: {
@@ -162,24 +158,45 @@ export default {
         this.notify(error, false);
       }
     },
-    async sembuhLkPenangananPenyakit(row) {
+    async sembuhLkPenangananPenyakit() {
       try {
-        const { id_riwayat_kesehatan, ternak, penyakit, tanggal_sakit, kandang, tanggal_sembuh, gejala, penanganan, } = row;
+        const { 
+          id_riwayat_kesehatan,
+          tanggal_sakit,
+          kandang,
+          gejala,
+          penanganan
+         } = this.input;
         const data = {
           id_riwayat_kesehatan,
           tanggal_sakit,
           tanggal_sembuh: new Date().toJSON(),
-          id_kandang: 1,
+          id_kandang: kandang.id_kandang,
           gejala,
           penanganan,
         };
         await this.a$kesehatanEdit(data);
-        this.notify(`Edit ${this.pageTitle} berhasil`);
+        this.notify(`Sembuh ${this.pageTitle} berhasil`);
+        this.modal.sembuhLkPenangananPenyakit = false;
         this.clearInput();
         await this.a$kesehatanList();
       } catch (error) {
         this.notify(error, false);
       }
+    },
+    triggerSembuh(row) {
+      const { id_riwayat_kesehatan, tanggal_sakit, ternak, kandang, gejala, penyakit, penanganan, tanggal_sembuh } = row;
+      this.input = {
+        id_riwayat_kesehatan,
+        tanggal_sakit,
+        ternak,
+        penyakit,
+        kandang,
+        gejala,
+        penanganan,
+        tanggal_sembuh,
+      };
+      this.modal.sembuhLkPenangananPenyakit = true;
     },
     async triggerDelete(row) {
       const { id_riwayat_kesehatan } = row;
@@ -255,7 +272,7 @@ export default {
     <template #body>
       <empty-result v-if="!g$kesehatanList.length" :text="`${pageTitle}`" />
       <data-table v-else :index="true" :data="g$kesehatanList" :columns="dt.column" :actions="dt.actions"
-        @ubah="triggerEdit" @sembuh="sembuhLkPenangananPenyakit" @hapus="triggerDelete"/>
+        @ubah="triggerEdit" @sembuh="triggerSembuh" @hapus="triggerDelete" />
     </template>
 
     <template #modal>
@@ -286,8 +303,9 @@ export default {
               <!-- Tanggal sakit -->
               <div class="col-12">
                 <base-input name="tanggal_sakit" placeholder="Pilih tanggal" label="Tanggal Sakit" required>
-                  <flat-pickr v-model.lazy="input.tanggal_sakit" :config="{ mode: 'single', allowInput: true, maxDate: 'today' }"
-                    class="form-control datepicker" placeholder="Pilih tanggal" />
+                  <flat-pickr v-model.lazy="input.tanggal_sakit"
+                    :config="{ mode: 'single', allowInput: true, maxDate: 'today' }" class="form-control datepicker"
+                    placeholder="Pilih tanggal" />
                 </base-input>
               </div>
 
@@ -338,8 +356,9 @@ export default {
               <!-- Tanggal sakit -->
               <div class="col-12">
                 <base-input name="tanggal_sakit" placeholder="Pilih tanggal" label="Tanggal Sakit" required>
-                  <flat-pickr v-model.lazy="input.tanggal_sakit" :config="{ mode: 'single', allowInput: true, maxDate: 'today' }"
-                    class="form-control datepicker" placeholder="Pilih tanggal" />
+                  <flat-pickr v-model.lazy="input.tanggal_sakit"
+                    :config="{ mode: 'single', allowInput: true, maxDate: 'today' }" class="form-control datepicker"
+                    placeholder="Pilih tanggal" />
                 </base-input>
               </div>
 
@@ -368,7 +387,8 @@ export default {
               <!-- Tanggal sembuh -->
               <div class="col-12">
                 <base-input name="tanggal_sembuh" placeholder="Pilih tanggal" label="Tanggal Sembuh" required>
-                  <flat-pickr v-model.lazy="input.tanggal_sembuh" :config="{ mode: 'single', allowInput: true, minDate: input.tanggal_sakit, maxDate: 'today' }"
+                  <flat-pickr v-model.lazy="input.tanggal_sembuh"
+                    :config="{ mode: 'single', allowInput: true, minDate: input.tanggal_sakit, maxDate: 'today' }"
                     class="form-control datepicker" placeholder="Pilih tanggal" />
                 </base-input>
               </div>
@@ -401,6 +421,28 @@ export default {
             Tutup
           </base-button>
           <base-button type="danger" @click="hapusLkPenangananPenyakit">Hapus</base-button>
+        </template>
+      </modal-comp>
+
+      <!-- Sembuh LK penanganan penyakit -->
+      <modal-comp v-model:show="modal.sembuhLkPenangananPenyakit" modal-classes="modal-sm">
+        <template #header>
+          <h3 class="modal-title">Sembuh {{ pageTitle }}</h3>
+        </template>
+        <template #body>
+          <p>
+            Yakin ingin menyatakan ternak dengan ID ternak <strong>{{ input.ternak ? input.ternak.id_ternak :
+                'ID'
+            }}</strong> sembuh dari penyakit <strong>{{ input.penyakit ? input.penyakit.nama_penyakit :
+    'Penyakit'
+}}</strong>?
+          </p>
+        </template>
+        <template #footer>
+          <base-button type="secondary" @click="modal.sembuhLkPenangananPenyakit = false">
+            Tutup
+          </base-button>
+          <base-button type="primary" @click="sembuhLkPenangananPenyakit">Sembuh</base-button>
         </template>
       </modal-comp>
     </template>

@@ -148,7 +148,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$pakanList();
+        this.a$pakanList('');
       }
     },
     async editPakan() {
@@ -167,7 +167,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$pakanList();
+        this.a$pakanList('');
       }
     },
     async delPakan() {
@@ -182,7 +182,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       } finally {
-        this.a$pakanList();
+        this.a$pakanList('');
       }
     },
     async triggerEditModal(row) {

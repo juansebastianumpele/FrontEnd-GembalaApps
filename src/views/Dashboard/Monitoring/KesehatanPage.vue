@@ -1,6 +1,7 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import d$kesehatan from "@/stores/monitoring/kesehatan";
+import d$kandang from "@/stores/monitoring/daftarkandang";
 import d$dropdown from "@/stores/dropdown";
 import d$ternak from "@/stores/monitoring/ternak";
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
@@ -59,6 +60,7 @@ export default {
     ...mapState(d$kesehatan, ["g$kesehatanList", "g$kesehatanDetail", "g$penyakitDetail", "g$totalSakit"]),
     ...mapState(d$dropdown, ["g$ddListPenyakit", "g$ddKandang"]),
     ...mapState(d$ternak, ["g$ternakList"]),
+    ...mapState(d$kandang, ["g$kandangList"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -76,6 +78,7 @@ export default {
     await this.a$ternakList().catch((error) => this.notify(error, false));
     await this.a$ddKandang().catch((error) => this.notify(error, false));
     await this.a$totalSakit().catch((error) => this.notify(error, false));
+    await this.a$kandangList().catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$kesehatan, [
@@ -86,6 +89,7 @@ export default {
       "a$totalSakit",
     ]),
     ...mapActions(d$dropdown, ["a$ddListPenyakit", "a$ddKandang"]),
+    ...mapActions(d$kandang, ["a$kandangList"]),
     clearInput() {
       this.input = {
         id: null,
@@ -180,8 +184,7 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$totalSakit.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$totalSakit" :columns="dt.column" :actions="dt.action"
-        @ubah-penyakit="triggerEditModal" @hapus-penyakit="triggerDelete" @detail-kesehatan="triggerDetail" />
+      <data-table v-else :index="true" :data="g$totalSakit" :columns="dt.column" :actions="dt.action" @detail-kesehatan="triggerDetail" />
     </template>
     <template #modal>
       <!-- Tambah ternak sakit -->
@@ -219,7 +222,7 @@ export default {
               <!-- Kandang -->
               <div class="col-12">
                 <base-input name="kandang" label="Kandang">
-                  <multi-select v-model="input.kandang" :options="g$ddKandang" track-by="id" label="name"
+                  <multi-select v-model="input.kandang" :options="g$kandangList" track-by="id_kandang" label="kode_kandang"
                     placeholder="Pilih Kandang" :show-labels="false" />
                 </base-input>
               </div>

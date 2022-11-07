@@ -609,7 +609,7 @@ export default {
                 >
                   <flat-pickr
                     v-model.lazy="input.tanggal_pembuatan"
-                    :config="{ mode: 'single', allowInput: true }"
+                    :config="{ mode: 'single', allowInput: true, maxDate: 'today' }"
                     class="form-control datepicker"
                     placeholder="Pilih Tanggal Pembuatan"
                   />
@@ -627,7 +627,7 @@ export default {
                 >
                   <flat-pickr
                     v-model.lazy="input.tanggal_konsumsi"
-                    :config="{ mode: 'single', allowInput: true }"
+                    :config="{ mode: 'single', allowInput: true, maxDate: this.input.tanggal_pembuatan }"
                     class="form-control datepicker"
                     placeholder="Pilih Tanggal Konsumsi"
                   />
