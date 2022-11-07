@@ -13,7 +13,7 @@ export default {
     HcBar,
   },
   data: () => ({
-    pageTitle: "Summary",
+    pageTitle: "Fase Adaptasi",
     //UI
     modal: {
       detailPemasukan: false,
@@ -85,45 +85,45 @@ export default {
   <main-layout :title="pageTitle" is-full style="background: transparent">
     <template #header>
       <div class="row">
-        <div class="col-8">
-          <h1 class="font-weight-bolder text-success">Fase Adaptasi</h1>
+        <div class="col-sm-8">
+          <h1 class="font-weight-bolder text-success">{{ pageTitle }}</h1>
         </div>
-        <div class="col-4">
-          <nav class="nav nav-pills flex-column flex-sm-row mb-4">
-            <li>
+        <div class="col-sm-4">
+          <div class="row">
+            <span class="text-center m-2">
               <base-button type="success1" class="btn-lg">
                 <router-link to="/fase/adaptasi" class="text-white">
                   Summary
                 </router-link>
               </base-button>
-            </li>
-            <li>
+            </span>
+            <span class="text-center m-2">
               <base-button
                 v-if="userInfo.role !== 'bod'"
                 type="secondary"
-                class="ml-3 btn-lg"
+                class="btn-lg"
               >
                 <router-link to="adaptasi/data-adaptasi" class="text-dark">
-                  Fase Adaptasi
+                  {{ pageTitle }}
                 </router-link>
               </base-button>
-            </li>
-            <li>
+            </span>
+            <span class="text-center m-2">
               <base-button
                 v-if="userInfo.role !== 'bod'"
                 type="secondary"
-                class="ml-3 btn-lg"
+                class="btn-lg"
               >
                 <router-link to="adaptasi/langkah-kerja" class="text-dark">
                   Langkah Kerja
                 </router-link>
               </base-button>
-            </li>
-          </nav>
+            </span>
+          </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-4">
+        <div class="col-sm-4">
           <card-comp>
             <div class="row align-items-center">
               <div class="col">
@@ -131,7 +131,7 @@ export default {
                   class="text-success text-left ls-1 mb-4"
                   style="font-size: 16px"
                 >
-                  Populasi Fase Pemasukan
+                  Populasi {{ pageTitle }}
                 </h1>
               </div>
             </div>
@@ -144,7 +144,7 @@ export default {
           </card-comp>
         </div>
         <div
-          class="col-8 carousel slide"
+          class="col-sm-8 carousel slide"
           id="carouselExampleControls"
           data-ride="carousel"
         >
@@ -152,7 +152,7 @@ export default {
             <div class="row carousel-item active ml-3">
               <div class="row">
                 <div
-                  class="col-2 bg-success text-center rounded m-2"
+                  class="col-sm-2 bg-success text-center rounded m-2"
                   v-for="item in g$kandangSlice1"
                   :key="item.id_kandang"
                 >
@@ -169,7 +169,7 @@ export default {
             >
               <div class="row">
                 <div
-                  class="col-2 bg-success text-center rounded m-2"
+                  class="col-sm-2 bg-success text-center rounded m-2"
                   v-for="item in row"
                   :key="item.id_kandang"
                 >
@@ -210,7 +210,7 @@ export default {
       </div>
       <div class="row ml-1">
         <h1 class="font-weight-bolder text-success">
-          Daftar Ternak Fase Pemasukan
+          Daftar Ternak {{ pageTitle }}
         </h1>
       </div>
     </template>

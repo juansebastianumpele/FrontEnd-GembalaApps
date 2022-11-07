@@ -12,30 +12,30 @@ export default {
 <template>
   <main-layout :title="pageTitle" disable-padding>
     <template #header>
-      <div>
-        <nav class="nav nav-pills flex-column flex-sm-row mb-4">
-          <li>
+      <div class="col-sm">
+        <div class="row">
+          <span class="text-center m-2">
             <base-button type="secondary" class="btn-lg">
               <router-link to="../perkawinan" class="text-dark">
                 Summary
               </router-link>
             </base-button>
-          </li>
-          <li>
-            <base-button type="secondary" class="ml-3 btn-lg">
+          </span>
+          <span class="text-center m-2">
+            <base-button type="secondary" class="btn-lg">
               <router-link to="data-perkawinan" class="text-dark">
                 Fase Perkawinan
               </router-link>
             </base-button>
-          </li>
-          <li>
-            <base-button type="success1" class="ml-3 btn-lg">
+          </span>
+          <span class="text-center m-2">
+            <base-button type="success1" class="btn-lg">
               <router-link to="langkah-kerja" class="text-white">
                 Langkah Kerja
               </router-link>
             </base-button>
-          </li>
-        </nav>
+          </span>
+        </div>
       </div>
       <div>
         <h3>Langkah Kerja Fase Perkawinan :</h3>
@@ -46,25 +46,25 @@ export default {
       <div>
         <card-comp>
           <ol>
-            <li>
+            <li class="mb-1">
               Periksa domba secara visual untuk mendapatkan identitas ternak
               yang terdiri dari bangsa dan jenis kelamin.
             </li>
-            <li>
+            <li class="mb-1">
               Periksa kondisi ternak, apakah terdapat cacat atau sakit yang
               berpotensi mempersulit proses budidaya. Pengecekan terdiri dari
               cek poel, cek mulut, cek telinga, kuku kaki, cek kondisi fisik
               lainnya, dan BCS domba tersebut.
             </li>
-            <li>
+            <li class="mb-1">
               Apabila domba dalam kondisi baik dan memenuhi kriteria, domba akan
               diterima.
             </li>
-            <li>
+            <li class="mb-1">
               Pasangkan kalung RFID dan daftarkan menggunakan RFID mobile.
               Selanjutnya akan terbentuk ID ternak yang baru.
             </li>
-            <li>
+            <li class="mb-1">
               Buka SOP pemasukan pada mobile apps untuk melengkapi data ternak
               yang baru saja dimasukkan sesuai indikator yang ditetapkan.
             </li>

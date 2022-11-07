@@ -191,7 +191,7 @@ export default {
           <span class="text-center m-2">
             <base-button type="success1" class="btn-lg">
               <router-link to="data-pemasukan" class="text-white">
-                Fase Pemasukan
+                {{ pageTitle }}
               </router-link>
             </base-button>
           </span>

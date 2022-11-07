@@ -7,6 +7,7 @@ const u$kesehatan = defineStore({
     kesehatan: [],
     detailKesehatan: [],
     total: [],
+    riwayatKesehatan: [],
   }),
   actions: {
     async a$kesehatanList() {
@@ -59,11 +60,24 @@ const u$kesehatan = defineStore({
         throw error;
       }
     },
+
+    // Riwayat Kesehatan by ID Ternak
+    async a$riwayatKesehatan(request) {
+      try {
+        const { data } = await s$kesehatan.riwayatKesehatan(request);
+        this.riwayatKesehatan = data.list;
+        console.log(data.list);
+      } catch ({ error }) {
+        this.riwayatKesehatan = [];
+        throw error;
+      }
+    },
   },
   getters: {
     g$kesehatanList: (state) => state.kesehatan,
     g$detailKesehatan: (state) => state.detailKesehatan,
     g$totalSakit: (state) => state.total,
+    g$riwayatKesehatan: (state) => state.riwayatKesehatan,
   },
 });
 
