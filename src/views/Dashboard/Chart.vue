@@ -80,8 +80,8 @@ export default {
               :legend="true"
             />
           </card-comp>
-          <card-comp type="success">
-            <div class="row align-items-center">
+          <card-comp type="success align-items-center">
+            <div class="row ">
               <div class="col">
                 <h1
                   class="text-white text-uppercase text-center ls-1 mb-2"
@@ -94,6 +94,7 @@ export default {
             <hc-pie
               :title="g$totalTernak.total_ternak"
               :height="245"
+              :width="320"
               :data="g$totalByStatus"
               :data-labels="true"
               :legend="true"

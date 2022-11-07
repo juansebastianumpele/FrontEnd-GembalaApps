@@ -23,6 +23,10 @@ export default {
       type: Number,
       default: 250,
     },
+    width: {
+      type: Number,
+      default: 300,
+    },
     dataLabels: {
       type: Boolean,
       default: false,
@@ -74,6 +78,7 @@ export default {
         chart: {
           type: "pie",
           height: this.height,
+          width: this.width,
         },
         ...basicOptions,
         title: {
