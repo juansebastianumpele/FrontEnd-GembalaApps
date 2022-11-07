@@ -28,11 +28,6 @@ export default {
           render: ({ ternak }) => ternak.id_ternak,
         },
         {
-          name: "kandang",
-          th: "Kode Kandang",
-          render: ({ kandang }) => kandang ? kandang.kode_kandang : null,
-        },
-        {
           name: "gejala",
           th: "Gejala",
           render: ({ gejala }) => gejala ? gejala : null,
@@ -169,7 +164,7 @@ export default {
           id_riwayat_kesehatan,
           tanggal_sakit,
           tanggal_sembuh: new Date().toJSON(),
-          id_kandang: 1,
+          id_kandang: kandang.id_kandang,
           gejala,
           penanganan,
         };

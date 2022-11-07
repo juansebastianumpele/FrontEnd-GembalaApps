@@ -169,7 +169,7 @@ export default {
           id_riwayat_kesehatan,
           tanggal_sakit,
           tanggal_sembuh: new Date().toJSON(),
-          id_kandang: 1,
+          id_kandang: kandang.id_kandang,
           gejala,
           penanganan,
         };
