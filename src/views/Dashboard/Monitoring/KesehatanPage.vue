@@ -184,8 +184,7 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$totalSakit.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$totalSakit" :columns="dt.column" :actions="dt.action"
-        @ubah-penyakit="triggerEditModal" @hapus-penyakit="triggerDelete" @detail-kesehatan="triggerDetail" />
+      <data-table v-else :index="true" :data="g$totalSakit" :columns="dt.column" :actions="dt.action" @detail-kesehatan="triggerDetail" />
     </template>
     <template #modal>
       <!-- Tambah ternak sakit -->

@@ -30,6 +30,7 @@ export default {
     modal: {
       editTernakSakit: false,
       hapusTernakSakit: false,
+      sembuhTernakSakit: false,
     },
     // DataTable
     dt: {
@@ -56,11 +57,6 @@ export default {
         },
       ],
       action: [
-        // {
-        //   text: "Detail",
-        //   color: "info",
-        //   event: "detail-ternak-sakit",
-        // },
         {
           text: "Sembuh",
           color: "primary",
@@ -122,12 +118,6 @@ export default {
         id: null,
       };
     },
-    // async triggerDetail(row) {
-    //   try {
-    //     this.infoTernak = { ...row };
-    //     this.modal.detailTernak = true;
-    //   } catch (error) {}
-    // },
     async triggerEdit(row) {
       const { id_riwayat_kesehatan, tanggal_sakit, ternak, kandang, gejala, penyakit, penanganan, tanggal_sembuh } = row;
       this.input = {
@@ -162,9 +152,23 @@ export default {
         this.notify(error, false);
       }
     },
-    async sembuhTernakSakit(row) {
+    triggerSembuh(row) {
+      const { id_riwayat_kesehatan, tanggal_sakit, ternak, kandang, gejala, penyakit, penanganan, tanggal_sembuh } = row;
+      this.input = {
+        id_riwayat_kesehatan,
+        tanggal_sakit,
+        ternak,
+        penyakit,
+        kandang,
+        gejala,
+        penanganan,
+        tanggal_sembuh,
+      };
+      this.modal.sembuhTernakSakit = true;
+    },
+    async sembuhTernakSakit() {
       try {
-        const { id_riwayat_kesehatan, ternak, penyakit, tanggal_sakit, kandang, tanggal_sembuh, gejala, penanganan, } = row;
+        const { id_riwayat_kesehatan, tanggal_sakit, kandang, gejala, penanganan, } = this.input;
         const data = {
           id_riwayat_kesehatan,
           tanggal_sakit,
@@ -174,7 +178,8 @@ export default {
           penanganan,
         };
         await this.a$kesehatanEdit(data);
-        this.notify(`Edit ${this.pageTitle} berhasil`);
+        this.notify(`Sembuh ${this.pageTitle} berhasil`);
+        this.modal.sembuhTernakSakit = false;
         this.clearInput();
         await this.a$penyakitDetail(this.$route.params.id)
       } catch (error) {
@@ -220,7 +225,7 @@ export default {
     <template #body>
       <empty-result v-if="!g$detailKesehatan.length" :text="`${pageTitle}`" />
       <data-table v-else :index="true" :data="g$detailKesehatan" :columns="dt.column" :actions="dt.action"
-        @ubah="triggerEdit" @hapus="triggerDelete" @sembuh="sembuhTernakSakit" />
+        @ubah="triggerEdit" @hapus="triggerDelete" @sembuh="triggerSembuh" />
     </template>
 
 
@@ -318,6 +323,28 @@ export default {
             Tutup
           </base-button>
           <base-button type="danger" @click="hapusTernakSakit">Hapus</base-button>
+        </template>
+      </modal-comp>
+
+      <!-- Sembuh LK penanganan penyakit -->
+      <modal-comp v-model:show="modal.sembuhTernakSakit" modal-classes="modal-sm">
+        <template #header>
+          <h3 class="modal-title">Sembuh {{ pageTitle }}</h3>
+        </template>
+        <template #body>
+          <p>
+            Yakin ingin menyatakan ternak dengan ID ternak <strong>{{ input.ternak ? input.ternak.id_ternak :
+                'ID'
+            }}</strong> sembuh dari penyakit <strong>{{ input.penyakit ? input.penyakit.nama_penyakit :
+    'Penyakit'
+}}</strong>?
+          </p>
+        </template>
+        <template #footer>
+          <base-button type="secondary" @click="modal.sembuhTernakSakit = false">
+            Tutup
+          </base-button>
+          <base-button type="primary" @click="sembuhTernakSakit">Sembuh</base-button>
         </template>
       </modal-comp>
     </template>
