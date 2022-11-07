@@ -331,6 +331,7 @@ __metadata:
     vue-multiselect: 3.0.0-alpha.2
     vue-router: ^4.0.15
     vue-toastification: ^2.0.0-rc.5
+    vueperslides: ^3.5.1
     yup: ^0.32.11
   languageName: unknown
   linkType: soft
@@ -2146,6 +2147,15 @@ __metadata:
     "@vue/server-renderer": 3.2.41
     "@vue/shared": 3.2.41
   checksum: 5328bf14c672c29fcde6747cac05ea7ffa46522ea8198120cdd61ba2847a1692e316019b942deb93326235e60b5d19b6db443c2fd8a827bba4b90c6595a709cd
+  languageName: node
+  linkType: hard
+
+"vueperslides@npm:^3.5.1":
+  version: 3.5.1
+  resolution: "vueperslides@npm:3.5.1"
+  peerDependencies:
+    vue: ^2.6.14 || ^3.2.0
+  checksum: a28c1c9764faf5b704a925faf91ca962d5a8da2e2d9f3f2789ad57a659c3f321844f30a8d644baf101cfb1ff474e3474c259b633e705567284f63f541b48c60d
   languageName: node
   linkType: hard
 

@@ -305,7 +305,7 @@ export default {
                   label="Jenis Kandang"
                 >
                   <multi-select
-                    v-model="input.jeniskandang"
+                    v-model="input.jenis_kandang"
                     :options="g$ddJenisKandang"
                     label="name"
                     track-by="id"
@@ -324,7 +324,7 @@ export default {
                   required
                 >
                   <multi-select
-                    v-model="input.jenispakan"
+                    v-model="input.jenis_pakan"
                     :options="g$ddListJenisPakan"
                     label="name"
                     track-by="id"

@@ -22,11 +22,6 @@ export default {
     dt: {
       column: [
         {
-          name: "createdAt",
-          th: "Tanggal",
-          render: ({ createdAt }) => ubahTanggal(createdAt),
-        },
-        {
           name: "id_ternak",
           th: "ID Ternak",
         },

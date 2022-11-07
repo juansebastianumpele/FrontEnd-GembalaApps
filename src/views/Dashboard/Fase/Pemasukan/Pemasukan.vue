@@ -204,7 +204,7 @@ export default {
           </span>
         </div>
       </div>
-      <div class="row align-items-center">
+      <div class="row align-items-center mt-3">
         <div class="col-auto">
           <h3>Daftar {{ pageTitle }}</h3>
         </div>
