@@ -32,6 +32,7 @@ export default {
       "g$totalByStatusKeluar",
       "g$totalAdgCempe",
       "g$totalByKandang",
+      "g$totalPopulasi",
     ]),
     modals() {
       return Object.values(this.modal).includes(true);
@@ -45,6 +46,7 @@ export default {
       "a$totalByFase",
       "a$totalByStatusKeluar",
       "a$totalByKandang",
+      "a$totalAdgCempe",
     ]),
   },
   async mounted() {
@@ -56,6 +58,7 @@ export default {
       this.notify(error, false)
     );
     await this.a$totalByKandang().catch((error) => this.notify(error, false));
+    await this.a$totalAdgCempe().catch((error) => this.notify(error, false));
   },
 };
 </script>
@@ -73,15 +76,15 @@ export default {
             >
               Grafik Populasi Domba Sembada (2022 - 2023)
             </h1>
-            <hc-column
+            <hc-area-spline
               :height="200"
-              :data="g$byPopulasi"
+              :data="g$totalPopulasi"
               :data-labels="true"
               :legend="true"
             />
           </card-comp>
           <card-comp type="success align-items-center">
-            <div class="row ">
+            <div class="row">
               <div class="col">
                 <h1
                   class="text-white text-uppercase text-center ls-1 mb-2"
@@ -338,10 +341,9 @@ export default {
             </div>
             <hc-area-spline
               :height="255"
-              :categories="[1, 2, 3, 4, 5]"
-              :series="[32, 32, 12, 12, 13]"
-              :subtitles="test"
-              :title="test"
+              :data="g$totalAdgCempe"
+              :data-labels="true"
+              :legend="true"
             />
           </card-comp>
         </div>
