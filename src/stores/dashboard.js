@@ -9,6 +9,7 @@ const u$dashboard = defineStore({
     totalByKandang: [],
     totalByStatusKeluar: [],
     totalAdgCempe: [],
+    categoriesAdgCempe: [],
     totalKandang: [],
     totalTernak: [],
   }),
@@ -57,7 +58,23 @@ const u$dashboard = defineStore({
     async a$totalAdgCempe() {
       try {
         const { data } = await s$dashboard.totalAdgCempe();
-        this.totalAdgCempe = data;
+        this.totalAdgCempe = Object.values(data);
+        let bulan = Object.keys(data);
+        this.categoriesAdgCempe = bulan.map((item) => {
+          let split = item.split("-")[1];
+          if (split == "1") return "Jan " + item.split("-")[0];
+          if (split == "2") return "Feb " + item.split("-")[0];
+          if (split == "3") return "Mar " + item.split("-")[0];
+          if (split == "4") return "Apr " + item.split("-")[0];
+          if (split == "5") return "Mei " + item.split("-")[0];
+          if (split == "6") return "Jun " + item.split("-")[0];
+          if (split == "7") return "Jul " + item.split("-")[0];
+          if (split == "8") return "Agu " + item.split("-")[0];
+          if (split == "9") return "Sep " + item.split("-")[0];
+          if (split == "10") return "Okt " + item.split("-")[0];
+          if (split == "11") return "Nov " + item.split("-")[0];
+          if (split == "12") return "Des " + item.split("-")[0];
+        });
       } catch ({ error }) {
         this.totalAdgCempe = [];
         throw error;
@@ -133,10 +150,61 @@ const u$dashboard = defineStore({
       length: state.totalByStatus.length,
     }),
     g$totalAdgCempe: (state) => ({
+      categories: [...state.categoriesAdgCempe],
       series: [
         {
           name: "Bobot",
-          data: [1, 2, 3, 4, 5],
+          data: state.totalAdgCempe.map(({ average }) => average),
+          color: "#006329",
+        },
+      ],
+    }),
+    g$totalPopulasi: (state) => ({
+      categories: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "Mei",
+        "Jun",
+        "Jul",
+        "Agu",
+        "Sep",
+        "Okt",
+        "Nov",
+        "Des",
+      ],
+      series: [
+        {
+          name: "Masuk",
+          data: [
+            ["Jan", 12],
+            ["Feb", 14],
+            ["Mar", 22],
+            ["Apr", 15],
+            ["Mei", 32],
+          ],
+          color: "#006329",
+        },
+        {
+          name: "Mati",
+          data: [
+            ["Jan", 20],
+            ["Feb", 33],
+            ["Mar", 28],
+            ["Apr", 40],
+            ["Mei", 31],
+          ],
+        },
+        {
+          name: "Keluar",
+          data: [
+            ["Jan", 16],
+            ["Feb", 26],
+            ["Mar", 28],
+            ["Apr", 43],
+            ["Mei", 22],
+          ],
         },
       ],
     }),

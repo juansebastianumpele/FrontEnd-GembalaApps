@@ -8,13 +8,12 @@ import basicOptions from "./config";
 export default {
   name: "HcAreaspline",
   props: {
-    categories: {
-      type: Array,
-      default: () => [{}],
-    },
-    series: {
-      type: Array,
-      default: () => [],
+    data: {
+      type: Object,
+      default: () => ({
+        series: [],
+        categories: [],
+      }),
     },
     color: {
       type: Boolean,
@@ -60,11 +59,12 @@ export default {
             fillOpacity: 0.1,
           },
         },
+
         xAxis: {
-          categories: this.categories,
+          categories: this.data.categories,
           crosshair: true,
         },
-        series: this.series,
+        series: this.data.series,
       };
     },
   },

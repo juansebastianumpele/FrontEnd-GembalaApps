@@ -15,7 +15,7 @@ const totalTernakByKandang = () =>
 const totalTernakByStatusKeluar = () =>
   baseApi.get(`${api}/web-dash/total-ternak-by-status-keluar`);
 
-const adgCempe = () => baseApi.get(`${api}/web-dash/adg-cempe`);
+const totalAdgCempe = () => baseApi.get(`${api}/web-dash/adg-cempe`);
 
 const totalKandang = () => baseApi.get(`${api}/web-dash/total-kandang`);
 
@@ -26,7 +26,7 @@ export {
   totalTernakByFase,
   totalTernakByKandang,
   totalTernakByStatusKeluar,
-  adgCempe,
+  totalAdgCempe,
   totalKandang,
   totalTernak,
 };
