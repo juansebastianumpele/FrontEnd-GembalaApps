@@ -81,9 +81,9 @@ const u$total = defineStore({
         throw error;
       }
     },
-    async a$byTimbangan() {
+    async a$byTimbangan(req) {
       try {
-        const { data } = await s$total.listTimbangan();
+        const { data } = await s$total.listTimbangan(req);
         this.ChartbyTimbangan = data.list;
       } catch ({ error }) {
         this.ChartbyTimbangan = [];

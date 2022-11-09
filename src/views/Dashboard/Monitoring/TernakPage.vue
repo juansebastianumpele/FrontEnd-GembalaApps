@@ -5,6 +5,7 @@ import d$dropdown from "@/stores/dropdown";
 import d$kesehatan from "@/stores/monitoring/kesehatan";
 import HcLine from "@/components/HighCharts/Line.vue";
 import d$chart from "@/stores/chart";
+import { ubahTanggal, umurTernak } from "@/utils/locale/ubahTanggal"
 
 import {
   object as y$object,
@@ -58,24 +59,24 @@ export default {
     // Input
     input: {
       id_ternak: null,
-      rf_id: null,
+      rf_id: "",
       image: null,
-      jenis_kelamin: null,
-      id_bangsa: null,
-      berat: null,
-      suhu: null,
-      tanggal_lahir: null,
-      tanggal_masuk: null,
+      jenis_kelamin: "",
+      id_bangsa: "",
+      berat: "",
+      suhu: "",
+      tanggal_lahir: "",
+      tanggal_masuk: "",
       id_dam: null,
       id_sire: null,
-      status_kesehatan: null,
+      status_kesehatan: "",
       id_penyakit: null,
-      id_pakan: null,
-      id_fp: null,
-      id_kandang: null,
+      id_pakan: "",
+      id_fp: "",
+      id_kandang: "",
       tanggal_keluar: null,
       status_keluar: null,
-      // tanggal_kawin: null,
+      // tanggal_kawin: "",
       // imageUrl: null,
     },
     // UI
@@ -96,7 +97,7 @@ export default {
         {
           name: "bangsa",
           th: "Bangsa",
-          render: ({ bangsa }) => (bangsa ? bangsa.bangsa : ""),
+          render: ({ bangsa }) => bangsa ? bangsa.bangsa : null,
         },
         {
           name: "jenis_kelamin",
@@ -105,12 +106,12 @@ export default {
         {
           name: "fase",
           th: "Status",
-          render: ({ fase }) => (fase ? fase.fase : ""),
+          render: ({ fase }) => fase ? fase.fase : null,
         },
         {
           name: "umur",
           th: "Umur (bln)",
-          render: ({ umur }) => Math.round(umur / 30),
+          render: ({ umur }) => umur ? umurTernak(umur) : null,
         },
       ],
       action: [
@@ -198,25 +199,25 @@ export default {
     clearInput() {
       this.input = {
         id_ternak: null,
-        rf_id: null,
+        rf_id: "",
         image: null,
-        jenis_kelamin: null,
-        id_bangsa: null,
-        berat: null,
-        suhu: null,
-        tanggal_lahir: null,
-        tanggal_masuk: null,
-        id_dam: null,
-        id_sire: null,
-        status_kesehatan: null,
-        id_penyakit: null,
-        id_pakan: null,
-        id_fp: null,
-        id_kandang: null,
+        jenis_kelamin: "",
+        bangsa: "",
+        berat: "",
+        suhu: "",
+        tanggal_lahir: "",
+        tanggal_masuk: "",
+        id_dam: "",
+        id_sire: "",
+        status_kesehatan: "",
+        penyakit: null,
+        pakan: "",
+        fase: "",
+        kandang: "",
         tanggal_keluar: null,
         status_keluar: null,
-      // tanggal_kawin: null,
-      // imageUrl: null,
+        // id_ternak: "",
+        // id_users: "",
       };
     },
     async addTernak() {
@@ -241,12 +242,12 @@ export default {
         const data = {
           rf_id,
           // image,
-          jenis_kelamin,
+          jenis_kelamin: jenis_kelamin ? jenis_kelamin : null,
           id_bangsa: bangsa ? bangsa.id : null,
           // berat,
           // suhu,
-          tanggal_lahir,
-          tanggal_masuk,
+          tanggal_lahir: tanggal_lahir ? tanggal_lahir : null,
+          tanggal_masuk: tanggal_masuk ? tanggal_masuk : null,
           id_dam: id_dam ? id_dam.id : null,
           id_sire: id_sire ? id_sire.id : null,
           // status_kesehatan,
@@ -271,38 +272,38 @@ export default {
         const {
           id_ternak,
           rf_id,
-          image,
+          // image,
           jenis_kelamin,
           bangsa,
-          berat,
-          suhu,
+          // berat,
+          // suhu,
           tanggal_lahir,
           tanggal_masuk,
           id_dam,
           id_sire,
-          penyakit,
+          // status_kesehatan,
+          // penyakit,
+          // pakan,
           fase,
           kandang,
-          tanggal_keluar,
-          status_keluar,
         } = this.input;
         const data = {
           id_ternak,
           rf_id,
-          image,
-          jenis_kelamin,
-          id_bangsa: bangsa.id,
-          berat,
-          suhu,
-          tanggal_lahir,
-          tanggal_masuk,
-          id_dam,
-          id_sire,
-          id_penyakit: penyakit.id,
-          id_fp: fase.id,
-          id_kandang: kandang.id,
-          tanggal_keluar,
-          status_keluar,
+          // image,
+          jenis_kelamin: jenis_kelamin ? jenis_kelamin : null,
+          id_bangsa: bangsa ? bangsa.id : null,
+          // berat,
+          // suhu,
+          tanggal_lahir: tanggal_lahir ? tanggal_lahir : null,
+          tanggal_masuk: tanggal_masuk ? tanggal_masuk : null,
+          id_dam: id_dam ? id_dam.id : null,
+          id_sire: id_sire ? id_sire.id : null,
+          // status_kesehatan,
+          // id_penyakit: penyakit.id,
+          // id_pakan: pakan.id,
+          id_fp: fase ? fase.id : null,
+          id_kandang: kandang ? kandang.id : null,
         };
         await this.schema.validate(data);
         await this.a$ternakEdit(data);
@@ -364,8 +365,14 @@ export default {
           suhu,
           tanggal_lahir,
           tanggal_masuk,
-          id_dam,
-          id_sire,
+          id_dam: {
+            id: id_dam ? id_dam : null,
+            name: id_dam ? id_dam : null,
+          },
+          id_sire: {
+            id: id_sire ? id_sire : null,
+            name: id_sire ? id_sire : null,
+          },
           kandang: {
             id: kandang ? kandang.id_kandang : null,
             name: kandang ? kandang.kode_kandang : null,
@@ -418,16 +425,11 @@ export default {
       const file = this.$refs.image.files[0];
       this.input.image = file;
       this.input.imageUrl = URL.createObjectURL(this.input.image);
+      console.log('file', this.input.image);
+      console.log('url', this.input.imageUrl);
     },
-    ubahTanggal(tanggal) {
-      const date = new Date(tanggal);
-      const options = {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      };
-      return date.toLocaleDateString("id-ID", options);
-    },
+    umurTernak,
+    ubahTanggal,
   },
 };
 </script>
@@ -470,7 +472,6 @@ export default {
         <template #body>
           <form-comp v-if="modal.addTernak" :validation-schema="schema">
             <div class="row">
-
               <!-- RFID -->
               <div class="col-6">
                 <field-form
@@ -486,6 +487,8 @@ export default {
                   ></base-input>
                 </field-form>
               </div>
+
+              <!-- Berat -->
               <!-- <div class="col-6">
                 <field-form
                   v-slot="{ field }"
@@ -500,8 +503,10 @@ export default {
                     required
                   ></base-input>
                 </field-form>
-              </div>
-              <div class="col-6">
+              </div> -->
+
+              <!-- Suhu -->
+              <!-- <div class="col-6">
                 <field-form
                   v-slot="{ field }"
                   v-model="input.suhu"
@@ -516,6 +521,8 @@ export default {
                   ></base-input>
                 </field-form>
               </div> -->
+
+              <!-- Bangsa -->
               <div class="col-6">
                 <base-input name="bangsa" placeholder="Bangsa" label="Bangsa">
                   <multi-select
@@ -562,7 +569,313 @@ export default {
                   />
                 </base-input>
               </div> -->
+              
+              <!-- Jenis kelamin -->
+              <div class="col-6">
+                <base-input
+                  name="jenis_kelamin"
+                  placeholder="Jenis Kelamin"
+                  label="Jenis Kelamin"
+                >
+                  <multi-select
+                    v-model="input.jenis_kelamin"
+                    :options="g$ddJenisKelamin"
+                    placeholder="Pilih Jenis Kelamin"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
 
+              <!-- Tanggal lahir -->
+              <div class="col-6">
+                <base-input
+                  name="tanggal_lahir"
+                  placeholder="Pilih tanggal"
+                  label="Tanggal Lahir"
+                  required
+                >
+                  <flat-pickr
+                    v-model.lazy="input.tanggal_lahir"
+                    :config="{ mode: 'single', allowInput: true, maxDate: 'today' }"
+                    class="form-control datepicker"
+                    placeholder="Pilih tanggal"
+                  />
+                </base-input>
+              </div>
+
+              <!-- ID sire -->
+              <div class="col-6">
+                <base-input
+                  name="id_sire"
+                  placeholder="ID sire (bapak) dari domba"
+                  label="ID Sire (Bapak)"
+                  nullable
+                >
+                  <multi-select
+                    v-model="input.id_sire"
+                    :options="g$ddListPejantan"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih ID sire (bapak) dari domba"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+
+              <!-- ID dam -->          
+              <div class="col-6">
+                <base-input
+                  name="id_dam"
+                  placeholder="ID dam (ibu) dari domba"
+                  label="ID Dam (Ibu)"
+                  nullable
+                >
+                  <multi-select
+                    v-model="input.id_dam"
+                    :options="g$ddListBetina"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih ID dam (ibu) dari domba"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+
+              <!-- Tanggal masuk -->
+              <div class="col-6">
+                <base-input
+                  name="tanggal_masuk"
+                  placeholder="Pilih tanggal"
+                  label="Tanggal Masuk"
+                  required
+                >
+                  <flat-pickr
+                    v-model.lazy="input.tanggal_masuk"
+                    :config="{ mode: 'single', allowInput: true, maxDate: 'today', defaultDate: 'today' }"
+                    class="form-control datepicker"
+                    placeholder="Pilih tanggal"
+                  />
+                </base-input>
+              </div>
+
+              <!-- Kandang -->
+              <div class="col-6">
+                <base-input
+                  name="kandang"
+                  placeholder="Kandang"
+                  label="Kandang"
+                  required
+                >
+                  <multi-select
+                    v-model="input.kandang"
+                    :options="g$ddKandang"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih Kandang"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+
+              <!-- Pakan -->
+              <!-- <div class="col-6">
+                <base-input
+                  name="pakan"
+                  placeholder="Pakan"
+                  label="Pakan"
+                  required
+                >
+                  <multi-select
+                    v-model="input.pakan"
+                    :options="g$ddPakan"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih Pakan"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div> -->
+
+              <!-- Status-->
+              <div class="col-6">
+                <base-input
+                  name="status_ternak"
+                  placeholder="Status Ternak"
+                  label="Status"
+                  required
+                >
+                  <multi-select
+                    v-model="input.fase"
+                    :options="g$ddFasePemeliharaan"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih status ternak"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+
+              <!-- Image-->
+              <!-- <div class="col-6" v-if="!this.input.image">
+                <div class="form-group has-label">
+                  <label class="form-control-label">image</label>
+                  <input
+                    class="form-control file"
+                    id="image"
+                    type="file"
+                    ref="image"
+                    accept="image/*"
+                    @change="handleFileUpload()"
+                  />
+                </div>
+              </div>
+              <div class="col-6" v-if="this.input.imageUrl">
+                <div class="text-center pb-2">
+                  <base-button type="danger" size="sm" @click="resetImage()">
+                    Reset Image
+                  </base-button>
+                </div>
+                <div class="text-center">
+                  <img
+                    width="250"
+                    v-if="input.imageUrl"
+                    :src="input.imageUrl"
+                  />
+                </div>
+              </div> -->
+            </div>
+          </form-comp>
+        </template>
+        <template #footer>
+          <base-button type="secondary" @click="modal.addTernak = false">
+            Tutup
+          </base-button>
+          <base-button type="primary" @click="addTernak()">
+            Tambah {{ pageTitle }}
+          </base-button>
+        </template>
+      </modal-comp>
+
+      <!-- Edit Modal -->
+      <modal-comp v-model:show="modal.ubahTernak" modal-classes="modal-lg">
+        <template #header>
+          <h3 class="modal-title">Detail {{ pageTitle }}</h3>
+        </template>
+        <template #body>
+          <form-comp v-if="modal.ubahTernak" :validation-schema="schema">
+            <div class="row">
+              <!-- ID ternak -->
+              <div class="col-6">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.id_ternak"
+                  name="id_ternak"
+                >
+                  <base-input
+                    v-bind="field"
+                    type="number"
+                    placeholder="ID dari ternak"
+                    label="ID Ternak"
+                  ></base-input>
+                </field-form>
+              </div>
+
+              <!-- RFID -->
+              <div class="col-6">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.rf_id"
+                  type="text"
+                  name="rf_id"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="RFID dari kalung domba"
+                    label="RFID"
+                  ></base-input>
+                </field-form>
+              </div>
+
+              <!-- Berat -->
+              <!-- <div class="col-6">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.berat"
+                  type="text"
+                  name="berat"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Berat"
+                    label="Berat"
+                    required
+                  ></base-input>
+                </field-form>
+              </div>
+              <div class="col-6">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.suhu"
+                  type="text"
+                  name="suhu_berkala"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Suhu"
+                    label="Suhu"
+                    required
+                  ></base-input>
+                </field-form>
+              </div> -->
+
+              <!-- Bangsa -->
+              <div class="col-6">
+                <base-input name="bangsa" placeholder="Bangsa" label="Bangsa">
+                  <multi-select
+                    v-model="input.bangsa"
+                    :options="g$ddBangsa"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih bangsa"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+
+              <!-- Status kesehatan -->
+              <!-- <div class="col-6">
+                <base-input
+                  name="status_kesehatan"
+                  placeholder="Status Kesehatan"
+                  label="Status Kesehatan"
+                  required
+                >
+                  <multi-select
+                    v-model="input.status_kesehatan"
+                    :options="g$ddStatusSehat"
+                    placeholder="Pilih Status Kesehatan"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div> -->
+              <!-- Jika status kesehatan = sakit, tampilkan field penyakit -->
+              <!-- <div v-if="input.status_kesehatan == 'Sakit'" class="col-6">
+                <base-input
+                  name="penyakit"
+                  placeholder="Penyakit"
+                  label="Penyakit"
+                >
+                  <multi-select
+                    v-model="input.penyakit"
+                    :options="g$ddListPenyakit"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih Penyakit"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div> -->
+              
               <!-- Jenis kelamin -->
               <div class="col-6">
                 <base-input
@@ -740,317 +1053,6 @@ export default {
           </form-comp>
         </template>
         <template #footer>
-          <base-button type="secondary" @click="modal.addTernak = false">
-            Tutup
-          </base-button>
-          <base-button type="primary" @click="addTernak()">
-            Tambah {{ pageTitle }}
-          </base-button>
-        </template>
-      </modal-comp>
-
-      <!-- Edit Modal -->
-      <modal-comp v-model:show="modal.ubahTernak" modal-classes="modal-lg">
-        <template #header>
-          <h3 class="modal-title">Detail {{ pageTitle }}</h3>
-        </template>
-        <template #body>
-          <form-comp v-if="modal.ubahTernak" :validation-schema="schema">
-            <div class="row">
-              <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.rf_id"
-                  type="text"
-                  name="rf_id"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="RFID Ternak"
-                  ></base-input>
-                </field-form>
-              </div>
-              <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.berat"
-                  type="text"
-                  name="berat"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Bobot Berkala"
-                    required
-                  ></base-input>
-                </field-form>
-              </div>
-              <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.suhu"
-                  type="text"
-                  name="suhu"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Suhu Berkala"
-                    required
-                  ></base-input>
-                </field-form>
-              </div>
-              <div class="col-6">
-                <base-input name="bangsa" placeholder="Bangsa" label="Bangsa">
-                  <multi-select
-                    v-model="input.bangsa"
-                    :options="g$ddBangsa"
-                    label="name"
-                    track-by="id"
-                    placeholder="Pilih bangsa"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
-              <!-- <div class="col-6">
-                <base-input
-                  name="status_kesehatan"
-                  placeholder="Status Kesehatan"
-                  label="Status Kesehatan"
-                  required
-                >
-                  <multi-select
-                    v-model="input.status_kesehatan"
-                    :options="g$ddStatusSehat"
-                    placeholder="Status Kesehatan"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div> -->
-              <!-- Jika status kesehatan = sakit, tampilkan field penyakit -->
-              <!-- <div v-if="input.status_kesehatan == 'Sakit'" class="col-6">
-                <base-input
-                  name="penyakit"
-                  placeholder="Penyakit"
-                  label="Penyakit"
-                  required
-                >
-                  <multi-select
-                    v-model="input.penyakit"
-                    :options="g$ddListPenyakit"
-                    label="name"
-                    track-by="id"
-                    placeholder="Pilih Penyakit"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div> -->
-              <div class="col-6">
-                <base-input
-                  name="jenis_kelamin"
-                  placeholder="Jenis Kelamin"
-                  label="Jenis Kelamin"
-                >
-                  <multi-select
-                    v-model="input.jenis_kelamin"
-                    :options="g$ddJenisKelamin"
-                    placeholder="Pilih Jenis Kelamin"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
-              <div class="col-6">
-                <base-input
-                  name="tanggal_lahir"
-                  placeholder="Pilih tanggal"
-                  label="Tanggal Lahir"
-                  required
-                >
-                  <flat-pickr
-                    v-model.lazy="input.tanggal_lahir"
-                    :config="{ mode: 'single', allowInput: true }"
-                    class="form-control datepicker"
-                    placeholder="Pilih tanggal"
-                  />
-                </base-input>
-              </div>
-              <div class="col-6">
-                <base-input
-                  name="id_sire"
-                  placeholder="Id Pejantan"
-                  label="ID Pejantan"
-                  nullable
-                >
-                  <multi-select
-                    v-model="input.id_sire"
-                    :options="g$ddListPejantan"
-                    label="name"
-                    track-by="id"
-                    placeholder="Pilih ID Pejantan"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
-              <div class="col-6">
-                <base-input
-                  name="id_dam"
-                  placeholder="Id Induk"
-                  label="ID Induk"
-                  nullable
-                >
-                  <multi-select
-                    v-model="input.id_dam"
-                    :options="g$ddListBetina"
-                    label="name"
-                    track-by="id"
-                    placeholder="Pilih ID Induk"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
-              <div class="col-6">
-                <base-input
-                  name="tanggal_masuk"
-                  placeholder="Pilih tanggal"
-                  label="Tanggal Masuk"
-                  required
-                >
-                  <flat-pickr
-                    v-model.lazy="input.tanggal_masuk"
-                    :config="{ mode: 'single', allowInput: true }"
-                    class="form-control datepicker"
-                    placeholder="Pilih tanggal"
-                  />
-                </base-input>
-              </div>
-              <div class="col-6">
-                <base-input
-                  name="kandang"
-                  placeholder="Kandang"
-                  label="Kandang"
-                  required
-                >
-                  <multi-select
-                    v-model="input.kandang"
-                    :options="g$ddKandang"
-                    label="name"
-                    track-by="id"
-                    placeholder="Pilih Kandang"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
-              <!-- <div class="col-6">
-                <base-input
-                  name="pakan"
-                  placeholder="Pakan"
-                  label="Pakan"
-                  required
-                >
-                  <multi-select
-                    v-model="input.pakan"
-                    :options="g$ddPakan"
-                    label="name"
-                    track-by="id"
-                    placeholder="Pilih Pakan"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div> -->
-              <div class="col-6">
-                <base-input
-                  name="fase"
-                  placeholder="Fase Pemeliharaan"
-                  label="Fase Pemeliharaan"
-                  required
-                >
-                  <multi-select
-                    v-model="input.fase"
-                    :options="g$ddFasePemeliharaan"
-                    label="name"
-                    track-by="id"
-                    placeholder="Pilih Status Ternak"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
-              <!-- <div class="col-6" v-if="input.fase.name === 'Cempe'">
-                <base-input
-                  name="tanggal_kawin"
-                  placeholder="Tanggal Kawin Induk"
-                  label="Tanggal Kawin Induk"
-                  required
-                >
-                  <multi-select
-                    v-model="input.fase"
-                    :options="g$ddFasePemeliharaan"
-                    label="name"
-                    track-by="id"
-                    placeholder="Pilih Status Ternak"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div> -->
-              <!-- <div class="col-6">
-                <base-input
-                  name="tanggal_keluar"
-                  placeholder="Pilih tanggal"
-                  label="Tanggal Keluar"
-                >
-                  <flat-pickr
-                    v-model.lazy="input.tanggal_keluar"
-                    :config="{ mode: 'single', allowInput: true }"
-                    class="form-control datepicker"
-                    placeholder="Pilih tanggal"
-                  />
-                </base-input>
-              </div>
-              <div class="col-6">
-                <base-input
-                  name="status_keluar"
-                  placeholder="Status Keluar"
-                  label="Status Keluar"
-                >
-                  <multi-select
-                    v-model="input.status_keluar"
-                    :options="g$ddStatusKeluar"
-                    placeholder="Pilih Status Keluar"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div> -->
-              <div class="col-6" v-if="!this.input.image">
-                <div class="form-group has-label">
-                  <label class="form-control-label">image</label>
-                  <input
-                    class="form-control file"
-                    id="image"
-                    type="file"
-                    ref="image"
-                    accept="image/*"
-                    @change="handleFileUpload()"
-                  />
-                </div>
-              </div>
-              <div class="col-6" v-if="this.input.imageUrl">
-                <div class="text-center pb-2">
-                  <base-button type="danger" size="sm" @click="resetImage()">
-                    Reset Image
-                  </base-button>
-                </div>
-                <div class="text-center">
-                  <img
-                    width="250"
-                    v-if="input.imageUrl"
-                    :src="input.imageUrl"
-                  />
-                </div>
-              </div>
-            </div>
-          </form-comp>
-        </template>
-        <template #footer>
           <base-button type="secondary" @click="modal.ubahTernak = false">
             Tutup
           </base-button>
@@ -1101,31 +1103,32 @@ export default {
         <template v-if="modal.detailTernak" #body>
           <tabs>
             <tab-pane title="Detail">
-              <div
-                style="max-height: 450px; overflow-y: auto; overflow-x: hidden"
-              >
+              <div style="max-height: 450px; overflow-y: auto; overflow-x: hidden">
                 <div class="row">
+                  <!-- ID Ternak -->
                   <div class="col-5">
                     <span style="font-weight: 600">ID Ternak</span>
                   </div>
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.id_ternak }}</span
-                    >
+                      {{ infoTernak.id_ternak }}</span>
                   </div>
                 </div>
+            
+                <!-- RFID -->
                 <div class="row">
                   <div class="col-5">
-                    <span style="font-weight: 600">ID RFID</span>
+                    <span style="font-weight: 600">RFID</span>
                   </div>
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.rf_id }}</span
-                    >
+                      {{ infoTernak.rf_id }}</span>
                   </div>
                 </div>
+            
+                <!-- Bangsa -->
                 <div class="row">
                   <div class="col-5">
                     <span style="font-weight: 600">Bangsa</span>
@@ -1134,11 +1137,12 @@ export default {
                     :
                     <span style="font-weight: 300">
                       {{
-                        infoTernak.bangsa ? infoTernak.bangsa.bangsa : ""
-                      }}</span
-                    >
+                      infoTernak.bangsa ? infoTernak.bangsa.bangsa :  "---"
+                      }}</span>
                   </div>
                 </div>
+            
+                <!-- Jenis kelamin -->
                 <div class="row">
                   <div class="col-5">
                     <span style="font-weight: 600">Jenis Kelamin</span>
@@ -1146,32 +1150,59 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.jenis_kelamin }}</span
-                    >
+                      {{ infoTernak.jenis_kelamin ? infoTernak.jenis_kelamin : "---" }}</span>
                   </div>
                 </div>
+
+                <!-- Tanggal lahir -->
                 <div class="row">
                   <div class="col-5">
-                    <span style="font-weight: 600">ID Induk</span>
+                    <span style="font-weight: 600">Tanggal Lahir</span>
                   </div>
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.id_dam ?? "-" }}</span
-                    >
+                      {{ infoTernak.tanggal_lahir ? ubahTanggal(infoTernak.tanggal_lahir) : "---" }}</span>
                   </div>
                 </div>
+
+                <!-- Umur -->
                 <div class="row">
                   <div class="col-5">
-                    <span style="font-weight: 600">ID Pemacek</span>
+                    <span style="font-weight: 600">Umur</span>
                   </div>
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.id_sire ?? "-" }}</span
-                    >
+                      {{ infoTernak.umur ? umurTernak(infoTernak.umur) : "---" }} </span>
                   </div>
                 </div>
+            
+                <!-- ID sire (bapak) -->
+                <div class="row">
+                  <div class="col-5">
+                    <span style="font-weight: 600">ID Sire (Bapak)</span>
+                  </div>
+                  <div class="col">
+                    :
+                    <span style="font-weight: 300">
+                      {{ infoTernak.id_sire ?? "---" }}</span>
+                  </div>
+                </div>
+            
+                <!-- ID dam (ibu) -->
+                <div class="row">
+                  <div class="col-5">
+                    <span style="font-weight: 600">ID Dam (Ibu)</span>
+                  </div>
+                  <div class="col">
+                    :
+                    <span style="font-weight: 300">
+                      {{ infoTernak.id_dam ?? "---" }}</span>
+                  </div>
+                </div>
+            
+                <!-- Kode kandang -->
                 <div class="row">
                   <div class="col-5">
                     <span style="font-weight: 600">Kode Kandang</span>
@@ -1180,24 +1211,26 @@ export default {
                     :
                     <span style="font-weight: 300">
                       {{
-                        infoTernak.kandang
-                          ? infoTernak.kandang.kode_kandang
-                          : ""
-                      }}</span
-                    >
+                      infoTernak.kandang
+                      ? infoTernak.kandang.kode_kandang
+                      : "---"
+                      }}</span>
                   </div>
                 </div>
+            
+                <!-- Status -->
                 <div class="row">
                   <div class="col-5">
-                    <span style="font-weight: 600">Fase Pemeliharaan</span>
+                    <span style="font-weight: 600">Status</span>
                   </div>
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.fase ? infoTernak.fase.fase : "" }}</span
-                    >
+                      {{ infoTernak.fase ? infoTernak.fase.fase : "---" }}</span>
                   </div>
                 </div>
+            
+                <!-- Jenis pakan -->
                 <div class="row">
                   <div class="col-5">
                     <span style="font-weight: 600">Jenis Pakan</span>
@@ -1206,13 +1239,14 @@ export default {
                     :
                     <span style="font-weight: 300">
                       {{
-                        infoTernak.kandang.jenis_pakan.jenis_pakan
-                          ? infoTernak.kandang.jenis_pakan.jenis_pakan
-                          : ""
-                      }}</span
-                    >
+                      infoTernak.kandang
+                      ? infoTernak.kandang.jenis_pakan.jenis_pakan
+                      : "---"
+                      }}</span>
                   </div>
                 </div>
+            
+                <!-- Berat -->
                 <div class="row">
                   <div class="col-5">
                     <span style="font-weight: 600">Berat</span>
@@ -1220,10 +1254,11 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.berat }} Kg</span
-                    >
+                      {{ infoTernak.berat ?? "---" }} Kg</span>
                   </div>
                 </div>
+            
+                <!-- Suhu -->
                 <div class="row">
                   <div class="col-5">
                     <span style="font-weight: 600">Suhu</span>
@@ -1231,10 +1266,11 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.suhu }} °C</span
-                    >
+                      {{ infoTernak.suhu ?? "---" }} °C</span>
                   </div>
                 </div>
+            
+                <!-- Status kesehatan -->
                 <div class="row">
                   <div class="col-5">
                     <span style="font-weight: 600">Status Kesehatan</span>
@@ -1242,25 +1278,11 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.status_kesehatan }}</span
-                    >
+                      {{ infoTernak.status_kesehatan ?? "---" }}</span>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-5">
-                    <span style="font-weight: 600">Nama Penyakit</span>
-                  </div>
-                  <div class="col">
-                    :
-                    <span style="font-weight: 300">
-                      {{
-                        infoTernak.penyakit
-                          ? infoTernak.penyakit.nama_penyakit
-                          : "-"
-                      }}</span
-                    >
-                  </div>
-                </div>
+            
+                <!-- Tanggal masuk -->
                 <div class="row">
                   <div class="col-5">
                     <span style="font-weight: 600">Tanggal Masuk</span>
@@ -1268,21 +1290,11 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.tanggal_masuk }}</span
-                    >
+                      {{ infoTernak.tanggal_masuk ? ubahTanggal(infoTernak.tanggal_masuk) : "---" }}</span>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-5">
-                    <span style="font-weight: 600">Umur</span>
-                  </div>
-                  <div class="col">
-                    :
-                    <span style="font-weight: 300">
-                      {{ Math.round(infoTernak.umur / 30) }} Bulan</span
-                    >
-                  </div>
-                </div>
+            
+                <!-- Tanggal keluar -->
                 <div class="row">
                   <div class="col-5">
                     <span style="font-weight: 600">Tanggal Keluar</span>
@@ -1290,10 +1302,11 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.tanggal_keluar ?? "-" }}</span
-                    >
+                      {{ infoTernak.tanggal_keluar ? ubahTanggal(infoTernak.tanggal_keluar) : "---" }}</span>
                   </div>
                 </div>
+            
+                <!-- Status keluar -->
                 <div class="row">
                   <div class="col-5">
                     <span style="font-weight: 600">Status Keluar</span>
@@ -1301,8 +1314,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.status_keluar ?? "-" }}</span
-                    >
+                      {{ infoTernak.status_keluar ?? "---" }}</span>
                   </div>
                 </div>
               </div>
