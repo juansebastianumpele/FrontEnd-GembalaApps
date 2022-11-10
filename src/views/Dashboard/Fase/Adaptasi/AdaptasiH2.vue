@@ -96,7 +96,7 @@ export default {
         const { id_ternak, treatment1, treatment2, treatment3 } = this.input;
         const data = {
           id_ternak: id_ternak.id_ternak,
-          id_kandang: this.g$ddListAdaptasiHari2[0].kandang.id_kandang,
+          id_kandang: id_kandang.id,
           treatments: [
             {
               id_treatment: treatment1 ? 4 : null,

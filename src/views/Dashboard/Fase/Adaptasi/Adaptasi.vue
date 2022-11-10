@@ -83,12 +83,21 @@ export default {
   methods: {
     ...mapActions(d$adaptasi, ["a$adaptasiHariKe1", "a$createAdaptasi"]),
     ...mapActions(d$dropdown, ["a$ddListAdaptasiHari1", "a$ddKandang"]),
+    clearInput() {
+      this.input = {
+        id_ternak: "",
+        treatment1: true,
+        treatment2: true,
+        treatment3: true,
+      };
+    },
+
     async createAdaptasi() {
       try {
         const { id_ternak, treatment1, treatment2, treatment3 } = this.input;
         const data = {
           id_ternak: id_ternak.id_ternak,
-          id_kandang: this.g$ddListAdaptasiHari1[0].kandang.id_kandang,
+          id_kandang: id_kandang.id,
           treatments: [
             {
               id_treatment: treatment1 ? 1 : "",
