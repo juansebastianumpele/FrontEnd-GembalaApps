@@ -304,7 +304,7 @@ export default {
               <div class="col-12">
                 <base-input name="tanggal_sakit" placeholder="Pilih tanggal" label="Tanggal Sakit" required>
                   <flat-pickr v-model.lazy="input.tanggal_sakit"
-                    :config="{ mode: 'single', allowInput: true, maxDate: 'today' }" class="form-control datepicker"
+                    :config="{ mode: 'single', allowInput: true, maxDate: new Date() }" class="form-control datepicker"
                     placeholder="Pilih tanggal" />
                 </base-input>
               </div>
@@ -357,7 +357,7 @@ export default {
               <div class="col-12">
                 <base-input name="tanggal_sakit" placeholder="Pilih tanggal" label="Tanggal Sakit" required>
                   <flat-pickr v-model.lazy="input.tanggal_sakit"
-                    :config="{ mode: 'single', allowInput: true, maxDate: 'today' }" class="form-control datepicker"
+                    :config="{ mode: 'single', allowInput: true, maxDate: new Date() }" class="form-control datepicker"
                     placeholder="Pilih tanggal" />
                 </base-input>
               </div>
@@ -388,7 +388,7 @@ export default {
               <div class="col-12">
                 <base-input name="tanggal_sembuh" placeholder="Pilih tanggal" label="Tanggal Sembuh" required>
                   <flat-pickr v-model.lazy="input.tanggal_sembuh"
-                    :config="{ mode: 'single', allowInput: true, minDate: input.tanggal_sakit, maxDate: 'today' }"
+                    :config="{ mode: 'single', allowInput: true, minDate: input.tanggal_sakit, maxDate: new Date() }"
                     class="form-control datepicker" placeholder="Pilih tanggal" />
                 </base-input>
               </div>

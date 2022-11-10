@@ -191,7 +191,7 @@ export default {
               <!-- Tanggal pemeliharaan -->
               <div class="col-6">
                 <base-input name="tanggal_pemeliharaan" label="Tanggal Pemeliharaan" required>
-                  <flat-pickr v-model.lazy="input.tanggal_pemeliharaan" :config="{ mode: 'single', allowInput: true , maxDate: 'today' }"
+                  <flat-pickr v-model.lazy="input.tanggal_pemeliharaan" :config="{ mode: 'single', allowInput: true , maxDate: new Date() }"
                     class="form-control datepicker" placeholder="Pilih tanggal" maxDate="today" />
                 </base-input>
               </div>
