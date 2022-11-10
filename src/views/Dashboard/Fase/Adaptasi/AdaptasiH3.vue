@@ -12,6 +12,7 @@ export default {
     pageTitle: "Fase Adaptasi",
     input: {
       id_ternak: "",
+      id_kandang: "",
       treatment1: true,
       treatment2: true,
       treatment3: true,
@@ -86,6 +87,7 @@ export default {
     clearInput() {
       this.input = {
         id_ternak: "",
+        id_kandang: "",
         treatment1: true,
         treatment2: true,
         treatment3: true,
@@ -93,7 +95,8 @@ export default {
     },
     async createAdaptasi() {
       try {
-        const { id_ternak, treatment1, treatment2, treatment3 } = this.input;
+        const { id_ternak, treatment1, treatment2, treatment3, id_kandang } =
+          this.input;
         const data = {
           id_ternak: id_ternak.id_ternak,
           id_kandang: id_kandang.id,
