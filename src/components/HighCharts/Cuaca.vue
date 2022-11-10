@@ -42,7 +42,7 @@ export default {
       }).format(this.cuaca.dt * 1000);
     },
     gambarCuaca() {
-      return `http://openweathermap.org/img/wn/${this.cuaca.weather[0].icon}@2x.png`;
+      return `https://openweathermap.org/img/wn/${this.cuaca.weather[0].icon}@2x.png`;
     },
     suhu() {
       return `${Math.round(this.cuaca.main.temp)}°C`;
