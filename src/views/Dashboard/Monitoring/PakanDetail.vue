@@ -126,7 +126,7 @@ export default {
               <!-- Tanggal -->
               <div class="col-12">
                 <base-input name="tanggal" class="" placeholder="Pilih tanggal" label="Tanggal" required>
-                  <flat-pickr v-model.lazy="input.tanggal" :config="{ mode: 'single', allowInput: true, maxDate: 'today' }"
+                  <flat-pickr v-model.lazy="input.tanggal" :config="{ mode: 'single', allowInput: true, maxDate: new Date() }"
                     class="form-control datepicker" placeholder="Pilih tanggal" />
                 </base-input>
               </div>

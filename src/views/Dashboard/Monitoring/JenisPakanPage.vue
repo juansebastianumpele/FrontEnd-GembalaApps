@@ -153,12 +153,15 @@ export default {
     },
     async editPakan() {
       try {
-        const { id_pakan, nama_pakan, deskripsi, komposisi, jumlah } =
+        const { id_jenis_pakan, jenis_pakan, interval_pakan, satuan, komposisi, nutrien } =
           this.input;
         const data = {
-          id_pakan,
-          nama_pakan,
-          deskripsi,
+          id_jenis_pakan,
+          jenis_pakan,
+          interval_pakan,
+          satuan,
+          komposisi,
+          nutrien,
         };
         await this.schema.validate(data);
         await this.a$pakanEdit(data);
