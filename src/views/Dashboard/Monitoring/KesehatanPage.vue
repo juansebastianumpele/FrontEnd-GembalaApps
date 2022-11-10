@@ -97,7 +97,6 @@ export default {
     },
     ...mapActions(d$ternak, ["a$ternakList"]),
     async triggerDetail(row) {
-      try {
         const { id_penyakit } = row;
         router.push({
           name: "Detail Ternak Sakit",
@@ -105,10 +104,6 @@ export default {
             id: id_penyakit,
           },
         });
-      } catch (error) {
-        this.clearInput();
-        this.notify(error, false);
-      }
     },
 
     async addTernakSakit() {
