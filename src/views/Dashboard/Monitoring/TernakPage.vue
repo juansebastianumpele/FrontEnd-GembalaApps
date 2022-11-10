@@ -5,7 +5,7 @@ import d$dropdown from "@/stores/dropdown";
 import d$kesehatan from "@/stores/monitoring/kesehatan";
 import HcLine from "@/components/HighCharts/Line.vue";
 import d$chart from "@/stores/chart";
-import { ubahTanggal, umurTernak } from "@/utils/locale/ubahTanggal"
+import { ubahTanggal } from "@/utils/locale/ubahTanggal"
 
 import {
   object as y$object,
@@ -110,8 +110,7 @@ export default {
         },
         {
           name: "umur",
-          th: "Umur (bln)",
-          render: ({ umur }) => umur ? umurTernak(umur) : null,
+          th: "Umur",
         },
       ],
       action: [
@@ -428,7 +427,6 @@ export default {
       console.log('file', this.input.image);
       console.log('url', this.input.imageUrl);
     },
-    umurTernak,
     ubahTanggal,
   },
 };
@@ -1159,7 +1157,7 @@ export default {
                   <div class="col">
                     :
                     <span style="font-weight: 300">
-                      {{ infoTernak.umur ? umurTernak(infoTernak.umur) : "---" }} </span>
+                      {{ infoTernak.umur ?? "---" }} </span>
                   </div>
                 </div>
             
