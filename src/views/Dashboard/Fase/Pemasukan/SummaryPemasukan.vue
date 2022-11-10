@@ -158,7 +158,7 @@ export default {
                 :content="key"
               >
                 <template #content>
-                  <div class="col text-center bg-success rounded mt-5">
+                  <div class="col-sm text-center bg-success rounded mt-5">
                     <h3 class="text-white pt-4">Kandang {{ value }}</h3>
                     <h1 class="text-white">{{ key }}</h1>
                     <p class="text-white pb-3">Ekor</p>

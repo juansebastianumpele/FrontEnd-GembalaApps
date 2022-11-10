@@ -222,7 +222,7 @@ export default {
                           style="font-size: x-large"
                         >
                           {{
-                            g$totalByFase[3] ? g$totalByFase[3].total_ternak : 0
+                            g$totalByFase[2] ? g$totalByFase[2].total_ternak : 0
                           }}
                         </div>
                         <div class="col-3 text-success">Ekor</div>

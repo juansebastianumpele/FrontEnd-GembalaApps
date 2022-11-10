@@ -81,6 +81,16 @@ const u$adaptasi = defineStore({
         throw error;
       }
     },
+
+    //Crate adaptasi
+    async a$createAdaptasi(req) {
+      try {
+        await s$adaptasi.createAdaptasi(req);
+        console.log(req);
+      } catch ({ error }) {
+        throw error;
+      }
+    },
   },
 
   getters: {
