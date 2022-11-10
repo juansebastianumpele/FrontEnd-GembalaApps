@@ -12,6 +12,7 @@ export default {
     pageTitle: "Fase Adaptasi",
     input: {
       id_ternak: "",
+      id_kandang: "",
       treatment1: true,
       treatment2: true,
       treatment3: true,
@@ -94,6 +95,7 @@ export default {
     clearInput() {
       this.input = {
         id_ternak: "",
+        id_kandang: "",
         treatment1: true,
         treatment2: true,
         treatment3: true,
@@ -137,6 +139,13 @@ export default {
         this.notify(error, false);
         this.clearInput();
       }
+    },
+
+    onChange(value) {
+      this.input.id_kandang = {
+        id: value.kandang.id_kandang,
+        name: value.kandang.kode_kandang,
+      };
     },
   },
 };
@@ -242,6 +251,7 @@ export default {
               <div class="col-12">
                 <base-input name="kandang" label="ID Ternak">
                   <multi-select
+                    @select="onChange"
                     v-model="input.id_ternak"
                     :options="g$ddListAdaptasiHari5"
                     label="id_ternak"

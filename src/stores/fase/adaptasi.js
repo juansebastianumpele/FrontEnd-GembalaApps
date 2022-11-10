@@ -12,6 +12,7 @@ const u$adaptasi = defineStore({
     hariKe3: [],
     hariKe4: [],
     hariKe5: [],
+    searchKandang: [],
   }),
   actions: {
     //List Summary Adaptasi

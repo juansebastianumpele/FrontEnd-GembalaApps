@@ -109,6 +109,13 @@ export default {
         this.clearInput();
       }
     },
+
+    onChange(value) {
+      this.input.id_kandang = {
+        id: value.kandang.id_kandang,
+        name: value.kandang.kode_kandang,
+      };
+    },
   },
 };
 </script>
@@ -214,6 +221,7 @@ export default {
                 <base-input name="kandang" label="ID Ternak">
                   <multi-select
                     v-model="input.id_ternak"
+                    @select="onChange"
                     :options="g$ddListAdaptasiHari4"
                     label="id_ternak"
                     track-by="id_ternak"
