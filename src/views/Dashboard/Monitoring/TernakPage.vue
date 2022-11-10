@@ -23,32 +23,32 @@ export default {
   },
   setup() {
     const schema = y$object({
-      rf_id: y$string().nullable().label("RF ID"),
-      // jenis_kelamin: y$string().required().label("Jenis Kelamin"),
+      rf_id: y$string().required().label("RFID"),
+      // jenis_kelamin: y$string().().label("Jenis Kelamin"),
       // bangsa: y$object({
       //   id: y$string().nullable().label("Bangsa"),
       // }).label("bangsa"),
-      // berat: y$string().required().label("Berat"),
-      // suhu: y$string().required().label("Suhu"),
-      // tanggal_lahir: y$string().required().label("Tanggal Lahir"),
-      // tanggal_masuk: y$string().required().label("Tanggal Masuk"),
+      // berat: y$string().().label("Berat"),
+      // suhu: y$string().().label("Suhu"),
+      // tanggal_lahir: y$string().().label("Tanggal Lahir"),
+      // tanggal_masuk: y$string().().label("Tanggal Masuk"),
       // // id_dam: y$string().nullable().label("ID Dam (Ibu)"),
       // // id_sire: y$string().nullable().label("ID Sire (Bapak)"),
-      // status_kesehatan: y$string().required().label("Status Kesehatan"),
+      // status_kesehatan: y$string().().label("Status Kesehatan"),
       // penyakit: y$object({
       //   id: y$string().nullable().label("Penyakit"),
       // }).label("Penyakit"),
       // pakan: y$object({
-      //   id: y$string().required().label("ID Pakan"),
+      //   id: y$string().().label("ID Pakan"),
       // }).label("ID Pakan"),
       // fase: y$object({
-      //   id: y$string().required().label("ID Fase"),
+      //   id: y$string().().label("ID Fase"),
       // }).label("Fase Pemeliharaan"),
       // image: y$array().nullable().label("image"),
       // tanggal_keluar: y$string().nullable().label("Tanggal Keluar"),
       // status_keluar: y$string().nullable().label("Status Keluar"),
-      // id_ternak: y$string().required().label("ID Ternak"),
-      // id_users: y$string().required().label("ID Users"),
+      // id_ternak: y$string().().label("ID Ternak"),
+      // id_users: y$string().().label("ID Users"),
     });
     return {
       schema,
@@ -473,7 +473,7 @@ export default {
           <form-comp v-if="modal.addTernak" :validation-schema="schema">
             <div class="row">
               <!-- RFID -->
-              <div class="col-6">
+              <div class="col-12">
                 <field-form
                   v-slot="{ field }"
                   v-model="input.rf_id"
@@ -500,7 +500,7 @@ export default {
                     v-bind="field"
                     placeholder="Berat"
                     label="Berat"
-                    required
+                    
                   ></base-input>
                 </field-form>
               </div> -->
@@ -517,7 +517,7 @@ export default {
                     v-bind="field"
                     placeholder="Suhu"
                     label="Suhu"
-                    required
+                    
                   ></base-input>
                 </field-form>
               </div> -->
@@ -542,7 +542,7 @@ export default {
                   name="status_kesehatan"
                   placeholder="Status Kesehatan"
                   label="Status Kesehatan"
-                  required
+                  
                 >
                   <multi-select
                     v-model="input.status_kesehatan"
@@ -592,11 +592,11 @@ export default {
                   name="tanggal_lahir"
                   placeholder="Pilih tanggal"
                   label="Tanggal Lahir"
-                  required
+                  
                 >
                   <flat-pickr
                     v-model.lazy="input.tanggal_lahir"
-                    :config="{ mode: 'single', allowInput: true, maxDate: 'today' }"
+                    :config="{ mode: 'single', allowInput: true, maxDate: new Date() }"
                     class="form-control datepicker"
                     placeholder="Pilih tanggal"
                   />
@@ -647,11 +647,11 @@ export default {
                   name="tanggal_masuk"
                   placeholder="Pilih tanggal"
                   label="Tanggal Masuk"
-                  required
+                  
                 >
                   <flat-pickr
                     v-model.lazy="input.tanggal_masuk"
-                    :config="{ mode: 'single', allowInput: true, maxDate: 'today', defaultDate: 'today' }"
+                    :config="{ mode: 'single', allowInput: true, maxDate: new Date(), defaultDate: 'today' }"
                     class="form-control datepicker"
                     placeholder="Pilih tanggal"
                   />
@@ -664,7 +664,7 @@ export default {
                   name="kandang"
                   placeholder="Kandang"
                   label="Kandang"
-                  required
+                  
                 >
                   <multi-select
                     v-model="input.kandang"
@@ -683,7 +683,7 @@ export default {
                   name="pakan"
                   placeholder="Pakan"
                   label="Pakan"
-                  required
+                  
                 >
                   <multi-select
                     v-model="input.pakan"
@@ -702,7 +702,7 @@ export default {
                   name="status_ternak"
                   placeholder="Status Ternak"
                   label="Status"
-                  required
+                  
                 >
                   <multi-select
                     v-model="input.fase"
@@ -764,24 +764,8 @@ export default {
         <template #body>
           <form-comp v-if="modal.ubahTernak" :validation-schema="schema">
             <div class="row">
-              <!-- ID ternak -->
-              <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.id_ternak"
-                  name="id_ternak"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="number"
-                    placeholder="ID dari ternak"
-                    label="ID Ternak"
-                  ></base-input>
-                </field-form>
-              </div>
-
               <!-- RFID -->
-              <div class="col-6">
+              <div class="col-12">
                 <field-form
                   v-slot="{ field }"
                   v-model="input.rf_id"
@@ -792,6 +776,7 @@ export default {
                     v-bind="field"
                     placeholder="RFID dari kalung domba"
                     label="RFID"
+                    required
                   ></base-input>
                 </field-form>
               </div>
@@ -808,7 +793,7 @@ export default {
                     v-bind="field"
                     placeholder="Berat"
                     label="Berat"
-                    required
+                    
                   ></base-input>
                 </field-form>
               </div>
@@ -823,7 +808,7 @@ export default {
                     v-bind="field"
                     placeholder="Suhu"
                     label="Suhu"
-                    required
+                    
                   ></base-input>
                 </field-form>
               </div> -->
@@ -848,7 +833,7 @@ export default {
                   name="status_kesehatan"
                   placeholder="Status Kesehatan"
                   label="Status Kesehatan"
-                  required
+                  
                 >
                   <multi-select
                     v-model="input.status_kesehatan"
@@ -898,11 +883,11 @@ export default {
                   name="tanggal_lahir"
                   placeholder="Pilih tanggal"
                   label="Tanggal Lahir"
-                  required
+                  
                 >
                   <flat-pickr
                     v-model.lazy="input.tanggal_lahir"
-                    :config="{ mode: 'single', allowInput: true, maxDate: 'today' }"
+                    :config="{ mode: 'single', allowInput: true, maxDate: new Date() }"
                     class="form-control datepicker"
                     placeholder="Pilih tanggal"
                   />
@@ -953,11 +938,11 @@ export default {
                   name="tanggal_masuk"
                   placeholder="Pilih tanggal"
                   label="Tanggal Masuk"
-                  required
+                  
                 >
                   <flat-pickr
                     v-model.lazy="input.tanggal_masuk"
-                    :config="{ mode: 'single', allowInput: true, maxDate: 'today', defaultDate: 'today' }"
+                    :config="{ mode: 'single', allowInput: true, maxDate: new Date(), defaultDate: 'today' }"
                     class="form-control datepicker"
                     placeholder="Pilih tanggal"
                   />
@@ -970,7 +955,7 @@ export default {
                   name="kandang"
                   placeholder="Kandang"
                   label="Kandang"
-                  required
+                  
                 >
                   <multi-select
                     v-model="input.kandang"
@@ -989,7 +974,7 @@ export default {
                   name="pakan"
                   placeholder="Pakan"
                   label="Pakan"
-                  required
+                  
                 >
                   <multi-select
                     v-model="input.pakan"
@@ -1008,7 +993,7 @@ export default {
                   name="status_ternak"
                   placeholder="Status Ternak"
                   label="Status"
-                  required
+                  
                 >
                   <multi-select
                     v-model="input.fase"
