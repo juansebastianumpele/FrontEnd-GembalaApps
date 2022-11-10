@@ -3,6 +3,7 @@ import * as s$ternak from "@/services/monitoring/ternak";
 import * as s$kandang from "@/services/monitoring/daftarkandang";
 import * as s$pakan from "@/services/monitoring/pakan";
 import * as s$penyakit from "@/services/monitoring/penyakit";
+import * as s$adaptasi from "@/services/fase/adaptasi";
 
 const u$dropdown = defineStore({
   id: "dropdown",
@@ -22,6 +23,11 @@ const u$dropdown = defineStore({
     listPejantan: [],
     listPenyakit: [],
     listJenisPakan: [],
+    listAdaptasiHari1: [],
+    listAdaptasiHari2: [],
+    listAdaptasiHari3: [],
+    listAdaptasiHari4: [],
+    listAdaptasiHari5: [],
   }),
   actions: {
     // bangsa
@@ -122,6 +128,61 @@ const u$dropdown = defineStore({
         throw error;
       }
     },
+
+    // List Adaptasi Hari 1
+    async a$ddListAdaptasiHari1() {
+      try {
+        const { data } = await s$adaptasi.listAdaptasiHari1();
+        this.listAdaptasiHari1 = data.list;
+      } catch ({ error }) {
+        this.listAdaptasiHari1 = [];
+        throw error;
+      }
+    },
+
+    // List Adaptasi Hari 2
+    async a$ddListAdaptasiHari2() {
+      try {
+        const { data } = await s$adaptasi.listAdaptasiHari2();
+        this.listAdaptasiHari2 = data.list;
+      } catch ({ error }) {
+        this.listAdaptasiHari2 = [];
+        throw error;
+      }
+    },
+
+    // List Adaptasi Hari 3
+    async a$ddListAdaptasiHari3() {
+      try {
+        const { data } = await s$adaptasi.listAdaptasiHari3();
+        this.listAdaptasiHari3 = data.list;
+      } catch ({ error }) {
+        this.listAdaptasiHari3 = [];
+        throw error;
+      }
+    },
+
+    // List Adaptasi Hari 4
+    async a$ddListAdaptasiHari4() {
+      try {
+        const { data } = await s$adaptasi.listAdaptasiHari4();
+        this.listAdaptasiHari4 = data.list;
+      } catch ({ error }) {
+        this.listAdaptasiHari4 = [];
+        throw error;
+      }
+    },
+
+    // List Adaptasi Hari 5
+    async a$ddListAdaptasiHari5() {
+      try {
+        const { data } = await s$adaptasi.listAdaptasiHari5();
+        this.listAdaptasiHari5 = data.list;
+      } catch ({ error }) {
+        this.listAdaptasiHari5 = [];
+        throw error;
+      }
+    },
   },
   getters: {
     g$ddJenisKelamin: (state) => state.jenisKelamin,
@@ -131,6 +192,11 @@ const u$dropdown = defineStore({
     g$ddSatuanPakan: (state) => state.satuanPakan,
     g$ddKeteranganDetailPakan: (state) => state.keteranganDetailPakan,
     g$ddKeteranganTambahPakan: (state) => state.keteranganTambahPakan,
+    g$ddListAdaptasiHari1: (state) => state.listAdaptasiHari1,
+    g$ddListAdaptasiHari2: (state) => state.listAdaptasiHari2,
+    g$ddListAdaptasiHari3: (state) => state.listAdaptasiHari3,
+    g$ddListAdaptasiHari4: (state) => state.listAdaptasiHari4,
+    g$ddListAdaptasiHari5: (state) => state.listAdaptasiHari5,
     g$ddJenisKandang: (state) =>
       state.jenisKandang.map(({ id_jenis_kandang, jenis_kandang }) => ({
         id: id_jenis_kandang,

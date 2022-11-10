@@ -2,6 +2,7 @@
 import { mapActions, mapState } from "pinia";
 import d$adaptasi from "@/stores/fase/adaptasi";
 import { ubahTanggal } from "@/utils/locale/ubahTanggal";
+import d$dropdown from "@/stores/dropdown";
 
 export default {
   metaInfo: () => ({
@@ -9,6 +10,16 @@ export default {
   }),
   data: () => ({
     pageTitle: "Fase Adaptasi",
+    input: {
+      id_ternak: "",
+      treatment1: true,
+      treatment2: true,
+      treatment3: true,
+    },
+    //UI
+    modal: {
+      createAdaptasi: false,
+    },
     // DataTable
     dt: {
       column: [
@@ -50,13 +61,64 @@ export default {
   }),
   computed: {
     ...mapState(d$adaptasi, ["g$adaptasiHariKe2"]),
+    ...mapState(d$dropdown, ["g$ddListAdaptasiHari2", "g$ddKandang"]),
+    modals() {
+      return Object.values(this.modal).includes(true);
+    },
+  },
+
+  watch: {
+    modals(val) {
+      if (!val) {
+        this.clearInput();
+      }
+    },
   },
 
   async mounted() {
     await this.a$adaptasiHariKe2().catch((error) => this.notify(error, false));
+    await this.a$ddListAdaptasiHari2();
+    await this.a$ddKandang();
   },
   methods: {
-    ...mapActions(d$adaptasi, ["a$adaptasiHariKe2"]),
+    ...mapActions(d$adaptasi, ["a$adaptasiHariKe2", "a$createAdaptasi"]),
+    ...mapActions(d$dropdown, ["a$ddListAdaptasiHari2", "a$ddKandang"]),
+    clearInput() {
+      this.input = {
+        id_ternak: "",
+        treatment1: true,
+        treatment2: true,
+        treatment3: true,
+      };
+    },
+    async createAdaptasi() {
+      try {
+        const { id_ternak, treatment1, treatment2, treatment3 } = this.input;
+        const data = {
+          id_ternak: id_ternak.id_ternak,
+          id_kandang: this.g$ddListAdaptasiHari2[0].kandang.id_kandang,
+          treatments: [
+            {
+              id_treatment: treatment1 ? 4 : null,
+            },
+            {
+              id_treatment: treatment2 ? 5 : null,
+            },
+            {
+              id_treatment: treatment3 ? 6 : null,
+            },
+          ],
+        };
+        await this.a$createAdaptasi(data);
+        this.modal.createAdaptasi = false;
+        this.notify("Berhasil membuat adaptasi baru", true);
+        this.a$adaptasiHariKe2();
+        this.a$ddListAdaptasiHari2();
+      } catch (error) {
+        this.notify(error, false);
+        this.clearInput();
+      }
+    },
   },
 };
 </script>
@@ -130,6 +192,11 @@ export default {
             </base-button>
           </span>
         </div>
+        <div class="col text-right">
+          <base-button type="success" @click="modal.createAdaptasi = true">
+            Tambah {{ pageTitle }}
+          </base-button>
+        </div>
       </div>
     </template>
 
@@ -141,6 +208,86 @@ export default {
         :data="g$adaptasiHariKe2"
         :columns="dt.column"
       />
+    </template>
+
+    <template #modal>
+      <!-- Create Adaptasi -->
+      <modal-comp v-model:show="modal.createAdaptasi" modal-classes="modal-md">
+        <template #header>
+          <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
+        </template>
+        <template #body>
+          <form-comp v-if="modal.createAdaptasi">
+            <div class="row">
+              <!-- id_ternak -->
+              <div class="col-12">
+                <base-input name="kandang" label="ID Ternak">
+                  <multi-select
+                    v-model="input.id_ternak"
+                    :options="g$ddListAdaptasiHari2"
+                    label="id_ternak"
+                    track-by="id_ternak"
+                    placeholder="Pilih ID Ternak"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+
+              <!-- id_kandang -->
+              <div class="col-12">
+                <base-input name="id_kandang" label="ID Kandang">
+                  <multi-select
+                    v-model="input.id_kandang"
+                    :options="g$ddKandang"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih ID Kandang"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+
+              <!-- Beri Vitol 140, 3ml/ekor -->
+              <div class="col-6">
+                <base-input
+                  name="treatment1"
+                  label="1. Beri Vitol 140, 3ml/ekor"
+                >
+                  <base-checkbox v-model="input.treatment1" name="treatment1" />
+                </base-input>
+              </div>
+
+              <!-- Pakan Rumput + Konsentrat -->
+              <div class="col-6">
+                <base-input
+                  name="treatment2"
+                  label="2. Pakan Rumput + Konsentrat"
+                >
+                  <base-checkbox v-model="input.treatment2" />
+                </base-input>
+              </div>
+
+              <!-- Pengobatan Jika Diperlukan -->
+              <div class="col-6">
+                <base-input
+                  name="treatment3"
+                  label="3. Pengobatan Jika Diperlukan"
+                >
+                  <base-checkbox v-model="input.treatment3" />
+                </base-input>
+              </div>
+            </div>
+          </form-comp>
+        </template>
+        <template #footer>
+          <base-button type="secondary" @click="modal.createAdaptasi = false">
+            Tutup
+          </base-button>
+          <base-button type="primary" @click="createAdaptasi">
+            Tambah {{ pageTitle }}
+          </base-button>
+        </template>
+      </modal-comp>
     </template>
   </main-layout>
 </template>
