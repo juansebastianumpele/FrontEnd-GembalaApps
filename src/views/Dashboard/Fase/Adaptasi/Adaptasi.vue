@@ -103,13 +103,13 @@ export default {
           id_kandang: id_kandang.id,
           treatments: [
             {
-              id_treatment: treatment1 ? 1 : "",
+              id_treatment: treatment1 ? 1 : null,
             },
             {
-              id_treatment: treatment2 ? 2 : "",
+              id_treatment: treatment2 ? 2 : null,
             },
             {
-              id_treatment: treatment3 ? 3 : "",
+              id_treatment: treatment3 ? 3 : null,
             },
           ],
         };
