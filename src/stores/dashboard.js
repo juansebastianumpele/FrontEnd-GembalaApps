@@ -4,7 +4,7 @@ import * as s$dashboard from "@/services/monitoring/dashboard";
 const u$dashboard = defineStore({
   id: "dashboard",
   state: () => ({
-    totalByJenis: [],
+    totalByStatus: [],
     totalByFase: [],
     totalByKandang: [],
     totalByStatusKeluar: [],
@@ -15,12 +15,12 @@ const u$dashboard = defineStore({
   }),
 
   actions: {
-    async a$totalByJenis() {
+    async a$totalByStatus() {
       try {
-        const { data } = await s$dashboard.totalTernakByJenis();
-        this.totalByJenis = data;
+        const { data } = await s$dashboard.totalTernakByStatus();
+        this.totalByStatus = data;
       } catch ({ error }) {
-        this.totalByJenis = [];
+        this.totalByStatus = [];
         throw error;
       }
     },
@@ -108,46 +108,46 @@ const u$dashboard = defineStore({
     g$totalByStatusKeluar: (state) => state.totalByStatusKeluar,
     g$totalKandang: (state) => state.totalKandang,
     g$totalTernak: (state) => state.totalTernak,
-    g$totalByJenis: (state) => ({
+    g$totalByStatus: (state) => ({
       series: [
         {
           name: "Total",
           innerSize: "50%",
           data: [
             {
-              y: state.totalByJenis.total_ternak_pejantan,
+              y: state.totalByStatus.total_ternak_pejantan,
               name: "Pejantan",
               color: "#006329",
             },
             {
-              y: state.totalByJenis.total_ternak_jantan,
+              y: state.totalByStatus.total_ternak_jantan,
               name: "Jantan",
               color: "#7EB918",
             },
             {
-              y: state.totalByJenis.total_ternak_indukan,
+              y: state.totalByStatus.total_ternak_indukan,
               name: "Indukan",
               color: "#008BD0",
             },
             {
-              y: state.totalByJenis.total_ternak_betina,
+              y: state.totalByStatus.total_ternak_betina,
               name: "Betina",
               color: "#776EAD",
             },
             {
-              y: state.totalByJenis.total_ternak_cempe_betina,
+              y: state.totalByStatus.total_ternak_cempe_betina,
               name: "Cempe Betina",
               color: "#E40044",
             },
             {
-              y: state.totalByJenis.total_ternak_cempe_jantan,
+              y: state.totalByStatus.total_ternak_cempe_jantan,
               name: "Cempe Jantan",
               color: "#F07C00",
             },
           ],
         },
       ],
-      length: state.totalByJenis.length,
+      length: state.totalByStatus.length,
     }),
     g$totalAdgCempe: (state) => ({
       categories: [...state.categoriesAdgCempe],

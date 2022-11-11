@@ -25,7 +25,7 @@ export default {
   }),
   computed: {
     ...mapState(d$dashboard, [
-      "g$totalByJenis",
+      "g$totalByStatus",
       "g$totalKandang",
       "g$totalTernak",
       "g$totalByFase",
@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     ...mapActions(d$dashboard, [
-      "a$totalByJenis",
+      "a$totalByStatus",
       "a$totalKandang",
       "a$totalTernak",
       "a$totalByFase",
@@ -50,7 +50,7 @@ export default {
     ]),
   },
   async mounted() {
-    await this.a$totalByJenis().catch((error) => this.notify(error, false));
+    await this.a$totalByStatus().catch((error) => this.notify(error, false));
     await this.a$totalKandang().catch((error) => this.notify(error, false));
     await this.a$totalTernak().catch((error) => this.notify(error, false));
     await this.a$totalByFase().catch((error) => this.notify(error, false));
@@ -98,7 +98,7 @@ export default {
               :title="g$totalTernak.total_ternak"
               :height="245"
               :width="320"
-              :data="g$totalByJenis"
+              :data="g$totalByStatus"
               :data-labels="true"
               :legend="true"
             />
@@ -107,42 +107,50 @@ export default {
 
         <!-- kolom kedua -->
         <div class="col-sm-4" style="width: 100%">
-          <card-comp type="success">
-            <div class="row align-items-center">
-              <div class="d-flex flex-row" style="width: 100%">
-                <div class="col">
-                  <img
-                    alt="Image placeholder"
-                    src="/images/domba1.png"
-                    class="img-fluid"
-                  />
+          <div class="row">
+            <div class="col-sm-6">
+              <card-comp type="success">
+                <h4 class="text-white mt--2">Kandang</h4>
+                <p class="text-white mt--2" style="font-size: 12px">
+                  Total Kandang
+                </p>
+                <div class="row mb--3">
+                  <div class="col-5">
+                    <h1
+                      class="text-white mt--4 mb--3 mr--2"
+                      style="font-size: 40px"
+                    >
+                      {{ g$totalKandang.total_kandang }}
+                    </h1>
+                  </div>
+                  <div class="col-7">
+                    <h4 class="text-white">Kandang</h4>
+                  </div>
                 </div>
-                <div class="col">
-                  <h2 class="text-center text-white" style="font-size: 24px">
-                    {{ g$totalTernak.total_ternak }}
-                  </h2>
-                  <h2 class="text-center text-white" style="font-size: 12px">
-                    Ekor
-                  </h2>
-                </div>
-                <div class="col">
-                  <img
-                    alt="Image placeholder"
-                    src="/images/kandang.png"
-                    class="img-fluid"
-                  />
-                </div>
-                <div class="col">
-                  <h2 class="text-center text-white" style="font-size: 24px">
-                    {{ g$totalKandang.total_kandang }}
-                  </h2>
-                  <h2 class="text-center text-white" style="font-size: 12px">
-                    Kandang
-                  </h2>
-                </div>
-              </div>
+              </card-comp>
             </div>
-          </card-comp>
+            <div class="col-sm-6">
+              <card-comp type="success">
+                <h4 class="text-white mt--2">Populasi Ternak</h4>
+                <p class="text-white mt--2" style="font-size: 12px">
+                  Semua Fase
+                </p>
+                <div class="row mb--3">
+                  <div class="col-5">
+                    <h1
+                      class="text-white mt--4 mb--3 mr--2"
+                      style="font-size: 40px"
+                    >
+                      {{ g$totalTernak.total_ternak }}
+                    </h1>
+                  </div>
+                  <div class="col-7">
+                    <h4 class="text-white">Ekor</h4>
+                  </div>
+                </div>
+              </card-comp>
+            </div>
+          </div>
           <card-comp type="success" class="mt--1">
             <div class="row align-items-center">
               <div class="col">
