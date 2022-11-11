@@ -25,7 +25,7 @@ export default {
   }),
   computed: {
     ...mapState(d$dashboard, [
-      "g$totalByStatus",
+      "g$totalByJenis",
       "g$totalKandang",
       "g$totalTernak",
       "g$totalByFase",
@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     ...mapActions(d$dashboard, [
-      "a$totalByStatus",
+      "a$totalByJenis",
       "a$totalKandang",
       "a$totalTernak",
       "a$totalByFase",
@@ -50,7 +50,7 @@ export default {
     ]),
   },
   async mounted() {
-    await this.a$totalByStatus().catch((error) => this.notify(error, false));
+    await this.a$totalByJenis().catch((error) => this.notify(error, false));
     await this.a$totalKandang().catch((error) => this.notify(error, false));
     await this.a$totalTernak().catch((error) => this.notify(error, false));
     await this.a$totalByFase().catch((error) => this.notify(error, false));
@@ -98,7 +98,7 @@ export default {
               :title="g$totalTernak.total_ternak"
               :height="245"
               :width="320"
-              :data="g$totalByStatus"
+              :data="g$totalByJenis"
               :data-labels="true"
               :legend="true"
             />
