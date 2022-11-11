@@ -24,31 +24,8 @@ export default {
   setup() {
     const schema = y$object({
       rf_id: y$string().required().label("RFID"),
-      // jenis_kelamin: y$string().().label("Jenis Kelamin"),
-      // bangsa: y$object({
-      //   id: y$string().nullable().label("Bangsa"),
-      // }).label("bangsa"),
-      // berat: y$string().().label("Berat"),
-      // suhu: y$string().().label("Suhu"),
-      // tanggal_lahir: y$string().().label("Tanggal Lahir"),
-      // tanggal_masuk: y$string().().label("Tanggal Masuk"),
-      // // id_dam: y$string().nullable().label("ID Dam (Ibu)"),
-      // // id_sire: y$string().nullable().label("ID Sire (Bapak)"),
-      // status_kesehatan: y$string().().label("Status Kesehatan"),
-      // penyakit: y$object({
-      //   id: y$string().nullable().label("Penyakit"),
-      // }).label("Penyakit"),
-      // pakan: y$object({
-      //   id: y$string().().label("ID Pakan"),
-      // }).label("ID Pakan"),
-      // fase: y$object({
-      //   id: y$string().().label("ID Fase"),
-      // }).label("Fase Pemeliharaan"),
-      // image: y$array().nullable().label("image"),
-      // tanggal_keluar: y$string().nullable().label("Tanggal Keluar"),
-      // status_keluar: y$string().nullable().label("Status Keluar"),
-      // id_ternak: y$string().().label("ID Ternak"),
-      // id_users: y$string().().label("ID Users"),
+      berat: y$string().nullable().label("Berat"),
+      suhu: y$string().nullable().label("Suhu"),
     });
     return {
       schema,
@@ -61,23 +38,19 @@ export default {
       id_ternak: null,
       rf_id: "",
       image: null,
-      jenis_kelamin: "",
-      id_bangsa: "",
-      berat: "",
-      suhu: "",
-      tanggal_lahir: "",
-      tanggal_masuk: "",
+      jenis_kelamin: null,
+      id_bangsa: null,
+      berat: null,
+      suhu: null,
+      tanggal_lahir: null,
+      tanggal_masuk: null,
       id_dam: null,
       id_sire: null,
-      status_kesehatan: "",
-      id_penyakit: null,
-      id_pakan: "",
-      id_fp: "",
-      id_kandang: "",
+      id_fp: null,
+      id_kandang: null,
       tanggal_keluar: null,
       status_keluar: null,
       status_ternak: "",
-      // tanggal_kawin: "",
       // imageUrl: null,
     },
     // UI
@@ -205,8 +178,8 @@ export default {
         image: null,
         jenis_kelamin: "",
         bangsa: "",
-        berat: "",
-        suhu: "",
+        berat: null,
+        suhu: null,
         tanggal_lahir: "",
         tanggal_masuk: "",
         id_dam: "",
@@ -218,8 +191,6 @@ export default {
         kandang: "",
         tanggal_keluar: null,
         status_keluar: null,
-        // id_ternak: "",
-        // id_users: "",
       };
     },
     async addTernak() {
@@ -229,15 +200,12 @@ export default {
           // image,
           jenis_kelamin,
           bangsa,
-          // berat,
-          // suhu,
+          berat,
+          suhu,
           tanggal_lahir,
           tanggal_masuk,
           id_dam,
           id_sire,
-          // status_kesehatan,
-          // penyakit,
-          // pakan,
           fase,
           kandang,
           status_ternak,
@@ -247,15 +215,12 @@ export default {
           // image,
           jenis_kelamin: jenis_kelamin ? jenis_kelamin : null,
           id_bangsa: bangsa ? bangsa.id : null,
-          // berat,
-          // suhu,
+          berat,
+          suhu,
           tanggal_lahir: tanggal_lahir ? tanggal_lahir : null,
           tanggal_masuk: tanggal_masuk ? tanggal_masuk : null,
           id_dam: id_dam ? id_dam.id : null,
           id_sire: id_sire ? id_sire.id : null,
-          // status_kesehatan,
-          // id_penyakit: penyakit.id,
-          // id_pakan: pakan.id,
           id_fp: fase ? fase.id : null,
           id_status_ternak: status_ternak
             ? status_ternak.id_status_ternak
@@ -281,15 +246,12 @@ export default {
           // image,
           jenis_kelamin,
           bangsa,
-          // berat,
-          // suhu,
+          berat,
+          suhu,
           tanggal_lahir,
           tanggal_masuk,
           id_dam,
           id_sire,
-          // status_kesehatan,
-          // penyakit,
-          // pakan,
           fase,
           status_ternak,
           kandang,
@@ -300,15 +262,12 @@ export default {
           // image,
           jenis_kelamin: jenis_kelamin ? jenis_kelamin : null,
           id_bangsa: bangsa ? bangsa.id : null,
-          // berat,
-          // suhu,
+          berat,
+          suhu,
           tanggal_lahir: tanggal_lahir ? tanggal_lahir : null,
           tanggal_masuk: tanggal_masuk ? tanggal_masuk : null,
           id_dam: id_dam ? id_dam.id : null,
           id_sire: id_sire ? id_sire.id : null,
-          // status_kesehatan,
-          // id_penyakit: penyakit.id,
-          // id_pakan: pakan.id,
           id_fp: fase ? fase.id : null,
           id_status_ternak: status_ternak
             ? status_ternak.id_status_ternak
@@ -407,7 +366,6 @@ export default {
           tanggal_keluar,
           status_keluar,
           image,
-          // id_users,
         };
         this.modal.ubahTernak = true;
       } catch (error) {
@@ -502,6 +460,38 @@ export default {
                     v-bind="field"
                     placeholder="RFID dari kalung domba"
                     label="RFID"
+                  ></base-input>
+                </field-form>
+              </div>
+
+              <!-- Berat -->
+              <div class="col-6">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.berat"
+                  type="text"
+                  name="berat"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Masukan berat"
+                    label="Berat"
+                  ></base-input>
+                </field-form>
+              </div>
+
+              <!-- suhu -->
+              <div class="col-6">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.suhu"
+                  type="text"
+                  name="suhu_berkala"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Masukan suhu"
+                    label="Suhu"
                   ></base-input>
                 </field-form>
               </div>
@@ -714,7 +704,7 @@ export default {
               </div>
 
               <!-- Berat -->
-              <!-- <div class="col-6">
+              <div class="col-6">
                 <field-form
                   v-slot="{ field }"
                   v-model="input.berat"
@@ -725,10 +715,11 @@ export default {
                     v-bind="field"
                     placeholder="Berat"
                     label="Berat"
-                    
                   ></base-input>
                 </field-form>
               </div>
+
+              <!-- suhu -->
               <div class="col-6">
                 <field-form
                   v-slot="{ field }"
@@ -740,10 +731,9 @@ export default {
                     v-bind="field"
                     placeholder="Suhu"
                     label="Suhu"
-                    
                   ></base-input>
                 </field-form>
-              </div> -->
+              </div>
 
               <!-- Bangsa -->
               <div class="col-6">
@@ -1202,36 +1192,6 @@ export default {
                           ? ubahTanggal(infoTernak.tanggal_masuk)
                           : "---"
                       }}</span
-                    >
-                  </div>
-                </div>
-
-                <!-- Tanggal keluar -->
-                <div class="row">
-                  <div class="col-5">
-                    <span style="font-weight: 600">Tanggal Keluar</span>
-                  </div>
-                  <div class="col">
-                    :
-                    <span style="font-weight: 300">
-                      {{
-                        infoTernak.tanggal_keluar
-                          ? ubahTanggal(infoTernak.tanggal_keluar)
-                          : "---"
-                      }}</span
-                    >
-                  </div>
-                </div>
-
-                <!-- Status keluar -->
-                <div class="row">
-                  <div class="col-5">
-                    <span style="font-weight: 600">Status Keluar</span>
-                  </div>
-                  <div class="col">
-                    :
-                    <span style="font-weight: 300">
-                      {{ infoTernak.status_keluar ?? "---" }}</span
                     >
                   </div>
                 </div>
