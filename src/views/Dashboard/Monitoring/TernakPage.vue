@@ -498,11 +498,7 @@ export default {
 
               <!-- Jenis kelamin -->
               <div class="col-6">
-                <base-input
-                  name="jenis_kelamin"
-                  placeholder="Jenis Kelamin"
-                  label="Jenis Kelamin"
-                >
+                <base-input name="jenis_kelamin" label="Jenis Kelamin">
                   <multi-select
                     v-model="input.jenis_kelamin"
                     :options="g$ddJenisKelamin"
@@ -514,11 +510,7 @@ export default {
 
               <!-- Tanggal lahir -->
               <div class="col-6">
-                <base-input
-                  name="tanggal_lahir"
-                  placeholder="Pilih tanggal"
-                  label="Tanggal Lahir"
-                >
+                <base-input name="tanggal_lahir" label="Tanggal Lahir">
                   <flat-pickr
                     v-model.lazy="input.tanggal_lahir"
                     :config="{
@@ -534,12 +526,7 @@ export default {
 
               <!-- ID sire -->
               <div class="col-6">
-                <base-input
-                  name="id_sire"
-                  placeholder="ID sire (bapak) dari domba"
-                  label="ID Sire (Bapak)"
-                  nullable
-                >
+                <base-input name="id_sire" label="ID Sire (Bapak)" nullable>
                   <multi-select
                     v-model="input.id_sire"
                     :options="g$ddListPejantan"
@@ -553,12 +540,7 @@ export default {
 
               <!-- ID dam -->
               <div class="col-6">
-                <base-input
-                  name="id_dam"
-                  placeholder="ID dam (ibu) dari domba"
-                  label="ID Dam (Ibu)"
-                  nullable
-                >
+                <base-input name="id_dam" label="ID Dam (Ibu)" nullable>
                   <multi-select
                     v-model="input.id_dam"
                     :options="g$ddListBetina"
@@ -572,11 +554,7 @@ export default {
 
               <!-- Tanggal masuk -->
               <div class="col-6">
-                <base-input
-                  name="tanggal_masuk"
-                  placeholder="Pilih tanggal"
-                  label="Tanggal Masuk"
-                >
+                <base-input name="tanggal_masuk" label="Tanggal Masuk">
                   <flat-pickr
                     v-model.lazy="input.tanggal_masuk"
                     :config="{
@@ -593,11 +571,7 @@ export default {
 
               <!-- Kandang -->
               <div class="col-6">
-                <base-input
-                  name="kandang"
-                  placeholder="Kandang"
-                  label="Kandang"
-                >
+                <base-input name="kandang" label="Kandang">
                   <multi-select
                     v-model="input.kandang"
                     :options="g$ddKandang"
@@ -617,7 +591,7 @@ export default {
                     :options="g$ddFasePemeliharaan"
                     label="name"
                     track-by="id"
-                    placeholder="Pilih Fase"
+                    placeholder="Pilih fase pemeliharaan"
                     :show-labels="false"
                   />
                 </base-input>
@@ -737,7 +711,7 @@ export default {
 
               <!-- Bangsa -->
               <div class="col-6">
-                <base-input name="bangsa" placeholder="Bangsa" label="Bangsa">
+                <base-input name="bangsa" label="Bangsa">
                   <multi-select
                     v-model="input.bangsa"
                     :options="g$ddBangsa"
@@ -751,11 +725,7 @@ export default {
 
               <!-- Jenis kelamin -->
               <div class="col-6">
-                <base-input
-                  name="jenis_kelamin"
-                  placeholder="Jenis Kelamin"
-                  label="Jenis Kelamin"
-                >
+                <base-input name="jenis_kelamin" label="Jenis Kelamin">
                   <multi-select
                     v-model="input.jenis_kelamin"
                     :options="g$ddJenisKelamin"
@@ -767,11 +737,7 @@ export default {
 
               <!-- Tanggal lahir -->
               <div class="col-6">
-                <base-input
-                  name="tanggal_lahir"
-                  placeholder="Pilih tanggal"
-                  label="Tanggal Lahir"
-                >
+                <base-input name="tanggal_lahir" label="Tanggal Lahir">
                   <flat-pickr
                     v-model.lazy="input.tanggal_lahir"
                     :config="{
@@ -787,12 +753,7 @@ export default {
 
               <!-- ID sire -->
               <div class="col-6">
-                <base-input
-                  name="id_sire"
-                  placeholder="ID sire (bapak) dari domba"
-                  label="ID Sire (Bapak)"
-                  nullable
-                >
+                <base-input name="id_sire" label="ID Sire (Bapak)" nullable>
                   <multi-select
                     v-model="input.id_sire"
                     :options="g$ddListPejantan"
@@ -806,12 +767,7 @@ export default {
 
               <!-- ID dam -->
               <div class="col-6">
-                <base-input
-                  name="id_dam"
-                  placeholder="ID dam (ibu) dari domba"
-                  label="ID Dam (Ibu)"
-                  nullable
-                >
+                <base-input name="id_dam" label="ID Dam (Ibu)" nullable>
                   <multi-select
                     v-model="input.id_dam"
                     :options="g$ddListBetina"
@@ -825,11 +781,7 @@ export default {
 
               <!-- Tanggal masuk -->
               <div class="col-6">
-                <base-input
-                  name="tanggal_masuk"
-                  placeholder="Pilih tanggal"
-                  label="Tanggal Masuk"
-                >
+                <base-input name="tanggal_masuk" label="Tanggal Masuk">
                   <flat-pickr
                     v-model.lazy="input.tanggal_masuk"
                     :config="{
@@ -846,11 +798,7 @@ export default {
 
               <!-- Kandang -->
               <div class="col-6">
-                <base-input
-                  name="kandang"
-                  placeholder="Kandang"
-                  label="Kandang"
-                >
+                <base-input name="kandang" label="Kandang">
                   <multi-select
                     v-model="input.kandang"
                     :options="g$ddKandang"
@@ -864,13 +812,13 @@ export default {
 
               <!-- Fase -->
               <div class="col-6">
-                <base-input name="fase" placeholder="Fase" label="Fase">
+                <base-input name="fase" label="Fase Pemeliharaan">
                   <multi-select
                     v-model="input.fase"
                     :options="g$ddFasePemeliharaan"
                     label="name"
                     track-by="id"
-                    placeholder="Pilih Fase"
+                    placeholder="Pilih fase pemeliharaan"
                     :show-labels="false"
                   />
                 </base-input>
