@@ -178,15 +178,12 @@ export default {
         image: null,
         jenis_kelamin: "",
         bangsa: "",
-        berat: null,
-        suhu: null,
+        berat: "",
+        suhu: "",
         tanggal_lahir: "",
         tanggal_masuk: "",
         id_dam: "",
         id_sire: "",
-        status_kesehatan: "",
-        penyakit: null,
-        pakan: "",
         fase: "",
         kandang: "",
         tanggal_keluar: null,
@@ -496,6 +493,20 @@ export default {
                 </field-form>
               </div>
 
+              <!-- Bangsa -->
+              <div class="col-6">
+                <base-input name="bangsa" label="Bangsa">
+                  <multi-select
+                    v-model="input.bangsa"
+                    :options="g$ddBangsa"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih bangsa"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+
               <!-- Jenis kelamin -->
               <div class="col-6">
                 <base-input name="jenis_kelamin" label="Jenis Kelamin">
@@ -699,7 +710,7 @@ export default {
                   v-slot="{ field }"
                   v-model="input.suhu"
                   type="text"
-                  name="suhu_berkala"
+                  name="suhu"
                 >
                   <base-input
                     v-bind="field"
@@ -1058,15 +1069,32 @@ export default {
                   </div>
                 </div>
 
-                <!-- Status -->
+                <!-- Fase -->
                 <div class="row">
                   <div class="col-5">
-                    <span style="font-weight: 600">Status</span>
+                    <span style="font-weight: 600">Fase Pemeliharaan</span>
                   </div>
                   <div class="col">
                     :
                     <span style="font-weight: 300">
                       {{ infoTernak.fase ? infoTernak.fase.fase : "---" }}</span
+                    >
+                  </div>
+                </div>
+
+                <!-- Status -->
+                <div class="row">
+                  <div class="col-5">
+                    <span style="font-weight: 600">Status Ternak</span>
+                  </div>
+                  <div class="col">
+                    :
+                    <span style="font-weight: 300">
+                      {{
+                        infoTernak.fase
+                          ? infoTernak.status_ternak.status_ternak
+                          : "---"
+                      }}</span
                     >
                   </div>
                 </div>
