@@ -12,6 +12,7 @@ const u$adaptasi = defineStore({
     hariKe3: [],
     hariKe4: [],
     hariKe5: [],
+    treatment: [],
   }),
   actions: {
     //List Summary Adaptasi
@@ -91,6 +92,18 @@ const u$adaptasi = defineStore({
         throw error;
       }
     },
+
+    //Get Treatment
+    async a$getTreatment(req) {
+      try {
+        const { data } = await s$adaptasi.getTreatment(req);
+        this.treatment = data.treatments;
+        console.log(this.treatment);
+      } catch ({ error }) {
+        this.treatment = [];
+        throw error;
+      }
+    },
   },
 
   getters: {
@@ -101,6 +114,7 @@ const u$adaptasi = defineStore({
     g$adaptasiHariKe3: (state) => state.hariKe3,
     g$adaptasiHariKe4: (state) => state.hariKe4,
     g$adaptasiHariKe5: (state) => state.hariKe5,
+    g$getTreatment: (state) => state.treatment,
     g$byPopulasi: (state) => ({
       categories: ["Total", "Jantan", "Betina"],
       series: [

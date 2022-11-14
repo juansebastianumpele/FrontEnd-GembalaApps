@@ -37,21 +37,21 @@ export default {
           render: ({ kandang }) => kandang.kode_kandang,
         },
         {
-          th: "Vitol 3ml/ekor",
+          th: "Masukan Ke Kandang Umbaran",
           render: ({ treatments }) =>
             Object.values(treatments)[0]
               ? '<i class="fas fa-solid fa-check text-success" style="font-size: 30px;"></i>'
               : '<i class="fas fa-solid fa-x text-danger" style="font-size: 20px;"></i>',
         },
         {
-          th: "Pakan Hijauan dan Konsentrat",
+          th: "Beri Air Gula",
           render: ({ treatments }) =>
             Object.values(treatments)[1]
               ? '<i class="fas fa-solid fa-check text-success" style="font-size: 30px;"></i>'
               : '<i class="fas fa-solid fa-x text-danger" style="font-size: 20px;"></i>',
         },
         {
-          th: "Pengobatan Jika Diperlukan",
+          th: "Pakan Rumput",
           render: ({ treatments }) =>
             Object.values(treatments)[2]
               ? '<i class="fas fa-solid fa-check text-success" style="font-size: 30px;"></i>'
@@ -61,7 +61,7 @@ export default {
     },
   }),
   computed: {
-    ...mapState(d$adaptasi, ["g$adaptasiHariKe1"]),
+    ...mapState(d$adaptasi, ["g$adaptasiHariKe1", "g$getTreatment"]),
     ...mapState(d$dropdown, ["g$ddListAdaptasiHari1", "g$ddKandang"]),
     modals() {
       return Object.values(this.modal).includes(true);
@@ -79,10 +79,15 @@ export default {
   async mounted() {
     await this.a$adaptasiHariKe1().catch((error) => this.notify(error, false));
     await this.a$ddListAdaptasiHari1();
+    await this.a$getTreatment(1);
     await this.a$ddKandang();
   },
   methods: {
-    ...mapActions(d$adaptasi, ["a$adaptasiHariKe1", "a$createAdaptasi"]),
+    ...mapActions(d$adaptasi, [
+      "a$adaptasiHariKe1",
+      "a$createAdaptasi",
+      "a$getTreatment",
+    ]),
     ...mapActions(d$dropdown, ["a$ddListAdaptasiHari1", "a$ddKandang"]),
     clearInput() {
       this.input = {
@@ -104,12 +109,18 @@ export default {
           treatments: [
             {
               id_treatment: treatment1 ? 1 : null,
+              step: 1,
+              treatment: treatment1 ? "Masukan Ke Kandang Umbaran" : null,
             },
             {
               id_treatment: treatment2 ? 2 : null,
+              step: 1,
+              treatment: treatment2 ? "Beri Air Gula" : null,
             },
             {
               id_treatment: treatment3 ? 3 : null,
+              step: 1,
+              treatment: treatment3 ? "Pakan Rumput" : null,
             },
           ],
         };
@@ -258,30 +269,30 @@ export default {
                 </base-input>
               </div>
 
-              <!-- Suntik Anti Parasit Vet Oxy 1ml/10kg bb -->
+              <!-- Treatment 1-->
               <div class="col-6">
-                <base-input
-                  name="treatment1"
-                  label="1. Suntik Anti Parasit Vet Oxy 1ml/10kg bb"
-                >
-                  <base-checkbox v-model="input.treatment1" name="treatment1" />
+                <base-input name="treatment1">
+                  <base-checkbox v-model="input.treatment1" name="treatment1">
+                    1. {{ g$getTreatment[0].treatment }}
+                  </base-checkbox>
                 </base-input>
               </div>
 
-              <!-- Pakan Rumput + Konsentrat -->
+              <!-- Treatment 2-->
               <div class="col-6">
-                <base-input
-                  name="treatment2"
-                  label="2. Pakan Rumput + Konsentrat"
-                >
-                  <base-checkbox v-model="input.treatment2" />
+                <base-input name="treatment2">
+                  <base-checkbox v-model="input.treatment2" name="treatment2">
+                    2. {{ g$getTreatment[1].treatment }}
+                  </base-checkbox>
                 </base-input>
               </div>
 
-              <!-- Pakan Rumput -->
+              <!-- Treatment 3-->
               <div class="col-6">
-                <base-input name="treatment3" label="3. Pakan Rumput">
-                  <base-checkbox v-model="input.treatment3" />
+                <base-input name="treatment3">
+                  <base-checkbox v-model="input.treatment3" name="treatment3">
+                    3. {{ g$getTreatment[2].treatment }}
+                  </base-checkbox>
                 </base-input>
               </div>
             </div>

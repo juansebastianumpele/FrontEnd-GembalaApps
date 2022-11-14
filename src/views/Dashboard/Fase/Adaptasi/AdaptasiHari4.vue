@@ -53,7 +53,7 @@ export default {
     },
   }),
   computed: {
-    ...mapState(d$adaptasi, ["g$adaptasiHariKe4"]),
+    ...mapState(d$adaptasi, ["g$adaptasiHariKe4", "g$getTreatment"]),
     ...mapState(d$dropdown, ["g$ddListAdaptasiHari4", "g$ddKandang"]),
     modals() {
       return Object.values(this.modal).includes(true);
@@ -71,10 +71,15 @@ export default {
   async mounted() {
     await this.a$adaptasiHariKe4().catch((error) => this.notify(error, false));
     await this.a$ddListAdaptasiHari4();
+    await this.a$getTreatment(4);
     await this.a$ddKandang();
   },
   methods: {
-    ...mapActions(d$adaptasi, ["a$adaptasiHariKe4", "a$createAdaptasi"]),
+    ...mapActions(d$adaptasi, [
+      "a$adaptasiHariKe4",
+      "a$createAdaptasi",
+      "a$getTreatment",
+    ]),
     ...mapActions(d$dropdown, ["a$ddListAdaptasiHari4", "a$ddKandang"]),
     clearInput() {
       this.input = {
@@ -93,9 +98,13 @@ export default {
           treatments: [
             {
               id_treatment: treatment1 ? 10 : null,
+              step: 4,
+              treatment: treatment1 ? "Obat Anti Parasit" : null,
             },
             {
               id_treatment: treatment2 ? 11 : null,
+              step: 4,
+              treatment: treatment2 ? "Pakan Rumput + Konsentrat" : null,
             },
           ],
         };
@@ -245,20 +254,21 @@ export default {
                 </base-input>
               </div>
 
-              <!-- Masukan Ke Kandang Umbaran -->
+              <!-- Treatment 1 -->
               <div class="col-6">
-                <base-input
-                  name="treatment1"
-                  label="1. Masukan Ke Kandang Umbaran"
-                >
-                  <base-checkbox v-model="input.treatment1" name="treatment1" />
+                <base-input name="treatment1">
+                  <base-checkbox v-model="input.treatment1" name="treatment1">
+                    1. {{ g$getTreatment[0].treatment }}
+                  </base-checkbox>
                 </base-input>
               </div>
 
-              <!-- Beri Air Gula -->
+              <!-- Treatment 2 -->
               <div class="col-6">
-                <base-input name="treatment2" label="2. Beri Air Gula">
-                  <base-checkbox v-model="input.treatment2" />
+                <base-input name="treatment2">
+                  <base-checkbox v-model="input.treatment2" name="treatment2">
+                    2. {{ g$getTreatment[1].treatment }}
+                  </base-checkbox>
                 </base-input>
               </div>
             </div>

@@ -20,6 +20,10 @@ const listAdaptasiHari5 = () => baseApi.get(`${api}/adaptasi/step?step=5`);
 //Create Adaptasi
 const createAdaptasi = (req) => baseApi.post(`${api}/adaptasi`, req);
 
+//get all treatment
+const getTreatment = (req) =>
+  baseApi.get(`${api}/adaptasi/treatment/all?step=${req}`);
+
 export {
   list,
   hariKe1,
@@ -33,4 +37,5 @@ export {
   listAdaptasiHari4,
   listAdaptasiHari5,
   createAdaptasi,
+  getTreatment,
 };

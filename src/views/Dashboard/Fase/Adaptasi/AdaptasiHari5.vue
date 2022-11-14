@@ -69,7 +69,7 @@ export default {
     },
   }),
   computed: {
-    ...mapState(d$adaptasi, ["g$adaptasiHariKe5"]),
+    ...mapState(d$adaptasi, ["g$adaptasiHariKe5", "g$getTreatment"]),
     ...mapState(d$dropdown, ["g$ddListAdaptasiHari5", "g$ddKandang"]),
     modals() {
       return Object.values(this.modal).includes(true);
@@ -87,10 +87,15 @@ export default {
   async mounted() {
     await this.a$adaptasiHariKe5().catch((error) => this.notify(error, false));
     await this.a$ddListAdaptasiHari5();
+    await this.a$getTreatment(5);
     await this.a$ddKandang();
   },
   methods: {
-    ...mapActions(d$adaptasi, ["a$adaptasiHariKe5", "a$createAdaptasi"]),
+    ...mapActions(d$adaptasi, [
+      "a$adaptasiHariKe5",
+      "a$createAdaptasi",
+      "a$getTreatment",
+    ]),
     ...mapActions(d$dropdown, ["a$ddListAdaptasiHari5", "a$ddKandang"]),
     clearInput() {
       this.input = {
@@ -118,15 +123,23 @@ export default {
           treatments: [
             {
               id_treatment: treatment1 ? 12 : null,
+              step: 5,
+              treatement: treatment1 ? "Grooming" : null,
             },
             {
               id_treatment: treatment2 ? 13 : null,
+              step: 5,
+              treatement: treatment2 ? "Sanitasi" : null,
             },
             {
               id_treatment: treatment3 ? 14 : null,
+              step: 5,
+              treatement: treatment3 ? "Wormectin" : null,
             },
             {
               id_treatment: treatment4 ? 15 : null,
+              step: 5,
+              treatement: treatment4 ? "Complete Feed" : null,
             },
           ],
         };
@@ -276,40 +289,36 @@ export default {
                 </base-input>
               </div>
 
-              <!-- Cukur Bulu Domba + Potong Kuku -->
+              <!-- Treatment 1 -->
               <div class="col-6">
-                <base-input
-                  name="treatment1"
-                  label="1. Cukur Bulu Domba + Potong Kuku"
-                >
-                  <base-checkbox v-model="input.treatment1" name="treatment1" />
+                <base-input name="treatment1">
+                  <base-checkbox v-model="input.treatment1" name="treatment1">
+                    1. {{ g$getTreatment[0].treatment }}
+                  </base-checkbox>
                 </base-input>
               </div>
-
-              <!-- Pemandian, Deterjen + Disinfektan -->
+              <!-- Treatment 2 -->
               <div class="col-6">
-                <base-input
-                  name="treatment2"
-                  label="2. Pemandian, Deterjen + Disinfektan"
-                >
-                  <base-checkbox v-model="input.treatment2" />
+                <base-input name="treatment2">
+                  <base-checkbox v-model="input.treatment2" name="treatment2">
+                    2. {{ g$getTreatment[1].treatment }}
+                  </base-checkbox>
                 </base-input>
               </div>
-
-              <!-- Suntik Anti Parasit Wormectin 0,25ml/10kg -->
+              <!-- Treatment 3 -->
               <div class="col-6">
-                <base-input
-                  name="treatment3"
-                  label="3. Suntik Anti Parasit Wormectin 0,25ml/10kg"
-                >
-                  <base-checkbox v-model="input.treatment3" />
+                <base-input name="treatment3">
+                  <base-checkbox v-model="input.treatment3" name="treatment3">
+                    3. {{ g$getTreatment[2].treatment }}
+                  </base-checkbox>
                 </base-input>
               </div>
-
-              <!-- Pakan Komplit -->
+              <!-- Treatment 4 -->
               <div class="col-6">
-                <base-input name="treatment4" label="4. Pakan Komplit">
-                  <base-checkbox v-model="input.treatment4" />
+                <base-input name="treatment4">
+                  <base-checkbox v-model="input.treatment4" name="treatment4">
+                    4. {{ g$getTreatment[3].treatment }}
+                  </base-checkbox>
                 </base-input>
               </div>
             </div>

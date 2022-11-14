@@ -160,7 +160,6 @@ export default {
                 v-for="(key, value) in g$kandang"
                 :key="key"
                 :title="`Kandang ${value}`"
-                :content="key"
               >
                 <template #content>
                   <div class="col text-center bg-success rounded mt-5">
