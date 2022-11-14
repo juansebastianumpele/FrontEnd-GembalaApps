@@ -32,7 +32,8 @@ const u$ternak = defineStore({
     },
     async a$ternakAdd(request) {
       try {
-        await s$ternak.add(request);
+        const tambahTernak = await s$ternak.add(request);
+        return tambahTernak.data;
       } catch ({ error }) {
         throw error;
       }

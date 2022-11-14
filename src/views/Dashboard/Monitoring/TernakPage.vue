@@ -36,7 +36,7 @@ export default {
     // Input
     input: {
       id_ternak: null,
-      rf_id: "",
+      rf_id: null,
       image: null,
       jenis_kelamin: null,
       id_bangsa: null,
@@ -50,7 +50,7 @@ export default {
       id_kandang: null,
       tanggal_keluar: null,
       status_keluar: null,
-      status_ternak: "",
+      status_ternak: null,
       // imageUrl: null,
     },
     // UI
@@ -174,18 +174,18 @@ export default {
     clearInput() {
       this.input = {
         id_ternak: null,
-        rf_id: "",
+        rf_id: null,
         image: null,
-        jenis_kelamin: "",
-        bangsa: "",
-        berat: "",
-        suhu: "",
-        tanggal_lahir: "",
-        tanggal_masuk: "",
-        id_dam: "",
-        id_sire: "",
-        fase: "",
-        kandang: "",
+        jenis_kelamin: null,
+        bangsa: null,
+        berat: null,
+        suhu: null,
+        tanggal_lahir: null,
+        tanggal_masuk: null,
+        id_dam: null,
+        id_sire: null,
+        fase: null,
+        kandang: null,
         tanggal_keluar: null,
         status_keluar: null,
       };
@@ -225,9 +225,9 @@ export default {
           id_kandang: kandang ? kandang.id : null,
         };
         await this.schema.validate(data);
-        await this.a$ternakAdd(data);
+        const tambahTernak = await this.a$ternakAdd(data);
         this.modal.addTernak = false;
-        this.notify(`Tambah ${this.pageTitle} Sukses!`);
+        this.notify(`Ternak dengan ID Ternak ${tambahTernak.id} berhasil ditambahkan`);
       } catch (error) {
         console.log(error);
         this.notify(error, false);
@@ -446,7 +446,7 @@ export default {
           <form-comp v-if="modal.addTernak" :validation-schema="schema">
             <div class="row">
               <!-- RFID -->
-              <div class="col-12">
+              <div class="col-6">
                 <field-form
                   v-slot="{ field }"
                   v-model="input.rf_id"
@@ -457,6 +457,7 @@ export default {
                     v-bind="field"
                     placeholder="RFID dari kalung domba"
                     label="RFID"
+                    required
                   ></base-input>
                 </field-form>
               </div>
@@ -466,13 +467,13 @@ export default {
                 <field-form
                   v-slot="{ field }"
                   v-model="input.berat"
-                  type="text"
                   name="berat"
                 >
                   <base-input
                     v-bind="field"
                     placeholder="Masukan berat"
                     label="Berat"
+                    type="number"
                   ></base-input>
                 </field-form>
               </div>
@@ -482,13 +483,13 @@ export default {
                 <field-form
                   v-slot="{ field }"
                   v-model="input.suhu"
-                  type="text"
                   name="suhu_berkala"
                 >
                   <base-input
                     v-bind="field"
                     placeholder="Masukan suhu"
                     label="Suhu"
+                    type="number"
                   ></base-input>
                 </field-form>
               </div>
@@ -588,7 +589,7 @@ export default {
                     :options="g$ddKandang"
                     label="name"
                     track-by="id"
-                    placeholder="Pilih Kandang"
+                    placeholder="Pilih andang"
                     :show-labels="false"
                   />
                 </base-input>
@@ -672,7 +673,7 @@ export default {
           <form-comp v-if="modal.ubahTernak" :validation-schema="schema">
             <div class="row">
               <!-- RFID -->
-              <div class="col-12">
+              <div class="col-6">
                 <field-form
                   v-slot="{ field }"
                   v-model="input.rf_id"
@@ -693,29 +694,29 @@ export default {
                 <field-form
                   v-slot="{ field }"
                   v-model="input.berat"
-                  type="text"
                   name="berat"
                 >
                   <base-input
                     v-bind="field"
                     placeholder="Berat"
                     label="Berat"
+                    type="number"
                   ></base-input>
                 </field-form>
               </div>
 
-              <!-- suhu -->
+              <!-- Suhu -->
               <div class="col-6">
                 <field-form
                   v-slot="{ field }"
                   v-model="input.suhu"
-                  type="text"
                   name="suhu"
                 >
                   <base-input
                     v-bind="field"
                     placeholder="Suhu"
                     label="Suhu"
+                    type="number"
                   ></base-input>
                 </field-form>
               </div>
@@ -895,7 +896,7 @@ export default {
       </modal-comp>
 
       <!-- delete modal -->
-      <modal-comp v-model:show="modal.confirm" modal-classes="modal-lg">
+      <modal-comp v-model:show="modal.confirm" modal-classes="modal-md">
         <template #header>
           <h3 class="modal-title">Hapus {{ pageTitle }}</h3>
         </template>
