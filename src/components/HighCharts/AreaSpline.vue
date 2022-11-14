@@ -54,6 +54,12 @@ export default {
         subtitle: {
           text: this.subtitle,
         },
+        legend: {
+          align: "center",
+          verticalAlign: "top",
+          floating: true,
+          borderWidth: 1,
+        },
         plotOptions: {
           areaspline: {
             fillOpacity: 0.1,
