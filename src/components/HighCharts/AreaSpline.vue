@@ -56,9 +56,6 @@ export default {
         },
         legend: {
           align: "center",
-          verticalAlign: "top",
-          floating: true,
-          borderWidth: 1,
         },
         plotOptions: {
           areaspline: {
