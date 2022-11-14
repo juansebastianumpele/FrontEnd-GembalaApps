@@ -115,7 +115,7 @@ export default {
                   Total Kandang
                 </p>
                 <div class="row mb--3">
-                  <div class="col-sm-5">
+                  <div class="col-5">
                     <h1
                       class="text-white mt--4 mb--3 mr--2"
                       style="font-size: 32px"
@@ -123,7 +123,7 @@ export default {
                       {{ g$totalKandang.total_kandang }}
                     </h1>
                   </div>
-                  <div class="col-sm-7">
+                  <div class="col-7">
                     <h4 class="text-white mt--2 ml--3">Kandang</h4>
                   </div>
                 </div>
