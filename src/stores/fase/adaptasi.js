@@ -87,7 +87,6 @@ const u$adaptasi = defineStore({
     async a$createAdaptasi(req) {
       try {
         await s$adaptasi.createAdaptasi(req);
-        console.log(req);
       } catch ({ error }) {
         throw error;
       }
@@ -98,7 +97,6 @@ const u$adaptasi = defineStore({
       try {
         const { data } = await s$adaptasi.getTreatment(req);
         this.treatment = data.treatments;
-        console.log(this.treatment);
       } catch ({ error }) {
         this.treatment = [];
         throw error;

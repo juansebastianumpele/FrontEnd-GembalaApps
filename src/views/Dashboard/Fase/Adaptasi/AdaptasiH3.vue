@@ -78,8 +78,8 @@ export default {
 
   async mounted() {
     await this.a$adaptasiHariKe3().catch((error) => this.notify(error, false));
+    this.a$getTreatment(3);
     await this.a$ddListAdaptasiHari3();
-    await this.a$getTreatment(3);
     await this.a$ddKandang();
   },
   methods: {
