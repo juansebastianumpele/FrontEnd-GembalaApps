@@ -19,10 +19,6 @@ export default {
   },
   data: () => ({
     pageTitle: "Fase Pemasukan",
-    //UI
-    modal: {
-      detailPemasukan: false,
-    },
     // DataTable
     dt: {
       column: [
@@ -53,7 +49,6 @@ export default {
         },
       ],
     },
-    infoPemasukan: {},
   }),
   computed: {
     ...mapState(useAuthStore, ["userInfo"]),
