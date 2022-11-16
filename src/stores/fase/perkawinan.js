@@ -8,13 +8,14 @@ const u$perkawinan = defineStore({
     perkawinan: [],
     indukan: [],
     pejantan: [],
+    kandang: [],
   }),
   actions: {
     //List Perkawinan
     async a$perkawinanList() {
       try {
         const { data } = await s$perkawinan.list();
-        this.perkawinan = data.data;
+        this.perkawinan = data.list;
       } catch ({ error }) {
         this.perkawinan = [];
         throw error;
@@ -51,12 +52,25 @@ const u$perkawinan = defineStore({
         throw error;
       }
     },
+
+    //list Summary Perkawinan
+    async a$listPerkawinan() {
+      try {
+        const { data } = await s$perkawinan.listPerkawinan();
+        this.perkawinan = data.ternak.list;
+        this.kandang = data.kandang.list;
+      } catch ({ error }) {
+        this.perkawinan = [];
+        throw error;
+      }
+    },
   },
 
   getters: {
     g$listPerkawinan: (state) => state.perkawinan,
     g$listIndukan: (state) => state.indukan,
     g$listPejantan: (state) => state.pejantan,
+    g$kandang: (state) => state.kandang,
   },
 });
 

@@ -64,8 +64,8 @@ export default {
 
   async mounted() {
     await this.a$perkawinanList().catch((error) => this.notify(error, false));
-    await this.a$listIndukan().catch((error) => this.notify(error, false));
-    await this.a$listPejantan().catch((error) => this.notify(error, false));
+    this.a$listIndukan();
+    this.a$listPejantan();
   },
   methods: {
     ...mapActions(d$perkawinan, [

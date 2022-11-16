@@ -1,9 +1,12 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import useAuthStore from "@/stores/auth";
-import d$pemasukan from "@/stores/fase/pemasukan";
-import { ubahTanggal } from "@/utils/locale/ubahTanggal";
+import d$perkawinan from "@/stores/fase/perkawinan";
 import HcBar from "@/components/HighCharts/Bar.vue";
+
+// In your Vue.js component.
+import { VueperSlides, VueperSlide } from "vueperslides";
+import "@/assets/vendor/vueperslides/vueperslides.css";
 
 export default {
   metaInfo: () => ({
@@ -11,47 +14,37 @@ export default {
   }),
   components: {
     HcBar,
+    VueperSlides,
+    VueperSlide,
   },
   data: () => ({
     pageTitle: "Fase Perkawinan",
-    //UI
-    modal: {
-      detailPemasukan: false,
-    },
     // DataTable
     dt: {
       column: [
-        {
-          name: "createdAt",
-          th: "Tanggal",
-          render: ({ createdAt }) => ubahTanggal(createdAt),
-        },
         {
           name: "id_ternak",
           th: "ID Ternak",
         },
         {
-          name: "bangsa",
           th: "Bangsa",
-          render: ({ bangsa }) => bangsa.bangsa,
+          render: ({ bangsa }) => (bangsa ? bangsa.bangsa : "---"),
         },
         {
           name: "jenis_kelamin",
           th: "Jenis Kelamin",
         },
         {
-          name: "kandang",
           th: "Kode Kandang",
           render: ({ kandang }) => kandang.kode_kandang,
         },
         {
-          name: "status_ternak",
-          th: "Status",
-          render: ({ status_ternak }) => status_ternak.status_ternak,
+          name: "riwayat_perkawinan",
+          th: "Riwayat Perkawinan",
         },
         {
-          name: "cek_bcs",
-          th: "BCS",
+          name: "waktu_koloni",
+          th: "Waktu di Koloni",
         },
       ],
     },
@@ -59,24 +52,23 @@ export default {
   }),
   computed: {
     ...mapState(useAuthStore, ["userInfo"]),
-    ...mapState(d$pemasukan, [
-      "g$kandangSlice",
-      "g$kandangSlice1",
-      "g$pemasukanThisMonth",
+    ...mapState(d$perkawinan, [
+      "g$listPerkawinan",
       "g$byPopulasi",
+      "g$kandang",
     ]),
   },
 
   async mounted() {
     try {
-      await this.a$pemasukanListThisMonth();
+      await this.a$listPerkawinan();
     } catch (error) {
       this.notify(error, false);
     }
   },
 
   methods: {
-    ...mapActions(d$pemasukan, ["a$pemasukanListThisMonth"]),
+    ...mapActions(d$perkawinan, ["a$listPerkawinan"]),
   },
 };
 </script>
@@ -92,7 +84,7 @@ export default {
           <div class="row">
             <span class="text-center m-2">
               <base-button type="success1" class="btn-lg">
-                <router-link to="/fase/perkawinan" class="text-white">
+                <router-link to="/fase/adaptasi" class="text-white">
                   Summary
                 </router-link>
               </base-button>
@@ -114,7 +106,7 @@ export default {
                 type="secondary"
                 class="btn-lg"
               >
-                <router-link to="perkawinan/langkah-kerja" class="text-dark">
+                <router-link to="adaptasi/langkah-kerja" class="text-dark">
                   Langkah Kerja
                 </router-link>
               </base-button>
@@ -136,75 +128,38 @@ export default {
               </div>
             </div>
             <hc-bar
-              :height="215"
+              :height="200"
               :data="g$byPopulasi"
               :data-labels="true"
               :legend="true"
             />
           </card-comp>
         </div>
-        <div
-          class="col-sm-8 carousel slide"
-          id="carouselExampleControls"
-          data-ride="carousel"
-        >
-          <card-comp class="carousel-inner">
-            <div class="row carousel-item active ml-3">
-              <div class="row">
-                <div
-                  class="col-sm-2 bg-success text-center rounded m-2"
-                  v-for="item in g$kandangSlice1"
-                  :key="item.id_kandang"
-                >
-                  <h3 class="text-white">Kandang {{ item.kode_kandang }}</h3>
-                  <h1 class="text-white">{{ item.total }}</h1>
-                  <p class="text-white">Ekor</p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="row carousel-item"
-              v-for="row in g$kandangSlice"
-              :key="row.id"
+        <div class="col-sm-8">
+          <card-comp>
+            <vueper-slides
+              class="no-shadow"
+              :visible-slides="4"
+              slide-multiple
+              :gap="4"
+              :slide-ratio="1 / 3"
+              :dragging-distance="10"
+              :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }"
             >
-              <div class="row">
-                <div
-                  class="col-sm-2 bg-success text-center rounded m-2"
-                  v-for="item in row"
-                  :key="item.id_kandang"
-                >
-                  <h3 class="text-white">Kandang {{ item.kode_kandang }}</h3>
-                  <h1 class="text-white">{{ item.total }}</h1>
-                  <p class="text-white">Ekor</p>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <button
-                class="carousel-control-prev active"
-                type="button"
-                data-target="#carouselExampleControls"
-                data-slide="prev"
+              <vueper-slide
+                v-for="(key, value) in g$kandang"
+                :key="key"
+                :title="`Kandang ${value}`"
               >
-                <span
-                  class="carousel-control-prev-icon"
-                  aria-hidden="true"
-                ></span>
-                <span class="sr-only">Previous</span>
-              </button>
-              <button
-                class="carousel-control-next"
-                type="button"
-                data-target="#carouselExampleControls"
-                data-slide="next"
-              >
-                <span
-                  class="carousel-control-next-icon"
-                  aria-hidden="true"
-                ></span>
-                <span class="sr-only">Next</span>
-              </button>
-            </div>
+                <template #content>
+                  <div class="col text-center bg-success rounded mt-5">
+                    <h3 class="text-white pt-4">Kandang {{ value }}</h3>
+                    <h1 class="text-white">{{ key }}</h1>
+                    <p class="text-white pb-3">Ekor</p>
+                  </div>
+                </template>
+              </vueper-slide>
+            </vueper-slides>
           </card-comp>
         </div>
       </div>
@@ -216,14 +171,11 @@ export default {
     </template>
 
     <template #body>
-      <empty-result
-        v-if="!g$pemasukanThisMonth.length"
-        :text="`${pageTitle}`"
-      />
+      <empty-result v-if="!g$listPerkawinan.length" :text="`${pageTitle}`" />
       <data-table
         v-else
         :index="true"
-        :data="g$pemasukanThisMonth"
+        :data="g$listPerkawinan"
         :columns="dt.column"
       />
     </template>

@@ -218,6 +218,27 @@ const dashboardRoutes = [
           import("@/views/Dashboard/Fase/Perkawinan/LK_Perkawinan.vue"),
         meta: { requiresAuth: true },
       },
+      {
+        path: "kebuntingan",
+        name: "Summary Kebuntingan",
+        component: () =>
+          import("@/views/Dashboard/Fase/Kebuntingan/Summarykebuntingan.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "kebuntingan/data-kebuntingan",
+        name: "Fase Kebuntingan",
+        component: () =>
+          import("@/views/Dashboard/Fase/Kebuntingan/Kebuntingan.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "kebuntingan/langkah-kerja",
+        name: "Langkah Kerja Kebuntingan",
+        component: () =>
+          import("@/views/Dashboard/Fase/Kebuntingan/LK_Kebuntingan.vue"),
+        meta: { requiresAuth: true },
+      },
     ],
   },
   {
