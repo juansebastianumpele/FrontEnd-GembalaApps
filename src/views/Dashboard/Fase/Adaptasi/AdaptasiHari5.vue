@@ -150,7 +150,6 @@ export default {
         this.a$ddListAdaptasiHari5();
       } catch (error) {
         this.notify(error, false);
-        this.clearInput();
       }
     },
 

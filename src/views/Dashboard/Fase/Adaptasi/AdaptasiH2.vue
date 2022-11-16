@@ -130,7 +130,6 @@ export default {
         this.a$ddListAdaptasiHari2();
       } catch (error) {
         this.notify(error, false);
-        this.clearInput();
       }
     },
 

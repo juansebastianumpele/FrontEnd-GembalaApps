@@ -115,7 +115,6 @@ export default {
         this.a$ddListAdaptasiHari4();
       } catch (error) {
         this.notify(error, false);
-        this.clearInput();
       }
     },
 
