@@ -56,13 +56,7 @@ export default {
   }),
   computed: {
     ...mapState(useAuthStore, ["userInfo"]),
-    ...mapState(d$adaptasi, [
-      "g$adaptasi",
-      "g$byPopulasi",
-      "g$kandang",
-      "g$kandangSlice",
-      "g$kandangSlice1",
-    ]),
+    ...mapState(d$adaptasi, ["g$adaptasi", "g$byPopulasi", "g$kandang"]),
   },
 
   async mounted() {
