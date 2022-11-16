@@ -19,10 +19,6 @@ export default {
   },
   data: () => ({
     pageTitle: "Fase Adaptasi",
-    //UI
-    modal: {
-      detailPemasukan: false,
-    },
     // DataTable
     dt: {
       column: [
