@@ -124,22 +124,22 @@ export default {
             {
               id_treatment: treatment1 ? 12 : null,
               step: 5,
-              treatement: treatment1 ? "Grooming" : null,
+              treatment: treatment1 ? "Grooming" : null,
             },
             {
               id_treatment: treatment2 ? 13 : null,
               step: 5,
-              treatement: treatment2 ? "Sanitasi" : null,
+              treatment: treatment2 ? "Sanitasi" : null,
             },
             {
               id_treatment: treatment3 ? 14 : null,
               step: 5,
-              treatement: treatment3 ? "Wormectin" : null,
+              treatment: treatment3 ? "Wormectin" : null,
             },
             {
               id_treatment: treatment4 ? 15 : null,
               step: 5,
-              treatement: treatment4 ? "Complete Feed" : null,
+              treatment: treatment4 ? "Complete Feed" : null,
             },
           ],
         };
@@ -264,8 +264,8 @@ export default {
               <div class="col-12">
                 <base-input name="kandang" label="ID Ternak">
                   <multi-select
-                    @select="onChange"
                     v-model="input.id_ternak"
+                    @select="onChange"
                     :options="g$ddListAdaptasiHari5"
                     label="id_ternak"
                     track-by="id_ternak"
@@ -297,6 +297,7 @@ export default {
                   </base-checkbox>
                 </base-input>
               </div>
+
               <!-- Treatment 2 -->
               <div class="col-6">
                 <base-input name="treatment2">
@@ -305,6 +306,7 @@ export default {
                   </base-checkbox>
                 </base-input>
               </div>
+
               <!-- Treatment 3 -->
               <div class="col-6">
                 <base-input name="treatment3">
@@ -313,6 +315,7 @@ export default {
                   </base-checkbox>
                 </base-input>
               </div>
+
               <!-- Treatment 4 -->
               <div class="col-6">
                 <base-input name="treatment4">
