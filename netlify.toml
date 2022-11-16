@@ -5,3 +5,8 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[redirects]]
+  from = "https://be.gembala.sembadafarm.com/*"
+  to = "http://be.gembala.sembadafarm.com/:splat"
+  status = 200
