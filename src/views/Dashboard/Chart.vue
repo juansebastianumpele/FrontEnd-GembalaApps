@@ -137,7 +137,10 @@ export default {
                 </p>
                 <div class="row mb--3">
                   <div class="col-5">
-                    <h1 class="text-white mt--4 mb--3" style="font-size: 32px">
+                    <h1
+                      class="text-white mt--4 mb--3 mr--2"
+                      style="font-size: 32px"
+                    >
                       {{ g$totalTernak.total_ternak }}
                     </h1>
                   </div>
