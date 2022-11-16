@@ -48,7 +48,6 @@ export default {
         },
       ],
     },
-    infoPemasukan: {},
   }),
   computed: {
     ...mapState(useAuthStore, ["userInfo"]),
