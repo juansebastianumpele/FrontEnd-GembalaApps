@@ -98,7 +98,10 @@ export default {
                 type="secondary"
                 class="btn-lg"
               >
-                <router-link to="adaptasi/data-kebuntingan" class="text-dark">
+                <router-link
+                  to="kebuntingan/data-kebuntingan"
+                  class="text-dark"
+                >
                   {{ pageTitle }}
                 </router-link>
               </base-button>
