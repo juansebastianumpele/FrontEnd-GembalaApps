@@ -25,6 +25,9 @@ const basicOptions = {
   legend: {
     enabled: false,
   },
+  accessibility: {
+    enabled: false,
+  },
 };
 
 export default basicOptions;
