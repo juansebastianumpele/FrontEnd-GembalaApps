@@ -63,8 +63,8 @@ export default {
 };
 </script>
 
-<template style="background: transparent">
-  <main-layout :title="pageTitle" is-full style="background: transparent">
+<template>
+  <main-layout :title="pageTitle" is-full>
     <template #body>
       <div class="row">
         <!-- kolom pertama -->
@@ -95,7 +95,7 @@ export default {
               </div>
             </div>
             <hc-pie
-              :title="g$totalTernak.total_ternak"
+              :title="g$totalTernak.total_ternak ? g$totalTernak.total_ternak.toString() : '0'"
               :height="245"
               :width="320"
               :data="g$totalByStatus"
