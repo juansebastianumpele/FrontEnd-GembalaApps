@@ -105,7 +105,7 @@ export default {
                 type="secondary"
                 class="btn-lg"
               >
-                <router-link to="adaptasi/langkah-kerja" class="text-dark">
+                <router-link to="perkawinan/langkah-kerja" class="text-dark">
                   Langkah Kerja
                 </router-link>
               </base-button>
