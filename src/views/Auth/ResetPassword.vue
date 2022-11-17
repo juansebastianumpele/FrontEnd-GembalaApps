@@ -63,7 +63,7 @@ export default {
               <strong>Lupa Password</strong><br /><br />
               <img
                 width="100"
-                src="../../../public/images/logo.png"
+                src="../../../images/logo.png"
                 alt="email"
               />
               <br />

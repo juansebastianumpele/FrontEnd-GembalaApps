@@ -243,6 +243,7 @@ const dashboardRoutes = [
   },
   {
     path: "/lembar-kerja",
+    name: "Lembar Kerja",
     component: DashboardLayout,
     children: [
       {

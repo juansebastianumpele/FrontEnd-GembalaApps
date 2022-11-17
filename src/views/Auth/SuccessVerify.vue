@@ -9,7 +9,7 @@
             <img
               width="200"
               style="margin: 20px 0 20px 0"
-              src="../../../public/images/done.svg"
+              src="../../../images/done.svg"
               alt="email"
             />
             <p class="text-lead text-white">
