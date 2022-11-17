@@ -46,28 +46,32 @@ export default {
       <div>
         <card-comp>
           <ol>
+            <li class="mb-1">Masuk ke menu proses persiapan.</li>
+            <li class="mb-1">Pilih domba indukan yang siap dikawinkan.</li>
+            <li class="mb-1">Isikan iD pejantan.</li>
             <li class="mb-1">
-              Periksa domba secara visual untuk mendapatkan identitas ternak
-              yang terdiri dari bangsa dan jenis kelamin.
+              Isi kan kode kandang apabila domba tersebut akan dipindahkan ke
+              kandang baru.
+            </li>
+            <li class="mb-1">Masuk ke menu proses kawin.</li>
+            <li class="mb-1">
+              Pilih domba yang sudah melakukan proses kawin selama 30 hari (USG
+              1) dan 60 hari (USG 2).
             </li>
             <li class="mb-1">
-              Periksa kondisi ternak, apakah terdapat cacat atau sakit yang
-              berpotensi mempersulit proses budidaya. Pengecekan terdiri dari
-              cek poel, cek mulut, cek telinga, kuku kaki, cek kondisi fisik
-              lainnya, dan BCS domba tersebut.
+              Domba yang sudah di cek USG harus di cat pilox dan ceklis USG
+              untuk memudahkan pengecekan USG.
             </li>
             <li class="mb-1">
-              Apabila domba dalam kondisi baik dan memenuhi kriteria, domba akan
-              diterima.
+              Apabila terdapat domba yang terindikasi bunting maka ubah status
+              domba tersebut menjadi bunting.
             </li>
             <li class="mb-1">
-              Pasangkan kalung RFID dan daftarkan menggunakan RFID mobile.
-              Selanjutnya akan terbentuk ID ternak yang baru.
+              Apabila setelah masa koloni berakhir atau setelah pengecekan USG 2
+              domba tidak terindikasi bunting maka ubah status domba tersebut
+              menjadi tidak bunting.
             </li>
-            <li class="mb-1">
-              Buka SOP pemasukan pada mobile apps untuk melengkapi data ternak
-              yang baru saja dimasukkan sesuai indikator yang ditetapkan.
-            </li>
+            <li class="mb-1">Submit Data.</li>
           </ol>
         </card-comp>
       </div>
