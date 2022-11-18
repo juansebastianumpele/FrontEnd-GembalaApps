@@ -105,7 +105,7 @@ export default {
                 type="secondary"
                 class="btn-lg"
               >
-                <router-link to="adaptasi/langkah-kerja" class="text-dark">
+                <router-link to="perkawinan/langkah-kerja" class="text-dark">
                   Langkah Kerja
                 </router-link>
               </base-button>
@@ -145,11 +145,7 @@ export default {
               :dragging-distance="10"
               :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }"
             >
-              <vueper-slide
-                v-for="(key, value) in g$kandang"
-                :key="key"
-                :title="`Kandang ${value}`"
-              >
+              <vueper-slide v-for="(key, value) in g$kandang" :key="key">
                 <template #content>
                   <div class="col text-center bg-success rounded mt-5">
                     <h3 class="text-white pt-4">Kandang {{ value }}</h3>

@@ -9,6 +9,7 @@ const u$perkawinan = defineStore({
     indukan: [],
     pejantan: [],
     kandang: [],
+    populasi: [],
   }),
   actions: {
     //List Perkawinan
@@ -59,6 +60,7 @@ const u$perkawinan = defineStore({
         const { data } = await s$perkawinan.listPerkawinan();
         this.perkawinan = data.ternak.list;
         this.kandang = data.kandang.list;
+        this.populasi = data.populasi;
       } catch ({ error }) {
         this.perkawinan = [];
         throw error;
@@ -71,6 +73,20 @@ const u$perkawinan = defineStore({
     g$listIndukan: (state) => state.indukan,
     g$listPejantan: (state) => state.pejantan,
     g$kandang: (state) => state.kandang,
+    g$byPopulasi: (state) => ({
+      categories: ["Total", "Jantan", "Betina"],
+      series: [
+        {
+          name: "Populasi",
+          color: "#006329",
+          data: [
+            state.populasi.total,
+            state.populasi.jantan,
+            state.populasi.betina,
+          ],
+        },
+      ],
+    }),
   },
 });
 
