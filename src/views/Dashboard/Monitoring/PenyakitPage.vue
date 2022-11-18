@@ -185,18 +185,18 @@ export default {
       <div>
         <nav class="nav nav-pills flex-column flex-sm-row mb-4">
           <li>
-            <base-button type="success1" class="btn-lg">
-              <router-link to="/monitoring/data-penyakit" class="text-white">
+            <router-link to="/monitoring/data-penyakit" >
+            <base-button type="success1" class="btn-lg text-white">
                 Data Penyakit
-              </router-link>
-            </base-button>
+              </base-button>
+            </router-link>
           </li>
           <li>
-            <base-button type="secondary" class="btn-lg ml-3">
-              <router-link to="data-penyakit/data-kesehatan" class="text-dark">
+            <router-link to="data-penyakit/data-kesehatan" >
+            <base-button type="secondary" class="btn-lg ml-3 text-dark">
                 Data Ternak Sakit
-              </router-link>
-            </base-button>
+              </base-button>
+            </router-link>
           </li>
         </nav>
       </div>

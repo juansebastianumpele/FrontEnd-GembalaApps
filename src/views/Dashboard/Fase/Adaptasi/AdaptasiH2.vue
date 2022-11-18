@@ -149,25 +149,25 @@ export default {
       <div class="col-sm">
         <div class="row">
           <span class="text-center m-2">
-            <base-button type="secondary" class="btn-lg">
-              <router-link to="../adaptasi" class="text-dark">
+            <router-link to="../adaptasi" >
+            <base-button type="secondary" class="btn-lg text-dark">
                 Summary
-              </router-link>
-            </base-button>
+              </base-button>
+            </router-link>
           </span>
           <span class="text-center m-2">
-            <base-button type="success1" class="btn-lg">
-              <router-link to="data-adaptasi" class="text-white">
+            <router-link to="data-adaptasi" >
+            <base-button type="success1" class="btn-lg text-white">
                 {{ pageTitle }}
-              </router-link>
-            </base-button>
+              </base-button>
+            </router-link>
           </span>
           <span class="text-center m-2">
-            <base-button type="secondary" class="btn-lg">
-              <router-link to="langkah-kerja" class="text-dark">
+            <router-link to="langkah-kerja" >
+            <base-button type="secondary" class="btn-lg text-dark">
                 Langkah Kerja
-              </router-link>
-            </base-button>
+              </base-button>
+            </router-link>
           </span>
         </div>
       </div>
@@ -177,39 +177,39 @@ export default {
         </div>
         <div class="col-auto">
           <span class="text-center m-2">
-            <base-button type="secondary" class="btn-sm">
-              <router-link to="data-adaptasi" class="text-dark">
+            <router-link to="data-adaptasi" >
+            <base-button type="secondary" class="btn-sm text-dark">
                 Hari ke-1
-              </router-link>
-            </base-button>
+              </base-button>
+            </router-link>
           </span>
           <span class="text-center m-2">
-            <base-button type="success1" class="btn-sm">
-              <router-link to="data-adaptasi-2" class="text-white">
+            <router-link to="data-adaptasi-2" class="">
+            <base-button type="success1" class="btn-sm text-white">
                 Hari ke-2
-              </router-link>
-            </base-button>
+              </base-button>
+            </router-link>
           </span>
           <span class="text-center m-2">
-            <base-button type="secondary" class="btn-sm">
-              <router-link to="data-adaptasi-3" class="text-dark">
+            <router-link to="data-adaptasi-3" >
+            <base-button type="secondary" class="btn-sm text-dark">
                 Hari ke-3
-              </router-link>
-            </base-button>
+              </base-button>
+            </router-link>
           </span>
           <span class="text-center m-2">
-            <base-button type="secondary" class="btn-sm">
-              <router-link to="data-adaptasi-4" class="text-dark">
+            <router-link to="data-adaptasi-4" >
+            <base-button type="secondary" class="btn-sm text-dark">
                 Hari ke-4
-              </router-link>
-            </base-button>
+              </base-button>
+            </router-link>
           </span>
           <span class="text-center m-2">
-            <base-button type="secondary" class="btn-sm">
-              <router-link to="data-adaptasi-5" class="text-dark">
+            <router-link to="data-adaptasi-5" >
+            <base-button type="secondary" class="btn-sm text-dark">
                 Hari ke-5
-              </router-link>
-            </base-button>
+              </base-button>
+            </router-link>
           </span>
         </div>
         <div class="col text-right">

@@ -151,18 +151,18 @@ export default {
     <template #header>
       <nav class="nav nav-pills flex-column flex-sm-row mb-4">
         <li>
-          <base-button type="secondary" class="btn-lg">
-            <router-link to="../data-penyakit" class="text-dark">
+          <router-link to="../data-penyakit" >
+          <base-button type="secondary" class="btn-lg text-dark">
               Data Penyakit
-            </router-link>
-          </base-button>
+            </base-button>
+          </router-link>
         </li>
         <li>
-          <base-button type="success1" class="btn-lg ml-3">
-            <router-link to="data-kesehatan" class="text-white">
+          <router-link to="data-kesehatan" >
+          <base-button type="success1" class="btn-lg ml-3 text-white">
               Data Ternak Sakit
-            </router-link>
-          </base-button>
+            </base-button>
+          </router-link>
         </li>
       </nav>
       <div class="row align-items-center">

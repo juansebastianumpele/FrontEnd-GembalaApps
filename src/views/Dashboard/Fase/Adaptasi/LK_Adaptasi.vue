@@ -15,25 +15,25 @@ export default {
       <div class="col-sm">
         <div class="row">
           <span class="text-center m-2">
-            <base-button type="secondary" class="btn-lg">
-              <router-link to="../adaptasi" class="text-dark">
+            <router-link to="../adaptasi" >
+            <base-button type="secondary" class="btn-lg text-dark">
                 Summary
-              </router-link>
-            </base-button>
+              </base-button>
+            </router-link>
           </span>
           <span class="text-center m-2">
-            <base-button type="secondary" class="btn-lg">
-              <router-link to="data-adaptasi" class="text-dark">
+            <router-link to="data-adaptasi" >
+            <base-button type="secondary" class="btn-lg text-dark">
                 Fase Adaptasi
-              </router-link>
-            </base-button>
+              </base-button>
+            </router-link>
           </span>
           <span class="text-center m-2">
-            <base-button type="success1" class="btn-lg">
-              <router-link to="langkah-kerja" class="text-white">
+            <router-link to="langkah-kerja" >
+            <base-button type="success1" class="btn-lg text-white">
                 {{ pageTitle }}
-              </router-link>
-            </base-button>
+              </base-button>
+            </router-link>
           </span>
         </div>
       </div>

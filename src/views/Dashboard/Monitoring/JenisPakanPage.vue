@@ -248,18 +248,18 @@ export default {
     <template #header>
       <nav class="nav nav-pills flex-column flex-sm-row mb-4">
         <li>
-          <base-button type="success1" class="btn-lg">
-            <router-link to="data-pakan" class="text-white">
+          <router-link to="data-pakan" >
+          <base-button type="success1" class="btn-lg text-white">
               Daftar Pakan
-            </router-link>
-          </base-button>
+            </base-button>
+          </router-link>
         </li>
         <li>
-          <base-button type="secondary" class="btn-lg ml-3">
-            <router-link to="data-pakan/bahan-pakan" class="text-dark">
+          <router-link to="data-pakan/bahan-pakan" >
+          <base-button type="secondary" class="btn-lg ml-3 text-dark">
               Daftar Bahan Pakan
-            </router-link>
-          </base-button>
+            </base-button>
+          </router-link>
         </li>
       </nav>
       <div class="row align-items-center">

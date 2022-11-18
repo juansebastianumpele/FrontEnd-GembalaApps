@@ -15,18 +15,18 @@ export default {
       <div class="col-sm">
         <div class="row">
           <span class="text-center m-2">
-            <base-button type="secondary" class="btn-lg">
-              <router-link to="../pemeliharaan" class="text-dark">
+            <router-link to="../pemeliharaan" >
+            <base-button type="secondary" class="btn-lg text-dark">
                 Fase Pemeliharaan
-              </router-link>
-            </base-button>
+              </base-button>
+            </router-link>
           </span>
           <span class="text-center m-2">
-            <base-button type="success1" class="btn-lg">
-              <router-link to="langkah-kerja" class="text-white">
+            <router-link to="langkah-kerja" >
+            <base-button type="success1" class="btn-lg text-white">
                 Langkah Kerja
-              </router-link>
-            </base-button>
+              </base-button>
+            </router-link>
           </span>
         </div>
       </div>
