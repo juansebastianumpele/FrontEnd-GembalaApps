@@ -46,7 +46,10 @@ export default {
       tanggal_masuk: null,
       id_dam: null,
       id_sire: null,
-      id_fp: null,
+      fase: {
+        id: 1,
+        name: "Pemasukan",
+      },
       id_kandang: null,
       tanggal_keluar: null,
       status_keluar: null,
@@ -184,7 +187,10 @@ export default {
         tanggal_masuk: null,
         id_dam: null,
         id_sire: null,
-        fase: null,
+        fase: {
+          id: 1,
+          name: "Pemasukan",
+        },
         kandang: null,
         tanggal_keluar: null,
         status_keluar: null,
