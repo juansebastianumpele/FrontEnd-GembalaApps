@@ -58,18 +58,6 @@ export default {
           th: "ID Cempe",
         },
       ],
-      action: [
-        {
-          text: "Ubah",
-          color: "warning",
-          event: "ubah-kawin",
-        },
-        {
-          text: "Hapus",
-          color: "danger",
-          event: "hapus-kawin",
-        },
-      ],
     },
   }),
   computed: {
@@ -210,11 +198,11 @@ export default {
         <div class="col-auto">
           <h3>Daftar {{ pageTitle }}</h3>
         </div>
-        <div class="col text-right">
+        <!-- <div class="col text-right">
           <base-button type="success" @click="modal.addKawin = true">
             Tambah {{ pageTitle }}
           </base-button>
-        </div>
+        </div> -->
       </div>
     </template>
 

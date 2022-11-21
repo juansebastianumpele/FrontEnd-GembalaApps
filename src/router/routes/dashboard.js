@@ -212,6 +212,13 @@ const dashboardRoutes = [
         meta: { requiresAuth: true },
       },
       {
+        path: "perkawinan/sedang-kawin",
+        name: "Sedang Kawin",
+        component: () =>
+          import("@/views/Dashboard/Fase/Perkawinan/SedangKawin.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
         path: "perkawinan/langkah-kerja",
         name: "Langkah Kerja Perkawinan",
         component: () =>

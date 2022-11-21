@@ -6,10 +6,12 @@ const u$perkawinan = defineStore({
   id: "perkawinan",
   state: () => ({
     perkawinan: [],
+    sedangKawin: [],
     indukan: [],
     pejantan: [],
     kandang: [],
     populasi: [],
+    statusPerkawinan: ['Bunting', 'Tidak Bunting'],
   }),
   actions: {
     //List Perkawinan
@@ -66,10 +68,32 @@ const u$perkawinan = defineStore({
         throw error;
       }
     },
+
+    // List sedang kawin
+    async a$sedangKawin() {
+      try {
+        const { data } = await s$perkawinan.sedangKawin();
+        this.sedangKawin = data.data;
+      } catch ({ error }) {
+        this.sedangKawin = [];
+        throw error;
+      }
+    },
+
+    // Update perkawinan
+    async a$updatePerkawinan(req) {
+      try {
+        await s$perkawinan.updatePerkawinan(req);
+      } catch ({ error }) {
+        throw error;
+      }
+    },
   },
 
   getters: {
     g$listPerkawinan: (state) => state.perkawinan,
+    g$sedangKawin: (state) => state.sedangKawin,
+    g$statusPerkawinan: (state) => state.statusPerkawinan,
     g$listIndukan: (state) => state.indukan,
     g$listPejantan: (state) => state.pejantan,
     g$kandang: (state) => state.kandang,
