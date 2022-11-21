@@ -35,8 +35,8 @@ export default {
           th: "Keterangan",
         },
         {
+          name: "jumlah",
           th: "Jumlah",
-          render: ({ jumlah }) => `${jumlah} Kg`,
         },
       ],
       action: [],
@@ -88,7 +88,7 @@ export default {
       );
       this.modal.addDetailPakan = false;
     },
-  },
+  }
 };
 </script>
 
@@ -111,13 +111,7 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$detailBahanPakan.length" :text="`${pageTitle}`" />
-      <data-table
-        v-else
-        :index="true"
-        :data="g$detailBahanPakan"
-        :columns="dt.column"
-        :actions="dt.action"
-      />
+      <data-table v-else :index="true" :data="g$detailBahanPakan" :columns="dt.column" :actions="dt.action" />
     </template>
 
     <template #modal>
@@ -131,56 +125,24 @@ export default {
             <div class="row">
               <!-- Tanggal -->
               <div class="col-12">
-                <base-input
-                  name="tanggal"
-                  class=""
-                  placeholder="Pilih tanggal"
-                  label="Tanggal"
-                  required
-                >
-                  <flat-pickr
-                    v-model.lazy="input.tanggal"
-                    :config="{
-                      mode: 'single',
-                      allowInput: true,
-                      maxDate: new Date(),
-                    }"
-                    class="form-control datepicker"
-                    placeholder="Pilih tanggal"
-                  />
+                <base-input name="tanggal" class="" placeholder="Pilih tanggal" label="Tanggal" required>
+                  <flat-pickr v-model.lazy="input.tanggal" :config="{ mode: 'single', allowInput: true, maxDate: new Date() }"
+                    class="form-control datepicker" placeholder="Pilih tanggal" />
                 </base-input>
               </div>
 
               <!-- Keterangan -->
               <div class="col-12">
-                <base-input
-                  name="keterangan"
-                  placeholder="Pakan masuk atau keluar?"
-                  label="Keterangan"
-                >
-                  <multi-select
-                    v-model="input.keterangan"
-                    :options="g$ddKeteranganDetailPakan"
-                    placeholder="Masuk atau keluar"
-                    :show-labels="false"
-                  />
+                <base-input name="keterangan" placeholder="Pakan masuk atau keluar?" label="Keterangan">
+                  <multi-select v-model="input.keterangan" :options="g$ddKeteranganDetailPakan"
+                    placeholder="Masuk atau keluar" :show-labels="false" />
                 </base-input>
               </div>
 
               <!-- Jumlah -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.jumlah"
-                  type="number"
-                  name="jumlah"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Jumlah dalam satuan"
-                    label="Jumlah"
-                    type="number"
-                  >
+                <field-form v-slot="{ field }" v-model="input.jumlah" type="number" name="jumlah">
+                  <base-input v-bind="field" placeholder="Jumlah dalam satuan" label="Jumlah" type="number">
                   </base-input>
                 </field-form>
               </div>
