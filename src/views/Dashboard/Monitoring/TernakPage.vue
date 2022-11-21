@@ -1090,7 +1090,7 @@ export default {
                     :
                     <span style="font-weight: 300">
                       {{
-                        infoTernak.fase
+                        infoTernak.status_ternak
                           ? infoTernak.status_ternak.status_ternak
                           : "---"
                       }}</span
