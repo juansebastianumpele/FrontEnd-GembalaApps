@@ -54,7 +54,7 @@ const u$kesehatan = defineStore({
     async a$totalSakit() {
       try {
         const { data } = await s$kesehatan.listTotal();
-        this.total = data;
+        this.total = data.list;
       } catch ({ error }) {
         this.total = [];
         throw error;
