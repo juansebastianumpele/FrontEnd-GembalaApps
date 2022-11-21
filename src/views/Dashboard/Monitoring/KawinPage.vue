@@ -55,6 +55,11 @@ export default {
           render: ({ fase }) => fase ? fase.fase : null,
         },
         {
+          name: "status",
+          th: "Status",
+          render: ({ status_ternak }) => status_ternak ? status_ternak.status_ternak : null,
+        },
+        {
           name: "totalPerkawinan",
           th: "Kawin",
           render: ({ totalPerkawinan }) => `${totalPerkawinan}X`,
