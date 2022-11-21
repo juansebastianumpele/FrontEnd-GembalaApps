@@ -65,7 +65,6 @@ export default {
     infoPemasukan: {},
     input: {
       ternakBaru: null,
-      rf_id: "",
       bangsa: null,
       jenis_kelamin: "Betina",
       cek_poel: 0,
@@ -132,7 +131,6 @@ export default {
         } = this.input;
         const data = {
           id_ternak: ternakBaru.id_ternak,
-          rf_id: ternakBaru.rf_id,
           id_bangsa: bangsa.id_bangsa,
           jenis_kelamin,
           cek_poel,
@@ -158,7 +156,6 @@ export default {
     clearInput() {
       this.input = {
         ternakBaru: null,
-        rf_id: "",
         bangsa: null,
         jenis_kelamin: "Betina",
         cek_poel: 0,
@@ -182,22 +179,22 @@ export default {
       <div class="col-sm">
         <div class="row">
           <span class="text-center m-2">
-            <router-link to="../pemasukan" >
-            <base-button type="secondary" class="btn-lg text-dark">
+            <router-link to="../pemasukan">
+              <base-button type="secondary" class="btn-lg text-dark">
                 Summary
               </base-button>
             </router-link>
           </span>
           <span class="text-center m-2">
-            <router-link to="data-pemasukan" >
-            <base-button type="success1" class="btn-lg text-white">
+            <router-link to="data-pemasukan">
+              <base-button type="success1" class="btn-lg text-white">
                 {{ pageTitle }}
               </base-button>
             </router-link>
           </span>
           <span class="text-center m-2">
-            <router-link to="langkah-kerja" >
-            <base-button type="secondary" class="btn-lg text-dark">
+            <router-link to="langkah-kerja">
+              <base-button type="secondary" class="btn-lg text-dark">
                 Langkah Kerja
               </base-button>
             </router-link>
