@@ -40,12 +40,12 @@ export default {
           th: "ID Indukan",
         },
         {
-          name: "nama_varietas",
+          name: "bangsa",
           th: "Bangsa",
-          render: ({ varietas }) => varietas ? varietas.varietas : null,
+          render: ({ bangsa }) => bangsa ? bangsa.bangsa : null,
         },
         {
-          name: "",
+          name: "kode_kandang",
           th: "Kode Kandang",
           render: ({ kandang }) => kandang ? kandang.kode_kandang : null,
         },
@@ -53,6 +53,30 @@ export default {
           name: "fase",
           th: "Fase Pemeliharaan",
           render: ({ fase }) => fase ? fase.fase : null,
+        },
+        {
+          name: "totalPerkawinan",
+          th: "Kawin",
+          render: ({ totalPerkawinan }) => `${totalPerkawinan}X`,
+        },
+        {
+          name: "totalKebuntingan",
+          th: "Bunting",
+          render: ({ totalKebuntingan }) => `${totalKebuntingan}X`,
+        },
+        {
+          name: "totalTidakBunting",
+          th: "Tidak Bunting",
+          render: ({ totalTidakBunting }) => `${totalTidakBunting}X`,
+        },
+        {
+          name: "totalAbortus",
+          th: "Abortus",
+          render: ({ totalAbortus }) => `${totalAbortus}X`,
+        },
+        {
+          name: "id_sire",
+          th: "ID Sire (Bapak)",
         },
       ],
       action: [
@@ -91,7 +115,6 @@ export default {
       };
     },
     async triggerDetail(row) {
-      try {
         const { id_ternak } = row;
         router.push({
           name: "Detail Kawin",
@@ -99,10 +122,6 @@ export default {
             id: id_ternak,
           },
         });
-      } catch (error) {
-        this.clearInput();
-        this.notify(error, false);
-      }
     },
   },
 };

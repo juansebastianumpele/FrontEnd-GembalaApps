@@ -3,6 +3,7 @@ import { mapActions, mapState } from "pinia";
 import d$kawin from "@/stores/monitoring/kawin";
 import d$dropdown from "@/stores/dropdown";
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
+import { ubahTanggal } from "@/utils/locale/ubahTanggal";
 
 export default {
   metaInfo: () => ({
@@ -36,22 +37,21 @@ export default {
     dt: {
       column: [
         {
-          name: "tanggal_kawin",
+          name: "tanggal_perkawinan",
           th: "Tanggal Kawin",
-          render: ({ tanggal_kawin }) => new Intl.DateTimeFormat('id', { dateStyle: 'full'}).format(new Date(tanggal_kawin)),
+          render: ({ tanggal_perkawinan }) => tanggal_perkawinan ? ubahTanggal(tanggal_perkawinan) : null,
         },
         {
-          name: "id_ternak",
+          name: "id_indukan",
           th: "ID Indukan",
         },
         {
-          name: "id_pemacek",
+          name: "id_pejantan",
           th: "ID Pemacek",
         },
         {
-          name: "fase",
-          th: "Fase Pemeliharaan",
-          render: ({ fase  }) => fase ? fase.fase : ''
+          name: "status",
+          th: "Status",
         },
         {
           name: "id_cempe",
@@ -90,13 +90,13 @@ export default {
     await this.a$kawinList(this.$route.params.id).catch((error) =>
       this.notify(error, false)
     );
-    await this.a$betinaList(`id_ternak=${this.$route.params.id}`).catch((error) =>
-      this.notify(error, false)
-    );
-    await this.a$jantanList(`kecuali=${this.g$betina[0].id_pejantan}`).catch((error) =>
-      this.notify(error, false)
-    );
-    await this.a$ddFasePemeliharaan().catch((error) => this.notify(error, false));
+    // await this.a$betinaList(`id_ternak=${this.$route.params.id}`).catch((error) =>
+    //   this.notify(error, false)
+    // );
+    // await this.a$jantanList(`kecuali=${this.g$betina[0].id_pejantan}`).catch((error) =>
+    //   this.notify(error, false)
+    // );
+    // await this.a$ddFasePemeliharaan().catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$kawin, [
@@ -220,15 +220,8 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$kawinList.length" :text="`${pageTitle}`" />
-      <data-table
-        v-else
-        :index="true"
-        :data="g$kawinList"
-        :columns="dt.column"
-        :actions="dt.action"
-        @ubah-kawin="triggerEditModal"
-        @hapus-kawin="triggerDelete"
-      />
+      <data-table v-else :index="true" :data="g$kawinList" :columns="dt.column" :actions="dt.action"
+        @ubah-kawin="triggerEditModal" @hapus-kawin="triggerDelete" />
     </template>
 
     <template #modal>
@@ -240,19 +233,9 @@ export default {
           <form-comp v-if="modal.addKawin" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <base-input
-                  name="tanggal_kawin"
-                  class=""
-                  placeholder="Pilih tanggal"
-                  label="Tanggal Kawin"
-                  required
-                >
-                  <flat-pickr
-                    v-model.lazy="input.tanggal_kawin"
-                    :config="{ mode: 'single', allowInput: true }"
-                    class="form-control datepicker"
-                    placeholder="Pilih Tanggal Kawin"
-                  />
+                <base-input name="tanggal_kawin" class="" placeholder="Pilih tanggal" label="Tanggal Kawin" required>
+                  <flat-pickr v-model.lazy="input.tanggal_kawin" :config="{ mode: 'single', allowInput: true }"
+                    class="form-control datepicker" placeholder="Pilih Tanggal Kawin" />
                 </base-input>
               </div>
               <!-- <div class="col-12">
@@ -263,39 +246,17 @@ export default {
 
               <!-- Pilih pejantan -->
               <div class="col-12">
-                <base-input
-                  name="pemacek"
-                  placeholder="Pemacek"
-                  label="Pemacek"
-                  required
-                >
-                  <multi-select
-                    v-model="input.id_pemacek"
-                    :options="g$jantan"
-                    label="id_ternak"
-                    track-by="id_ternak"
-                    placeholder="Pilih Pemacek"
-                    :show-labels="false"
-                  />
+                <base-input name="pemacek" placeholder="Pemacek" label="Pemacek" required>
+                  <multi-select v-model="input.id_pemacek" :options="g$jantan" label="id_ternak" track-by="id_ternak"
+                    placeholder="Pilih Pemacek" :show-labels="false" />
                 </base-input>
               </div>
 
               <!-- Fase pemeliharaan -->
               <div class="col-12">
-                <base-input
-                  name="fase"
-                  placeholder="Fase Pemeliharaan"
-                  label="Fase Pemeliharaan"
-                  required
-                >
-                  <multi-select
-                    v-model="input.fase"
-                    :options="g$ddFasePemeliharaan"
-                    label="name"
-                    track-by="id"
-                    placeholder="Pilih Fase Pemeliharaan"
-                    :show-labels="false"
-                  />
+                <base-input name="fase" placeholder="Fase Pemeliharaan" label="Fase Pemeliharaan" required>
+                  <multi-select v-model="input.fase" :options="g$ddFasePemeliharaan" label="name" track-by="id"
+                    placeholder="Pilih Fase Pemeliharaan" :show-labels="false" />
                 </base-input>
               </div>
 
@@ -329,19 +290,9 @@ export default {
           <form-comp v-if="modal.ubahKawin" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <base-input
-                  name="tanggal_kawin"
-                  class=""
-                  placeholder="Pilih tanggal"
-                  label="Tanggal Kawin"
-                  required
-                >
-                  <flat-pickr
-                    v-model.lazy="input.tanggal_kawin"
-                    :config="{ mode: 'single', allowInput: true }"
-                    class="form-control datepicker"
-                    placeholder="Pilih Tanggal Kawin"
-                  />
+                <base-input name="tanggal_kawin" class="" placeholder="Pilih tanggal" label="Tanggal Kawin" required>
+                  <flat-pickr v-model.lazy="input.tanggal_kawin" :config="{ mode: 'single', allowInput: true }"
+                    class="form-control datepicker" placeholder="Pilih Tanggal Kawin" />
                 </base-input>
               </div>
               <!-- <div class="col-12">
@@ -350,18 +301,9 @@ export default {
                 </field-form>
               </div> -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.id_pemacek"
-                  type="text"
-                  name="id_pemacek"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Masukan ID Indukan Pejantan"
-                    label="ID Pemacek"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.id_pemacek" type="text" name="id_pemacek">
+                  <base-input v-bind="field" placeholder="Masukan ID Indukan Pejantan" label="ID Pemacek" required>
+                  </base-input>
                 </field-form>
               </div>
               <!-- <div class="col-12">
