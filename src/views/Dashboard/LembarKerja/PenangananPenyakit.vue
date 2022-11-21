@@ -108,20 +108,16 @@ export default {
     },
     async triggerEdit(row) {
       const {
-        id_riwayat_kesehatan,
+        id_kesehatan,
         tanggal_sakit,
-        ternak,
         kandang,
         gejala,
-        penyakit,
         penanganan,
         tanggal_sembuh,
       } = row;
       this.input = {
-        id_riwayat_kesehatan,
+        id_kesehatan,
         tanggal_sakit,
-        ternak,
-        penyakit,
         kandang,
         gejala,
         penanganan,
@@ -151,9 +147,7 @@ export default {
     async editLkPenangananPenyakit() {
       try {
         const {
-          id_riwayat_kesehatan,
-          ternak,
-          penyakit,
+          id_kesehatan,
           tanggal_sakit,
           kandang,
           tanggal_sembuh,
@@ -161,7 +155,7 @@ export default {
           penanganan,
         } = this.input;
         const data = {
-          id_riwayat_kesehatan,
+          id_kesehatan,
           tanggal_sakit,
           tanggal_sembuh,
           id_kandang: kandang.id_kandang,
@@ -205,20 +199,20 @@ export default {
     },
     triggerSembuh(row) {
       const {
-        id_riwayat_kesehatan,
+        id_kesehatan,
+        id_ternak,
+        penyakit,
         tanggal_sakit,
-        ternak,
         kandang,
         gejala,
-        penyakit,
         penanganan,
         tanggal_sembuh,
       } = row;
       this.input = {
-        id_riwayat_kesehatan,
-        tanggal_sakit,
-        ternak,
+        id_kesehatan,
+        id_ternak,
         penyakit,
+        tanggal_sakit,
         kandang,
         gejala,
         penanganan,
@@ -421,43 +415,6 @@ export default {
         <template #body>
           <form-comp v-if="modal.editLkPenangananPenyakit">
             <div class="row">
-              <!-- ID ternak -->
-              <div class="col-12">
-                <base-input
-                  name="id_ternak"
-                  placeholder="ID Ternak"
-                  label="ID Ternak"
-                >
-                  <multi-select
-                    v-model="input.ternak"
-                    :options="g$ternakList"
-                    label="id_ternak"
-                    track-by="id_ternak"
-                    placeholder="Pilih ternak"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
-
-              <!-- Penyakit -->
-              <div class="col-12">
-                <base-input
-                  name="penyakit"
-                  placeholder="Nama Penyakit"
-                  label="Nama Penyakit"
-                  required
-                >
-                  <multi-select
-                    v-model="input.penyakit"
-                    :options="g$penyakitList"
-                    label="nama_penyakit"
-                    track-by="id_penyakit"
-                    placeholder="Pilih Penyakit"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
-
               <!-- Tanggal sakit -->
               <div class="col-12">
                 <base-input
@@ -600,7 +557,7 @@ export default {
         <template #body>
           <p>
             Yakin ingin menyatakan ternak dengan ID ternak
-            <strong>{{ input.ternak ? input.ternak.id_ternak : "ID" }}</strong>
+            <strong>{{ input.id_ternak ? input.id_ternak : "ID" }}</strong>
             sembuh dari penyakit
             <strong>{{
               input.penyakit ? input.penyakit.nama_penyakit : "Penyakit"

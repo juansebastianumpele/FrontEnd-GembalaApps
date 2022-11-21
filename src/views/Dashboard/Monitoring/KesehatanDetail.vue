@@ -160,7 +160,6 @@ export default {
           gejala,
           penanganan,
         };
-        console.log(data);
         await this.a$kesehatanEdit(data);
         this.modal.editTernakSakit = false;
         this.notify(`Edit ${this.pageTitle} berhasil`);
@@ -173,6 +172,8 @@ export default {
     triggerSembuh(row) {
       const {
         id_kesehatan,
+        id_ternak,
+        penyakit,
         tanggal_sakit,
         kandang,
         gejala,
@@ -181,6 +182,8 @@ export default {
       } = row;
       this.input = {
         id_kesehatan,
+        id_ternak,
+        penyakit,
         tanggal_sakit,
         kandang,
         gejala,
