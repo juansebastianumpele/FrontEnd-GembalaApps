@@ -173,15 +173,10 @@ export default {
     },
     async sembuhLkPenangananPenyakit() {
       try {
-        const {
-          id_riwayat_kesehatan,
-          tanggal_sakit,
-          kandang,
-          gejala,
-          penanganan,
-        } = this.input;
+        const { id_kesehatan, tanggal_sakit, kandang, gejala, penanganan } =
+          this.input;
         const data = {
-          id_riwayat_kesehatan,
+          id_kesehatan,
           tanggal_sakit,
           tanggal_sembuh: new Date().toJSON(),
           id_kandang: kandang.id_kandang,
