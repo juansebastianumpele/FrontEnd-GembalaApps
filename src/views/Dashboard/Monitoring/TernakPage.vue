@@ -1189,9 +1189,7 @@ export default {
                     </div>
                     <div class="col">
                       :
-                      <span style="font-weight: 200">{{
-                        item.penyakit.nama_penyakit
-                      }}</span>
+                      <span style="font-weight: 200">{{ item.penyakit }}</span>
                     </div>
                   </div>
                   <div class="row">
