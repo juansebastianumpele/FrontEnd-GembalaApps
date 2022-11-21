@@ -44,7 +44,7 @@ export default {
     },
   }),
   computed: {
-    ...mapState(d$user, ["g$userDetail"]),
+    ...mapState(d$user, ["g$userDetail", "g$userPeternakan"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -57,8 +57,8 @@ export default {
         this.input.nama_pengguna = this.g$userDetail.nama_pengguna;
         this.input.email = this.g$userDetail.email;
         this.input.nomor_telepon = this.g$userDetail.nomor_telepon;
-        this.input.alamat = this.g$userDetail.alamat;
-        this.input.nama_peternakan = this.g$userDetail.nama_peternakan;
+        this.input.alamat = this.g$userPeternakan.alamat;
+        this.input.nama_peternakan = this.g$userPeternakan.nama_peternakan;
       }
     },
   },
@@ -91,7 +91,10 @@ export default {
       };
       await this.a$userRegisterBod(data)
         .then(() => {
-          this.notify("Masuk sebagai BoD dengan email dan password yang ada pada pesan email", true);
+          this.notify(
+            "Masuk sebagai BoD dengan email dan password yang ada pada pesan email",
+            true
+          );
           this.modal.daftarBod = false;
         })
         .catch((error) => this.notify(error, false));
@@ -120,11 +123,10 @@ export default {
     //edit profile
     async editProfile() {
       try {
-        const { nama_pengguna, email, nomor_telepon, alamat, nama_peternakan } =
+        const { nama_pengguna, nomor_telepon, alamat, nama_peternakan } =
           this.input;
         const data = {
           nama_pengguna,
-          email,
           nomor_telepon,
           alamat,
           nama_peternakan,
@@ -198,7 +200,7 @@ export default {
           <div class="col-6">
             <field-form
               v-slot="{ field }"
-              v-model="g$userDetail.nama_peternakan"
+              v-model="g$userPeternakan.nama_peternakan"
               type="text"
               name="nama_peternakan"
             >
@@ -244,7 +246,7 @@ export default {
           <div class="col-12">
             <field-form
               v-slot="{ field }"
-              v-model="g$userDetail.alamat"
+              v-model="g$userPeternakan.alamat"
               type="text"
               name="alamat"
             >
@@ -321,22 +323,6 @@ export default {
                     placeholder="Nama Pengguna"
                     label="Nama Penguna"
                     addon-left-icon="fas fa-user"
-                  ></base-input>
-                </field-form>
-              </div>
-              <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.email"
-                  type="email"
-                  name="email"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="email"
-                    placeholder="Email"
-                    label="Email"
-                    addon-left-icon="fas fa-envelope"
                   ></base-input>
                 </field-form>
               </div>

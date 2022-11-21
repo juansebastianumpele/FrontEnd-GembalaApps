@@ -5,6 +5,7 @@ const u$user = defineStore({
   id: "user",
   state: () => ({
     detail: [],
+    peternakan: [],
   }),
   actions: {
     // Detail
@@ -12,6 +13,7 @@ const u$user = defineStore({
       try {
         const { data } = await s$user.detail();
         this.detail = data;
+        this.peternakan = data.peternakan;
       } catch ({ error }) {
         throw error;
       }
@@ -41,10 +43,11 @@ const u$user = defineStore({
       } catch ({ error }) {
         throw error;
       }
-    }
+    },
   },
   getters: {
     g$userDetail: (state) => state.detail,
+    g$userPeternakan: (state) => state.peternakan,
   },
 });
 
