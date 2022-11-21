@@ -20,27 +20,28 @@ export default {
         {
           name: "tanggal_sakit",
           th: "Tanggal Sakit",
-          render: ({ tanggal_sakit }) => tanggal_sakit ? ubahTanggal(tanggal_sakit) : null,
+          render: ({ tanggal_sakit }) =>
+            tanggal_sakit ? ubahTanggal(tanggal_sakit) : null,
         },
         {
           name: "id_ternak",
           th: "ID Ternak",
-          render: ({ ternak }) => ternak.id_ternak,
         },
         {
           name: "gejala",
           th: "Gejala",
-          render: ({ gejala }) => gejala ? gejala : null,
+          render: ({ gejala }) => (gejala ? gejala : null),
         },
         {
           name: "penanganan",
           th: "Penaganan",
-          render: ({ penanganan }) => penanganan ? penanganan : null,
+          render: ({ penanganan }) => (penanganan ? penanganan : null),
         },
         {
           name: "tanggal_sembuh",
           th: "Tanggal Sembuh",
-          render: ({ tanggal_sembuh }) => tanggal_sembuh ? ubahTanggal(tanggal_sembuh) : null,
+          render: ({ tanggal_sembuh }) =>
+            tanggal_sembuh ? ubahTanggal(tanggal_sembuh) : null,
         },
       ],
       actions: [
@@ -106,12 +107,17 @@ export default {
       this.modal.addLkPenangananPenyakit = true;
     },
     async triggerEdit(row) {
-      const { id_riwayat_kesehatan, tanggal_sakit, ternak, kandang, gejala, penyakit, penanganan, tanggal_sembuh } = row;
-      this.input = {
-        id_riwayat_kesehatan,
+      const {
+        id_kesehatan,
         tanggal_sakit,
-        ternak,
-        penyakit,
+        kandang,
+        gejala,
+        penanganan,
+        tanggal_sembuh,
+      } = row;
+      this.input = {
+        id_kesehatan,
+        tanggal_sakit,
         kandang,
         gejala,
         penanganan,
@@ -140,9 +146,16 @@ export default {
     },
     async editLkPenangananPenyakit() {
       try {
-        const { id_riwayat_kesehatan, ternak, penyakit, tanggal_sakit, kandang, tanggal_sembuh, gejala, penanganan, } = this.input;
+        const {
+          id_kesehatan,
+          tanggal_sakit,
+          kandang,
+          tanggal_sembuh,
+          gejala,
+          penanganan,
+        } = this.input;
         const data = {
-          id_riwayat_kesehatan,
+          id_kesehatan,
           tanggal_sakit,
           tanggal_sembuh,
           id_kandang: kandang.id_kandang,
@@ -160,15 +173,10 @@ export default {
     },
     async sembuhLkPenangananPenyakit() {
       try {
-        const { 
-          id_riwayat_kesehatan,
-          tanggal_sakit,
-          kandang,
-          gejala,
-          penanganan
-         } = this.input;
+        const { id_kesehatan, tanggal_sakit, kandang, gejala, penanganan } =
+          this.input;
         const data = {
-          id_riwayat_kesehatan,
+          id_kesehatan,
           tanggal_sakit,
           tanggal_sembuh: new Date().toJSON(),
           id_kandang: kandang.id_kandang,
@@ -185,12 +193,21 @@ export default {
       }
     },
     triggerSembuh(row) {
-      const { id_riwayat_kesehatan, tanggal_sakit, ternak, kandang, gejala, penyakit, penanganan, tanggal_sembuh } = row;
-      this.input = {
-        id_riwayat_kesehatan,
-        tanggal_sakit,
-        ternak,
+      const {
+        id_kesehatan,
+        id_ternak,
         penyakit,
+        tanggal_sakit,
+        kandang,
+        gejala,
+        penanganan,
+        tanggal_sembuh,
+      } = row;
+      this.input = {
+        id_kesehatan,
+        id_ternak,
+        penyakit,
+        tanggal_sakit,
         kandang,
         gejala,
         penanganan,
@@ -242,15 +259,15 @@ export default {
       <div class="col-sm">
         <div class="row">
           <span class="text-center m-2">
-            <router-link to="penanganan-penyakit" >
-            <base-button type="success1" class="btn-lg text-white">
+            <router-link to="penanganan-penyakit">
+              <base-button type="success1" class="btn-lg text-white">
                 Penanganan Penyakit
               </base-button>
             </router-link>
           </span>
           <span class="text-center m-2">
-            <router-link to="penanganan-penyakit/langkah-kerja" >
-            <base-button type="secondary" class="btn-lg text-dark">
+            <router-link to="penanganan-penyakit/langkah-kerja">
+              <base-button type="secondary" class="btn-lg text-dark">
                 Langkah Kerja
               </base-button>
             </router-link>
@@ -271,13 +288,24 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$kesehatanList.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$kesehatanList" :columns="dt.column" :actions="dt.actions"
-        @ubah="triggerEdit" @sembuh="triggerSembuh" @hapus="triggerDelete" />
+      <data-table
+        v-else
+        :index="true"
+        :data="g$kesehatanList"
+        :columns="dt.column"
+        :actions="dt.actions"
+        @ubah="triggerEdit"
+        @sembuh="triggerSembuh"
+        @hapus="triggerDelete"
+      />
     </template>
 
     <template #modal>
       <!-- Tambah LK penanganan penyakit -->
-      <modal-comp v-model:show="modal.addLkPenangananPenyakit" modal-classes="modal-md">
+      <modal-comp
+        v-model:show="modal.addLkPenangananPenyakit"
+        modal-classes="modal-md"
+      >
         <template #header>
           <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
         </template>
@@ -286,41 +314,83 @@ export default {
             <div class="row">
               <!-- ID ternak -->
               <div class="col-12">
-                <base-input name="id_ternak" placeholder="ID Ternak" label="ID Ternak">
-                  <multi-select v-model="input.ternak" :options="g$ternakList" label="id_ternak" track-by="id_ternak"
-                    placeholder="Pilih ternak" :show-labels="false" />
+                <base-input
+                  name="id_ternak"
+                  placeholder="ID Ternak"
+                  label="ID Ternak"
+                >
+                  <multi-select
+                    v-model="input.ternak"
+                    :options="g$ternakList"
+                    label="id_ternak"
+                    track-by="id_ternak"
+                    placeholder="Pilih ternak"
+                    :show-labels="false"
+                  />
                 </base-input>
               </div>
 
               <!-- Penyakit -->
               <div class="col-12">
-                <base-input name="penyakit" placeholder="Nama Penyakit" label="Nama Penyakit" required>
-                  <multi-select v-model="input.penyakit" :options="g$penyakitList" label="nama_penyakit"
-                    track-by="id_penyakit" placeholder="Pilih Penyakit" :show-labels="false" />
+                <base-input
+                  name="penyakit"
+                  placeholder="Nama Penyakit"
+                  label="Nama Penyakit"
+                  required
+                >
+                  <multi-select
+                    v-model="input.penyakit"
+                    :options="g$penyakitList"
+                    label="nama_penyakit"
+                    track-by="id_penyakit"
+                    placeholder="Pilih Penyakit"
+                    :show-labels="false"
+                  />
                 </base-input>
               </div>
 
               <!-- Tanggal sakit -->
               <div class="col-12">
-                <base-input name="tanggal_sakit" placeholder="Pilih tanggal" label="Tanggal Sakit" required>
-                  <flat-pickr v-model.lazy="input.tanggal_sakit"
-                    :config="{ mode: 'single', allowInput: true, maxDate: new Date() }" class="form-control datepicker"
-                    placeholder="Pilih tanggal" />
+                <base-input
+                  name="tanggal_sakit"
+                  placeholder="Pilih tanggal"
+                  label="Tanggal Sakit"
+                  required
+                >
+                  <flat-pickr
+                    v-model.lazy="input.tanggal_sakit"
+                    :config="{
+                      mode: 'single',
+                      allowInput: true,
+                      maxDate: new Date(),
+                    }"
+                    class="form-control datepicker"
+                    placeholder="Pilih tanggal"
+                  />
                 </base-input>
               </div>
 
               <!-- Kandang -->
               <div class="col-12">
                 <base-input name="kandang" label="Kandang">
-                  <multi-select v-model="input.kandang" :options="g$kandangList" track-by="id_kandang"
-                    label="kode_kandang" placeholder="Pilih Kandang" :show-labels="false" />
+                  <multi-select
+                    v-model="input.kandang"
+                    :options="g$kandangList"
+                    track-by="id_kandang"
+                    label="kode_kandang"
+                    placeholder="Pilih Kandang"
+                    :show-labels="false"
+                  />
                 </base-input>
               </div>
             </div>
           </form-comp>
         </template>
         <template #footer>
-          <base-button type="secondary" @click="modal.addLkPenangananPenyakit = false">
+          <base-button
+            type="secondary"
+            @click="modal.addLkPenangananPenyakit = false"
+          >
             Tutup
           </base-button>
           <base-button type="primary" @click="createLkPenangananPenyakit">
@@ -330,73 +400,112 @@ export default {
       </modal-comp>
 
       <!-- Ubah LK penanganan penyakit -->
-      <modal-comp v-model:show="modal.editLkPenangananPenyakit" modal-classes="modal-md">
+      <modal-comp
+        v-model:show="modal.editLkPenangananPenyakit"
+        modal-classes="modal-md"
+      >
         <template #header>
           <h3 class="modal-title">Ubah {{ pageTitle }}</h3>
         </template>
         <template #body>
           <form-comp v-if="modal.editLkPenangananPenyakit">
             <div class="row">
-              <!-- ID ternak -->
-              <div class="col-12">
-                <base-input name="id_ternak" placeholder="ID Ternak" label="ID Ternak">
-                  <multi-select v-model="input.ternak" :options="g$ternakList" label="id_ternak" track-by="id_ternak"
-                    placeholder="Pilih ternak" :show-labels="false" />
-                </base-input>
-              </div>
-
-              <!-- Penyakit -->
-              <div class="col-12">
-                <base-input name="penyakit" placeholder="Nama Penyakit" label="Nama Penyakit" required>
-                  <multi-select v-model="input.penyakit" :options="g$penyakitList" label="nama_penyakit"
-                    track-by="id_penyakit" placeholder="Pilih Penyakit" :show-labels="false" />
-                </base-input>
-              </div>
-
               <!-- Tanggal sakit -->
               <div class="col-12">
-                <base-input name="tanggal_sakit" placeholder="Pilih tanggal" label="Tanggal Sakit" required>
-                  <flat-pickr v-model.lazy="input.tanggal_sakit"
-                    :config="{ mode: 'single', allowInput: true, maxDate: new Date() }" class="form-control datepicker"
-                    placeholder="Pilih tanggal" />
+                <base-input
+                  name="tanggal_sakit"
+                  placeholder="Pilih tanggal"
+                  label="Tanggal Sakit"
+                  required
+                >
+                  <flat-pickr
+                    v-model.lazy="input.tanggal_sakit"
+                    :config="{
+                      mode: 'single',
+                      allowInput: true,
+                      maxDate: new Date(),
+                    }"
+                    class="form-control datepicker"
+                    placeholder="Pilih tanggal"
+                  />
                 </base-input>
               </div>
 
               <!-- Kandang -->
               <div class="col-12">
                 <base-input name="kandang" label="Kandang">
-                  <multi-select v-model="input.kandang" :options="g$kandangList" track-by="id_kandang"
-                    label="kode_kandang" placeholder="Pilih Kandang" :show-labels="false" />
+                  <multi-select
+                    v-model="input.kandang"
+                    :options="g$kandangList"
+                    track-by="id_kandang"
+                    label="kode_kandang"
+                    placeholder="Pilih Kandang"
+                    :show-labels="false"
+                  />
                 </base-input>
               </div>
 
               <!-- Gejala -->
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.gejala" type="text" name="gejala">
-                  <base-input v-bind="field" placeholder="Gejala" label="Gejala"></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.gejala"
+                  type="text"
+                  name="gejala"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Gejala"
+                    label="Gejala"
+                  ></base-input>
                 </field-form>
               </div>
 
               <!-- Penanganan -->
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.penanganan" type="text" name="penanganan">
-                  <base-input v-bind="field" placeholder="Penanganan" label="Penanganan"></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.penanganan"
+                  type="text"
+                  name="penanganan"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Penanganan"
+                    label="Penanganan"
+                  ></base-input>
                 </field-form>
               </div>
 
               <!-- Tanggal sembuh -->
               <div class="col-12">
-                <base-input name="tanggal_sembuh" placeholder="Pilih tanggal" label="Tanggal Sembuh" required>
-                  <flat-pickr v-model.lazy="input.tanggal_sembuh"
-                    :config="{ mode: 'single', allowInput: true, minDate: input.tanggal_sakit, maxDate: new Date() }"
-                    class="form-control datepicker" placeholder="Pilih tanggal" />
+                <base-input
+                  name="tanggal_sembuh"
+                  placeholder="Pilih tanggal"
+                  label="Tanggal Sembuh"
+                  required
+                >
+                  <flat-pickr
+                    v-model.lazy="input.tanggal_sembuh"
+                    :config="{
+                      mode: 'single',
+                      allowInput: true,
+                      minDate: input.tanggal_sakit,
+                      maxDate: new Date(),
+                    }"
+                    class="form-control datepicker"
+                    placeholder="Pilih tanggal"
+                  />
                 </base-input>
               </div>
             </div>
           </form-comp>
         </template>
         <template #footer>
-          <base-button type="secondary" @click="modal.editLkPenangananPenyakit = false">
+          <base-button
+            type="secondary"
+            @click="modal.editLkPenangananPenyakit = false"
+          >
             Tutup
           </base-button>
           <base-button type="primary" @click="editLkPenangananPenyakit">
@@ -406,7 +515,10 @@ export default {
       </modal-comp>
 
       <!-- Hapus LK penanganan penyakit -->
-      <modal-comp v-model:show="modal.hapusLkPenangananPenyakit" modal-classes="modal-sm">
+      <modal-comp
+        v-model:show="modal.hapusLkPenangananPenyakit"
+        modal-classes="modal-sm"
+      >
         <template #header>
           <h3 class="modal-title">Hapus {{ pageTitle }}</h3>
         </template>
@@ -417,32 +529,47 @@ export default {
           </p>
         </template>
         <template #footer>
-          <base-button type="secondary" @click="modal.hapusLkPenangananPenyakit = false">
+          <base-button
+            type="secondary"
+            @click="modal.hapusLkPenangananPenyakit = false"
+          >
             Tutup
           </base-button>
-          <base-button type="danger" @click="hapusLkPenangananPenyakit">Hapus</base-button>
+          <base-button type="danger" @click="hapusLkPenangananPenyakit"
+            >Hapus</base-button
+          >
         </template>
       </modal-comp>
 
       <!-- Sembuh LK penanganan penyakit -->
-      <modal-comp v-model:show="modal.sembuhLkPenangananPenyakit" modal-classes="modal-sm">
+      <modal-comp
+        v-model:show="modal.sembuhLkPenangananPenyakit"
+        modal-classes="modal-sm"
+      >
         <template #header>
           <h3 class="modal-title">Sembuh {{ pageTitle }}</h3>
         </template>
         <template #body>
           <p>
-            Yakin ingin menyatakan ternak dengan ID ternak <strong>{{ input.ternak ? input.ternak.id_ternak :
-                'ID'
-            }}</strong> sembuh dari penyakit <strong>{{ input.penyakit ? input.penyakit.nama_penyakit :
-    'Penyakit'
-}}</strong>?
+            Yakin ingin menyatakan ternak dengan ID ternak
+            <strong>{{ input.id_ternak ? input.id_ternak : "ID" }}</strong>
+            sembuh dari penyakit
+            <strong>{{
+              input.penyakit ? input.penyakit.nama_penyakit : "Penyakit"
+            }}</strong
+            >?
           </p>
         </template>
         <template #footer>
-          <base-button type="secondary" @click="modal.sembuhLkPenangananPenyakit = false">
+          <base-button
+            type="secondary"
+            @click="modal.sembuhLkPenangananPenyakit = false"
+          >
             Tutup
           </base-button>
-          <base-button type="primary" @click="sembuhLkPenangananPenyakit">Sembuh</base-button>
+          <base-button type="primary" @click="sembuhLkPenangananPenyakit"
+            >Sembuh</base-button
+          >
         </template>
       </modal-comp>
     </template>
