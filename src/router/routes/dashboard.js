@@ -239,6 +239,27 @@ const dashboardRoutes = [
           import("@/views/Dashboard/Fase/Kebuntingan/LK_Kebuntingan.vue"),
         meta: { requiresAuth: true },
       },
+      {
+        path: "kelahiran",
+        name: "Summary Kelahiran",
+        component: () =>
+          import("@/views/Dashboard/Fase/Kelahiran/SummaryKelahiran.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "kelahiran/data-kelahiran",
+        name: "Fase Kelahiran",
+        component: () =>
+          import("@/views/Dashboard/Fase/Kelahiran/Kelahiran.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "kelahiran/langkah-kerja",
+        name: "Langkah Kerja Kelahiran",
+        component: () =>
+          import("@/views/Dashboard/Fase/Kelahiran/LK_Kelahiran.vue"),
+        meta: { requiresAuth: true },
+      },
     ],
   },
   {
