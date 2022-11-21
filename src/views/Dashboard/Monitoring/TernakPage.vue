@@ -227,7 +227,9 @@ export default {
         await this.schema.validate(data);
         const tambahTernak = await this.a$ternakAdd(data);
         this.modal.addTernak = false;
-        this.notify(`Ternak dengan ID Ternak ${tambahTernak.id} berhasil ditambahkan`);
+        this.notify(
+          `Ternak dengan ID Ternak ${tambahTernak.id} berhasil ditambahkan`
+        );
       } catch (error) {
         console.log(error);
         this.notify(error, false);
@@ -707,11 +709,7 @@ export default {
 
               <!-- Suhu -->
               <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.suhu"
-                  name="suhu"
-                >
+                <field-form v-slot="{ field }" v-model="input.suhu" name="suhu">
                   <base-input
                     v-bind="field"
                     placeholder="Suhu"
@@ -1228,17 +1226,21 @@ export default {
             <tab-pane title="Perlakuan">
               <h3 class="my-3">Perlakuan yang telah diberikan</h3>
               <empty-result v-if="!g$perlakuan.length" :text="`Perlakuan`" />
-              <div v-for="item in g$perlakuan">
+              <div v-for="(key, index) in g$perlakuan">
                 <hr class="m-0" />
                 <div class="row">
-                  <div class="col-8">
-                    <small class="text-sm m-0">
-                      {{ item.treatment.treatment }}
+                  <div class="col-7">
+                    <small class="text-sm mb-1 mt-1">
+                      <ol>
+                        <li :value="index + 1" class="ml--2">
+                          {{ key.treatment.treatment }}
+                        </li>
+                      </ol>
                     </small>
                   </div>
-                  <div class="col-4">
+                  <div class="col-5">
                     <small>
-                      {{ ubahTanggal(item.tanggal_adaptasi) }}
+                      {{ ubahTanggal(key.tanggal_adaptasi) }}
                     </small>
                   </div>
                 </div>
