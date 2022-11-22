@@ -62,22 +62,22 @@ export default {
         {
           name: "totalPerkawinan",
           th: "Kawin",
-          render: ({ totalPerkawinan }) => `${totalPerkawinan}X`,
+          render: ({ totalPerkawinan }) => `${totalPerkawinan} X`,
         },
         {
           name: "totalKebuntingan",
           th: "Bunting",
-          render: ({ totalKebuntingan }) => `${totalKebuntingan}X`,
+          render: ({ totalKebuntingan }) => `${totalKebuntingan} X`,
         },
         {
           name: "totalTidakBunting",
           th: "Tidak Bunting",
-          render: ({ totalTidakBunting }) => `${totalTidakBunting}X`,
+          render: ({ totalTidakBunting }) => `${totalTidakBunting} X`,
         },
         {
           name: "totalAbortus",
           th: "Abortus",
-          render: ({ totalAbortus }) => `${totalAbortus}X`,
+          render: ({ totalAbortus }) => `${totalAbortus} X`,
         },
         {
           name: "id_sire",

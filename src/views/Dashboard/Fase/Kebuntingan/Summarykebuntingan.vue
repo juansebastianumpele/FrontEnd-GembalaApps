@@ -48,11 +48,11 @@ export default {
         },
         {
           th: "Riwayat Abortus",
-          render: ({ totalAbortus }) => totalAbortus + " Kali",
+          render: ({ totalAbortus }) => `${totalAbortus} X`,
         },
         {
           th: "Riwayat Kebuntingan",
-          render: ({ totalKebuntingan }) => totalKebuntingan + " Kali",
+          render: ({ totalKebuntingan }) => `${totalKebuntingan} X`,
         },
       ],
     },
