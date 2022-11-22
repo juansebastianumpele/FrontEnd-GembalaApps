@@ -82,22 +82,30 @@ export default {
         <div class="col-sm-4">
           <div class="row">
             <span class="text-center m-2">
-              <router-link to="/fase/adaptasi" >
-              <base-button type="success1" class="btn-lg text-white">
+              <router-link to="/fase/adaptasi">
+                <base-button type="success1" class="btn-lg text-white">
                   Summary
                 </base-button>
               </router-link>
             </span>
             <span class="text-center m-2">
-              <router-link to="perkawinan/data-perkawinan" >
-              <base-button v-if="userInfo.role !== 'bod'" type="secondary" class="btn-lg text-dark">
+              <router-link to="perkawinan/data-perkawinan">
+                <base-button
+                  v-if="userInfo.role !== 'bod'"
+                  type="secondary"
+                  class="btn-lg text-dark"
+                >
                   {{ pageTitle }}
                 </base-button>
               </router-link>
             </span>
             <span class="text-center m-2">
-              <router-link to="perkawinan/langkah-kerja" >
-              <base-button v-if="userInfo.role !== 'bod'" type="secondary" class="btn-lg text-dark">
+              <router-link to="perkawinan/langkah-kerja">
+                <base-button
+                  v-if="userInfo.role !== 'bod'"
+                  type="secondary"
+                  class="btn-lg text-dark"
+                >
                   Langkah Kerja
                 </base-button>
               </router-link>
@@ -105,23 +113,38 @@ export default {
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row" v-if="g$listPerkawinan.length">
         <div class="col-sm-4">
           <card-comp>
             <div class="row align-items-center">
               <div class="col">
-                <h1 class="text-success text-left ls-1 mb-4" style="font-size: 16px">
+                <h1
+                  class="text-success text-left ls-1 mb-4"
+                  style="font-size: 16px"
+                >
                   Populasi {{ pageTitle }}
                 </h1>
               </div>
             </div>
-            <hc-bar :height="200" :data="g$byPopulasi" :data-labels="true" :legend="true" />
+            <hc-bar
+              :height="200"
+              :data="g$byPopulasi"
+              :data-labels="true"
+              :legend="true"
+            />
           </card-comp>
         </div>
         <div class="col-sm-8">
           <card-comp>
-            <vueper-slides class="no-shadow" :visible-slides="4" slide-multiple :gap="4" :slide-ratio="1 / 3"
-              :dragging-distance="10" :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }">
+            <vueper-slides
+              class="no-shadow"
+              :visible-slides="4"
+              slide-multiple
+              :gap="4"
+              :slide-ratio="1 / 3"
+              :dragging-distance="10"
+              :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }"
+            >
               <vueper-slide v-for="(key, value) in g$kandang" :key="key">
                 <template #content>
                   <div class="col text-center bg-success rounded mt-5">
@@ -135,7 +158,7 @@ export default {
           </card-comp>
         </div>
       </div>
-      <div class="row ml-1">
+      <div class="row ml-1" v-if="g$listPerkawinan.length">
         <h1 class="font-weight-bolder text-success">
           Daftar Ternak {{ pageTitle }}
         </h1>
@@ -144,7 +167,12 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$listPerkawinan.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$listPerkawinan" :columns="dt.column" />
+      <data-table
+        v-else
+        :index="true"
+        :data="g$listPerkawinan"
+        :columns="dt.column"
+      />
     </template>
   </main-layout>
 </template>

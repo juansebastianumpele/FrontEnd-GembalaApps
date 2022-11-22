@@ -113,7 +113,7 @@ export default {
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row" v-if="g$kelahiran.length">
         <div class="col-sm-4">
           <card-comp>
             <div class="row align-items-center">
@@ -158,7 +158,7 @@ export default {
           </card-comp>
         </div>
       </div>
-      <div class="row ml-1">
+      <div class="row ml-1" v-if="g$kelahiran.length">
         <h1 class="font-weight-bolder text-success">
           Daftar Ternak {{ pageTitle }}
         </h1>
