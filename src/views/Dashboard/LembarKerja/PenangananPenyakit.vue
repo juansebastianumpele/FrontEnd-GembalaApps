@@ -66,12 +66,12 @@ export default {
     input: {
       ternak: null,
       penyakit: null,
-      tanggal_sakit: "",
+      tanggal_sakit: null,
       kandang: null,
-      id_riwayat_kesehatan: "",
-      gejala: "",
-      penanganan: "",
-      tanggal_sembuh: "",
+      id_riwayat_kesehatan: null,
+      gejala: null,
+      penanganan: null,
+      tanggal_sembuh: null,
     },
     modal: {
       addLkPenangananPenyakit: false,
@@ -241,12 +241,12 @@ export default {
       this.input = {
         ternak: null,
         penyakit: null,
-        tanggal_sakit: "",
+        tanggal_sakit: null,
         kandang: null,
-        id_riwayat_kesehatan: "",
-        gejala: "",
-        penanganan: "",
-        tanggal_sembuh: "",
+        id_riwayat_kesehatan: null,
+        gejala: null,
+        penanganan: null,
+        tanggal_sembuh: null,
       };
     },
   },
@@ -358,11 +358,12 @@ export default {
                   required
                 >
                   <flat-pickr
-                    v-model.lazy="input.tanggal_sakit"
+                    v-model="input.tanggal_sakit"
                     :config="{
                       mode: 'single',
                       allowInput: true,
                       maxDate: new Date(),
+                      defaultDate: 'today',
                     }"
                     class="form-control datepicker"
                     placeholder="Pilih tanggal"
