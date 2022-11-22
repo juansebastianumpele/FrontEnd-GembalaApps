@@ -146,11 +146,10 @@ export default {
         await this.a$createLkPemasukan(data);
         this.modal.createPemasukan = false;
         this.notify(`Berhasil menambahkan data ${this.pageTitle}`, true);
-      } catch (error) {
-        this.notify(error, false);
-      } finally {
         this.clearInput();
         this.a$pemasukanList().catch((error) => this.notify(error, false));
+      } catch (error) {
+        this.notify(error, false);
       }
     },
     clearInput() {
@@ -382,7 +381,7 @@ export default {
             <div class="row">
               <!-- ID Ternak -->
               <div class="col-6">
-                <base-input name="id_ternak" label="ID Ternak">
+                <base-input name="id_ternak" label="ID Ternak" required>
                   <multi-select
                     v-model="input.ternakBaru"
                     :options="g$ternakBaru"
@@ -396,7 +395,7 @@ export default {
 
               <!-- Bangsa -->
               <div class="col-6">
-                <base-input name="bangsa" label="Bangsa">
+                <base-input name="bangsa" label="Bangsa" required>
                   <multi-select
                     v-model="input.bangsa"
                     :options="g$bangsa"
@@ -411,7 +410,7 @@ export default {
 
               <!-- Kandang -->
               <div class="col-6">
-                <base-input name="kandang" label="Kandang">
+                <base-input name="kandang" label="Kandang" required>
                   <multi-select
                     v-model="input.kandang"
                     :options="g$kandangList"
@@ -429,6 +428,7 @@ export default {
                   name="jenis_kelamin"
                   placeholder="Jenis Kelamin"
                   label="Jenis Kelamin"
+                  required
                 >
                   <multi-select
                     v-model="input.jenis_kelamin"
@@ -441,7 +441,7 @@ export default {
 
               <!-- Status ternak -->
               <div class="col-6">
-                <base-input name="status_ternak" label="Status Ternak">
+                <base-input name="status_ternak" label="Status Ternak" required>
                   <multi-select
                     v-model="input.status_ternak"
                     :options="g$statusTernak"
@@ -460,12 +460,13 @@ export default {
                   v-slot="{ field }"
                   v-model="input.status_kesehatan"
                   name="status_kesehatan"
-                >
+                  >
                   <base-input
-                    v-bind="field"
-                    placeholder="Status kesehatan"
-                    label="Status Kesehatan"
-                    type="text"
+                  v-bind="field"
+                  placeholder="Status kesehatan"
+                  label="Status Kesehatan"
+                  type="text"
+                  required
                   >
                   </base-input>
                 </field-form>
@@ -483,6 +484,7 @@ export default {
                     placeholder="Kondisi bcs"
                     label="Cek BCS"
                     type="number"
+                    required
                   ></base-input>
                 </field-form>
               </div>
@@ -499,6 +501,7 @@ export default {
                     placeholder="Jumlah poel"
                     label="Cek Poel"
                     type="number"
+                    required
                   ></base-input>
                 </field-form>
               </div>
@@ -515,6 +518,7 @@ export default {
                     placeholder="Kondisi mulut"
                     label="Cek Mulut"
                     type="text"
+                    required
                   ></base-input>
                 </field-form>
               </div>
@@ -531,6 +535,7 @@ export default {
                     placeholder="Kondisi telinga"
                     label="Cek Telinga"
                     type="text"
+                    required
                   >
                   </base-input>
                 </field-form>
@@ -548,6 +553,7 @@ export default {
                     placeholder="Kondisi kuku kai"
                     label="Cek Kuku Kaki"
                     type="text"
+                    required
                   >
                   </base-input>
                 </field-form>
@@ -565,6 +571,7 @@ export default {
                     placeholder="Kondisi fisik lain"
                     label="Cek Kondisi Fisik Lain"
                     type="text"
+                    required
                   ></base-input>
                 </field-form>
               </div>
