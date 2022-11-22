@@ -62,6 +62,7 @@ export default {
       await this.a$setAbortus(data).catch((error) => this.notify(error, false));
       this.modal.abortus = false;
       await this.a$sedangBunting().catch((error) => this.notify(error, false));
+      this.notify(`Berhasil mengubah status kebuntingan ternak dengan ID ternak ${data.id_ternak} menjadi abortus`, true);
     }
   },
 };
