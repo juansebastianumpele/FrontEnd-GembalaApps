@@ -95,7 +95,11 @@ export default {
               </div>
             </div>
             <hc-pie
-              :title="g$totalTernak.total_ternak ? g$totalTernak.total_ternak.toString() : '0'"
+              :title="
+                g$totalTernak.total_ternak
+                  ? g$totalTernak.total_ternak.toString()
+                  : '0'
+              "
               :height="245"
               :width="320"
               :data="g$totalByStatus"
@@ -176,7 +180,7 @@ export default {
                           style="font-size: x-large"
                         >
                           {{
-                            g$totalByFase[0] ? g$totalByFase[0].total_ternak : 0
+                            g$totalByFase[1] ? g$totalByFase[1].total_ternak : 0
                           }}
                         </div>
                         <div class="col-3 text-success">Ekor</div>
@@ -203,7 +207,7 @@ export default {
                           style="font-size: x-large"
                         >
                           {{
-                            g$totalByFase[1] ? g$totalByFase[1].total_ternak : 0
+                            g$totalByFase[0] ? g$totalByFase[0].total_ternak : 0
                           }}
                         </div>
                         <div class="col-3 text-success">Ekor</div>
