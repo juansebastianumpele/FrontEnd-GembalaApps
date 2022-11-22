@@ -41,7 +41,7 @@ export default {
         {
           name: "status_ternak",
           th: "Status",
-          render: ({ status_ternak }) => status_ternak.status_ternak,
+          render: ({ status_ternak }) => status_ternak ? status_ternak.status_ternak : null,
         },
         {
           name: "cek_bcs",
