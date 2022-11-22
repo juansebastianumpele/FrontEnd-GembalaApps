@@ -237,6 +237,10 @@ export default {
         this.notify(error, false);
       }
     },
+    // Pilih kandang berdasarkan ternak
+    onChange(value) {
+      this.input.kandang = value.kandang;
+    },
     clearInput() {
       this.input = {
         ternak: null,
@@ -322,6 +326,7 @@ export default {
                   <multi-select
                     v-model="input.ternak"
                     :options="g$ternakList"
+                    @select="onChange"
                     label="id_ternak"
                     track-by="id_ternak"
                     placeholder="Pilih ternak"
