@@ -178,7 +178,7 @@
             <!-- Current Page End Index -->
             {{ itemsPerPage * (currentPage - 1) + paginatedItems.length }}
             <!-- All Items Provided -->
-            from {{ renderedItems.length }}
+            dari {{ renderedItems.length }}
           </div>
         </div>
         <div v-if="paginate" class="col-md-6">
