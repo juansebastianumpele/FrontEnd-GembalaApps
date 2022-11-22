@@ -274,6 +274,27 @@ const dashboardRoutes = [
           import("@/views/Dashboard/Fase/Kelahiran/LK_Kelahiran.vue"),
         meta: { requiresAuth: true },
       },
+      {
+        path: "lepas-sapih",
+        name: "Summary Lepas Sapih",
+        component: () =>
+          import("@/views/Dashboard/Fase/LepasSapih/SummaryLepasSapih.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "lepas-sapih/data-lepas-sapih",
+        name: "Fase Lepas Sapih",
+        component: () =>
+          import("@/views/Dashboard/Fase/LepasSapih/LepasSapih.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "lepas-sapih/langkah-kerja",
+        name: "Langkah Kerja Lepas Sapih",
+        component: () =>
+          import("@/views/Dashboard/Fase/LepasSapih/LK_LepasSapih.vue"),
+        meta: { requiresAuth: true },
+      },
     ],
   },
   {
