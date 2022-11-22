@@ -24,7 +24,7 @@ export default {
           <span class="text-center m-2">
             <router-link to="data-kelahiran">
               <base-button type="secondary" class="btn-lg text-dark">
-                Fase Pemasukan
+                Fase Kelahiran
               </base-button>
             </router-link>
           </span>
