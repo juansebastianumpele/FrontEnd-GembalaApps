@@ -398,10 +398,7 @@ export default {
         this.a$riwayatKesehatan(this.infoTernak.id_ternak);
         this.a$perlakuan(this.infoTernak.id_ternak);
         this.a$byTimbangan(this.infoTernak.id_ternak);
-      } catch (error) {
-      } finally {
-        this.a$ternakList();
-      }
+      } catch (error) {}
     },
     handleFileUpload() {
       const file = this.$refs.image.files[0];

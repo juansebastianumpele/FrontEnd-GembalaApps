@@ -1,6 +1,7 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import d$kelahiran from "@/stores/fase/kelahiran";
+import d$dropdown from "@/stores/dropdown";
 import { ubahTanggal } from "@/utils/locale/ubahTanggal";
 
 export default {
@@ -10,12 +11,18 @@ export default {
   data: () => ({
     pageTitle: "Fase Kelahiran",
     input: {
-      id_indukan: "",
-      id_pejantan: "",
+      id_ternak: "",
+      tanggal_lahir: "",
+      jenis_kelamin: "",
+      tanggal_masuk: "",
+      id_dam: "",
+      id_sire: "",
+      kandang: "",
+      bangsa: "",
     },
     //UI
     modal: {
-      createPerkawinan: false,
+      createKelahiran: false,
     },
     // DataTable
     dt: {
@@ -56,14 +63,84 @@ export default {
     },
   }),
   computed: {
-    ...mapState(d$kelahiran, ["g$kelahiran"]),
+    ...mapState(d$kelahiran, [
+      "g$kelahiran",
+      "g$listIndukan",
+      "g$listPejantan",
+      "g$listCempeBaru",
+    ]),
+    ...mapState(d$dropdown, ["g$ddBangsa", "g$ddJenisKelamin", "g$ddKandang"]),
+    modals() {
+      return Object.values(this.modal).includes(true);
+    },
+  },
+
+  watch: {
+    modals(val) {
+      if (!val) {
+        this.clearInput();
+      }
+    },
   },
 
   async mounted() {
     await this.a$kelahiranList().catch((error) => this.notify(error, false));
+    this.a$ddKandang(), this.a$ddBangsa(), this.a$listIndukan();
+    this.a$listPejantan();
+    this.a$listCempeBaru();
   },
   methods: {
-    ...mapActions(d$kelahiran, ["a$kelahiranList"]),
+    ...mapActions(d$kelahiran, [
+      "a$kelahiranList",
+      "a$listIndukan",
+      "a$listPejantan",
+      "a$listCempeBaru",
+      "a$kelahiranCreate",
+    ]),
+    ...mapActions(d$dropdown, ["a$ddBangsa", "a$ddKandang"]),
+    clearInput() {
+      this.input = {
+        id_ternak: "",
+        tanggal_lahir: "",
+        jenis_kelamin: "",
+        tanggal_masuk: "",
+        id_dam: "",
+        id_sire: "",
+        kandang: "",
+        bangsa: "",
+      };
+    },
+    async createKelahiran() {
+      try {
+        const {
+          id_ternak,
+          tanggal_lahir,
+          jenis_kelamin,
+          tanggal_masuk,
+          id_dam,
+          id_sire,
+          kandang,
+          bangsa,
+        } = this.input;
+        const data = {
+          id_ternak: id_ternak.id_ternak,
+          tanggal_masuk,
+          tanggal_lahir,
+          id_sire: id_sire.id_ternak,
+          id_dam: id_dam.id_ternak,
+          jenis_kelamin,
+          id_bangsa: bangsa.id,
+          id_kandang: kandang.id,
+        };
+        await this.a$kelahiranCreate(data);
+        this.notify("Data berhasil ditambahkan", true);
+        this.modal.createKelahiran = false;
+      } catch (error) {
+        this.notify(error, false);
+      } finally {
+        this.a$kelahiranList();
+      }
+    },
   },
 };
 </script>
@@ -101,7 +178,7 @@ export default {
           <h3>Daftar {{ pageTitle }}</h3>
         </div>
         <div class="col text-right">
-          <base-button type="success" @click="modal.createPerkawinan = true">
+          <base-button type="success" @click="modal.createKelahiran = true">
             Tambah {{ pageTitle }}
           </base-button>
         </div>
@@ -120,39 +197,122 @@ export default {
 
     <template #modal>
       <!-- Create Adaptasi -->
-      <modal-comp
-        v-model:show="modal.createPerkawinan"
-        modal-classes="modal-md"
-      >
+      <modal-comp v-model:show="modal.createKelahiran" modal-classes="modal-md">
         <template #header>
           <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
         </template>
         <template #body>
-          <form-comp v-if="modal.createPerkawinan">
+          <form-comp v-if="modal.createKelahiran">
             <div class="row">
-              <!-- id_indukan -->
-              <div class="col-12">
-                <base-input name="id_indukan" label="ID Indukan">
+              <!-- id_ternak -->
+              <div class="col-6">
+                <base-input name="id_ternak" label="ID Cempe">
                   <multi-select
-                    v-model="input.id_indukan"
+                    v-model="input.id_ternak"
+                    :options="g$listCempeBaru"
+                    label="id_ternak"
+                    track-by="id_ternak"
+                    placeholder="Pilih ID Cempe"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+
+              <!-- Jenis kelamin -->
+              <div class="col-6">
+                <base-input name="jenis_kelamin" label="Jenis Kelamin">
+                  <multi-select
+                    v-model="input.jenis_kelamin"
+                    :options="g$ddJenisKelamin"
+                    placeholder="Pilih Jenis Kelamin"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+
+              <!-- Tanggal masuk -->
+              <div class="col-6">
+                <base-input name="tanggal_masuk" label="Tanggal Masuk">
+                  <flat-pickr
+                    v-model.lazy="input.tanggal_masuk"
+                    :config="{
+                      mode: 'single',
+                      allowInput: true,
+                      maxDate: new Date(),
+                    }"
+                    class="form-control datepicker"
+                    placeholder="Pilih tanggal"
+                  />
+                </base-input>
+              </div>
+
+              <!-- Tanggal lahir -->
+              <div class="col-6">
+                <base-input name="tanggal_lahir" label="Tanggal Lahir">
+                  <flat-pickr
+                    v-model.lazy="input.tanggal_lahir"
+                    :config="{
+                      mode: 'single',
+                      allowInput: true,
+                      maxDate: new Date(),
+                    }"
+                    class="form-control datepicker"
+                    placeholder="Pilih tanggal"
+                  />
+                </base-input>
+              </div>
+
+              <!-- id_indukan -->
+              <div class="col-6">
+                <base-input name="id_indukan" label="ID Dam(Ibu)">
+                  <multi-select
+                    v-model="input.id_dam"
                     :options="g$listIndukan"
                     label="id_ternak"
                     track-by="id_ternak"
-                    placeholder="Pilih ID Indukan"
+                    placeholder="Pilih ID Dam(Ibu)"
                     :show-labels="false"
                   />
                 </base-input>
               </div>
 
               <!-- id_pejantan -->
-              <div class="col-12">
-                <base-input name="id_pejantan" label="ID Pejantan">
+              <div class="col-6">
+                <base-input name="id_pejantan" label="ID Sire(Bapak)">
                   <multi-select
-                    v-model="input.id_pejantan"
+                    v-model="input.id_sire"
                     :options="g$listPejantan"
                     label="id_ternak"
                     track-by="id_ternak"
-                    placeholder="Pilih ID Pejantan"
+                    placeholder="Pilih ID Sire(Bapak)"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+
+              <!-- Bangsa -->
+              <div class="col-6">
+                <base-input name="bangsa" label="Bangsa">
+                  <multi-select
+                    v-model="input.bangsa"
+                    :options="g$ddBangsa"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih bangsa"
+                    :show-labels="false"
+                  />
+                </base-input>
+              </div>
+
+              <!-- Kandang -->
+              <div class="col-6">
+                <base-input name="kandang" label="Kandang">
+                  <multi-select
+                    v-model="input.kandang"
+                    :options="g$ddKandang"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih andang"
                     :show-labels="false"
                   />
                 </base-input>
@@ -161,10 +321,10 @@ export default {
           </form-comp>
         </template>
         <template #footer>
-          <base-button type="secondary" @click="modal.createPerkawinan = false">
+          <base-button type="secondary" @click="modal.createKelahiran = false">
             Tutup
           </base-button>
-          <base-button type="primary" @click="createPerkawinan">
+          <base-button type="primary" @click="createKelahiran">
             Tambah {{ pageTitle }}
           </base-button>
         </template>
