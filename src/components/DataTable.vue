@@ -161,7 +161,7 @@
                   headers.length + (actions.length ? 1 : 0) + (index ? 1 : 0)
                 "
               >
-                No results
+                Tidak ada hasil
               </td>
             </tr>
           </tbody>
