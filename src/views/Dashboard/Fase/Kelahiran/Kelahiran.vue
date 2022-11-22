@@ -11,14 +11,14 @@ export default {
   data: () => ({
     pageTitle: "Fase Kelahiran",
     input: {
-      id_ternak: "",
-      tanggal_lahir: "",
-      jenis_kelamin: "",
-      tanggal_masuk: "",
-      id_dam: "",
-      id_sire: "",
-      kandang: "",
-      bangsa: "",
+      id_ternak: null,
+      tanggal_lahir: null,
+      jenis_kelamin: null,
+      tanggal_masuk: null,
+      id_dam: null,
+      id_sire: null,
+      kandang: null,
+      bangsa: null,
     },
     //UI
     modal: {
@@ -100,14 +100,14 @@ export default {
     ...mapActions(d$dropdown, ["a$ddBangsa", "a$ddKandang"]),
     clearInput() {
       this.input = {
-        id_ternak: "",
-        tanggal_lahir: "",
-        jenis_kelamin: "",
-        tanggal_masuk: "",
-        id_dam: "",
-        id_sire: "",
-        kandang: "",
-        bangsa: "",
+        id_ternak: null,
+        tanggal_lahir: null,
+        jenis_kelamin: null,
+        tanggal_masuk: null,
+        id_dam: null,
+        id_sire: null,
+        kandang: null,
+        bangsa: null,
       };
     },
     async createKelahiran() {
@@ -255,6 +255,7 @@ export default {
                       mode: 'single',
                       allowInput: true,
                       maxDate: new Date(),
+                      defaultDate: 'today',
                     }"
                     class="form-control datepicker"
                     placeholder="Pilih tanggal"
