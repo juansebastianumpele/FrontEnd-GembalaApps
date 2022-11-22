@@ -206,7 +206,7 @@ export default {
             <div class="row">
               <!-- id_ternak -->
               <div class="col-6">
-                <base-input name="id_ternak" label="ID Cempe">
+                <base-input name="id_ternak" label="ID Cempe" required>
                   <multi-select
                     v-model="input.id_ternak"
                     :options="g$listCempeBaru"
@@ -220,7 +220,7 @@ export default {
 
               <!-- Jenis kelamin -->
               <div class="col-6">
-                <base-input name="jenis_kelamin" label="Jenis Kelamin">
+                <base-input name="jenis_kelamin" label="Jenis Kelamin" required>
                   <multi-select
                     v-model="input.jenis_kelamin"
                     :options="g$ddJenisKelamin"
@@ -232,7 +232,7 @@ export default {
 
               <!-- Tanggal masuk -->
               <div class="col-6">
-                <base-input name="tanggal_masuk" label="Tanggal Masuk">
+                <base-input name="tanggal_masuk" label="Tanggal Masuk" required>
                   <flat-pickr
                     v-model.lazy="input.tanggal_masuk"
                     :config="{
@@ -248,7 +248,7 @@ export default {
 
               <!-- Tanggal lahir -->
               <div class="col-6">
-                <base-input name="tanggal_lahir" label="Tanggal Lahir">
+                <base-input name="tanggal_lahir" label="Tanggal Lahir" required>
                   <flat-pickr
                     v-model.lazy="input.tanggal_lahir"
                     :config="{
@@ -264,13 +264,13 @@ export default {
 
               <!-- id_indukan -->
               <div class="col-6">
-                <base-input name="id_indukan" label="ID Dam(Ibu)">
+                <base-input name="id_indukan" label="ID Dam (Ibu)" required>
                   <multi-select
                     v-model="input.id_dam"
                     :options="g$listIndukan"
                     label="id_ternak"
                     track-by="id_ternak"
-                    placeholder="Pilih ID Dam(Ibu)"
+                    placeholder="Pilih ID dam (ibu)"
                     :show-labels="false"
                   />
                 </base-input>
@@ -278,13 +278,13 @@ export default {
 
               <!-- id_pejantan -->
               <div class="col-6">
-                <base-input name="id_pejantan" label="ID Sire(Bapak)">
+                <base-input name="id_pejantan" label="ID Sire (bapak)" required>
                   <multi-select
                     v-model="input.id_sire"
                     :options="g$listPejantan"
                     label="id_ternak"
                     track-by="id_ternak"
-                    placeholder="Pilih ID Sire(Bapak)"
+                    placeholder="Pilih ID sire (bapak)"
                     :show-labels="false"
                   />
                 </base-input>
@@ -292,7 +292,7 @@ export default {
 
               <!-- Bangsa -->
               <div class="col-6">
-                <base-input name="bangsa" label="Bangsa">
+                <base-input name="bangsa" label="Bangsa" required>
                   <multi-select
                     v-model="input.bangsa"
                     :options="g$ddBangsa"
@@ -306,13 +306,13 @@ export default {
 
               <!-- Kandang -->
               <div class="col-6">
-                <base-input name="kandang" label="Kandang">
+                <base-input name="kandang" label="Kandang" required>
                   <multi-select
                     v-model="input.kandang"
                     :options="g$ddKandang"
                     label="name"
                     track-by="id"
-                    placeholder="Pilih andang"
+                    placeholder="Pilih kandang"
                     :show-labels="false"
                   />
                 </base-input>
