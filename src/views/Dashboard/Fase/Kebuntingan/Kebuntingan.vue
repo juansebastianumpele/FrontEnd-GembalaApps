@@ -80,10 +80,21 @@ export default {
         <div class="col-auto">
           <h3>Daftar {{ pageTitle }}</h3>
         </div>
-        <div class="col text-right">
-          <base-button type="success" @click="modal.createPerkawinan = true">
-            Tambah {{ pageTitle }}
-          </base-button>
+        <div class="col-auto">
+          <span class="text-center m-2">
+            <router-link to="data-kebuntingan" >
+            <base-button type="success1" class="btn-lg text-white">
+                Riwayat Kebuntingan
+              </base-button>
+            </router-link>
+          </span>
+          <span class="text-center m-2">
+            <router-link to="sedang-bunting" >
+            <base-button type="secondary" class="btn-lg text-dark">
+                Sedang Bunting
+              </base-button>
+            </router-link>
+          </span>
         </div>
       </div>
     </template>

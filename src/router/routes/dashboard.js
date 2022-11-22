@@ -240,6 +240,13 @@ const dashboardRoutes = [
         meta: { requiresAuth: true },
       },
       {
+        path: "kebuntingan/sedang-bunting",
+        name: "Sedang Bunting",
+        component: () =>
+          import("@/views/Dashboard/Fase/Kebuntingan/SedangBunting.vue"),
+        meta: { requiresAuth: true },
+      },
+      {
         path: "kebuntingan/langkah-kerja",
         name: "Langkah Kerja Kebuntingan",
         component: () =>

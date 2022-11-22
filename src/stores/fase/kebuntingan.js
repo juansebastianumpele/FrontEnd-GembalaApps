@@ -5,6 +5,7 @@ const u$kebuntingan = defineStore({
   id: "kebuntingan",
   state: () => ({
     kebuntingan: [],
+    sedangBunting: [],
     populasi: [],
     kandang: [],
   }),
@@ -32,11 +33,33 @@ const u$kebuntingan = defineStore({
         throw error;
       }
     },
+
+    // Sedang bunting
+    async a$sedangBunting() {
+      try {
+        const { data } = await s$kebuntingan.sedangBunting();
+        this.sedangBunting = data.list;
+      } catch ({ error }) {
+        this.sedangBunting = [];
+        throw error;
+      }
+    },
+
+    // Set abortus
+    async a$setAbortus(req) {
+      try {
+        const { data } = await s$kebuntingan.setAbortus(req);
+        return data;
+      } catch ({ error }) {
+        throw error;
+      }
+    },
   },
 
   getters: {
     g$kebuntingan: (state) => state.kebuntingan,
     g$kandang: (state) => state.kandang,
+    g$sedangBunting: (state) => state.sedangBunting,
     g$byPopulasi: (state) => ({
       categories: ["Total"],
       series: [

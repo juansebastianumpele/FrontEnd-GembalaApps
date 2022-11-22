@@ -5,7 +5,11 @@ const { api } = subApiUrl;
 
 const list = () => baseApi.get(`${api}/riwayat-kebuntingan`);
 
-//sumary
+// Summary
 const listKebuntingan = () => baseApi.get(`${api}/kebuntingan/all-ternak`);
 
-export { list, listKebuntingan };
+
+const sedangBunting = () => baseApi.get(`${api}/kebuntingan/ternak`);
+const setAbortus = (req) => baseApi.post(`${api}/kebuntingan/set-abortus`, req);
+
+export { list, listKebuntingan, sedangBunting, setAbortus };
