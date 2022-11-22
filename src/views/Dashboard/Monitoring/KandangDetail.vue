@@ -1,6 +1,7 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import d$ternak from "@/stores/monitoring/ternak";
+import { ubahTanggal } from "@/utils/locale/ubahTanggal";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 
@@ -44,12 +45,12 @@ export default {
         {
           name: "kebutuhan_pakan",
           th: "Kebutuhan Pakan",
-          render: ({ kebutuhan_pakan }) => kebutuhan_pakan + " KG",
+          render: ({ kebutuhan_pakan }) => kebutuhan_pakan + " Kg",
         },
         {
           name: "berat",
           th: "Berat Ternak",
-          render: ({ berat }) => berat + " KG",
+          render: ({ berat }) => berat + " Kg",
         },
       ],
       action: [
@@ -93,6 +94,7 @@ export default {
         this.modal.detailTernak = true;
       } catch (error) {}
     },
+    ubahTanggal,
   },
 };
 </script>
@@ -130,8 +132,9 @@ export default {
         <template v-if="modal.detailTernak" #body>
           <div style="max-height: 450px; overflow-y: auto; overflow-x: hidden">
             <div class="row">
+              <!-- ID Ternak -->
               <div class="col-5">
-                <span style="font-weight: 600">Nomor Ternak</span>
+                <span style="font-weight: 600">ID Ternak</span>
               </div>
               <div class="col">
                 :
@@ -140,28 +143,34 @@ export default {
                 >
               </div>
             </div>
+
+            <!-- RFID -->
             <div class="row">
               <div class="col-5">
-                <span style="font-weight: 600">ID RFID</span>
+                <span style="font-weight: 600">RFID</span>
+              </div>
+              <div class="col">
+                :
+                <span style="font-weight: 300"> {{ infoTernak.rf_id }}</span>
+              </div>
+            </div>
+
+            <!-- Bangsa -->
+            <div class="row">
+              <div class="col-5">
+                <span style="font-weight: 600">Bangsa</span>
               </div>
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoTernak.rf_id ?? "-" }}</span
+                  {{
+                    infoTernak.bangsa ? infoTernak.bangsa.bangsa : "---"
+                  }}</span
                 >
               </div>
             </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Varietas</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.bangsa.bangsa }}</span
-                >
-              </div>
-            </div>
+
+            <!-- Jenis kelamin -->
             <div class="row">
               <div class="col-5">
                 <span style="font-weight: 600">Jenis Kelamin</span>
@@ -169,118 +178,31 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoTernak.jenis_kelamin }}</span
+                  {{
+                    infoTernak.jenis_kelamin ? infoTernak.jenis_kelamin : "---"
+                  }}</span
                 >
               </div>
             </div>
+
+            <!-- Tanggal lahir -->
             <div class="row">
               <div class="col-5">
-                <span style="font-weight: 600">ID Dam (Ibu)</span>
+                <span style="font-weight: 600">Tanggal Lahir</span>
               </div>
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoTernak.id_dam ?? "-" }}</span
+                  {{
+                    infoTernak.tanggal_lahir
+                      ? ubahTanggal(infoTernak.tanggal_lahir)
+                      : "---"
+                  }}</span
                 >
               </div>
             </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">ID Sire (Bapak)</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.id_sire ?? "-" }}</span
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Kandang</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.kandang.kode_kandang }}</span
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Fase Pemeliharaan</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.fase.fase }}</span
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Jenis Pakan</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.kandang.jenis_pakan.jenis_pakan }}</span
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Berat</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300"> {{ infoTernak.berat }} kg</span>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Suhu</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.suhu }}&deg;C</span
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Status Kesehatan</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.status_kesehatan }}</span
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Nama Penyakit</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.penyakit ?? "-" }}</span
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-5">
-                <span style="font-weight: 600">Tanggal Masuk</span>
-              </div>
-              <div class="col">
-                :
-                <span style="font-weight: 300">
-                  {{ infoTernak.tanggal_masuk }}</span
-                >
-              </div>
-            </div>
+
+            <!-- Umur -->
             <div class="row">
               <div class="col-5">
                 <span style="font-weight: 600">Umur</span>
@@ -288,29 +210,151 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ Math.round(infoTernak.umur / 30) }} Bulan</span
-                >
+                  {{ infoTernak.umur ?? "---" }}
+                </span>
               </div>
             </div>
+
+            <!-- ID sire (bapak) -->
             <div class="row">
               <div class="col-5">
-                <span style="font-weight: 600">Tanggal Keluar</span>
+                <span style="font-weight: 600">ID Sire (Bapak)</span>
               </div>
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoTernak.tanggal_keluar ?? "-" }}</span
+                  {{ infoTernak.id_sire ?? "---" }}</span
                 >
               </div>
             </div>
+
+            <!-- ID dam (ibu) -->
             <div class="row">
               <div class="col-5">
-                <span style="font-weight: 600">Status Keluar</span>
+                <span style="font-weight: 600">ID Dam (Ibu)</span>
               </div>
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoTernak.status_keluar ?? "-" }}</span
+                  {{ infoTernak.id_dam ?? "---" }}</span
+                >
+              </div>
+            </div>
+
+            <!-- Kode kandang -->
+            <div class="row">
+              <div class="col-5">
+                <span style="font-weight: 600">Kode Kandang</span>
+              </div>
+              <div class="col">
+                :
+                <span style="font-weight: 300">
+                  {{
+                    infoTernak.kandang ? infoTernak.kandang.kode_kandang : "---"
+                  }}</span
+                >
+              </div>
+            </div>
+
+            <!-- Fase -->
+            <div class="row">
+              <div class="col-5">
+                <span style="font-weight: 600">Fase Pemeliharaan</span>
+              </div>
+              <div class="col">
+                :
+                <span style="font-weight: 300">
+                  {{ infoTernak.fase ? infoTernak.fase.fase : "---" }}</span
+                >
+              </div>
+            </div>
+
+            <!-- Status -->
+            <div class="row">
+              <div class="col-5">
+                <span style="font-weight: 600">Status Ternak</span>
+              </div>
+              <div class="col">
+                :
+                <span style="font-weight: 300">
+                  {{
+                    infoTernak.status_ternak
+                      ? infoTernak.status_ternak.status_ternak
+                      : "---"
+                  }}</span
+                >
+              </div>
+            </div>
+
+            <!-- Jenis pakan -->
+            <div class="row">
+              <div class="col-5">
+                <span style="font-weight: 600">Jenis Pakan</span>
+              </div>
+              <div class="col">
+                :
+                <span style="font-weight: 300">
+                  {{
+                    infoTernak.kandang
+                      ? infoTernak.kandang.jenis_pakan.jenis_pakan
+                      : "---"
+                  }}</span
+                >
+              </div>
+            </div>
+
+            <!-- Berat -->
+            <div class="row">
+              <div class="col-5">
+                <span style="font-weight: 600">Berat</span>
+              </div>
+              <div class="col">
+                :
+                <span style="font-weight: 300">
+                  {{ infoTernak.berat ?? "---" }} Kg</span
+                >
+              </div>
+            </div>
+
+            <!-- Suhu -->
+            <div class="row">
+              <div class="col-5">
+                <span style="font-weight: 600">Suhu</span>
+              </div>
+              <div class="col">
+                :
+                <span style="font-weight: 300">
+                  {{ infoTernak.suhu ?? "---" }} °C</span
+                >
+              </div>
+            </div>
+
+            <!-- Status kesehatan -->
+            <div class="row">
+              <div class="col-5">
+                <span style="font-weight: 600">Status Kesehatan</span>
+              </div>
+              <div class="col">
+                :
+                <span style="font-weight: 300">
+                  {{ infoTernak.status_kesehatan ?? "---" }}</span
+                >
+              </div>
+            </div>
+
+            <!-- Tanggal masuk -->
+            <div class="row">
+              <div class="col-5">
+                <span style="font-weight: 600">Tanggal Masuk</span>
+              </div>
+              <div class="col">
+                :
+                <span style="font-weight: 300">
+                  {{
+                    infoTernak.tanggal_masuk
+                      ? ubahTanggal(infoTernak.tanggal_masuk)
+                      : "---"
+                  }}</span
                 >
               </div>
             </div>

@@ -46,7 +46,10 @@ export default {
       tanggal_masuk: null,
       id_dam: null,
       id_sire: null,
-      id_fp: null,
+      fase: {
+        id: 1,
+        name: "Pemasukan",
+      },
       id_kandang: null,
       tanggal_keluar: null,
       status_keluar: null,
@@ -184,7 +187,10 @@ export default {
         tanggal_masuk: null,
         id_dam: null,
         id_sire: null,
-        fase: null,
+        fase: {
+          id: 1,
+          name: "Pemasukan",
+        },
         kandang: null,
         tanggal_keluar: null,
         status_keluar: null,
@@ -1090,7 +1096,7 @@ export default {
                     :
                     <span style="font-weight: 300">
                       {{
-                        infoTernak.fase
+                        infoTernak.status_ternak
                           ? infoTernak.status_ternak.status_ternak
                           : "---"
                       }}</span
@@ -1189,9 +1195,7 @@ export default {
                     </div>
                     <div class="col">
                       :
-                      <span style="font-weight: 200">{{
-                        item.penyakit.nama_penyakit
-                      }}</span>
+                      <span style="font-weight: 200">{{ item.penyakit }}</span>
                     </div>
                   </div>
                   <div class="row">

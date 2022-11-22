@@ -66,7 +66,6 @@ const u$kesehatan = defineStore({
       try {
         const { data } = await s$kesehatan.riwayatKesehatan(request);
         this.riwayatKesehatan = data.list;
-        console.log(data.list);
       } catch ({ error }) {
         this.riwayatKesehatan = [];
         throw error;
