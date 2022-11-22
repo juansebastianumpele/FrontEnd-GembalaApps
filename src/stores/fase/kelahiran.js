@@ -73,7 +73,6 @@ const u$kelahiran = defineStore({
     //Create Kelahiran
     async a$kelahiranCreate(req) {
       try {
-        console.log(req);
         await s$kelahiran.create(req);
       } catch ({ error }) {
         throw error;
