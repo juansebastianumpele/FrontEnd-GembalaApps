@@ -40,11 +40,11 @@ export default {
         },
         {
           th: "Suhu",
-          render: ({ suhu }) => suhu + "°C",
+          render: ({ suhu }) => suhu ? suhu + "°C" : null,
         },
         {
           th: "Bobot",
-          render: ({ berat }) => berat + " Kg",
+          render: ({ berat }) => berat ? berat + " Kg" : null,
         },
         {
           name: "umur",

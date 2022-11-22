@@ -13,7 +13,6 @@ const u$pemeliharaan = defineStore({
       try {
         const { data } = await s$pemeliharaan.list();
         this.pemeliharaan = data.list;
-        console.log(data.list);
       } catch ({ error }) {
         this.pemeliharaan = [];
         throw error;

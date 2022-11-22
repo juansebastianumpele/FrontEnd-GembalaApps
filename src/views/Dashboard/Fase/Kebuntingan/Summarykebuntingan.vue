@@ -40,19 +40,19 @@ export default {
         },
         {
           th: "Suhu",
-          render: ({ suhu }) => suhu + "°C",
+          render: ({ suhu }) => suhu ? suhu + "°C" : null,
         },
         {
           th: "Bobot",
-          render: ({ berat }) => berat + " Kg",
+          render: ({ berat }) => berat ? berat + " Kg" : null,
         },
         {
           th: "Riwayat Abortus",
-          render: ({ totalAbortus }) => totalAbortus + " Kali",
+          render: ({ totalAbortus }) => `${totalAbortus} X`,
         },
         {
           th: "Riwayat Kebuntingan",
-          render: ({ totalKebuntingan }) => totalKebuntingan + " Kali",
+          render: ({ totalKebuntingan }) => `${totalKebuntingan} X`,
         },
       ],
     },

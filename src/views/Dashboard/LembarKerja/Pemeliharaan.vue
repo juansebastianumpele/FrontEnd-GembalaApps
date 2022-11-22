@@ -56,9 +56,9 @@ export default {
     },
     input: {
       kandang: null,
-      tanggal_pemeliharaan: "",
+      tanggal_pemeliharaan: null,
       jenis_pakan: null,
-      jumlah_pakan: null,
+      jumlah_pakan: 0,
       pembersihan_kandang: true,
       pembersihan_ternak: true,
     },
@@ -124,7 +124,7 @@ export default {
     clearInput() {
       this.input = {
         kandang: null,
-        tanggal_pemeliharaan: "",
+        tanggal_pemeliharaan: null,
         jenis_pakan: null,
         jumlah_pakan: 0,
         pembersihan_kandang: true,
@@ -170,20 +170,12 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$pemeliharaanAll.length" :text="`${pageTitle}`" />
-      <data-table
-        v-else
-        :index="true"
-        :data="g$pemeliharaanAll"
-        :columns="dt.column"
-      />
+      <data-table v-else :index="true" :data="g$pemeliharaanAll" :columns="dt.column" />
     </template>
 
     <template #modal>
       <!-- Create LK pemeliharaan -->
-      <modal-comp
-        v-model:show="modal.createLkPemeliharaan"
-        modal-classes="modal-md"
-      >
+      <modal-comp v-model:show="modal.createLkPemeliharaan" modal-classes="modal-md">
         <template #header>
           <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
         </template>
@@ -193,66 +185,37 @@ export default {
               <!-- Kandang -->
               <div class="col-6">
                 <base-input name="kandang" label="Kandang">
-                  <multi-select
-                    v-model="input.kandang"
-                    :options="g$kandangList"
-                    label="kode_kandang"
-                    track-by="id"
-                    placeholder="Pilih Kandang"
-                    :show-labels="false"
-                  />
+                  <multi-select v-model="input.kandang" :options="g$kandangList" label="kode_kandang" track-by="id"
+                    placeholder="Pilih Kandang" :show-labels="false" />
                 </base-input>
               </div>
 
               <!-- Tanggal pemeliharaan -->
               <div class="col-6">
-                <base-input
-                  name="tanggal_pemeliharaan"
-                  label="Tanggal Pemeliharaan"
-                  required
-                >
-                  <flat-pickr
-                    v-model.lazy="input.tanggal_pemeliharaan"
-                    :config="{
-                      mode: 'single',
-                      allowInput: true,
-                      maxDate: new Date(),
-                    }"
-                    class="form-control datepicker"
-                    placeholder="Pilih tanggal"
-                    maxDate="today"
-                  />
+                <base-input name="tanggal_pemeliharaan" label="Tanggal Pemeliharaan" required>
+                  <flat-pickr v-model="input.tanggal_pemeliharaan" :config="{
+                    mode: 'single',
+                    allowInput: true,
+                    maxDate: new Date(),
+                    defaultDate: 'today',
+                  }" class="form-control datepicker" placeholder="Pilih tanggal" maxDate="today" />
                 </base-input>
               </div>
 
               <!-- Jenis pakan -->
               <div class="col-6">
                 <base-input name="jenis_pakan" label="Jenis Pakan">
-                  <multi-select
-                    v-model="input.jenis_pakan"
-                    :options="g$pakanList"
-                    label="jenis_pakan"
-                    track-by="id_jenis_pakan"
-                    placeholder="Pilih jenis pakan"
-                    :show-labels="false"
-                    :preselectFirst="true"
-                  />
+                  <multi-select v-model="input.jenis_pakan" :options="g$pakanList" label="jenis_pakan"
+                    track-by="id_jenis_pakan" placeholder="Pilih jenis pakan" :show-labels="false"
+                    :preselectFirst="true" />
                 </base-input>
               </div>
 
               <!-- Jumlah pakan -->
               <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.jumlah_pakan"
-                  name="jumlah_pakan"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Jumlah pakan dalam kg"
-                    label="Jumlah Pakan (Kg)"
-                    type="number"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.jumlah_pakan" name="jumlah_pakan">
+                  <base-input v-bind="field" placeholder="Jumlah pakan dalam kg" label="Jumlah Pakan (Kg)"
+                    type="number"></base-input>
                 </field-form>
               </div>
 
@@ -277,10 +240,7 @@ export default {
           </form-comp>
         </template>
         <template #footer>
-          <base-button
-            type="secondary"
-            @click="modal.createLkPemeliharaan = false"
-          >
+          <base-button type="secondary" @click="modal.createLkPemeliharaan = false">
             Tutup
           </base-button>
           <base-button type="primary" @click="createLkPemeliharaan">

@@ -28,7 +28,7 @@ export default {
         },
         {
           th: "Bangsa",
-          render: ({ bangsa }) => (bangsa ? bangsa.bangsa : "---"),
+          render: ({ bangsa }) => bangsa ? bangsa.bangsa : null,
         },
         {
           name: "jenis_kelamin",
