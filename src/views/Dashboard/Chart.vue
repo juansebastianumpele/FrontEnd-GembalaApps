@@ -47,6 +47,7 @@ export default {
       "a$totalByStatusKeluar",
       "a$totalByKandang",
       "a$totalAdgCempe",
+      "a$populasi",
     ]),
   },
   async mounted() {
@@ -59,6 +60,7 @@ export default {
     );
     await this.a$totalByKandang().catch((error) => this.notify(error, false));
     await this.a$totalAdgCempe().catch((error) => this.notify(error, false));
+    await this.a$populasi().catch((error) => this.notify(error, false));
   },
 };
 </script>

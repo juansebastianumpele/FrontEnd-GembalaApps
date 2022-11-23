@@ -3,6 +3,8 @@ import { subApiUrl } from "@/utils/constant";
 
 const { api } = subApiUrl;
 
+const populasi = () => baseApi.get(`${api}/web-dash/populasi`);
+
 const totalTernakByStatus = () =>
   baseApi.get(`${api}/web-dash/total-ternak-by-status`);
 
@@ -22,6 +24,7 @@ const totalKandang = () => baseApi.get(`${api}/web-dash/total-kandang`);
 const totalTernak = () => baseApi.get(`${api}/web-dash/total-ternak`);
 
 export {
+  populasi,
   totalTernakByStatus,
   totalTernakByFase,
   totalTernakByKandang,
