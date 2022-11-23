@@ -14,10 +14,12 @@ export default {
       ternak: null,
       tanggal_lepas_sapih: null,
       kandang: null,
+      status: null,
     },
     //UI
     modal: {
       createLepasSapih: false,
+      seleksi: false,
     },
     // DataTable
     dt: {
@@ -28,11 +30,12 @@ export default {
         },
         {
           th: "Tanggal Lepas Sapih",
-          render: ({ tanggal_lepas_sapih }) => tanggal_lepas_sapih ? ubahTanggal(tanggal_lepas_sapih) : null,
+          render: ({ tanggal }) => tanggal ? ubahTanggal(tanggal) : null,
         },
         {
           name: "kode_kandang",
           th: "Kode Kandang",
+          render: ({ kandang }) => kandang ? kandang.kode_kandang : null,
         },
       ],
       action: [
@@ -45,7 +48,7 @@ export default {
     },
   }),
   computed: {
-    ...mapState(d$lepasSapih, ["g$lepasSapih", "g$cempe"]),
+    ...mapState(d$lepasSapih, ["g$cempe", "g$statusSeleksi", "g$ternakLepasSapih"]),
     ...mapState(d$kandang, ["g$kandangList"]),
     modals() {
       return Object.values(this.modal).includes(true);
@@ -61,14 +64,15 @@ export default {
   },
 
   async mounted() {
-    await this.a$lepasSapihList().catch((error) => this.notify(error, false));
+    await this.a$ternakLepasSapih().catch((error) => this.notify(error, false));
     await this.a$kandangList().catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$lepasSapih, ["a$lepasSapihList", "a$createLepasSapih", "a$cempe"]),
+    ...mapActions(d$lepasSapih, ["a$createLepasSapih", "a$cempe", "a$ternakLepasSapih", "a$seleksiTernak"]),
     ...mapActions(d$kandang, ["a$kandangList"]),
     clearInput() {
       this.input = {
+        id_ternak: null,
         ternak: null,
         tanggal_lepas_sapih: null,
         kandang: null,
@@ -97,6 +101,25 @@ export default {
     triggerCreateLepasSapih() {
       this.modal.createLepasSapih = true;
       this.a$cempe().catch((error) => this.notify(error, false));
+    },
+    triggerSeleksi(row) {
+      this.modal.seleksi = true;
+      this.input = row;
+    },
+    async seleksiTernak() {
+      try {
+        const { id_ternak, status } = this.input;
+        const data = {
+          id_ternak,
+          status,
+        };
+        await this.a$seleksiTernak(data);
+        this.notify("Ternak berhasil diseleksi", true);
+        this.modal.seleksi = false;
+        this.a$ternakLepasSapih();
+      } catch (error) {
+        this.notify(error, false);
+      }
     },
   },
 };
@@ -137,25 +160,30 @@ export default {
         <div class="col-auto">
           <span class="text-center m-2">
             <router-link to="data-lepas-sapih">
-              <base-button type="success1" class="btn-lg text-white" >
+              <base-button type="secondary" class="btn-lg text-dark">
                 Riwayat Lepas Sapih
               </base-button>
             </router-link>
           </span>
           <span class="text-center m-2">
             <router-link to="fase-lepas-sapih" >
-              <base-button type="secondary" class="btn-lg text-dark" >
+              <base-button type="success1" class="btn-lg text-white">
                 Lepas Sapih
               </base-button>
             </router-link>
           </span>
         </div>
+        <div class="col text-right">
+          <base-button type="success" @click="triggerCreateLepasSapih">
+            Tambah {{ pageTitle }}
+          </base-button>
+        </div>
       </div>
     </template>
 
     <template #body>
-      <empty-result v-if="!g$lepasSapih.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$lepasSapih" :columns="dt.column"  />
+      <empty-result v-if="!g$ternakLepasSapih.length" :text="`${pageTitle}`" />
+      <data-table v-else :index="true" :data="g$ternakLepasSapih" :columns="dt.column" :actions="dt.action" @seleksi="triggerSeleksi"/>
     </template>
 
     <template #modal>
@@ -203,6 +231,34 @@ export default {
           </base-button>
           <base-button type="primary" @click="createLepasSapih">
             Tambah {{ pageTitle }}
+          </base-button>
+        </template>
+      </modal-comp>
+
+      <!-- Seleksi -->
+      <modal-comp v-model:show="modal.seleksi" modal-classes="modal-md">
+        <template #header>
+          <h3 class="modal-title">Seleksi {{ pageTitle }}</h3>
+        </template>
+        <template #body>
+          <form-comp v-if="modal.seleksi">
+            <div class="row">
+              <!-- status_seleksi -->
+              <div class="col-12">
+                <base-input name="status" label="Status">
+                  <multi-select v-model="input.status" :options="g$statusSeleksi"
+                    placeholder="Pilih status" :show-labels="false" />
+                </base-input>
+              </div>
+            </div>
+          </form-comp>
+        </template>
+        <template #footer>
+          <base-button type="secondary" @click="modal.seleksi = false">
+            Tutup
+          </base-button>
+          <base-button type="primary" @click="seleksiTernak">
+            Seleksi
           </base-button>
         </template>
       </modal-comp>

@@ -7,6 +7,7 @@ const u$kelahiran = defineStore({
   state: () => ({
     kelahiran: [],
     cempe: [],
+    statusLepasSapih: ['Indukan', 'Pejantan', 'Bakalan'],
     populasi: [],
     kandang: [],
     pejantan: [],

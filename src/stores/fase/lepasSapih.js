@@ -1,11 +1,13 @@
 import { defineStore } from "pinia";
 import * as s$lepasSapih from "@/services/fase/lepasSapih";
-import * as s$dropdown from "@/services/dropdown";
 
 const u$lepasSapih = defineStore({
   id: "lepasSapih",
   state: () => ({
     lepasSapih: [],
+    ternakLepasSapih: [],
+    statusSeleksi: ['Indukan', 'Pejantan', 'Bakalan'],
+    cempe: [],
     populasi: [],
     kandang: [],
   }),
@@ -33,11 +35,56 @@ const u$lepasSapih = defineStore({
         throw error;
       }
     },
+
+    // Create lepas sapih
+    async a$createLepasSapih(req) {
+      try {
+        const { data } = await s$lepasSapih.createLepasSapih(req);
+        return data;
+      } catch ({ error }) {
+        throw error;
+      }
+    },
+
+    // Cempe
+    async a$cempe() {
+      try {
+        const { data } = await s$lepasSapih.cempe();
+        this.cempe = data.ternak.list;
+      } catch ({ error }) {
+        this.cempe = [];
+        throw error;
+      }
+    },
+
+    // Get ternak lepas sapih
+    async a$ternakLepasSapih() {
+      try {
+        const { data } = await s$lepasSapih.ternakLepasSapih();
+        this.ternakLepasSapih = data.list;
+      } catch ({ error }) {
+        this.ternakLepasSapih = [];
+        throw error;
+      }
+    },
+
+    // Seleksi ternak
+    async a$seleksiTernak(req) {
+      try {
+        const { data } = await s$lepasSapih.seleksiTernak(req);
+        return data;
+      } catch ({ error }) {
+        throw error;
+      }
+    }
   },
 
   getters: {
     g$lepasSapih: (state) => state.lepasSapih,
     g$kandang: (state) => state.kandang,
+    g$cempe: (state) => state.cempe,
+    g$ternakLepasSapih: (state) => state.ternakLepasSapih,
+    g$statusSeleksi: (state) => state.statusSeleksi,
     g$byPopulasi: (state) => ({
       categories: ["Total", "Total Jantan", "Totoal Betina"],
       series: [
