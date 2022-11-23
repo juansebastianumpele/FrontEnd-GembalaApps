@@ -2,6 +2,11 @@ import { defineStore } from "pinia";
 import * as s$total from "@/services/monitoring/ternak";
 import * as s$daftarkandang from "@/services/monitoring/daftarkandang";
 
+const ubahTanggal = (tanggal) =>
+  new Intl.DateTimeFormat("id-ID", { dateStyle: "short" }).format(
+    new Date(tanggal)
+  );
+
 const u$total = defineStore({
   id: "chart",
   state: () => ({
@@ -160,8 +165,8 @@ const u$total = defineStore({
       length: state.chartFase.length,
     }),
     g$byTimbangan: (state) => ({
-      categories: state.ChartbyTimbangan.map(
-        ({ tanggal_timbang }) => tanggal_timbang.split("T")[0]
+      categories: state.ChartbyTimbangan.map(({ tanggal_timbang }) =>
+        ubahTanggal(tanggal_timbang)
       ),
       series: [
         {
