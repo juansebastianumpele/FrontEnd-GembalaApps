@@ -8,5 +8,9 @@ const list = () => baseApi.get(`${api}/riwayat-lepas-sapih`);
 
 //sumary
 const listLepasSapih = () => baseApi.get(`${api}/lepas-sapih/ternak-dash`);
+const createLepasSapih = (req) => baseApi.post(`${api}/lepas-sapih`, req);
+const cempe = () => baseApi.get(`${api}/kelahiran/data-ternak-kelahiran`);
+const ternakLepasSapih = (req) => baseApi.get(`${api}/lepas-sapih`, req);
+const seleksiTernak = (req) => baseApi.post(`${api}/lepas-sapih/seleksi`, req);
 
-export { list, listLepasSapih };
+export { list, listLepasSapih, createLepasSapih, cempe, ternakLepasSapih, seleksiTernak };

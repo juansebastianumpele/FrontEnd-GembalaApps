@@ -8,9 +8,8 @@ const list = () => baseApi.get(`${api}/riwayat-kelahiran`);
 //ternak kelahiran baru
 const listCempeBaru = () => baseApi.get(`${api}/kelahiran/new-cempe`);
 
-//sumary
-const listKelahiran = () =>
-  baseApi.get(`${api}/kelahiran/data-ternak-kelahiran`);
+// Summary
+const listKelahiran = () => baseApi.get(`${api}/kelahiran/data-ternak-kelahiran`);
 
 //create
 const create = (req) => baseApi.post(`${api}/kelahiran/create`, req);
