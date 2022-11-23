@@ -15,7 +15,6 @@ const u$lepasSapih = defineStore({
       try {
         const { data } = await s$lepasSapih.list();
         this.lepasSapih = data.list;
-        console.log(data.list);
       } catch ({ error }) {
         this.lepasSapih = [];
         throw error;
