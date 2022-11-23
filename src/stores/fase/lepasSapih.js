@@ -11,6 +11,18 @@ const u$lepasSapih = defineStore({
   }),
   actions: {
     //List Lepas Sapih
+    async a$lepasSapihList() {
+      try {
+        const { data } = await s$lepasSapih.list();
+        this.lepasSapih = data.list;
+        console.log(data.list);
+      } catch ({ error }) {
+        this.lepasSapih = [];
+        throw error;
+      }
+    },
+
+    //Summary Lepas Sapih
     async a$listLepasSapih() {
       try {
         const { data } = await s$lepasSapih.listLepasSapih();
