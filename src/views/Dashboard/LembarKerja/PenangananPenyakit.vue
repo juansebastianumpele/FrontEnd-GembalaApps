@@ -282,6 +282,20 @@ export default {
         <div class="col-auto">
           <h3>Daftar {{ pageTitle }}</h3>
         </div>
+        <span class="text-center m-2">
+          <router-link to="penanganan-penyakit">
+            <base-button type="success1" class="btn-lg text-white">
+              Sedang Sakit
+            </base-button>
+          </router-link>
+        </span>
+        <span class="text-center m-2">
+          <router-link to="penanganan-penyakit/riwayat-sakit">
+            <base-button type="secondary" class="btn-lg text-dark">
+              Riwayat Sakit
+            </base-button>
+          </router-link>
+        </span>
         <div class="col text-right">
           <base-button type="success" @click="triggerCreate">
             Tambah {{ pageTitle }}

@@ -339,6 +339,13 @@ const dashboardRoutes = [
           ),
         meta: { requiresAuth: true },
       },
+      {
+        path: "penanganan-penyakit/riwayat-sakit",
+        name: "Riwayat Ternak Sakit",
+        component: () =>
+          import("@/views/Dashboard/LembarKerja/RiwayatSakit.vue"),
+        meta: { requiresAuth: true },
+      },
     ],
   },
 ];
