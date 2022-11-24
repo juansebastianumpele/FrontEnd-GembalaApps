@@ -1,15 +1,20 @@
 import { defineStore } from "pinia";
 import * as s$ternak from "@/services/monitoring/ternak";
 
+const ubahTanggal = (tanggal) =>
+  new Intl.DateTimeFormat("id-ID", { dateStyle: "short" }).format(
+    new Date(tanggal)
+  );
+
 const u$ternak = defineStore({
   id: "ternak",
   state: () => ({
     ternak: [],
-    detailTernak: [],
     statusTernak: [],
     bangsa: [],
     totalTernak: 0,
     perlakuan: [],
+    timbangan: [],
   }),
   actions: {
     async a$ternakList(request) {
@@ -52,26 +57,6 @@ const u$ternak = defineStore({
         throw error;
       }
     },
-    // Detail Ternak by ID Kandang
-    async a$kandangDetail(request) {
-      try {
-        const { data } = await s$ternak.detailKandang(request);
-        this.detailTernak = data.list;
-      } catch ({ error }) {
-        this.detailTernak = {};
-        throw error;
-      }
-    },
-    // Detail Ternak by ID Pakan
-    async a$pakanDetail(request) {
-      try {
-        const { data } = await s$ternak.detailPakan(request);
-        this.detailTernak = data;
-      } catch ({ error }) {
-        this.detailTernak = {};
-        throw error;
-      }
-    },
     // Get status ternak
     async a$statusTernak() {
       try {
@@ -102,15 +87,43 @@ const u$ternak = defineStore({
         throw error;
       }
     },
+    //Get data timbangan
+    async a$byTimbangan(req) {
+      try {
+        const { data } = await s$ternak.listTimbangan(req);
+        this.timbangan = data.list;
+      } catch ({ error }) {
+        this.timbangan = [];
+        throw error;
+      }
+    },
   },
   getters: {
     g$ternakList: (state) => state.ternak,
-    g$detailKandang: (state) => state.detailTernak,
-    g$detailPakan: (state) => state.detailTernak,
     g$totalTernak: (state) => state.totalTernak,
     g$statusTernak: (state) => state.statusTernak,
     g$bangsa: (state) => state.bangsa,
     g$perlakuan: (state) => state.perlakuan,
+    g$byTimbangan: (state) => ({
+      categories: state.timbangan.map(({ tanggal_timbang }) =>
+        ubahTanggal(tanggal_timbang)
+      ),
+      series: [
+        {
+          name: "Bobot",
+          backgroundColor: "rgb(255, 99, 132)",
+          borderColor: "rgb(255, 99, 132)",
+          data: state.timbangan.map(({ berat }) => berat),
+        },
+        {
+          backgroundColor: "rgb(255, 99, 132)",
+          borderColor: "rgb(255, 99, 132)",
+          name: "Suhu",
+          data: state.timbangan.map(({ suhu }) => suhu),
+        },
+      ],
+      length: state.timbangan.length,
+    }),
   },
 });
 

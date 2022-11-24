@@ -4,7 +4,6 @@ import d$ternak from "@/stores/monitoring/ternak";
 import d$dropdown from "@/stores/dropdown";
 import d$kesehatan from "@/stores/monitoring/kesehatan";
 import HcLine from "@/components/HighCharts/Line.vue";
-import d$chart from "@/stores/chart";
 import { ubahTanggal } from "@/utils/locale/ubahTanggal";
 
 import {
@@ -81,9 +80,13 @@ export default {
           th: "Jenis Kelamin",
         },
         {
-          name: "fase",
-          th: "Status",
+          th: "Fase",
           render: ({ fase }) => (fase ? fase.fase : null),
+        },
+        {
+          th: "Status",
+          render: ({ status_ternak }) =>
+            status_ternak ? status_ternak.status_ternak : null,
         },
         {
           name: "umur",
@@ -111,9 +114,13 @@ export default {
     infoTernak: {},
   }),
   computed: {
-    ...mapState(d$ternak, ["g$ternakList", "g$perlakuan", "g$statusTernak"]),
+    ...mapState(d$ternak, [
+      "g$ternakList",
+      "g$perlakuan",
+      "g$statusTernak",
+      "g$byTimbangan",
+    ]),
     ...mapState(d$kesehatan, ["g$riwayatKesehatan"]),
-    ...mapState(d$chart, ["g$byTimbangan"]),
     ...mapState(d$dropdown, [
       "g$ddJenisKelamin",
       "g$ddBangsa",
@@ -144,7 +151,6 @@ export default {
       this.notify(error, false)
     );
     await this.a$ddKandang().catch((error) => this.notify(error, false));
-    // await this.a$ddPakan().catch((error) => this.notify(error, false));
     await this.a$ddListPenyakit().catch((error) => this.notify(error, false));
     await this.a$ddListBetina().catch((error) => this.notify(error, false));
     await this.a$ddListPejantan().catch((error) => this.notify(error, false));
@@ -158,6 +164,7 @@ export default {
       "a$ternakEdit",
       "a$perlakuan",
       "a$statusTernak",
+      "a$byTimbangan",
     ]),
     ...mapActions(d$dropdown, [
       "a$ddBangsa",
@@ -168,7 +175,6 @@ export default {
       "a$ddListBetina",
       "a$ddListPejantan",
     ]),
-    ...mapActions(d$chart, ["a$byTimbangan"]),
     ...mapActions(d$kesehatan, ["a$riwayatKesehatan"]),
     resetImage() {
       this.input.imageUrl = "";
@@ -1234,7 +1240,7 @@ export default {
                     <small class="text-sm mb-1 mt-1">
                       <ol>
                         <li :value="index + 1" class="ml--2">
-                          {{ key.treatment.treatment }}
+                          {{ key.treatment }}
                         </li>
                       </ol>
                     </small>

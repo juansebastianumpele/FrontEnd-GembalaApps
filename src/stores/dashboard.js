@@ -12,6 +12,8 @@ const u$dashboard = defineStore({
     categoriesAdgCempe: [],
     totalKandang: [],
     totalTernak: [],
+    populasi: [],
+    categoriesPopulasi: [],
   }),
 
   actions: {
@@ -100,6 +102,33 @@ const u$dashboard = defineStore({
         throw error;
       }
     },
+
+    async a$populasi() {
+      try {
+        const { data } = await s$dashboard.populasi();
+        this.populasi = Object.values(data.list);
+        console.log(this.populasi);
+        let bulan = Object.keys(data.list);
+        this.categoriesPopulasi = bulan.map((item) => {
+          let split = item.split("-")[1];
+          if (split == "1") return "Jan ";
+          if (split == "2") return "Feb ";
+          if (split == "3") return "Mar ";
+          if (split == "4") return "Apr ";
+          if (split == "5") return "Mei ";
+          if (split == "6") return "Jun ";
+          if (split == "7") return "Jul ";
+          if (split == "8") return "Agu ";
+          if (split == "9") return "Sep ";
+          if (split == "10") return "Okt ";
+          if (split == "11") return "Nov ";
+          if (split == "12") return "Des ";
+        });
+      } catch ({ error }) {
+        this.populasi = [];
+        throw error;
+      }
+    },
   },
 
   getters: {
@@ -160,51 +189,20 @@ const u$dashboard = defineStore({
       ],
     }),
     g$totalPopulasi: (state) => ({
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "Mei",
-        "Jun",
-        "Jul",
-        "Agu",
-        "Sep",
-        "Okt",
-        "Nov",
-        "Des",
-      ],
+      categories: [...state.categoriesPopulasi],
       series: [
         {
           name: "Masuk",
-          data: [
-            ["Jan", 12],
-            ["Feb", 14],
-            ["Mar", 22],
-            ["Apr", 15],
-            ["Mei", 32],
-          ],
+          data: state.populasi.map(({ masuk }) => masuk),
           color: "#006329",
         },
         {
           name: "Mati",
-          data: [
-            ["Jan", 20],
-            ["Feb", 33],
-            ["Mar", 28],
-            ["Apr", 40],
-            ["Mei", 31],
-          ],
+          data: state.populasi.map(({ mati }) => mati),
         },
         {
           name: "Keluar",
-          data: [
-            ["Jan", 16],
-            ["Feb", 26],
-            ["Mar", 28],
-            ["Apr", 43],
-            ["Mei", 22],
-          ],
+          data: state.populasi.map(({ keluar }) => keluar),
         },
       ],
     }),
