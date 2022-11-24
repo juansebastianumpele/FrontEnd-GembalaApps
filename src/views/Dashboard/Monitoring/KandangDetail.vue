@@ -35,12 +35,12 @@ export default {
         {
           name: "bangsa",
           th: "Bangsa",
-          render: ({ bangsa }) => bangsa.bangsa,
+          render: ({ bangsa }) => (bangsa ? bangsa.bangsa : null),
         },
         {
           name: "fase",
           th: "Fase Pemeliharaan",
-          render: ({ fase }) => fase.fase,
+          render: ({ fase }) => (fase ? fase.fase : null),
         },
         {
           name: "kebutuhan_pakan",
