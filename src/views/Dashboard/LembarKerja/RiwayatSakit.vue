@@ -2,10 +2,6 @@
 import { mapActions, mapState } from "pinia";
 
 import d$kesehatan from "@/stores/monitoring/kesehatan";
-import d$ternak from "@/stores/monitoring/ternak";
-import d$kandang from "@/stores/monitoring/daftarkandang";
-import d$penyakit from "@/stores/monitoring/penyakit";
-
 import { ubahTanggal } from "@/utils/locale/ubahTanggal";
 
 export default {
@@ -67,14 +63,14 @@ export default {
       <div class="col-sm">
         <div class="row">
           <span class="text-center m-2">
-            <router-link to="penanganan-penyakit">
+            <router-link to="../penanganan-penyakit">
               <base-button type="success1" class="btn-lg text-white">
                 Penanganan Penyakit
               </base-button>
             </router-link>
           </span>
           <span class="text-center m-2">
-            <router-link to="penanganan-penyakit/langkah-kerja">
+            <router-link to="langkah-kerja">
               <base-button type="secondary" class="btn-lg text-dark">
                 Langkah Kerja
               </base-button>
