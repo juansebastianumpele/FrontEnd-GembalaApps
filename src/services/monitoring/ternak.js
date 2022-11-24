@@ -18,23 +18,8 @@ const listFase = () => baseApi.get(`${api}/fase`);
 const statusTernak = () => baseApi.get(`${api}/status-ternak`);
 
 // Jumlah Ternak
-const listBetina = () => baseApi.get(`${api}/${ternak}?jenis_kelamin=Betina`);
-const listPejantan = () => baseApi.get(`${api}/${ternak}?jenis_kelamin=Jantan`);
-
-// Detail
-const detailKandang = (req) =>
-  baseApi.get(`${api}/${ternak}?id_kandang=${req}`);
-const detailPakan = (req) =>
-  baseApi.get(`${api}/${ternak}/listternakpakan/${req}`);
-
-// Dashboard
-const detailTernak = (req) => baseApi.get(`${api}/${ternak}/users/${req.id}`);
-const totalSehat = () => baseApi.get(`${api}/dashboard/status_kesehatan`);
-const totalJeniskelamin = (req) =>
-  baseApi.get(`${api}/${ternak}/totaljeniskelamin/${req}`);
-const populasi = () => baseApi.get(`${api}/dashboard/populasi`);
-const tabelKandang = (req) => baseApi.get(`${api}/${ternak}/totalberat/${req}`);
-const filterTernak = (req) => baseApi.get(`${api}/${ternak}/listFilter?${req}`);
+const listBetina = () => baseApi.get(`${api}/${ternak}/indukan`);
+const listPejantan = () => baseApi.get(`${api}/${ternak}/pejantan`);
 
 //timbangan
 const listTimbangan = (req) =>
@@ -49,14 +34,6 @@ export {
   del,
   listBangsa,
   listFase,
-  detailKandang,
-  detailPakan,
-  detailTernak,
-  totalSehat,
-  totalJeniskelamin,
-  populasi,
-  tabelKandang,
-  filterTernak,
   listTimbangan,
   statusTernak,
   listPerlakuan,

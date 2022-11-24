@@ -6,6 +6,7 @@ const u$daftarkandang = defineStore({
   state: () => ({
     listkandang: [],
     totalKandang: [],
+    detailKandang: [],
   }),
   actions: {
     async a$kandangDesc(request) {
@@ -57,10 +58,21 @@ const u$daftarkandang = defineStore({
         throw error;
       }
     },
+    // Detail Ternak by ID Kandang
+    async a$kandangDetail(request) {
+      try {
+        const { data } = await s$daftarkandang.detailKandang(request);
+        this.detailKandang = data.list;
+      } catch ({ error }) {
+        this.detailKandang = {};
+        throw error;
+      }
+    },
   },
   getters: {
     g$kandangList: (state) => state.listkandang,
     g$totalKandang: (state) => state.totalKandang,
+    g$detailKandang: (state) => state.detailKandang,
   },
 });
 

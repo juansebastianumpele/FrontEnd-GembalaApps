@@ -81,9 +81,13 @@ export default {
           th: "Jenis Kelamin",
         },
         {
-          name: "fase",
-          th: "Status",
+          th: "Fase",
           render: ({ fase }) => (fase ? fase.fase : null),
+        },
+        {
+          th: "Status",
+          render: ({ status_ternak }) =>
+            status_ternak ? status_ternak.status_ternak : null,
         },
         {
           name: "umur",
