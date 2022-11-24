@@ -425,12 +425,11 @@ export default {
         <div class="col-auto">
           <h3>Daftar {{ pageTitle }}</h3>
         </div>
-        <!-- Tambah ternak manual -->
-        <!-- <div class="col text-right">
+        <div class="col text-right">
           <base-button type="success" @click="modal.addTernak = true">
             Tambah {{ pageTitle }}
           </base-button>
-        </div> -->
+        </div>
       </div>
     </template>
 
