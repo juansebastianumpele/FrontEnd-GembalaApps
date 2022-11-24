@@ -9,7 +9,8 @@ const edit = (req) => baseApi.put(`${api}/${ternak}`, req);
 const del = (req) => baseApi.put(`${api}/${ternak}/keluar`, req);
 
 //perlakuan
-const listPerlakuan = (req) => baseApi.get(`${api}/adaptasi?id_ternak=${req}`);
+const listPerlakuan = (req) =>
+  baseApi.get(`${api}/adaptasi/main?id_ternak=${req}`);
 
 // Dropdown
 const listBangsa = () => baseApi.get(`${api}/bangsa`);
@@ -36,7 +37,8 @@ const tabelKandang = (req) => baseApi.get(`${api}/${ternak}/totalberat/${req}`);
 const filterTernak = (req) => baseApi.get(`${api}/${ternak}/listFilter?${req}`);
 
 //timbangan
-const listTimbangan = (req) => baseApi.get(`${api}/${timbangan}?id_ternak=${req}`);
+const listTimbangan = (req) =>
+  baseApi.get(`${api}/${timbangan}?id_ternak=${req}`);
 
 export {
   listBetina,

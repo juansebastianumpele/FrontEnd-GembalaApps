@@ -1234,7 +1234,7 @@ export default {
                     <small class="text-sm mb-1 mt-1">
                       <ol>
                         <li :value="index + 1" class="ml--2">
-                          {{ key.treatment.treatment }}
+                          {{ key.treatment }}
                         </li>
                       </ol>
                     </small>
