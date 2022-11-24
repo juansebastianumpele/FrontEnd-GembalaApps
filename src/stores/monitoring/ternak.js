@@ -1,6 +1,11 @@
 import { defineStore } from "pinia";
 import * as s$ternak from "@/services/monitoring/ternak";
 
+const ubahTanggal = (tanggal) =>
+  new Intl.DateTimeFormat("id-ID", { dateStyle: "short" }).format(
+    new Date(tanggal)
+  );
+
 const u$ternak = defineStore({
   id: "ternak",
   state: () => ({
@@ -9,6 +14,7 @@ const u$ternak = defineStore({
     bangsa: [],
     totalTernak: 0,
     perlakuan: [],
+    timbangan: [],
   }),
   actions: {
     async a$ternakList(request) {
@@ -81,6 +87,16 @@ const u$ternak = defineStore({
         throw error;
       }
     },
+    //Get data timbangan
+    async a$byTimbangan(req) {
+      try {
+        const { data } = await s$ternak.listTimbangan(req);
+        this.timbangan = data.list;
+      } catch ({ error }) {
+        this.timbangan = [];
+        throw error;
+      }
+    },
   },
   getters: {
     g$ternakList: (state) => state.ternak,
@@ -88,6 +104,26 @@ const u$ternak = defineStore({
     g$statusTernak: (state) => state.statusTernak,
     g$bangsa: (state) => state.bangsa,
     g$perlakuan: (state) => state.perlakuan,
+    g$byTimbangan: (state) => ({
+      categories: state.timbangan.map(({ tanggal_timbang }) =>
+        ubahTanggal(tanggal_timbang)
+      ),
+      series: [
+        {
+          name: "Bobot",
+          backgroundColor: "rgb(255, 99, 132)",
+          borderColor: "rgb(255, 99, 132)",
+          data: state.timbangan.map(({ berat }) => berat),
+        },
+        {
+          backgroundColor: "rgb(255, 99, 132)",
+          borderColor: "rgb(255, 99, 132)",
+          name: "Suhu",
+          data: state.timbangan.map(({ suhu }) => suhu),
+        },
+      ],
+      length: state.timbangan.length,
+    }),
   },
 });
 
