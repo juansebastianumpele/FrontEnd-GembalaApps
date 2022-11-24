@@ -71,6 +71,17 @@ const u$kesehatan = defineStore({
         throw error;
       }
     },
+
+    // Riwayat Kesehatan
+    async a$riwayatKesehatanList() {
+      try {
+        const { data } = await s$kesehatan.listRiwayatKesehatan();
+        this.riwayatKesehatan = data.list;
+      } catch ({ error }) {
+        this.riwayatKesehatan = [];
+        throw error;
+      }
+    },
   },
   getters: {
     g$kesehatanList: (state) => state.kesehatan,

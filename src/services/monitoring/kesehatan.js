@@ -13,5 +13,15 @@ const detailKesehatan = (req) =>
   baseApi.get(`${api}/kesehatan/ternak-sakit?id_penyakit=${req}`);
 const riwayatKesehatan = (req) =>
   baseApi.get(`${api}/riwayat-kesehatan?id_ternak=${req}`);
+const listRiwayatKesehatan = () => baseApi.get(`${api}/riwayat-kesehatan`);
 
-export { list, add, edit, del, detailKesehatan, listTotal, riwayatKesehatan };
+export {
+  list,
+  add,
+  edit,
+  del,
+  detailKesehatan,
+  listTotal,
+  riwayatKesehatan,
+  listRiwayatKesehatan,
+};
