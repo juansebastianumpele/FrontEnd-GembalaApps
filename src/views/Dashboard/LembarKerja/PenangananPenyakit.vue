@@ -28,20 +28,22 @@ export default {
           th: "ID Ternak",
         },
         {
+          name: "penyakit",
+          th: "Penyakit",
+          render: ({ penyakit }) => penyakit.nama_penyakit,
+        },
+        {
           name: "gejala",
           th: "Gejala",
-          render: ({ gejala }) => (gejala ? gejala : null),
         },
         {
           name: "penanganan",
           th: "Penaganan",
-          render: ({ penanganan }) => (penanganan ? penanganan : null),
         },
         {
           name: "tanggal_sembuh",
           th: "Tanggal Sembuh",
-          render: ({ tanggal_sembuh }) =>
-            tanggal_sembuh ? ubahTanggal(tanggal_sembuh) : null,
+          render: ({ tanggal_sembuh }) => tanggal_sembuh ? ubahTanggal(tanggal_sembuh) : null,
         },
       ],
       actions: [
