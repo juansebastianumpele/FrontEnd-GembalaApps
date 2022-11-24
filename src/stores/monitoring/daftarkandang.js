@@ -5,19 +5,10 @@ const u$daftarkandang = defineStore({
   id: "kandang",
   state: () => ({
     listkandang: [],
-    totalKandang: [],
     detailKandang: [],
   }),
   actions: {
-    async a$kandangDesc(request) {
-      try {
-        const { data } = await s$daftarkandang.list(request);
-        this.listkandang = data;
-      } catch ({ error }) {
-        this.listkandang = [];
-        throw error;
-      }
-    },
+    //list kandang
     async a$kandangList() {
       try {
         const { data, total } = await s$daftarkandang.listKandang();
@@ -28,6 +19,8 @@ const u$daftarkandang = defineStore({
         throw error;
       }
     },
+
+    //tambah kandang
     async a$kandangAdd(request) {
       try {
         await s$daftarkandang.add(request);
@@ -35,6 +28,8 @@ const u$daftarkandang = defineStore({
         throw error;
       }
     },
+
+    //edit kandang
     async a$kandangEdit(request) {
       try {
         await s$daftarkandang.edit(request);
@@ -42,6 +37,8 @@ const u$daftarkandang = defineStore({
         throw error;
       }
     },
+
+    //delete kandang
     async a$kandangDelete(request) {
       try {
         await s$daftarkandang.del(request);
@@ -49,15 +46,7 @@ const u$daftarkandang = defineStore({
         throw error;
       }
     },
-    async a$totalKandang() {
-      try {
-        const { data } = await s$daftarkandang.listKandang();
-        this.totalKandang = data.total;
-      } catch ({ error }) {
-        this.totalKandang = [];
-        throw error;
-      }
-    },
+
     // Detail Ternak by ID Kandang
     async a$kandangDetail(request) {
       try {
@@ -71,7 +60,6 @@ const u$daftarkandang = defineStore({
   },
   getters: {
     g$kandangList: (state) => state.listkandang,
-    g$totalKandang: (state) => state.totalKandang,
     g$detailKandang: (state) => state.detailKandang,
   },
 });

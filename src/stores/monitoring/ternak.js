@@ -84,7 +84,6 @@ const u$ternak = defineStore({
   },
   getters: {
     g$ternakList: (state) => state.ternak,
-    g$detailPakan: (state) => state.detailTernak,
     g$totalTernak: (state) => state.totalTernak,
     g$statusTernak: (state) => state.statusTernak,
     g$bangsa: (state) => state.bangsa,
