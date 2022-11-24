@@ -600,7 +600,7 @@ export default {
                     :options="g$ddKandang"
                     label="name"
                     track-by="id"
-                    placeholder="Pilih andang"
+                    placeholder="Pilih kandang"
                     :show-labels="false"
                   />
                 </base-input>

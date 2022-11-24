@@ -13,23 +13,12 @@ const dashboardRoutes = [
         component: () => import("@/views/Dashboard/Chart.vue"),
         meta: { requiresAuth: true, hideFooter: true },
       },
-      {
-        path: "monitor",
-        name: "Monitor",
-        component: () => import("@/views/Dashboard/Monitor.vue"),
-        meta: { requiresAuth: true, hideFooter: true, monitoring: true },
-      },
-      // {
-      //   path: "filter",
-      //   name: "Filter",
-      //   component: () => import("@/views/Dashboard/DetailFilter.vue"),
-      //   meta: { requiresAuth: true, hideFooter: true },
-      // },
     ],
   },
   {
     path: "/monitoring",
     component: DashboardLayout,
+    redirect: { name: "Home" },
     children: [
       {
         path: "data-kandang",
@@ -115,6 +104,7 @@ const dashboardRoutes = [
   {
     path: "/user",
     component: DashboardLayout,
+    redirect: { name: "Home" },
     children: [
       {
         path: "profile",
@@ -127,6 +117,7 @@ const dashboardRoutes = [
   {
     path: "/fase",
     component: DashboardLayout,
+    redirect: { name: "Home" },
     children: [
       {
         path: "pemasukan",
@@ -308,6 +299,7 @@ const dashboardRoutes = [
     path: "/lembar-kerja",
     name: "Lembar Kerja",
     component: DashboardLayout,
+    redirect: { name: "Home" },
     children: [
       {
         path: "pemeliharaan",

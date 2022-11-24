@@ -73,11 +73,6 @@ export default {
           color: "warning",
           event: "ubah",
         },
-        {
-          text: "Hapus",
-          color: "danger",
-          event: "hapus",
-        },
       ],
     },
     infoTernak: false,
