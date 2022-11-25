@@ -520,7 +520,7 @@ export default {
                     class="text-dark text-center mt--3 font-weight-bolder"
                     style="font-size: 12px; font-family: inherit"
                   >
-                    Terjual
+                    Dijual
                   </p>
                 </div>
               </div>
