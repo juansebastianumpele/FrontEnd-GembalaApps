@@ -164,6 +164,13 @@ export default {
             </base-button>
           </router-link>
         </li>
+        <li>
+          <router-link to="riwayat-kesehatan" >
+          <base-button type="secondary" class="btn-lg ml-3 text-dark">
+              Riwayat Ternak Sakit
+            </base-button>
+          </router-link>
+        </li>
       </nav>
       <div class="row align-items-center">
         <div class="col-auto">

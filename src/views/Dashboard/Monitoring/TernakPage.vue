@@ -286,10 +286,11 @@ export default {
           id_kandang: kandang ? kandang.id : null,
         };
         await this.schema.validate(data);
-        console.log(data);
-        await this.a$ternakEdit(data);
+        const editTernak = await this.a$ternakEdit(data);
         this.modal.ubahTernak = false;
-        this.notify(`Edit ${this.pageTitle} Sukses!`);
+        this.notify(
+          `Ternak dengan ID Ternak ${editTernak.id} berhasil diubah`
+        );
       } catch (error) {
         this.notify(error, false);
       } finally {
@@ -304,10 +305,12 @@ export default {
           status_keluar,
           tanggal_keluar: new Date(),
         };
-        await this.a$ternakDelete(data);
+        const deleteTernak = await this.a$ternakDelete(data);
         console.log(data);
         this.modal.confirm = false;
-        this.notify(`Hapus ${this.pageTitle} Sukses!`);
+        this.notify(
+          `Ternak dengan ID Ternak ${deleteTernak.id} berhasil dihapus`
+        );
       } catch (error) {
         this.notify(error, false);
       } finally {

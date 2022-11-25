@@ -45,14 +45,16 @@ const u$ternak = defineStore({
     },
     async a$ternakEdit(request) {
       try {
-        await s$ternak.edit(request);
+        const editTernak = await s$ternak.edit(request);
+        return editTernak.data;
       } catch ({ error }) {
         throw error;
       }
     },
     async a$ternakDelete(request) {
       try {
-        await s$ternak.del(request);
+        const deleteTernak = await s$ternak.del(request);
+        return deleteTernak.data;
       } catch ({ error }) {
         throw error;
       }
