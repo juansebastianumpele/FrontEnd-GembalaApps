@@ -20,12 +20,12 @@ export default {
 
     async function onSubmit(values) {
       try {
-        const register = await auth.a$register(values);
-        if (register === "Register success!") {
-          notify(register);
-          router.push({ name: "Verify" });
+        const forgotPassword = await auth.a$forgotPassword(values);
+        if (forgotPassword === "Link Reset Password Dikirim!") {
+          notify(forgotPassword);
+          router.push({ name: "Login" });
         } else {
-          throw new Error(register);
+          throw new Error(forgotPassword);
         }
       } catch (error) {
         notify(error, false);
@@ -33,15 +33,7 @@ export default {
     }
 
     const schema = y$object({
-      nama_lengkap: y$string().required().label("Nama lengkap"),
-      username: y$string().required().label("Nama Pengguna"),
       email: y$string().required().email().label("Email"),
-      no_hp: y$number().required().label("Nomor Telepon"),
-      password: y$string().min(5).required().label("Password"),
-      repeat_password: y$string()
-        .oneOf([y$ref("password")], "Password Tidak Cocok")
-        .required()
-        .label("Konfirmasi Password"),
     });
 
     return {

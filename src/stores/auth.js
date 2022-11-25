@@ -28,7 +28,8 @@ const useAuthStore = defineStore({
   actions: {
     async a$setUserInfo() {
       try {
-        const { id_user, role, nama_pengguna, status, id_peternakan } = certDetail();
+        const { id_user, role, nama_pengguna, status, id_peternakan } =
+          certDetail();
         this.id = id_user;
         this.name = nama_pengguna;
         this.role = role;
@@ -51,8 +52,8 @@ const useAuthStore = defineStore({
         setCk("CERT", data.token, { datetime: d(data.expiresAt) });
         this.a$setUserInfo();
 
-        if (this.userInfo.role == 'superadmin') {
-          return "Login Superadmin Berhasil!"
+        if (this.userInfo.role == "superadmin") {
+          return "Login Superadmin Berhasil!";
         }
 
         return "Login Berhasil!";
@@ -77,6 +78,15 @@ const useAuthStore = defineStore({
         return "Register Berhasil!";
       } catch ({ error, message }) {
         throw (error || message) ?? "Register Gagal!";
+      }
+    },
+
+    async a$forgotPassword(request) {
+      try {
+        await s$auth.forgotPassword(request);
+        return "Link Reset Password Dikirim!";
+      } catch ({ error, message }) {
+        throw (error || message) ?? "Link Reset Password Gagal Dikirim!";
       }
     },
   },
