@@ -263,7 +263,7 @@ export default {
                           style="font-size: x-large"
                         >
                           {{
-                            g$totalByFase[4] ? g$totalByFase[4].total_ternak : 0
+                            g$totalByFase[3] ? g$totalByFase[3].total_ternak : 0
                           }}
                         </div>
                         <div class="col-3 text-success">Ekor</div>
@@ -290,7 +290,7 @@ export default {
                           style="font-size: x-large"
                         >
                           {{
-                            g$totalByFase[5] ? g$totalByFase[5].total_ternak : 0
+                            g$totalByFase[4] ? g$totalByFase[4].total_ternak : 0
                           }}
                         </div>
                         <div class="col-3 text-success">Ekor</div>
@@ -317,7 +317,7 @@ export default {
                           style="font-size: x-large"
                         >
                           {{
-                            g$totalByFase[6] ? g$totalByFase[6].total_ternak : 0
+                            g$totalByFase[5] ? g$totalByFase[5].total_ternak : 0
                           }}
                         </div>
                         <div class="col-3 text-success">Ekor</div>
