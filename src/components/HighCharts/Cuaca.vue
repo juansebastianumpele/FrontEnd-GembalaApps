@@ -60,6 +60,27 @@ export default {
       // from m/s to km/h
       return Math.round(this.cuaca.wind.speed * 3.6);
     },
+    arahAngin() {
+      if (this.cuaca.wind.deg >= 0 && this.cuaca.wind.deg <= 22.5) {
+        return "Utara ↓";
+      } else if (this.cuaca.wind.deg > 22.5 && this.cuaca.wind.deg <= 67.5) {
+        return "Timur Laut ↙";
+      } else if (this.cuaca.wind.deg > 67.5 && this.cuaca.wind.deg <= 112.5) {
+        return "Timur ←";
+      } else if (this.cuaca.wind.deg > 112.5 && this.cuaca.wind.deg <= 157.5) {
+        return "Tenggara ↖";
+      } else if (this.cuaca.wind.deg > 157.5 && this.cuaca.wind.deg <= 202.5) {
+        return "Selatan ↑";
+      } else if (this.cuaca.wind.deg > 202.5 && this.cuaca.wind.deg <= 247.5) {
+        return "Barat Daya ↗";
+      } else if (this.cuaca.wind.deg > 247.5 && this.cuaca.wind.deg <= 292.5) {
+        return "Barat →";
+      } else if (this.cuaca.wind.deg > 292.5 && this.cuaca.wind.deg <= 337.5) {
+        return "Barat Laut ↘";
+      } else if (this.cuaca.wind.deg > 337.5 && this.cuaca.wind.deg <= 360) {
+        return "Utara ↓";
+      }
+    },
     deskripsi() {
       return this.cuaca.weather[0].description;
     },
@@ -142,7 +163,7 @@ export default {
           {{ tekanan }} hPa
         </div>
         <div class="col-6 text-white">
-          <i class="fa-solid fa-wind"></i> Angin: {{ kecepatanAngin }} Km/jam
+          <i class="fa-solid fa-wind"></i> Angin: {{ kecepatanAngin }} Km/jam dari {{ arahAngin }}
         </div>
       </div>
     </div>
