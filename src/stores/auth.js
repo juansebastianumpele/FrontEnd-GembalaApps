@@ -84,9 +84,9 @@ const useAuthStore = defineStore({
     async a$forgotPassword(request) {
       try {
         await s$auth.forgotPassword(request);
-        return "Link Reset Password Dikirim!";
+        return "Password baru dikirim ke email anda!";
       } catch ({ error, message }) {
-        throw (error || message) ?? "Link Reset Password Gagal Dikirim!";
+        throw (error || message) ?? "Gagal melakuka reset password!";
       }
     },
   },

@@ -21,7 +21,7 @@ export default {
     async function onSubmit(values) {
       try {
         const forgotPassword = await auth.a$forgotPassword(values);
-        if (forgotPassword === "Link Reset Password Dikirim!") {
+        if (forgotPassword === "Password baru dikirim ke email anda!") {
           notify(forgotPassword);
           router.push({ name: "Login" });
         } else {
