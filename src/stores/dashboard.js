@@ -107,7 +107,6 @@ const u$dashboard = defineStore({
       try {
         const { data } = await s$dashboard.populasi();
         this.populasi = Object.values(data.list);
-        console.log(this.populasi);
         let bulan = Object.keys(data.list);
         this.categoriesPopulasi = bulan.map((item) => {
           let split = item.split("-")[1];
@@ -192,13 +191,13 @@ const u$dashboard = defineStore({
       categories: [...state.categoriesPopulasi],
       series: [
         {
-          name: "Masuk",
-          data: state.populasi.map(({ masuk }) => masuk),
+          name: "Populasi",
+          data: state.populasi.map(({ populasi }) => populasi),
           color: "#006329",
         },
         {
-          name: "Mati",
-          data: state.populasi.map(({ mati }) => mati),
+          name: "Masuk",
+          data: state.populasi.map(({ masuk }) => masuk),
         },
         {
           name: "Keluar",
