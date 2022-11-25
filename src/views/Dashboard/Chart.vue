@@ -517,8 +517,8 @@ export default {
                     {{ g$totalByStatusKeluar.total_dijual }}
                   </p>
                   <p
-                    class="text-dark text-center mt--3"
-                    style="font-size: 13px; font-family: inherit"
+                    class="text-dark text-center mt--3 font-weight-bolder"
+                    style="font-size: 12px; font-family: inherit"
                   >
                     Terjual
                   </p>
@@ -530,8 +530,8 @@ export default {
                     {{ g$totalByStatusKeluar.total_disembelih }}
                   </p>
                   <p
-                    class="text-dark text-center mt--3"
-                    style="font-size: 13px; font-family: inherit"
+                    class="text-dark text-center mt--3 font-weight-bolder"
+                    style="font-size: 12px; font-family: inherit"
                   >
                     Disembelih
                   </p>
@@ -543,8 +543,8 @@ export default {
                     {{ g$totalByStatusKeluar.total_mati }}
                   </p>
                   <p
-                    class="text-dark text-center mt--3"
-                    style="font-size: 13px; font-family: inherit"
+                    class="text-dark text-center mt--3 font-weight-bolder"
+                    style="font-size: 12px; font-family: inherit"
                   >
                     Mati
                   </p>
