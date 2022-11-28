@@ -510,14 +510,14 @@ export default {
                 </h1>
               </div>
             </div>
-            <div class="row mt-3">
+            <div class="row mt-3 mb--3">
               <div class="col-sm-4">
                 <div class="bg-white rounded">
                   <p class="text-lg text-dark text-center font-weight-bolder">
                     {{ g$totalByStatusKeluar.total_dijual }}
                   </p>
                   <p
-                    class="text-dark text-center mt--3 font-weight-bolder"
+                    class="text-dark text-center mt--3 pb-3 font-weight-bolder"
                     style="font-size: 12px; font-family: inherit"
                   >
                     Dijual
@@ -530,7 +530,7 @@ export default {
                     {{ g$totalByStatusKeluar.total_disembelih }}
                   </p>
                   <p
-                    class="text-dark text-center mt--3 font-weight-bolder"
+                    class="text-dark text-center mt--3 pb-3 font-weight-bolder"
                     style="font-size: 12px; font-family: inherit"
                   >
                     Disembelih
@@ -543,7 +543,7 @@ export default {
                     {{ g$totalByStatusKeluar.total_mati }}
                   </p>
                   <p
-                    class="text-dark text-center mt--3 font-weight-bolder"
+                    class="text-dark text-center mt--3 pb-3 font-weight-bolder"
                     style="font-size: 12px; font-family: inherit"
                   >
                     Mati
