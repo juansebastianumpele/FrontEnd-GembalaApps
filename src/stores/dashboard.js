@@ -64,18 +64,18 @@ const u$dashboard = defineStore({
         let bulan = Object.keys(data);
         this.categoriesAdgCempe = bulan.map((item) => {
           let split = item.split("-")[1];
-          if (split == "1") return "Jan " + item.split("-")[0];
-          if (split == "2") return "Feb " + item.split("-")[0];
-          if (split == "3") return "Mar " + item.split("-")[0];
-          if (split == "4") return "Apr " + item.split("-")[0];
-          if (split == "5") return "Mei " + item.split("-")[0];
-          if (split == "6") return "Jun " + item.split("-")[0];
-          if (split == "7") return "Jul " + item.split("-")[0];
-          if (split == "8") return "Agu " + item.split("-")[0];
-          if (split == "9") return "Sep " + item.split("-")[0];
-          if (split == "10") return "Okt " + item.split("-")[0];
-          if (split == "11") return "Nov " + item.split("-")[0];
-          if (split == "12") return "Des " + item.split("-")[0];
+          if (split == "1") return "Jan ";
+          if (split == "2") return "Feb ";
+          if (split == "3") return "Mar ";
+          if (split == "4") return "Apr ";
+          if (split == "5") return "Mei ";
+          if (split == "6") return "Jun ";
+          if (split == "7") return "Jul ";
+          if (split == "8") return "Agu ";
+          if (split == "9") return "Sep ";
+          if (split == "10") return "Okt ";
+          if (split == "11") return "Nov ";
+          if (split == "12") return "Des ";
         });
       } catch ({ error }) {
         this.totalAdgCempe = [];
