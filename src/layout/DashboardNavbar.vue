@@ -51,11 +51,16 @@
           <a href="#" class="nav-link pr-0" @click.prevent>
             <div class="media align-items-center">
               <span class="avatar avatar-sm rounded-circle">
-                <img alt="Image placeholder" :src="siteMeta.profile" />
+                <img
+                  alt="Image placeholder"
+                  :src="
+                    g$userDetail.image ? g$userDetail.image : siteMeta.profile
+                  "
+                />
               </span>
               <div class="media-body ml-2 d-none d-lg-block">
                 <span class="mb-0 text-sm font-weight-bold">{{
-                  userInfo.name ?? "User"
+                  g$userDetail.nama_pengguna ?? "User"
                 }}</span>
               </div>
             </div>
@@ -82,8 +87,10 @@
 import BaseNav from "@/components/Navbar/BaseNav.vue";
 import RouteBreadcrumb from "@/components/Breadcrumb/RouteBreadCrumb.vue";
 
-import { mapActions } from "pinia";
+import { mapActions, mapState } from "pinia";
 import useAuthStore from "@/stores/auth";
+
+import d$user from "@/stores/user";
 
 export default {
   components: {
@@ -110,9 +117,14 @@ export default {
       const { name } = this.$route;
       return this.capitalizeFirstLetter(name);
     },
+    ...mapState(d$user, ["g$userDetail"]),
+  },
+  async mounted() {
+    await this.a$userDetail();
   },
   methods: {
     ...mapActions(useAuthStore, ["a$logout"]),
+    ...mapActions(d$user, ["a$userDetail"]),
     async Logout() {
       await this.a$logout();
       this.notify("Logout Berhasil!");
