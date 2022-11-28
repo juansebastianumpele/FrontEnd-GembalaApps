@@ -1,6 +1,7 @@
 const verifyRoutes = {
   path: "/verify",
   name: "Verify",
+  component: () => import("@/views/Auth/VerifyView.vue"),
   children: [
     {
       path: "success-verify",

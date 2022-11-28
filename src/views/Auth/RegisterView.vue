@@ -20,6 +20,7 @@ export default {
 
     async function onSubmit(values) {
       try {
+        console.log(values);
         const register = await auth.a$register(values);
         if (register === "Register Berhasil!") {
           notify(register);
@@ -32,16 +33,18 @@ export default {
       }
     }
 
+
     const schema = y$object({
-      nama_lengkap: y$string().required().label("Nama lengkap"),
-      username: y$string().required().label("Nama Pengguna"),
+      nama_pengguna: y$string().min(4).max(30).required().label("Nama pengguna"),
       email: y$string().required().email().label("Email"),
-      no_hp: y$number().required().label("Nomor Telepon"),
-      password: y$string().min(5).required().label("Password"),
-      repeat_password: y$string()
-        .oneOf([y$ref("password")], "Password Tidak Cocok")
+      nomor_telepon: y$string().required().label("Nomor Telepon"),
+      alamat: y$string().required().label("Alamat"),
+      nama_peternakan: y$string().required().label("Nama Peternakan"),
+      kata_sandi: y$string().min(5).required().label("Kata Sandi"),
+      ulangi_kata_sandi: y$string()
+        .oneOf([y$ref("kata_sandi")], "Kata Sandi Tidak Cocok")
         .required()
-        .label("Konfirmasi Password"),
+        .label("Ulangi Kata Sandi"),
     });
 
     return {
@@ -65,20 +68,12 @@ export default {
             </div>
             <form-comp :validation-schema="schema" @submit="onSubmit">
               <base-input
-                name="nama_lengkap"
+                name="nama_pengguna"
                 form-classes="input-group-alternative"
-                label="Nama Lengkap"
-                placeholder="Nama Lengkap"
-                addon-left-icon="fas fa-user"
-              >
-              </base-input>
-
-              <base-input
-                name="username"
-                form-classes="input-group-alternative"
+                label="Nama Pengguna (Alfanumerik)"
                 placeholder="Nama Pengguna"
-                label="Nama Pengguna"
                 addon-left-icon="fas fa-user"
+                required
               >
               </base-input>
 
@@ -89,18 +84,31 @@ export default {
                 label="Email"
                 addon-left-icon="fas fa-envelope"
                 focused
+                required
               >
               </base-input>
 
               <base-input
-                name="no_hp"
+                name="nomor_telepon"
                 form-classes="input-group-alternative"
                 placeholder="Nomor Telepon"
                 label="Nomor Telepon"
                 addon-left-icon="fas fa-phone"
                 focused
+                required
               >
               </base-input>
+
+              <base-input
+                name="nama_peternakan"
+                form-classes="input-group-alternative"
+                label="Nama Peternakan"
+                placeholder="Nama Peternakan"
+                addon-left-icon="fas fa-house"
+                required
+              >
+              </base-input>
+
               <base-input
                 name="alamat"
                 form-classes="input-group-alternative"
@@ -108,28 +116,31 @@ export default {
                 label="Alamat"
                 addon-left-icon="fas fa-location-arrow"
                 focused
+                required
               >
               </base-input>
 
               <base-input
-                name="password"
+                name="kata_sandi"
                 form-classes="input-group-alternative"
-                placeholder="Password"
-                label="Password"
+                placeholder="Kata Sandi"
+                label="Kata Sandi"
                 type="password"
                 addon-left-icon="fas fa-lock"
                 password
+                required
               >
               </base-input>
 
               <base-input
-                name="repeat_password"
+                name="ulangi_kata_sandi"
                 form-classes="input-group-alternative"
-                placeholder="Repeat Password"
-                label="Konfirmasi Password"
+                placeholder="Ulangi Kata Sandi"
+                label="Ulangi Kata Sandi"
                 type="password"
                 addon-left-icon="fas fa-lock"
                 password
+                required
               >
               </base-input>
               <div class="text-center">
