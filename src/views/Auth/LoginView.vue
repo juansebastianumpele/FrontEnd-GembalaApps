@@ -82,10 +82,21 @@ export default {
                   Masuk
                 </base-button>
               </div>
-              <div class="text-center">
-                <router-link to="/auth/reset" class="text-success">
-                  <small>Lupa Kata Sandi?</small>
+              <div class="text-center mt-4">
+                <div>
+                <span class="text-muted"
+                  ><small>Belum Punya Akun? </small></span
+                >
+                <router-link to="/auth/register" class="text-primary">
+                  <small>Daftar Disini</small>
                 </router-link>
+                </div>
+
+                <div>
+                <router-link to="/auth/reset" class="text-primary">
+                  <small>Lupa Password?</small>
+                </router-link>
+                </div>
               </div>
             </form-comp>
           </div>
