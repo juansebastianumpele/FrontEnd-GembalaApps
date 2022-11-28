@@ -41,6 +41,7 @@ export default {
       changePw: false,
       editProfile: false,
       daftarBod: false,
+      hapusAkun: false,
     },
   }),
   computed: {
@@ -71,6 +72,7 @@ export default {
       "a$userDetail",
       "a$userChangeProfile",
       "a$userRegisterBod",
+      "a$hapusAkun",
     ]),
     async clearInput() {
       this.input = {
@@ -136,10 +138,24 @@ export default {
         console.log(data);
         this.modal.editProfile = false;
         this.notify("Edit Profil Sukses!");
+        this.a$userDetail();
       } catch (error) {
         this.notify(error, false);
-      } finally {
+      }
+    },
+    async hapusAkun() {
+      try {
+        const { password } = this.input;
+        const data = {
+          kata_sandi: password,
+        };
+        await this.a$hapusAkun(data);
+        console.log(data);
+        this.modal.hapusAkun = false;
+        this.notify("Hapun akun berhasil!");
         this.a$userDetail();
+      } catch (error) {
+        this.notify(error, false);
       }
     },
     handleFileUpload() {
@@ -155,12 +171,7 @@ export default {
   <main-layout :title="pageTitle">
     <template #header>
       <div class="text-center">
-        <img
-          :src="siteMeta.profile"
-          alt="profile"
-          class="rounded-circle"
-          style="width: 200px; height: 200px"
-        />
+        <img :src="siteMeta.profile" alt="profile" class="rounded-circle" style="width: 200px; height: 200px" />
       </div>
       <div class="row align-items-center">
         <div class="col">
@@ -176,6 +187,9 @@ export default {
           <base-button type="warning" @click="modal.changePw = true">
             Ganti Sandi
           </base-button>
+          <base-button type="danger" @click="modal.hapusAkun = true">
+            Hapus Akun
+          </base-button>
         </div>
       </div>
     </template>
@@ -183,79 +197,29 @@ export default {
       <form-comp :validation-schema="schema">
         <div class="row">
           <div class="col-6">
-            <field-form
-              v-slot="{ field }"
-              v-model="g$userDetail.nama_pengguna"
-              type="text"
-              name="nama_pengguna"
-            >
-              <base-input
-                v-bind="field"
-                placeholder="Nama Pengguna"
-                label="Nama Penguna"
-                disabled
-              ></base-input>
+            <field-form v-slot="{ field }" v-model="g$userDetail.nama_pengguna" type="text" name="nama_pengguna">
+              <base-input v-bind="field" placeholder="Nama Pengguna" label="Nama Penguna" disabled></base-input>
             </field-form>
           </div>
           <div class="col-6">
-            <field-form
-              v-slot="{ field }"
-              v-model="g$userPeternakan.nama_peternakan"
-              type="text"
-              name="nama_peternakan"
-            >
-              <base-input
-                v-bind="field"
-                placeholder="Nama Peternakan"
-                label="Nama Peternakan"
-                disabled
-              ></base-input>
+            <field-form v-slot="{ field }" v-model="g$userPeternakan.nama_peternakan" type="text"
+              name="nama_peternakan">
+              <base-input v-bind="field" placeholder="Nama Peternakan" label="Nama Peternakan" disabled></base-input>
             </field-form>
           </div>
           <div class="col-6">
-            <field-form
-              v-slot="{ field }"
-              v-model.number="g$userDetail.email"
-              type="email"
-              name="email"
-            >
-              <base-input
-                v-bind="field"
-                placeholder="Email"
-                type="email"
-                label="Email"
-                disabled
-              ></base-input>
+            <field-form v-slot="{ field }" v-model.number="g$userDetail.email" type="email" name="email">
+              <base-input v-bind="field" placeholder="Email" type="email" label="Email" disabled></base-input>
             </field-form>
           </div>
           <div class="col-6">
-            <field-form
-              v-slot="{ field }"
-              v-model="g$userDetail.nomor_telepon"
-              type="number"
-              name="nomor_telepon"
-            >
-              <base-input
-                v-bind="field"
-                placeholder="Nomor Telepon"
-                label="Nomor Telepon"
-                disabled
-              ></base-input>
+            <field-form v-slot="{ field }" v-model="g$userDetail.nomor_telepon" type="number" name="nomor_telepon">
+              <base-input v-bind="field" placeholder="Nomor Telepon" label="Nomor Telepon" disabled></base-input>
             </field-form>
           </div>
           <div class="col-12">
-            <field-form
-              v-slot="{ field }"
-              v-model="g$userPeternakan.alamat"
-              type="text"
-              name="alamat"
-            >
-              <base-input
-                v-bind="field"
-                placeholder="Alamat"
-                label="Alamat"
-                disabled
-              ></base-input>
+            <field-form v-slot="{ field }" v-model="g$userPeternakan.alamat" type="text" name="alamat">
+              <base-input v-bind="field" placeholder="Alamat" label="Alamat" disabled></base-input>
             </field-form>
           </div>
         </div>
@@ -273,20 +237,9 @@ export default {
             <div class="row">
               <!-- Email BoD -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.email"
-                  type="email"
-                  name="email"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="email"
-                    placeholder="Email"
-                    label="Email Akun Board of Directors"
-                    addon-left-icon="fas fa-envelope"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.email" type="email" name="email">
+                  <base-input v-bind="field" type="email" placeholder="Email" label="Email Akun Board of Directors"
+                    addon-left-icon="fas fa-envelope" required></base-input>
                 </field-form>
               </div>
             </div>
@@ -311,80 +264,34 @@ export default {
           <form-comp v-if="modal.editProfile" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.nama_pengguna"
-                  type="text"
-                  name="nama_pengguna"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="text"
-                    placeholder="Nama Pengguna"
-                    label="Nama Penguna"
-                    addon-left-icon="fas fa-user"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.nama_pengguna" type="text" name="nama_pengguna">
+                  <base-input v-bind="field" type="text" placeholder="Nama Pengguna" label="Nama Penguna"
+                    addon-left-icon="fas fa-user"></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.nomor_telepon"
-                  type="text"
-                  name="nomo_telepon"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="text"
-                    placeholder="Nomor Telepon"
-                    label="Nomor Telepon"
-                    addon-left-icon="fas fa-phone"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.nomor_telepon" type="text" name="nomo_telepon">
+                  <base-input v-bind="field" type="text" placeholder="Nomor Telepon" label="Nomor Telepon"
+                    addon-left-icon="fas fa-phone"></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.alamat"
-                  type="text"
-                  name="alamat"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="text"
-                    placeholder="Alamat"
-                    label="Alamat"
-                    addon-left-icon="fas fa-location-arrow"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.alamat" type="text" name="alamat">
+                  <base-input v-bind="field" type="text" placeholder="Alamat" label="Alamat"
+                    addon-left-icon="fas fa-location-arrow"></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.nama_peternakan"
-                  type="text"
-                  name="nama_peternakan"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="text"
-                    placeholder="Nama Peternakan"
-                    label="Nama Peternakan"
-                    addon-left-icon="fas fa-user"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.nama_peternakan" type="text" name="nama_peternakan">
+                  <base-input v-bind="field" type="text" placeholder="Nama Peternakan" label="Nama Peternakan"
+                    addon-left-icon="fas fa-user"></base-input>
                 </field-form>
               </div>
               <div class="col-12" v-if="!this.input.foto">
                 <div class="form-group has-label">
                   <label class="form-control-label">Foto</label>
-                  <input
-                    class="form-control file"
-                    id="foto"
-                    type="file"
-                    ref="foto"
-                    accept="image/*"
-                    @change="handleFileUpload()"
-                  />
+                  <input class="form-control file" id="foto" type="file" ref="foto" accept="image/*"
+                    @change="handleFileUpload()" />
                 </div>
               </div>
               <div class="col-6" v-if="this.input.fotoUrl">
@@ -419,53 +326,24 @@ export default {
           <form-comp v-if="modal.changePw" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.password"
-                  type="password"
-                  name="password"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="password"
-                    placeholder="Sandi Lama"
-                    label="Sandi Lama"
-                    password
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.password" type="password" name="password">
+                  <base-input v-bind="field" type="password" placeholder="Sandi Lama" label="Sandi Lama" password>
+                  </base-input>
                 </field-form>
               </div>
             </div>
             <div class="row">
               <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.new_password"
-                  type="new_password"
-                  name="new_password"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="password"
-                    placeholder="Sandi Baru"
-                    label="Sandi Baru"
-                    password
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.new_password" type="new_password" name="new_password">
+                  <base-input v-bind="field" type="password" placeholder="Sandi Baru" label="Sandi Baru" password>
+                  </base-input>
                 </field-form>
               </div>
               <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.repeat_password"
-                  type="repeat_password"
-                  name="repeat_password"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="password"
-                    placeholder="Konfirmasi Sandi Baru"
-                    label="Konfirmasi Sandi Baru"
-                    password
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.repeat_password" type="repeat_password"
+                  name="repeat_password">
+                  <base-input v-bind="field" type="password" placeholder="Konfirmasi Sandi Baru"
+                    label="Konfirmasi Sandi Baru" password></base-input>
                 </field-form>
               </div>
             </div>
@@ -478,6 +356,30 @@ export default {
           <base-button type="primary" @click="editPassword()">
             Simpan Perubahan
           </base-button>
+        </template>
+      </modal-comp>
+
+      <!-- Hapus akun -->
+      <modal-comp v-model:show="modal.hapusAkun" modal-classes="modal-md">
+        <template #header>
+          <h3 class="modal-title">Hapus Akun</h3>
+        </template>
+        <template #body>
+          <div class="col-12">
+            <field-form v-slot="{ field }" v-model="input.password" type="password" name="password">
+              <base-input v-bind="field" type="password" placeholder="Kata sandi" label="Masukkan kata sandi" password>
+              </base-input>
+            </field-form>
+            <p class="text-danger text-sm">
+              Apakah anda yakin akan menghapus akun anda? Setelah dihapus, Anda tidak dapat memulihkan akun anda!
+            </p>
+          </div>
+        </template>
+        <template #footer>
+          <base-button type="secondary" @click="modal.hapusAkun = false">
+            Tutup
+          </base-button>
+          <base-button type="danger" @click="hapusAkun()">Hapus</base-button>
         </template>
       </modal-comp>
     </template>

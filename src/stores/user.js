@@ -44,6 +44,15 @@ const u$user = defineStore({
         throw error;
       }
     },
+
+    // Hapus Akun
+    async a$hapusAkun(request) {
+      try {
+        await s$user.hapusAkun(request);
+      } catch ({ error }) {
+        throw error;
+      }
+    },
   },
   getters: {
     g$userDetail: (state) => state.detail,
