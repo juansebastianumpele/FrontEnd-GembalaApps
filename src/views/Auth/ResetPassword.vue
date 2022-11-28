@@ -53,47 +53,29 @@ export default {
           <div class="card-header bg-transparent pb-5">
             <div class="text-center mt-2 mb-3">
               <strong>Lupa Password</strong><br /><br />
-              <img
-                width="100"
-                src="../../../public/images/logo.png"
-                alt="email"
-              />
+              <img width="100" src="../../../public/images/logo.png" alt="email" />
               <br />
               <br />
             </div>
             <small>
-              Silahkan masukan email Anda yang telah terdaftar. Kode untuk
-              mengatur ulang password akan kami kirim via email.
+              Silahkan masukan email Anda yang telah terdaftar. Password baru akan dikirimkan ke email Anda dan setelahnya anda dapat mengatur ulang password.
             </small>
             <br style="margin-bottom: 20px" />
             <form-comp :validation-schema="schema" @submit="onSubmit">
-              <base-input
-                name="email"
-                form-classes="input-group-alternative"
-                placeholder="Email"
-                label="Email"
-                addon-left-icon="fas fa-envelope"
-                focused
-              >
+              <base-input name="email" form-classes="input-group-alternative" placeholder="Email" label="Email"
+                addon-left-icon="fas fa-envelope" focused>
               </base-input>
 
               <div class="text-center">
-                <base-button
-                  type="success1"
-                  class="my-2 text-white"
-                  native-type="submit"
-                >
+                <base-button type="success1" class="my-2 text-white" native-type="submit">
                   Kirim Kode Verifikasi
                 </base-button>
               </div>
             </form-comp>
             <div class="row mt-3">
-              <div class="col-7 text-left">
+              <div class="col-7 text-center">
                 <router-link to="/auth/login" class="text-success">
-                  <small
-                    ><i class="fa-solid fa-arrow-left-long"></i> Kembali halaman
-                    login</small
-                  >
+                  <small><i class="fa-solid fa-arrow-left-long"></i> Kembali halaman login</small>
                 </router-link>
               </div>
             </div>
