@@ -510,7 +510,7 @@ export default {
                 </h1>
               </div>
             </div>
-            <div class="row mt-2">
+            <div class="row mt-3">
               <div class="col-sm-4">
                 <div class="bg-white rounded">
                   <p class="text-lg text-dark text-center font-weight-bolder">

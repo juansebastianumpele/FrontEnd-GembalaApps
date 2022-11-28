@@ -145,25 +145,26 @@ export default {
       </div>
     </div>
   </div>
-  <div class="row mt-3">
+  <div class="row mt-3 mr--3">
     <div class="col kecil">
       <div class="row">
-        <div class="col-6 text-white">
+        <div class="col-5 text-white">
           <i class="fa-solid fa-temperature-half"></i> Maks/Min:
           {{ maksMin }}
         </div>
-        <div class="col-6 text-white">
+        <div class="col-7 text-white">
           <i class="fa-solid fa-droplet"></i> Kelembapan: {{ kelembapan }}%
         </div>
       </div>
-      <hr class="bg-white m-2 mr-4 ml--2" />
+      <hr class="bg-white m-2 mr-4 ml--1" />
       <div class="row">
-        <div class="col-6 text-white">
+        <div class="col-5 text-white">
           <i class="fa-solid fa-arrows-to-circle"></i> Tekanan:
           {{ tekanan }} hPa
         </div>
-        <div class="col-6 text-white">
-          <i class="fa-solid fa-wind"></i> Angin: {{ kecepatanAngin }} Km/jam dari {{ arahAngin }}
+        <div class="col-7 text-white">
+          <i class="fa-solid fa-wind"></i> Angin: {{ kecepatanAngin }} Km/jam
+          dari {{ arahAngin }}
         </div>
       </div>
     </div>
