@@ -53,9 +53,7 @@
               <span class="avatar avatar-sm rounded-circle">
                 <img
                   alt="Image placeholder"
-                  :src="
-                    g$userDetail.image ? g$userDetail.image : siteMeta.profile
-                  "
+                  :src="g$userDetail.image ?? siteMeta.profile"
                 />
               </span>
               <div class="media-body ml-2 d-none d-lg-block">
