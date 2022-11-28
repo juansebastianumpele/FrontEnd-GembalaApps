@@ -5,8 +5,11 @@ const { api, auth } = subApiUrl;
 
 const detail = () => baseApi.get(`${api}/${auth}/profile`);
 const changePw = (req) => baseApi.put(`${api}/${auth}/update-password`, req);
-const changeProfile = (req) => baseApi.put(`${api}/${auth}/update-account`, req);
+const changeProfile = (req) =>
+  baseApi.put(`${api}/${auth}/update-account`, req);
 const registerBod = (req) => baseApi.post(`${api}/${auth}/register-bod`, req);
-const hapusAkun = (req) => baseApi.delete(`${api}/${auth}/delete-account`, { data: req });
+const hapusAkun = (req) =>
+  baseApi.delete(`${api}/${auth}/delete-account`, { data: req });
+const uploadFoto = (req) => baseApi.post(`${api}/${auth}/photo-profile`, req);
 
-export { detail, changePw, changeProfile, registerBod, hapusAkun };
+export { detail, changePw, changeProfile, registerBod, hapusAkun, uploadFoto };

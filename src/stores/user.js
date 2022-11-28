@@ -53,6 +53,15 @@ const u$user = defineStore({
         throw error;
       }
     },
+
+    // Upload Foto
+    async a$uploadFoto(request) {
+      try {
+        await s$user.uploadFoto(request);
+      } catch ({ error }) {
+        throw error;
+      }
+    },
   },
   getters: {
     g$userDetail: (state) => state.detail,
