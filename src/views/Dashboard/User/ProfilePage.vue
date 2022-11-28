@@ -139,7 +139,6 @@ export default {
         // await this.schema.validate(data);
         await this.a$userChangeProfile(data);
         await this.a$uploadFoto(foto);
-        console.log(foto);
         this.modal.editProfile = false;
         this.notify("Edit Profil Sukses!");
         this.a$userDetail();
