@@ -131,7 +131,7 @@ export default {
               </div>
             </div>
             <hc-bar
-              :height="200"
+              :height="215"
               :data="g$byPopulasi"
               :data-labels="true"
               :legend="true"
@@ -148,6 +148,8 @@ export default {
               :slide-ratio="1 / 3"
               :dragging-distance="10"
               :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }"
+              fixed-height="200px"
+
             >
               <vueper-slide v-for="item in g$kandang">
                 <template #content>

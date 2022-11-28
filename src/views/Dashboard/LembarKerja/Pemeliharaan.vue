@@ -73,7 +73,6 @@ export default {
   },
 
   async mounted() {
-    await this.a$pemeliharaanList().catch((error) => this.notify(error, false));
     await this.a$pemeliharaanListAll().catch((error) =>
       this.notify(error, false)
     );
