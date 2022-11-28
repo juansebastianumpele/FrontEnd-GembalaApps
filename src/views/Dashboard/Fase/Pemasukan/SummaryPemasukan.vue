@@ -145,6 +145,7 @@ export default {
               :slide-ratio="1 / 3"
               :dragging-distance="10"
               :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }"
+              fixed-height="200px"
             >
               <vueper-slide v-for="(key, value) in g$kandang" :key="key">
                 <template #content>
