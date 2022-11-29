@@ -9,12 +9,12 @@ const verifyRoutes = {
       component: () => import("@/views/Auth/VerifyView.vue"),
     },
     {
-      path: "sukses-verifikasi",
+      path: "success-verify",
       name: "Success",
       component: () => import("@/views/Auth/SuccessVerify.vue"),
     },
     {
-      path: "gagal-verifikasi",
+      path: "failed-verify",
       name: "Failed",
       component: () => import("@/views/Auth/FailedVerify.vue"),
     },
