@@ -24,7 +24,7 @@ export default {
         const register = await auth.a$register(values);
         if (register === "Register Berhasil!") {
           notify(register);
-          router.push({ name: "Verify" });
+          router.push({ name: "Cek Email" });
         } else {
           throw new Error(register);
         }
