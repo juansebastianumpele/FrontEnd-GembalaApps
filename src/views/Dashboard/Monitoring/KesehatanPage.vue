@@ -97,13 +97,13 @@ export default {
     },
     ...mapActions(d$ternak, ["a$ternakList"]),
     async triggerDetail(row) {
-        const { id_penyakit } = row;
-        router.push({
-          name: "Detail Ternak Sakit",
-          params: {
-            id: id_penyakit,
-          },
-        });
+      const { id_penyakit } = row;
+      router.push({
+        name: "Detail Ternak Sakit",
+        params: {
+          id: id_penyakit,
+        },
+      });
     },
 
     async addTernakSakit() {
@@ -150,27 +150,21 @@ export default {
   <main-layout :title="pageTitle" disable-padding>
     <template #header>
       <nav class="nav nav-pills flex-column flex-sm-row mb-4">
-        <li>
-          <router-link to="../data-penyakit" >
+        <router-link to="../data-penyakit" class="nav-item">
           <base-button type="secondary" class="btn-lg text-dark">
-              Data Penyakit
-            </base-button>
-          </router-link>
-        </li>
-        <li>
-          <router-link to="data-kesehatan" >
-          <base-button type="success1" class="btn-lg ml-3 text-white">
-              Data Ternak Sakit
-            </base-button>
-          </router-link>
-        </li>
-        <li>
-          <router-link to="riwayat-kesehatan" >
-          <base-button type="secondary" class="btn-lg ml-3 text-dark">
-              Riwayat Ternak Sakit
-            </base-button>
-          </router-link>
-        </li>
+            Data Penyakit
+          </base-button>
+        </router-link>
+        <router-link to="data-kesehatan" class="nav-item">
+          <base-button type="success1" class="btn-lg text-white" >
+            Data Ternak Sakit
+          </base-button>
+        </router-link>
+        <router-link to="riwayat-kesehatan" class="nav-item">
+          <base-button type="secondary" class="btn-lg text-dark" >
+            Riwayat Ternak Sakit
+          </base-button>
+        </router-link>
       </nav>
       <div class="row align-items-center">
         <div class="col-auto">
@@ -186,7 +180,8 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$totalSakit.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$totalSakit" :columns="dt.column" :actions="dt.action" @detail-kesehatan="triggerDetail" />
+      <data-table v-else :index="true" :data="g$totalSakit" :columns="dt.column" :actions="dt.action"
+        @detail-kesehatan="triggerDetail" />
     </template>
     <template #modal>
       <!-- Tambah ternak sakit -->
@@ -216,16 +211,17 @@ export default {
               <!-- Tanggal sakit -->
               <div class="col-12">
                 <base-input name="tanggal_sakit" placeholder="Pilih tanggal" label="Tanggal Sakit" required>
-                  <flat-pickr v-model.lazy="input.tanggal_sakit" :config="{ mode: 'single', allowInput: true, maxDate: new Date() }"
-                    class="form-control datepicker" placeholder="Pilih tanggal" />
+                  <flat-pickr v-model.lazy="input.tanggal_sakit"
+                    :config="{ mode: 'single', allowInput: true, maxDate: new Date() }" class="form-control datepicker"
+                    placeholder="Pilih tanggal" />
                 </base-input>
               </div>
 
               <!-- Kandang -->
               <div class="col-12">
                 <base-input name="kandang" label="Kandang">
-                  <multi-select v-model="input.kandang" :options="g$kandangList" track-by="id_kandang" label="kode_kandang"
-                    placeholder="Pilih Kandang" :show-labels="false" />
+                  <multi-select v-model="input.kandang" :options="g$kandangList" track-by="id_kandang"
+                    label="kode_kandang" placeholder="Pilih Kandang" :show-labels="false" />
                 </base-input>
               </div>
             </div>

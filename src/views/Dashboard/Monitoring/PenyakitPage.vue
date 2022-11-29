@@ -182,31 +182,23 @@ export default {
 <template>
   <main-layout :title="pageTitle" disable-padding>
     <template #header>
-      <div>
-        <nav class="nav nav-pills flex-column flex-sm-row mb-4">
-          <li>
-            <router-link to="/monitoring/data-penyakit" >
-            <base-button type="success1" class="btn-lg text-white">
-                Data Penyakit
-              </base-button>
-            </router-link>
-          </li>
-          <li>
-            <router-link to="data-penyakit/data-kesehatan" >
-            <base-button type="secondary" class="btn-lg ml-3 text-dark">
-                Data Ternak Sakit
-              </base-button>
-            </router-link>
-          </li>
-          <li>
-            <router-link to="data-penyakit/riwayat-kesehatan" >
-            <base-button type="secondary" class="btn-lg ml-3 text-dark">
-                Riwayat Ternak Sakit
-              </base-button>
-            </router-link>
-          </li>
-        </nav>
-      </div>
+      <nav class="nav nav-pills flex-column flex-sm-row mb-4">
+        <router-link to="/monitoring/data-penyakit" class="nav-item">
+          <base-button type="success1" class="btn-lg text-white">
+            Data Penyakit
+          </base-button>
+        </router-link>
+        <router-link to="data-penyakit/data-kesehatan" class="nav-item">
+          <base-button type="secondary" class="btn-lg text-dark">
+            Data Ternak Sakit
+          </base-button>
+        </router-link>
+        <router-link to="data-penyakit/riwayat-kesehatan" class="nav-item">
+          <base-button type="secondary" class="btn-lg text-dark">
+            Riwayat Ternak Sakit
+          </base-button>
+        </router-link>
+      </nav>
       <div class="row align-items-center">
         <div class="col-auto">
           <h3>Daftar {{ pageTitle }}</h3>
@@ -221,15 +213,8 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$penyakitList.length" :text="`${pageTitle}`" />
-      <data-table
-        v-else
-        :index="true"
-        :data="g$penyakitList"
-        :columns="dt.column"
-        :actions="dt.action"
-        @ubah-penyakit="triggerEditModal"
-        @hapus-penyakit="triggerDelete"
-      />
+      <data-table v-else :index="true" :data="g$penyakitList" :columns="dt.column" :actions="dt.action"
+        @ubah-penyakit="triggerEditModal" @hapus-penyakit="triggerDelete" />
     </template>
 
     <template #modal>
@@ -241,46 +226,18 @@ export default {
           <form-comp v-if="modal.addPenyakit" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.nama_penyakit"
-                  type="text"
-                  name="nama_penyakit"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Nama Penyakit"
-                    label="Nama Penyakit"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.nama_penyakit" type="text" name="nama_penyakit">
+                  <base-input v-bind="field" placeholder="Nama Penyakit" label="Nama Penyakit" required></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.gejala"
-                  type="text"
-                  name="gejala"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Gejala"
-                    label="Gejala"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.gejala" type="text" name="gejala">
+                  <base-input v-bind="field" placeholder="Gejala" label="Gejala"></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.penanganan"
-                  type="text"
-                  name="penanganan"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Penanganan"
-                    label="Penanganan"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.penanganan" type="text" name="penanganan">
+                  <base-input v-bind="field" placeholder="Penanganan" label="Penanganan"></base-input>
                 </field-form>
               </div>
             </div>
@@ -305,46 +262,18 @@ export default {
           <form-comp v-if="modal.ubahPenyakit" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.nama_penyakit"
-                  type="text"
-                  name="nama_penyakit"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Nama Penyakit"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.nama_penyakit" type="text" name="nama_penyakit">
+                  <base-input v-bind="field" placeholder="Text" label="Nama Penyakit" required></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.gejala"
-                  type="text"
-                  name="gejala"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Gejala"
-                    label="Gejala"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.gejala" type="text" name="gejala">
+                  <base-input v-bind="field" placeholder="Gejala" label="Gejala"></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.penanganan"
-                  type="text"
-                  name="penanganan"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Penanganan"
-                    label="Penanganan"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.penanganan" type="text" name="penanganan">
+                  <base-input v-bind="field" placeholder="Penanganan" label="Penanganan"></base-input>
                 </field-form>
               </div>
             </div>
