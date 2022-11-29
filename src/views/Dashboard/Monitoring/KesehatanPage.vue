@@ -5,7 +5,6 @@ import d$kandang from "@/stores/monitoring/daftarkandang";
 import d$dropdown from "@/stores/dropdown";
 import d$ternak from "@/stores/monitoring/ternak";
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
-import router from "../../../router";
 
 export default {
   metaInfo: () => ({
@@ -98,7 +97,7 @@ export default {
     ...mapActions(d$ternak, ["a$ternakList"]),
     async triggerDetail(row) {
       const { id_penyakit } = row;
-      router.push({
+      this.$router.push({
         name: "Detail Ternak Sakit",
         params: {
           id: id_penyakit,
