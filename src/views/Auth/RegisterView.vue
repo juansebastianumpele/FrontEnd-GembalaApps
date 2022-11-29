@@ -37,6 +37,7 @@ export default {
       nama_pengguna: y$string()
         .min(4)
         .max(30)
+        .matches(/^[a-zA-Z0-9]+$/, "Hanya boleh huruf dan angka")
         .required()
         .label("Nama pengguna"),
       email: y$string().required().email().label("Email"),
