@@ -50,12 +50,11 @@
         <template #title-container>
           <a href="#" class="nav-link pr-0" @click.prevent>
             <div class="media align-items-center">
-              <span class="avatar avatar-sm rounded-circle">
                 <img
+                  class="avatar avatar-sm rounded-circle"
                   alt="Image placeholder"
                   :src="g$userDetail.image ?? siteMeta.profile"
                 />
-              </span>
               <div class="media-body ml-2 d-none d-lg-block">
                 <span class="mb-0 text-sm font-weight-bold">{{
                   g$userDetail.nama_pengguna ?? "User"
