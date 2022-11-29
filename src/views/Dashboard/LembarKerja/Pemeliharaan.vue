@@ -130,6 +130,9 @@ export default {
         pembersihan_ternak: true,
       };
     },
+    onChange(value) {
+      this.input.jumlah_pakan = value.kebutuhan_pakan;
+    },
   },
 };
 </script>
@@ -185,7 +188,7 @@ export default {
               <div class="col-6">
                 <base-input name="kandang" label="Kandang">
                   <multi-select v-model="input.kandang" :options="g$kandangList" label="kode_kandang" track-by="id"
-                    placeholder="Pilih Kandang" :show-labels="false" />
+                    placeholder="Pilih Kandang" :show-labels="false" @select="onChange"/>
                 </base-input>
               </div>
 
