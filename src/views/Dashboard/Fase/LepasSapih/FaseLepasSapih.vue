@@ -93,7 +93,7 @@ export default {
         await this.a$createLepasSapih(data);
         this.notify("Data berhasil ditambahkan", true);
         this.modal.createLepasSapih = false;
-        this.a$lepasSapihList();
+        this.a$ternakLepasSapih();
       } catch (error) {
         this.notify(error, false);
       }
