@@ -33,8 +33,8 @@ export default {
       nomor_telepon: "",
       alamat: "",
       nama_peternakan: "",
-      foto: null,
-      fotoUrl: null,
+      foto: "",
+      fotoUrl: "",
     },
     // UI
     modal: {
@@ -138,7 +138,10 @@ export default {
         const foto = new FormData();
         foto.append("avatar", this.input.foto);
         await this.a$userChangeProfile(data);
-        await this.a$uploadFoto(foto);
+        if (this.input.foto !== this.g$userDetail.image) {
+          await this.a$uploadFoto(foto);
+        }
+        // await this.a$uploadFoto(foto);
         console.log("foto", foto);
         this.modal.editProfile = false;
         this.notify("Edit Profil Sukses!");
@@ -178,7 +181,7 @@ export default {
           :src="g$userDetail.image ? g$userDetail.image : siteMeta.profile"
           alt="profile"
           class="rounded-circle img-fluid"
-          style="width: 200px; height: 200px; object-fit: cover;"
+          style="width: 200px; height: 200px; object-fit: cover"
         />
       </div>
       <div class="row">
