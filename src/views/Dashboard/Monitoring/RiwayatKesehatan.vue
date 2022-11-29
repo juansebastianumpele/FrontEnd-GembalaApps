@@ -65,27 +65,21 @@ export default {
     <main-layout :title="pageTitle" disable-padding>
         <template #header>
             <nav class="nav nav-pills flex-column flex-sm-row mb-4">
-                <li>
-                    <router-link to="../data-penyakit">
-                        <base-button type="secondary" class="btn-lg text-dark">
-                            Data Penyakit
-                        </base-button>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="data-kesehatan">
-                        <base-button type="secondary" class="btn-lg ml-3 text-dark">
-                            Data Ternak Sakit
-                        </base-button>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link to="riwayat-kesehatan">
-                        <base-button type="success1" class="btn-lg ml-3 text-white">
-                            Riwayat Ternak Sakit
-                        </base-button>
-                    </router-link>
-                </li>
+                <router-link to="../data-penyakit" class="nav-item">
+                    <base-button type="secondary" class="btn-lg text-dark">
+                        Data Penyakit
+                    </base-button>
+                </router-link>
+                <router-link to="data-kesehatan" class="nav-item">
+                    <base-button type="secondary" class="btn-lg text-dark">
+                        Data Ternak Sakit
+                    </base-button>
+                </router-link>
+                <router-link to="riwayat-kesehatan" class="nav-item">
+                    <base-button type="success1" class="btn-lg text-white">
+                        Riwayat Ternak Sakit
+                    </base-button>
+                </router-link>
             </nav>
             <div class="row align-items-center">
                 <div class="col-auto">

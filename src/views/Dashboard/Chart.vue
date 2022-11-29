@@ -76,7 +76,7 @@ export default {
               class="text-white text-uppercase text-center ls-1 mt-0 mb-2"
               style="font-size: 12px"
             >
-              Grafik Populasi Domba Sembada (2022 - 2023)
+              Grafik Populasi Domba Sembada ({{new Date().getFullYear()}})
             </h1>
             <hc-area-spline
               :height="200"
@@ -349,7 +349,7 @@ export default {
                   class="text-white text-uppercase text-center ls-1 mb-2"
                   style="font-size: 12px"
                 >
-                  Grafik ADG Cempe
+                  Grafik ADG Cempe ({{new Date().getFullYear()}})
                 </h1>
               </div>
             </div>

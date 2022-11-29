@@ -177,15 +177,15 @@ export default {
         <img
           :src="g$userDetail.image ? g$userDetail.image : siteMeta.profile"
           alt="profile"
-          class="rounded-circle"
-          style="width: 200px; height: 200px"
+          class="rounded-circle img-fluid"
+          style="width: 200px; height: 200px; object-fit: cover;"
         />
       </div>
-      <div class="row align-items-center">
+      <div class="row">
         <div class="col">
           <h3>{{ pageTitle }}</h3>
         </div>
-        <div class="col text-right">
+        <div class="col d-flex justify-content-end">
           <base-button type="primary" @click="modal.daftarBod = true">
             Daftarkan Akun BoD
           </base-button>
@@ -404,7 +404,7 @@ export default {
                     id="foto"
                     type="file"
                     ref="foto"
-                    accept="image/*"
+                    accept="image/png, image/jpeg"
                     @change="handleFileUpload()"
                   />
                 </div>
