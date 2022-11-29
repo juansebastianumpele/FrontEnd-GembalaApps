@@ -86,7 +86,7 @@ const u$lepasSapih = defineStore({
     g$ternakLepasSapih: (state) => state.ternakLepasSapih,
     g$statusSeleksi: (state) => state.statusSeleksi,
     g$byPopulasi: (state) => ({
-      categories: ["Total", "Total Jantan", "Totoal Betina"],
+      categories: ["Total", "Total Jantan", "Total Betina"],
       series: [
         {
           name: "Populasi",
