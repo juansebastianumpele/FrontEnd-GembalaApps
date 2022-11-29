@@ -33,9 +33,12 @@ export default {
       }
     }
 
-
     const schema = y$object({
-      nama_pengguna: y$string().min(4).max(30).required().label("Nama pengguna"),
+      nama_pengguna: y$string()
+        .min(4)
+        .max(30)
+        .required()
+        .label("Nama pengguna"),
       email: y$string().required().email().label("Email"),
       nomor_telepon: y$string().required().label("Nomor Telepon"),
       alamat: y$string().required().label("Alamat"),
@@ -56,7 +59,7 @@ export default {
 </script>
 
 <template>
-  <div class="header bg-gradient-argon py-9 pt-md-9"></div>
+  <div class="header py-9 pt-md-9"></div>
   <div class="container">
     <div class="row mx-0 justify-content-center mt--9">
       <div class="col-sm-2 col-sm-5 mt--6">
@@ -144,7 +147,11 @@ export default {
               >
               </base-input>
               <div class="text-center">
-                <base-button type="primary" class="my-4" native-type="submit">
+                <base-button
+                  type="success1"
+                  class="my-2 btn-lg px-4 rounded-lg text-white"
+                  native-type="submit"
+                >
                   Buat Akun
                 </base-button>
               </div>
