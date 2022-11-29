@@ -403,7 +403,7 @@ export default {
                     id="foto"
                     type="file"
                     ref="foto"
-                    accept="image/*"
+                    accept="image/png, image/jpeg"
                     @change="handleFileUpload()"
                   />
                 </div>
