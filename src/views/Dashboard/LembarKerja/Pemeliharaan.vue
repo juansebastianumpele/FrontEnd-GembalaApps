@@ -186,7 +186,7 @@ export default {
             <div class="row">
               <!-- Kandang -->
               <div class="col-6">
-                <base-input name="kandang" label="Kandang">
+                <base-input name="kandang" label="Kandang" required>
                   <multi-select v-model="input.kandang" :options="g$kandangList" label="kode_kandang" track-by="id"
                     placeholder="Pilih Kandang" :show-labels="false" @select="onChange"/>
                 </base-input>
@@ -206,7 +206,7 @@ export default {
 
               <!-- Jenis pakan -->
               <div class="col-6">
-                <base-input name="jenis_pakan" label="Jenis Pakan">
+                <base-input name="jenis_pakan" label="Jenis Pakan" required>
                   <multi-select v-model="input.jenis_pakan" :options="g$pakanList" label="jenis_pakan"
                     track-by="id_jenis_pakan" placeholder="Pilih jenis pakan" :show-labels="false"
                     :preselectFirst="true" />
@@ -217,7 +217,7 @@ export default {
               <div class="col-6">
                 <field-form v-slot="{ field }" v-model="input.jumlah_pakan" name="jumlah_pakan">
                   <base-input v-bind="field" placeholder="Jumlah pakan dalam kg" label="Jumlah Pakan (Kg)"
-                    type="number"></base-input>
+                    type="number" required></base-input>
                 </field-form>
               </div>
 
