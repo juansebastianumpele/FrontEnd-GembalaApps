@@ -33,8 +33,8 @@ export default {
       nomor_telepon: "",
       alamat: "",
       nama_peternakan: "",
-      foto: "",
-      fotoUrl: "",
+      foto: null,
+      fotoUrl: null,
     },
     // UI
     modal: {
@@ -58,6 +58,8 @@ export default {
         this.input.nama_pengguna = this.g$userDetail.nama_pengguna;
         this.input.email = this.g$userDetail.email;
         this.input.nomor_telepon = this.g$userDetail.nomor_telepon;
+        this.input.foto = this.g$userDetail.image;
+        this.input.fotoUrl = this.g$userDetail.image;
         this.input.alamat = this.g$userPeternakan.alamat;
         this.input.nama_peternakan = this.g$userPeternakan.nama_peternakan;
       }
@@ -114,7 +116,6 @@ export default {
         };
         // await this.schema.validate(data);
         await this.a$userChangePw(data);
-        console.log(data);
         this.modal.changePw = false;
         this.notify("Edit Sandi Sukses!");
       } catch (error) {
@@ -136,9 +137,9 @@ export default {
         };
         const foto = new FormData();
         foto.append("avatar", this.input.foto);
-        // await this.schema.validate(data);
         await this.a$userChangeProfile(data);
         await this.a$uploadFoto(foto);
+        console.log("foto", foto);
         this.modal.editProfile = false;
         this.notify("Edit Profil Sukses!");
         this.a$userDetail();
@@ -395,7 +396,7 @@ export default {
                   ></base-input>
                 </field-form>
               </div>
-              <div class="col-12" v-if="!this.input.foto">
+              <div class="col-6" v-if="!this.input.foto">
                 <div class="form-group has-label">
                   <label class="form-control-label">Foto</label>
                   <input
