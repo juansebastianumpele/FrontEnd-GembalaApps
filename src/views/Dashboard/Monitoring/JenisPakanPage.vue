@@ -247,20 +247,16 @@ export default {
   <main-layout :title="pageTitle" disable-padding>
     <template #header>
       <nav class="nav nav-pills flex-column flex-sm-row mb-4">
-        <li>
-          <router-link to="data-pakan" >
+        <router-link to="data-pakan" class="nav-item">
           <base-button type="success1" class="btn-lg text-white">
-              Daftar Pakan
-            </base-button>
-          </router-link>
-        </li>
-        <li>
-          <router-link to="data-pakan/bahan-pakan" >
-          <base-button type="secondary" class="btn-lg ml-3 text-dark">
-              Daftar Bahan Pakan
-            </base-button>
-          </router-link>
-        </li>
+            Daftar Pakan
+          </base-button>
+        </router-link>
+        <router-link to="data-pakan/bahan-pakan" class="nav-item">
+          <base-button type="secondary" class="btn-lg text-dark">
+            Daftar Bahan Pakan
+          </base-button>
+        </router-link>
       </nav>
       <div class="row align-items-center">
         <div class="col-auto">
@@ -276,16 +272,8 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$pakanList.length" :text="`${pageTitle}`" />
-      <data-table
-        v-else
-        :index="true"
-        :data="g$pakanList"
-        :columns="dt.column"
-        :actions="dt.action"
-        @ubah-pakan="triggerEditModal"
-        @hapus-pakan="triggerDelete"
-        @detail-pakan="triggerDetail"
-      />
+      <data-table v-else :index="true" :data="g$pakanList" :columns="dt.column" :actions="dt.action"
+        @ubah-pakan="triggerEditModal" @hapus-pakan="triggerDelete" @detail-pakan="triggerDetail" />
     </template>
 
     <template #modal>
@@ -298,88 +286,40 @@ export default {
             <div class="row">
               <!-- nama pakan -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.jenis_pakan"
-                  type="text"
-                  name="jenis_pakan"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Nama Pakan"
-                    label="Nama Pakan"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.jenis_pakan" type="text" name="jenis_pakan">
+                  <base-input v-bind="field" placeholder="Nama Pakan" label="Nama Pakan" required></base-input>
                 </field-form>
               </div>
 
               <!-- interval pemberian pakan -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.interval_pakan"
-                  type="number"
-                  name="interval"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Masukan interval dalam hari"
-                    label="Interval Pemberian Pakan (Hari)"
-                    type="number"
-                    required
-                  >
+                <field-form v-slot="{ field }" v-model="input.interval_pakan" type="number" name="interval">
+                  <base-input v-bind="field" placeholder="Masukan interval dalam hari"
+                    label="Interval Pemberian Pakan (Hari)" type="number" required>
                   </base-input>
                 </field-form>
               </div>
 
               <!-- satuan pakan (tong/ball) -->
               <div class="col-12">
-                <base-input
-                  name="satuan"
-                  placeholder="Satuan Pakan"
-                  label="Satuan Pakan"
-                >
-                  <multi-select
-                    v-model="input.satuan"
-                    :options="g$ddKeteranganTambahPakan"
-                    placeholder="Pilih Satuan Pakan"
-                    :show-labels="false"
-                    required
-                  />
+                <base-input name="satuan" placeholder="Satuan Pakan" label="Satuan Pakan">
+                  <multi-select v-model="input.satuan" :options="g$ddKeteranganTambahPakan"
+                    placeholder="Pilih Satuan Pakan" :show-labels="false" required />
                 </base-input>
               </div>
 
               <!-- Komposisi -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.komposisi"
-                  type="text"
-                  name="komposisi"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Contoh: Bongkol Jagung 15%, Premix 0,1%, Jagung 60%"
-                    label="Komposisi"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.komposisi" type="text" name="komposisi">
+                  <base-input v-bind="field" placeholder="Contoh: Bongkol Jagung 15%, Premix 0,1%, Jagung 60%"
+                    label="Komposisi" required></base-input>
                 </field-form>
               </div>
 
               <!-- Nutrien -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.nutrien"
-                  type="text"
-                  name="nutrien"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Contoh: BK: 87%; PK 21%; LK 24%"
-                    label="Nutrien"
-                    required
-                  >
+                <field-form v-slot="{ field }" v-model="input.nutrien" type="text" name="nutrien">
+                  <base-input v-bind="field" placeholder="Contoh: BK: 87%; PK 21%; LK 24%" label="Nutrien" required>
                   </base-input>
                 </field-form>
               </div>
@@ -405,88 +345,40 @@ export default {
             <div class="row">
               <!-- nama pakan -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.jenis_pakan"
-                  type="text"
-                  name="jenis_pakan"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Nama Pakan"
-                    label="Nama Pakan"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.jenis_pakan" type="text" name="jenis_pakan">
+                  <base-input v-bind="field" placeholder="Nama Pakan" label="Nama Pakan" required></base-input>
                 </field-form>
               </div>
 
               <!-- interval pemberian pakan -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.interval_pakan"
-                  type="number"
-                  name="interval"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Masukan interval dalam hari"
-                    label="Interval Pemberian Pakan (Hari)"
-                    type="number"
-                    required
-                  >
+                <field-form v-slot="{ field }" v-model="input.interval_pakan" type="number" name="interval">
+                  <base-input v-bind="field" placeholder="Masukan interval dalam hari"
+                    label="Interval Pemberian Pakan (Hari)" type="number" required>
                   </base-input>
                 </field-form>
               </div>
 
               <!-- satuan pakan (tong/ball) -->
               <div class="col-12">
-                <base-input
-                  name="satuan"
-                  placeholder="Satuan Pakan"
-                  label="Satuan Pakan"
-                >
-                  <multi-select
-                    v-model="input.satuan"
-                    :options="g$ddKeteranganTambahPakan"
-                    placeholder="Pilih Satuan Pakan"
-                    :show-labels="false"
-                    required
-                  />
+                <base-input name="satuan" placeholder="Satuan Pakan" label="Satuan Pakan">
+                  <multi-select v-model="input.satuan" :options="g$ddKeteranganTambahPakan"
+                    placeholder="Pilih Satuan Pakan" :show-labels="false" required />
                 </base-input>
               </div>
 
               <!-- Komposisi -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.komposisi"
-                  type="text"
-                  name="komposisi"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Contoh: Bongkol Jagung 15%, Premix 0,1%, Jagung 60%"
-                    label="Komposisi"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.komposisi" type="text" name="komposisi">
+                  <base-input v-bind="field" placeholder="Contoh: Bongkol Jagung 15%, Premix 0,1%, Jagung 60%"
+                    label="Komposisi" required></base-input>
                 </field-form>
               </div>
 
               <!-- Nutrien -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.nutrien"
-                  type="text"
-                  name="nutrien"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Contoh: BK: 87%; PK 21%; LK 24%"
-                    label="Nutrien"
-                    required
-                  >
+                <field-form v-slot="{ field }" v-model="input.nutrien" type="text" name="nutrien">
+                  <base-input v-bind="field" placeholder="Contoh: BK: 87%; PK 21%; LK 24%" label="Nutrien" required>
                   </base-input>
                 </field-form>
               </div>

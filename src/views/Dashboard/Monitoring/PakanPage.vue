@@ -186,20 +186,16 @@ export default {
   <main-layout :title="pageTitle" disable-padding>
     <template #header>
       <nav class="nav nav-pills flex-column flex-sm-row mb-4">
-        <li>
-          <router-link to="../data-pakan" >
+        <router-link to="../data-pakan" class="nav-item">
           <base-button type="secondary" class="btn-lg text-dark">
-              Daftar Pakan
-            </base-button>
-          </router-link>
-        </li>
-        <li>
-          <router-link to="bahan-pakan" >
-          <base-button type="success1" class="btn-lg ml-3 text-white">
-              Daftar Bahan Pakan
-            </base-button>
-          </router-link>
-        </li>
+            Daftar Pakan
+          </base-button>
+        </router-link>
+        <router-link to="bahan-pakan" class="nav-item">
+          <base-button type="success1" class="btn-lg text-white">
+            Daftar Bahan Pakan
+          </base-button>
+        </router-link>
       </nav>
       <div class="row align-items-center">
         <div class="col-auto">
@@ -215,16 +211,8 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$bahanPakanList.length" :text="`${pageTitle}`" />
-      <data-table
-        v-else
-        :index="true"
-        :data="g$bahanPakanList"
-        :columns="dt.column"
-        :actions="dt.action"
-        @ubah-pakan="triggerEdit"
-        @hapus-pakan="triggerDelete"
-        @detail-pakan="triggerDetail"
-      />
+      <data-table v-else :index="true" :data="g$bahanPakanList" :columns="dt.column" :actions="dt.action"
+        @ubah-pakan="triggerEdit" @hapus-pakan="triggerDelete" @detail-pakan="triggerDetail" />
     </template>
 
     <template #modal>
@@ -237,32 +225,15 @@ export default {
           <form-comp v-if="modal.addBahanPakan" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.jenis_bahan_pakan"
-                  type="text"
-                  name="jenis_bahan_pakan"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Nama Bahan Pakan"
-                    label="Nama Bahan Pakan"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.jenis_bahan_pakan" type="text" name="jenis_bahan_pakan">
+                  <base-input v-bind="field" placeholder="Nama Bahan Pakan" label="Nama Bahan Pakan" required>
+                  </base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <base-input
-                  name="satuan"
-                  placeholder="Satuan Pakan"
-                  label="Satuan Pakan"
-                >
-                  <multi-select
-                    v-model="input.satuan"
-                    :options="g$ddSatuanPakan"
-                    placeholder="Pilih Satuan Pakan"
-                    :show-labels="false"
-                  />
+                <base-input name="satuan" placeholder="Satuan Pakan" label="Satuan Pakan">
+                  <multi-select v-model="input.satuan" :options="g$ddSatuanPakan" placeholder="Pilih Satuan Pakan"
+                    :show-labels="false" />
                 </base-input>
               </div>
             </div>
@@ -288,34 +259,17 @@ export default {
             <div class="row">
               <!-- Nama Bahan Pakan -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.jenis_bahan_pakan"
-                  type="text"
-                  name="jenis_bahan_pakan"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Nama Bahan Pakan"
-                    label="Nama Bahan Pakan"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.jenis_bahan_pakan" type="text" name="jenis_bahan_pakan">
+                  <base-input v-bind="field" placeholder="Nama Bahan Pakan" label="Nama Bahan Pakan" required>
+                  </base-input>
                 </field-form>
               </div>
 
               <!-- Satuan -->
               <div class="col-12">
-                <base-input
-                  name="satuan"
-                  placeholder="Satuan Pakan"
-                  label="Satuan Pakan"
-                >
-                  <multi-select
-                    v-model="input.satuan"
-                    :options="g$ddSatuanPakan"
-                    placeholder="Pilih Satuan Pakan"
-                    :show-labels="false"
-                  />
+                <base-input name="satuan" placeholder="Satuan Pakan" label="Satuan Pakan">
+                  <multi-select v-model="input.satuan" :options="g$ddSatuanPakan" placeholder="Pilih Satuan Pakan"
+                    :show-labels="false" />
                 </base-input>
               </div>
             </div>
