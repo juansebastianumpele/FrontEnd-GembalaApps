@@ -176,8 +176,8 @@ export default {
         <img
           :src="g$userDetail.image ? g$userDetail.image : siteMeta.profile"
           alt="profile"
-          class="rounded-circle"
-          style="width: 200px; height: 200px"
+          class="rounded-circle img-fluid"
+          style="width: 200px; height: 200px; object-fit: cover;"
         />
       </div>
       <div class="row align-items-center">

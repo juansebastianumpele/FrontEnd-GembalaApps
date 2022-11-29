@@ -51,9 +51,10 @@
           <a href="#" class="nav-link pr-0" @click.prevent>
             <div class="media align-items-center">
                 <img
-                  class="avatar avatar-sm rounded-circle"
+                  class="avatar avatar-sm rounded-circle img-fluid"
                   alt="Image placeholder"
                   :src="g$userDetail.image ?? siteMeta.profile"
+                  style="object-fit: cover"
                 />
               <div class="media-body ml-2 d-none d-lg-block">
                 <span class="mb-0 text-sm font-weight-bold">{{
