@@ -48,7 +48,7 @@ export default {
           <ol>
             <li class="mb-1">Masuk ke menu proses persiapan.</li>
             <li class="mb-1">Pilih domba indukan yang siap dikawinkan.</li>
-            <li class="mb-1">Isikan iD pejantan.</li>
+            <li class="mb-1">Isikan ID pejantan.</li>
             <li class="mb-1">
               Isi kan kode kandang apabila domba tersebut akan dipindahkan ke
               kandang baru.
