@@ -59,7 +59,7 @@ export default {
               Seleksi domba yang akan dijadikan calon pejantan, calon indukan
               dan calon bakalan.
             </li>
-            <li class="mb-1">setelah di seleksi dimasukan ke dalam form.</li>
+            <li class="mb-1">Setelah diseleksi dimasukan ke dalam form.</li>
             <li class="mb-1">Submit Data.</li>
           </ol>
         </card-comp>
