@@ -35,7 +35,7 @@ export default {
       "g$totalByKandang",
       "g$totalPopulasi",
     ]),
-    ...mapActions(d$user, ["a$userDetail"]),
+    ...mapState(d$user, ["g$userPeternakan"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -51,6 +51,7 @@ export default {
       "a$totalAdgCempe",
       "a$populasi",
     ]),
+    ...mapActions(d$user, ["a$userDetail"]),
   },
   async mounted() {
     this.a$userDetail();
