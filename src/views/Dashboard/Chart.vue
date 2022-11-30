@@ -76,7 +76,7 @@ export default {
               class="text-white text-uppercase text-center ls-1 mt-0 mb-2"
               style="font-size: 12px"
             >
-              Grafik Populasi Domba Sembada ({{new Date().getFullYear()}})
+              Grafik Populasi Domba Sembada ({{ new Date().getFullYear() }})
             </h1>
             <hc-area-spline
               :height="200"
@@ -334,12 +334,6 @@ export default {
         <div class="col-sm-4">
           <!-- cuaca -->
           <card-comp type="success">
-            <h1
-              class="text-white text-uppercase text-center ls-1 mt-0 mb-2"
-              style="font-size: 12px"
-            >
-              Cuaca hari ini di Selomartani
-            </h1>
             <cuaca />
           </card-comp>
           <card-comp type="success">
@@ -349,7 +343,7 @@ export default {
                   class="text-white text-uppercase text-center ls-1 mb-2"
                   style="font-size: 12px"
                 >
-                  Grafik ADG Cempe ({{new Date().getFullYear()}})
+                  Grafik ADG Cempe ({{ new Date().getFullYear() }})
                 </h1>
               </div>
             </div>

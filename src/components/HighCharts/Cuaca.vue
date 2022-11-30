@@ -1,5 +1,6 @@
 <script>
 import axios from "axios";
+import * as s$dashboard from "@/services/monitoring/dashboard";
 
 export default {
   name: "Cuaca",
@@ -30,8 +31,8 @@ export default {
       name: "Melati",
       cod: 200,
     },
-    latitude: -7.7296003,
-    longitude: 110.366628,
+    latitude: -7.716492,
+    longitude: 110.461627,
   }),
 
   computed: {
@@ -92,8 +93,8 @@ export default {
   },
 
   methods: {
-    getWeather() {
-      axios
+    async getWeather() {
+      await axios
         .get(
           `https://api.openweathermap.org/data/2.5/weather?lat=${this.latitude}&lon=${this.longitude}&units=metric&lang=id&appid=724edd4b529beb144b3986c95d678b48`
         )
@@ -101,14 +102,31 @@ export default {
           this.cuaca = response.data;
         });
     },
+    async getCoordinat() {
+      try {
+        const { data } = await s$dashboard.coordinate();
+        this.latitude = data.latitude;
+        this.longitude = data.longitude;
+        console.log(data);
+      } catch (error) {
+        throw error;
+      }
+    },
   },
-  mounted() {
-    this.getWeather();
+  async mounted() {
+    await this.getCoordinat();
+    await this.getWeather();
   },
 };
 </script>
 
 <template>
+  <h1
+    class="text-white text-uppercase text-center ls-1 mt-0 mb-2"
+    style="font-size: 12px"
+  >
+    Cuaca hari ini di {{ cuaca.name }}
+  </h1>
   <div class="row">
     <div class="col">
       <p class="text-left text-white pt-1 mt-1 ml-3" style="font-size: small">
