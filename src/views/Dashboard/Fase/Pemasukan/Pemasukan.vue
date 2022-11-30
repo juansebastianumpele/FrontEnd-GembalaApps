@@ -86,10 +86,7 @@ export default {
   },
 
   async mounted() {
-    await this.a$pemasukanList().catch((error) => this.notify(error, false));
-    await this.a$kandangList().catch((error) => this.notify(error, false));
-    await this.a$statusTernak().catch((error) => this.notify(error, false));
-    await this.a$bangsa().catch((error) => this.notify(error, false));
+    this.a$pemasukanList().catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$pemasukan, [
@@ -111,7 +108,10 @@ export default {
     },
     async triggerCreate() {
       this.modal.createPemasukan = true;
-      await this.a$getTernakBaru().catch((error) => this.notify(error, false));
+      this.a$getTernakBaru().catch((error) => this.notify(error, false));
+      this.a$kandangList().catch((error) => this.notify(error, false));
+      this.a$statusTernak().catch((error) => this.notify(error, false));
+      this.a$bangsa().catch((error) => this.notify(error, false));
     },
     async createLkPemasukan() {
       try {
@@ -214,14 +214,8 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$pemasukan.length" :text="`${pageTitle}`" />
-      <data-table
-        v-else
-        :index="true"
-        :data="g$pemasukan"
-        :columns="dt.column"
-        :actions="dt.action"
-        @detail-pemasukan="triggerDetail"
-      />
+      <data-table v-else :index="true" :data="g$pemasukan" :columns="dt.column" :actions="dt.action"
+        @detail-pemasukan="triggerDetail" />
     </template>
 
     <template #modal>
@@ -242,8 +236,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.id_ternak }}</span
-                >
+                  {{ infoPemasukan.id_ternak }}</span>
               </div>
             </div>
             <div class="row">
@@ -253,8 +246,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.bangsa.bangsa }}</span
-                >
+                  {{ infoPemasukan.bangsa.bangsa }}</span>
               </div>
             </div>
             <div class="row">
@@ -264,8 +256,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.jenis_kelamin }}</span
-                >
+                  {{ infoPemasukan.jenis_kelamin }}</span>
               </div>
             </div>
             <div class="row">
@@ -275,8 +266,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.cek_poel }}</span
-                >
+                  {{ infoPemasukan.cek_poel }}</span>
               </div>
             </div>
             <div class="row">
@@ -286,8 +276,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.cek_mulut }}</span
-                >
+                  {{ infoPemasukan.cek_mulut }}</span>
               </div>
             </div>
             <div class="row">
@@ -297,8 +286,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.cek_telinga }}</span
-                >
+                  {{ infoPemasukan.cek_telinga }}</span>
               </div>
             </div>
             <div class="row">
@@ -308,8 +296,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.cek_kuku_kaki }}</span
-                >
+                  {{ infoPemasukan.cek_kuku_kaki }}</span>
               </div>
             </div>
             <div class="row">
@@ -319,8 +306,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.cek_kondisi_fisik_lain }}</span
-                >
+                  {{ infoPemasukan.cek_kondisi_fisik_lain }}</span>
               </div>
             </div>
             <div class="row">
@@ -330,8 +316,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.cek_bcs }}</span
-                >
+                  {{ infoPemasukan.cek_bcs }}</span>
               </div>
             </div>
             <div class="row">
@@ -341,8 +326,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.status_ternak.status_ternak }}</span
-                >
+                  {{ infoPemasukan.status_ternak.status_ternak }}</span>
               </div>
             </div>
             <div class="row">
@@ -352,8 +336,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.status_kesehatan }}</span
-                >
+                  {{ infoPemasukan.status_kesehatan }}</span>
               </div>
             </div>
             <div class="row">
@@ -363,8 +346,7 @@ export default {
               <div class="col">
                 :
                 <span style="font-weight: 300">
-                  {{ infoPemasukan.kandang.kode_kandang }}</span
-                >
+                  {{ infoPemasukan.kandang.kode_kandang }}</span>
               </div>
             </div>
           </div>
@@ -382,197 +364,98 @@ export default {
               <!-- ID Ternak -->
               <div class="col-6">
                 <base-input name="id_ternak" label="ID Ternak" required>
-                  <multi-select
-                    v-model="input.ternakBaru"
-                    :options="g$ternakBaru"
-                    track-by="id_ternak"
-                    label="id_ternak"
-                    placeholder="Pilih ID Ternak"
-                    :show-labels="false"
-                  />
+                  <multi-select v-model="input.ternakBaru" :options="g$ternakBaru" track-by="id_ternak"
+                    label="id_ternak" placeholder="Pilih ID Ternak" :show-labels="false" />
                 </base-input>
               </div>
 
               <!-- Bangsa -->
               <div class="col-6">
                 <base-input name="bangsa" label="Bangsa" required>
-                  <multi-select
-                    v-model="input.bangsa"
-                    :options="g$bangsa"
-                    label="bangsa"
-                    track-by="id_bangsa"
-                    placeholder="Pilih bangsa"
-                    :show-labels="false"
-                    :preselectFirst="true"
-                  />
+                  <multi-select v-model="input.bangsa" :options="g$bangsa" label="bangsa" track-by="id_bangsa"
+                    placeholder="Pilih bangsa" :show-labels="false" :preselectFirst="true" />
                 </base-input>
               </div>
 
               <!-- Kandang -->
               <div class="col-6">
                 <base-input name="kandang" label="Kandang" required>
-                  <multi-select
-                    v-model="input.kandang"
-                    :options="g$kandangList"
-                    label="kode_kandang"
-                    track-by="id"
-                    placeholder="Pilih Kandang"
-                    :show-labels="false"
-                  />
+                  <multi-select v-model="input.kandang" :options="g$kandangList" label="kode_kandang" track-by="id"
+                    placeholder="Pilih Kandang" :show-labels="false" />
                 </base-input>
               </div>
 
               <!-- Jenis kelamin -->
               <div class="col-6">
-                <base-input
-                  name="jenis_kelamin"
-                  placeholder="Jenis Kelamin"
-                  label="Jenis Kelamin"
-                  required
-                >
-                  <multi-select
-                    v-model="input.jenis_kelamin"
-                    :options="g$ddJenisKelamin"
-                    placeholder="Pilih Jenis Kelamin"
-                    :show-labels="false"
-                  />
+                <base-input name="jenis_kelamin" placeholder="Jenis Kelamin" label="Jenis Kelamin" required>
+                  <multi-select v-model="input.jenis_kelamin" :options="g$ddJenisKelamin"
+                    placeholder="Pilih Jenis Kelamin" :show-labels="false" />
                 </base-input>
               </div>
 
               <!-- Status ternak -->
               <div class="col-6">
                 <base-input name="status_ternak" label="Status Ternak" required>
-                  <multi-select
-                    v-model="input.status_ternak"
-                    :options="g$statusTernak"
-                    label="status_ternak"
-                    track-by="id_status_ternak"
-                    placeholder="Pilih status ternak"
-                    :show-labels="false"
-                    :preselectFirst="true"
-                  />
+                  <multi-select v-model="input.status_ternak" :options="g$statusTernak" label="status_ternak"
+                    track-by="id_status_ternak" placeholder="Pilih status ternak" :show-labels="false"
+                    :preselectFirst="true" />
                 </base-input>
               </div>
 
               <!-- Status kesehatan -->
               <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.status_kesehatan"
-                  name="status_kesehatan"
-                  >
-                  <base-input
-                  v-bind="field"
-                  placeholder="Status kesehatan"
-                  label="Status Kesehatan"
-                  type="text"
-                  required
-                  >
+                <field-form v-slot="{ field }" v-model="input.status_kesehatan" name="status_kesehatan">
+                  <base-input v-bind="field" placeholder="Status kesehatan" label="Status Kesehatan" type="text"
+                    required>
                   </base-input>
                 </field-form>
               </div>
 
               <!-- Cek bcs -->
               <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.cek_bcs"
-                  name="cek_bcs"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Kondisi bcs"
-                    label="Cek BCS"
-                    type="number"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.cek_bcs" name="cek_bcs">
+                  <base-input v-bind="field" placeholder="Kondisi bcs" label="Cek BCS" type="number"
+                    required></base-input>
                 </field-form>
               </div>
 
               <!-- Cek poel -->
               <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.cek_poel"
-                  name="cek_poel"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Jumlah poel"
-                    label="Cek Poel"
-                    type="number"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.cek_poel" name="cek_poel">
+                  <base-input v-bind="field" placeholder="Jumlah poel" label="Cek Poel" type="number"
+                    required></base-input>
                 </field-form>
               </div>
 
               <!-- Cek mulut -->
               <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.cek_mulut"
-                  name="cek_mulut"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Kondisi mulut"
-                    label="Cek Mulut"
-                    type="text"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.cek_mulut" name="cek_mulut">
+                  <base-input v-bind="field" placeholder="Kondisi mulut" label="Cek Mulut" type="text"
+                    required></base-input>
                 </field-form>
               </div>
 
               <!-- Cek telinga -->
               <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.cek_telinga"
-                  name="cek_telinga"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Kondisi telinga"
-                    label="Cek Telinga"
-                    type="text"
-                    required
-                  >
+                <field-form v-slot="{ field }" v-model="input.cek_telinga" name="cek_telinga">
+                  <base-input v-bind="field" placeholder="Kondisi telinga" label="Cek Telinga" type="text" required>
                   </base-input>
                 </field-form>
               </div>
 
               <!-- Cek kuku kaki -->
               <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.cek_kuku_kaki"
-                  name="cek_kuku_kaki"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Kondisi kuku kai"
-                    label="Cek Kuku Kaki"
-                    type="text"
-                    required
-                  >
+                <field-form v-slot="{ field }" v-model="input.cek_kuku_kaki" name="cek_kuku_kaki">
+                  <base-input v-bind="field" placeholder="Kondisi kuku kai" label="Cek Kuku Kaki" type="text" required>
                   </base-input>
                 </field-form>
               </div>
 
               <!-- Cek kondisi fisik lain -->
               <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.cek_kondisi_fisik_lain"
-                  name="cek_kondisi_fisik_lain"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Kondisi fisik lain"
-                    label="Cek Kondisi Fisik Lain"
-                    type="text"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.cek_kondisi_fisik_lain" name="cek_kondisi_fisik_lain">
+                  <base-input v-bind="field" placeholder="Kondisi fisik lain" label="Cek Kondisi Fisik Lain" type="text"
+                    required></base-input>
                 </field-form>
               </div>
             </div>
