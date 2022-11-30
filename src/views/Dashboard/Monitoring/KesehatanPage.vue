@@ -73,11 +73,7 @@ export default {
   },
   async mounted() {
     await this.a$kesehatanList().catch((error) => this.notify(error, false));
-    await this.a$ddListPenyakit().catch((error) => this.notify(error, false));
-    await this.a$ternakList().catch((error) => this.notify(error, false));
-    await this.a$ddKandang().catch((error) => this.notify(error, false));
     await this.a$totalSakit().catch((error) => this.notify(error, false));
-    await this.a$kandangList().catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$kesehatan, [
@@ -95,6 +91,12 @@ export default {
       };
     },
     ...mapActions(d$ternak, ["a$ternakList"]),
+    async triggerAddTernakSakit() {
+      this.modal.addTernakSakit = true;
+      this.a$ternakList().catch((error) => this.notify(error, false));
+      this.a$ddListPenyakit().catch((error) => this.notify(error, false));
+      this.a$kandangList().catch((error) => this.notify(error, false));
+    },
     async triggerDetail(row) {
       const { id_penyakit } = row;
       this.$router.push({
@@ -104,7 +106,6 @@ export default {
         },
       });
     },
-
     async addTernakSakit() {
       try {
         const { ternak, penyakit, tanggal_sakit, kandang } = this.input;
@@ -170,7 +171,7 @@ export default {
           <h3>Daftar {{ pageTitle }}</h3>
         </div>
         <div class="col text-right">
-          <base-button type="success" @click="modal.addTernakSakit = true">
+          <base-button type="success" @click="triggerAddTernakSakit">
             Tambah {{ pageTitle }}
           </base-button>
         </div>
