@@ -334,11 +334,10 @@ export default {
               </div>
 
               <!-- persentase kebutuhan pakan -->
-              <div class="col-6">
+              <div class="col-12">
                 <field-form
                   v-slot="{ field }"
                   v-model="input.persentase_kebutuhan_pakan"
-                  type="number"
                   name="persentase_kebutuhan_pakan"
                 >
                   <base-input
@@ -346,6 +345,7 @@ export default {
                     placeholder="Persentase Kebutuhan Pakan"
                     label="Persentase Kebutuhan Pakan"
                     value="5"
+                    type="number"
                   ></base-input>
                 </field-form>
               </div>
@@ -424,17 +424,17 @@ export default {
               </div>
 
               <!-- persentase kebutuhan pakan -->
-              <div class="col-6">
+              <div class="col-12">
                 <field-form
                   v-slot="{ field }"
                   v-model="input.persentase_kebutuhan_pakan"
-                  type="number"
                   name="persentase_kebutuhan_pakan"
                 >
                   <base-input
                     v-bind="field"
-                    placeholder="Persentase Kebutuhan Pakan"
-                    label="Persentase Kebutuhan Pakan"
+                    placeholder="Masukkan persentase kebutuhan pakan kandang "
+                    label="Persentase Kebutuhan Pakan (%)"
+                    type="number"
                   ></base-input>
                 </field-form>
               </div>
