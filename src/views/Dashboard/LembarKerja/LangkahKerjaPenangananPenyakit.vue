@@ -42,7 +42,7 @@ export default {
             <li class="mb-1">Temukan domba yang terindikasi penyakit.</li>
             <li class="mb-1">Buka menu fitur kesehatan</li>
             <li class="mb-1">Klik sub-menu daftar penyakit.</li>
-            <li class="mb-1">Setelah diketahui terdapat penyakit, isi form id ternak dan pilih penyakit.</li>
+            <li class="mb-1">Setelah diketahui terdapat penyakit, isi form ID ternak dan pilih penyakit.</li>
             <li class="mb-1">Submit data.</li>
           </ol>
         </card-comp>
