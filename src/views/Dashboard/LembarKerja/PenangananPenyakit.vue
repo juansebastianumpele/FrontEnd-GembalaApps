@@ -147,6 +147,9 @@ export default {
       }
     },
     async editLkPenangananPenyakit() {
+      this.a$kandangList().catch((error) => this.notify(error, false));
+      this.a$ternakList().catch((error) => this.notify(error, false));
+      this.a$penyakitList().catch((error) => this.notify(error, false));
       try {
         const {
           id_kesehatan,

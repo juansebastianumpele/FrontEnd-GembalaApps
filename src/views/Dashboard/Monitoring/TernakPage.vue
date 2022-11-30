@@ -314,6 +314,12 @@ export default {
       this.a$statusTernak().catch((error) => this.notify(error, false));
     },
     async triggerEditModal(row) {
+      this.a$ddBangsa().catch((error) => this.notify(error, false));
+      this.a$ddFasePemeliharaan().catch((error) => this.notify(error, false));
+      this.a$ddKandang().catch((error) => this.notify(error, false));
+      this.a$ddListBetina().catch((error) => this.notify(error, false));
+      this.a$ddListPejantan().catch((error) => this.notify(error, false));
+      this.a$statusTernak().catch((error) => this.notify(error, false));
       try {
         const {
           id_ternak,

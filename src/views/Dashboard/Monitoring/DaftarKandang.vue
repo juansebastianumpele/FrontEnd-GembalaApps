@@ -185,6 +185,8 @@ export default {
       this.a$ddJenisKandang().catch((error) => this.notify(error, false));
     },
     async triggerEditModal(row) {
+      this.a$ddListJenisPakan("").catch((error) => this.notify(error, false));
+      this.a$ddJenisKandang().catch((error) => this.notify(error, false));
       try {
         const {
           id_kandang,

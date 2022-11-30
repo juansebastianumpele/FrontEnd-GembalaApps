@@ -123,25 +123,6 @@ export default {
         this.notify(error, false);
       }
     },
-    async editTernakSakit() {
-      try {
-        const { id, id_ternak, nama_penyakit, tgl_sakit } = this.input;
-        const data = {
-          id,
-          id_ternak,
-          nama_penyakit,
-          tgl_sakit,
-        };
-        await this.schema.validate(data);
-        await this.a$kesehatanEdit(data);
-        this.modal.editTernakSakit = false;
-        this.notify(`Ubah ${this.pageTitle} berhasil`);
-      } catch (error) {
-        this.notify(error, false);
-      } finally {
-        this.a$kesehatanList();
-      }
-    },
   },
 };
 </script>
