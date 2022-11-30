@@ -43,8 +43,8 @@ export default {
             <li class="mb-1">Buka Menu Fitur Kesehatan</li>
             <li class="mb-1">Klik Sub-menu Daftar Penyakit.</li>
             <li class="mb-1">
-              Setelah Diketahui terdapat Penyakit, Isi Form ID Ternak Dan Pilih
-              Penyakit.
+              Setelah diketahui terdapat penyakit, Isi form ID ternak Dan pilih
+              penyakit.
             </li>
             <li class="mb-1">Submit Data.</li>
           </ol>
