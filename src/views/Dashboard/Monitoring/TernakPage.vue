@@ -243,7 +243,6 @@ export default {
           `Ternak dengan ID Ternak ${tambahTernak.id} berhasil ditambahkan`
         );
       } catch (error) {
-        console.log(error);
         this.notify(error, false);
       } finally {
         this.a$ternakList();
@@ -288,9 +287,7 @@ export default {
         await this.schema.validate(data);
         const editTernak = await this.a$ternakEdit(data);
         this.modal.ubahTernak = false;
-        this.notify(
-          `Ternak dengan ID Ternak ${editTernak.id} berhasil diubah`
-        );
+        this.notify(`Ternak dengan ID Ternak ${editTernak.id} berhasil diubah`);
       } catch (error) {
         this.notify(error, false);
       } finally {
@@ -306,7 +303,6 @@ export default {
           tanggal_keluar: new Date(),
         };
         const deleteTernak = await this.a$ternakDelete(data);
-        console.log(data);
         this.modal.confirm = false;
         this.notify(
           `Ternak dengan ID Ternak ${deleteTernak.id} berhasil dihapus`
@@ -413,8 +409,6 @@ export default {
       const file = this.$refs.image.files[0];
       this.input.image = file;
       this.input.imageUrl = URL.createObjectURL(this.input.image);
-      console.log("file", this.input.image);
-      console.log("url", this.input.imageUrl);
     },
     ubahTanggal,
   },

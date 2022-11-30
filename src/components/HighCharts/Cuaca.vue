@@ -107,7 +107,6 @@ export default {
         const { data } = await s$dashboard.coordinate();
         this.latitude = data.latitude;
         this.longitude = data.longitude;
-        console.log(data);
       } catch (error) {
         throw error;
       }

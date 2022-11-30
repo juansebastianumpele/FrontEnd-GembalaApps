@@ -174,7 +174,6 @@ export default {
         const data = {
           id_kandang,
         };
-        console.log(data);
         await this.a$kandangDelete(data);
         this.modal.confirm = false;
         this.notify(`Hapus ${this.pageTitle} Sukses!`);
