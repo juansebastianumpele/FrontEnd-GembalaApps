@@ -15,15 +15,15 @@ export default {
       <div class="col-sm">
         <div class="row">
           <span class="text-center m-2">
-            <router-link to="../pemeliharaan" >
-            <base-button type="secondary" class="btn-lg text-dark">
+            <router-link to="../pemeliharaan">
+              <base-button type="secondary" class="btn-lg text-dark">
                 Fase Pemeliharaan
               </base-button>
             </router-link>
           </span>
           <span class="text-center m-2">
-            <router-link to="langkah-kerja" >
-            <base-button type="success1" class="btn-lg text-white">
+            <router-link to="langkah-kerja">
+              <base-button type="success1" class="btn-lg text-white">
                 Langkah Kerja
               </base-button>
             </router-link>
@@ -31,7 +31,7 @@ export default {
         </div>
       </div>
       <div>
-        <h3>Langkah Kerja Fase Pemasukan :</h3>
+        <h3>Langkah Kerja Lembar Kerja Pemeliharaan:</h3>
       </div>
     </template>
 
@@ -39,13 +39,12 @@ export default {
       <div>
         <card-comp>
           <ol>
-            <li class="mb-1">Temukan Domba Yang Terindikasi Penyakit.</li>
-            <li class="mb-1">Buka Menu Fitur Kesehatan</li>
+            <li class="mb-1">Buka monitor Kandang.</li>
+            <li class="mb-1">Lihat kebutuhan pakan pada kandang yang akan dikerjakan.</li>
             <li class="mb-1">Klik Sub-menu Daftar Penyakit.</li>
-            <li class="mb-1">
-              Setelah Diketahui terdapat Penyakit, Isi Form ID Ternak Dan Pilih
-              Penyakit.
-            </li>
+            <li class="mb-1">Sanitasi kandang ternak serta berikan pakan sesuai porsi.</li>
+            <li class="mb-1">Tambah lembar kerja menggunakan ikon tanda {+} di sebelah kanan atas.</li>
+            <li class="mb-1">Isi form.</li>
             <li class="mb-1">Submit Data.</li>
           </ol>
         </card-comp>
