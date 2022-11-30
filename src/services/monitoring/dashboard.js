@@ -23,6 +23,8 @@ const totalKandang = () => baseApi.get(`${api}/web-dash/total-kandang`);
 
 const totalTernak = () => baseApi.get(`${api}/web-dash/total-ternak`);
 
+const coordinate = () => baseApi.get(`${api}/web-dash/coordinate`);
+
 export {
   populasi,
   totalTernakByStatus,
@@ -32,4 +34,5 @@ export {
   totalAdgCempe,
   totalKandang,
   totalTernak,
+  coordinate,
 };

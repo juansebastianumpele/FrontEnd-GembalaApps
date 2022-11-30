@@ -35,6 +35,7 @@ export default {
       nama_peternakan: "",
       foto: "",
       fotoUrl: "",
+      postcode: "",
     },
     // UI
     modal: {
@@ -62,6 +63,7 @@ export default {
         this.input.fotoUrl = this.g$userDetail.image;
         this.input.alamat = this.g$userPeternakan.alamat;
         this.input.nama_peternakan = this.g$userPeternakan.nama_peternakan;
+        this.input.postcode = this.g$userPeternakan.postcode;
       }
     },
   },
@@ -127,13 +129,19 @@ export default {
     //edit profile
     async editProfile() {
       try {
-        const { nama_pengguna, nomor_telepon, alamat, nama_peternakan } =
-          this.input;
+        const {
+          nama_pengguna,
+          nomor_telepon,
+          alamat,
+          nama_peternakan,
+          postcode,
+        } = this.input;
         const data = {
           nama_pengguna,
           nomor_telepon,
           alamat,
           nama_peternakan,
+          postcode,
         };
         const foto = new FormData();
         foto.append("avatar", this.input.foto);
@@ -141,8 +149,6 @@ export default {
         if (this.input.foto !== this.g$userDetail.image) {
           await this.a$uploadFoto(foto);
         }
-        // await this.a$uploadFoto(foto);
-        console.log("foto", foto);
         this.modal.editProfile = false;
         this.notify("Edit Profil Sukses!");
         this.a$userDetail();
@@ -268,7 +274,22 @@ export default {
               ></base-input>
             </field-form>
           </div>
-          <div class="col-12">
+          <div class="col-6">
+            <field-form
+              v-slot="{ field }"
+              v-model="g$userPeternakan.postcode"
+              type="text"
+              name="postcode"
+            >
+              <base-input
+                v-bind="field"
+                placeholder="Kode Pos"
+                label="Kode Pos"
+                disabled
+              ></base-input>
+            </field-form>
+          </div>
+          <div class="col-6">
             <field-form
               v-slot="{ field }"
               v-model="g$userPeternakan.alamat"
@@ -396,6 +417,23 @@ export default {
                     placeholder="Nama Peternakan"
                     label="Nama Peternakan"
                     addon-left-icon="fas fa-user"
+                  ></base-input>
+                </field-form>
+              </div>
+
+              <!-- postcode -->
+              <div class="col-12">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.postcode"
+                  name="postcode"
+                >
+                  <base-input
+                    v-bind="field"
+                    type="text"
+                    placeholder="Kode Pos"
+                    label="Kode Pos"
+                    addon-left-icon="fas fa-signs-post"
                   ></base-input>
                 </field-form>
               </div>

@@ -112,7 +112,6 @@ export default {
           jenis_bahan_pakan,
           satuan,
         };
-        console.log(data);
         await this.a$bahanPakanEdit(data);
         this.modal.ubahBahanPakan = false;
         this.notify(`Edit ${this.pageTitle} Sukses!`);
@@ -211,8 +210,16 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$bahanPakanList.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$bahanPakanList" :columns="dt.column" :actions="dt.action"
-        @ubah-pakan="triggerEdit" @hapus-pakan="triggerDelete" @detail-pakan="triggerDetail" />
+      <data-table
+        v-else
+        :index="true"
+        :data="g$bahanPakanList"
+        :columns="dt.column"
+        :actions="dt.action"
+        @ubah-pakan="triggerEdit"
+        @hapus-pakan="triggerDelete"
+        @detail-pakan="triggerDetail"
+      />
     </template>
 
     <template #modal>
@@ -225,15 +232,33 @@ export default {
           <form-comp v-if="modal.addBahanPakan" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.jenis_bahan_pakan" type="text" name="jenis_bahan_pakan">
-                  <base-input v-bind="field" placeholder="Nama Bahan Pakan" label="Nama Bahan Pakan" required>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.jenis_bahan_pakan"
+                  type="text"
+                  name="jenis_bahan_pakan"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Nama Bahan Pakan"
+                    label="Nama Bahan Pakan"
+                    required
+                  >
                   </base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <base-input name="satuan" placeholder="Satuan Pakan" label="Satuan Pakan">
-                  <multi-select v-model="input.satuan" :options="g$ddSatuanPakan" placeholder="Pilih Satuan Pakan"
-                    :show-labels="false" />
+                <base-input
+                  name="satuan"
+                  placeholder="Satuan Pakan"
+                  label="Satuan Pakan"
+                >
+                  <multi-select
+                    v-model="input.satuan"
+                    :options="g$ddSatuanPakan"
+                    placeholder="Pilih Satuan Pakan"
+                    :show-labels="false"
+                  />
                 </base-input>
               </div>
             </div>
@@ -259,17 +284,35 @@ export default {
             <div class="row">
               <!-- Nama Bahan Pakan -->
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.jenis_bahan_pakan" type="text" name="jenis_bahan_pakan">
-                  <base-input v-bind="field" placeholder="Nama Bahan Pakan" label="Nama Bahan Pakan" required>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.jenis_bahan_pakan"
+                  type="text"
+                  name="jenis_bahan_pakan"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Nama Bahan Pakan"
+                    label="Nama Bahan Pakan"
+                    required
+                  >
                   </base-input>
                 </field-form>
               </div>
 
               <!-- Satuan -->
               <div class="col-12">
-                <base-input name="satuan" placeholder="Satuan Pakan" label="Satuan Pakan">
-                  <multi-select v-model="input.satuan" :options="g$ddSatuanPakan" placeholder="Pilih Satuan Pakan"
-                    :show-labels="false" />
+                <base-input
+                  name="satuan"
+                  placeholder="Satuan Pakan"
+                  label="Satuan Pakan"
+                >
+                  <multi-select
+                    v-model="input.satuan"
+                    :options="g$ddSatuanPakan"
+                    placeholder="Pilih Satuan Pakan"
+                    :show-labels="false"
+                  />
                 </base-input>
               </div>
             </div>

@@ -20,7 +20,6 @@ export default {
 
     async function onSubmit(values) {
       try {
-        console.log(values);
         const register = await auth.a$register(values);
         if (register === "Register Berhasil!") {
           notify(register);

@@ -35,7 +35,6 @@ const u$bahanPakan = defineStore({
     async a$bahanPakanDelete(request) {
       try {
         await s$bahanPakan.del(request);
-        console.log(request);
       } catch ({ error }) {
         throw error;
       }
