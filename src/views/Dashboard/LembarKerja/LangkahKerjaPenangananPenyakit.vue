@@ -39,14 +39,11 @@ export default {
       <div>
         <card-comp>
           <ol>
-            <li class="mb-1">Temukan Domba Yang Terindikasi Penyakit.</li>
-            <li class="mb-1">Buka Menu Fitur Kesehatan</li>
-            <li class="mb-1">Klik Sub-menu Daftar Penyakit.</li>
-            <li class="mb-1">
-              Setelah diketahui terdapat penyakit, Isi form ID ternak Dan pilih
-              penyakit.
-            </li>
-            <li class="mb-1">Submit Data.</li>
+            <li class="mb-1">Temukan domba yang terindikasi penyakit.</li>
+            <li class="mb-1">Buka menu fitur kesehatan</li>
+            <li class="mb-1">Klik sub-menu daftar penyakit.</li>
+            <li class="mb-1">Setelah diketahui terdapat penyakit, isi form id ternak dan pilih penyakit.</li>
+            <li class="mb-1">Submit data.</li>
           </ol>
         </card-comp>
       </div>
