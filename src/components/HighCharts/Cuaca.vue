@@ -1,6 +1,8 @@
 <script>
 import axios from "axios";
+import { mapActions, mapState } from "pinia";
 import * as s$dashboard from "@/services/monitoring/dashboard";
+import d$user from "@/stores/user";
 
 export default {
   name: "Cuaca",
@@ -90,6 +92,7 @@ export default {
         this.cuaca.main.temp_max
       )}°C`;
     },
+    ...mapState(d$user, ["g$userPeternakan"]),
   },
 
   methods: {
@@ -111,10 +114,12 @@ export default {
         throw error;
       }
     },
+    ...mapActions(d$user, ["a$userDetail"]),
   },
   async mounted() {
     await this.getCoordinat();
     await this.getWeather();
+    await this.a$userDetail();
   },
 };
 </script>
@@ -124,7 +129,7 @@ export default {
     class="text-white text-uppercase text-center ls-1 mt-0 mb-2"
     style="font-size: 12px"
   >
-    Cuaca hari ini di {{ cuaca.name }}
+    Cuaca hari ini di peternakan {{ g$userPeternakan.nama_peternakan }}
   </h1>
   <div class="row">
     <div class="col">
