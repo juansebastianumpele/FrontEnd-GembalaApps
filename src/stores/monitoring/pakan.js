@@ -57,7 +57,7 @@ const u$pakan = defineStore({
         const { data } = await s$pakan.listPakan(req);
         this.detailPakan = data.list;
       } catch ({ error }) {
-        this.pakan = [];
+        this.detailPakan = [];
         throw error;
       }
     },
