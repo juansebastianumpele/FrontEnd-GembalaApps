@@ -33,10 +33,61 @@ export default {
       name: "Melati",
       cod: 200,
     },
+    perkiraaanCuaca: {
+      city:
+      {
+        id: 1630681,
+        name: "Candi Prambanan",
+        coord:
+        {
+          lon: 110.4616,
+          lat: -7.7165
+        },
+        country: "ID",
+        population: 44925,
+        timezone: 25200
+      },
+      cod: 200,
+      message: 3.3570573,
+      cnt: 1,
+      list: [{
+        dt: 1669780800,
+        sunrise: 1669759857,
+        sunset: 1669804965,
+        temp: {
+          day: 27.6,
+          min: 22.76,
+          max: 27.79,
+          night: 22.76,
+          eve: 25.56,
+          morn: 23.2
+        },
+        feels_like: {
+          day: 30.03,
+          night: 23.44,
+          eve: 26.23,
+          morn: 23.98
+        },
+        pressure: 1010,
+        humidity: 71,
+        weather: [{
+          id: 500,
+          main: "Rain",
+          description: "hujan rintik-rintik",
+          icon: "10d"
+        }],
+        speed: 4.37,
+        deg: 211,
+        gust: 4.32,
+        clouds: 97,
+        pop: 0.44,
+        rain: 1.27
+      }]
+    },
     latitude: -7.716492,
     longitude: 110.461627,
+    appid: '724edd4b529beb144b3986c95d678b48',
   }),
-
   computed: {
     tanggal() {
       return new Intl.DateTimeFormat("id", {
@@ -92,6 +143,9 @@ export default {
         this.cuaca.main.temp_max
       )}°C`;
     },
+    curahHujan() {
+      return this.cuaca.rain ? `${this.cuaca.rain["1h"]} mm` : '0 mm';
+    },
     ...mapState(d$user, ["g$userPeternakan"]),
   },
 
@@ -99,13 +153,22 @@ export default {
     async getWeather() {
       await axios
         .get(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${this.latitude}&lon=${this.longitude}&units=metric&lang=id&appid=724edd4b529beb144b3986c95d678b48`
+          `https://api.openweathermap.org/data/2.5/weather?lat=${this.latitude}&lon=${this.longitude}&units=metric&lang=id&appid=${this.appid}`
         )
         .then((response) => {
           this.cuaca = response.data;
         });
     },
-    async getCoordinat() {
+    async getWeatherPrediction() {
+      await axios
+        .get(
+          `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${this.latitude}&lon=${this.longitude}&units=metric&lang=id&cnt=1&appid=${this.appid}`
+        )
+        .then((response) => {
+          this.perkiraaanCuaca = response.data;
+        });
+    },
+    async getCoordinate() {
       try {
         const { data } = await s$dashboard.coordinate();
         this.latitude = data.latitude;
@@ -117,7 +180,7 @@ export default {
     ...mapActions(d$user, ["a$userDetail"]),
   },
   async mounted() {
-    await this.getCoordinat();
+    await this.getCoordinate();
     await this.getWeather();
     await this.a$userDetail();
   },
@@ -125,10 +188,7 @@ export default {
 </script>
 
 <template>
-  <h1
-    class="text-white text-uppercase text-center ls-1 mt-0 mb-2"
-    style="font-size: 12px"
-  >
+  <h1 class="text-white text-uppercase text-center ls-1 mt-0 mb-2" style="font-size: 12px">
     Cuaca hari ini di peternakan {{ g$userPeternakan.nama_peternakan }}
   </h1>
   <div class="row">
@@ -140,16 +200,8 @@ export default {
   </div>
   <div class="row mt--4">
     <div class="col-5">
-      <img
-        style="width: 80px"
-        :src="gambarCuaca"
-        class="d-block p-0 m-0"
-        alt="..."
-      />
-      <p
-        class="text-left text-white ml-2 mt--3 m-0 p-0 text-capitalize"
-        style="font-size: small"
-      >
+      <img style="width: 80px" :src="gambarCuaca" class="d-block p-0 m-0" alt="..." />
+      <p class="text-left text-white ml-2 mt--3 m-0 p-0 text-capitalize" style="font-size: small">
         {{ deskripsi }}
       </p>
     </div>
@@ -171,8 +223,8 @@ export default {
     <div class="col kecil">
       <div class="row">
         <div class="col-5 text-white">
-          <i class="fa-solid fa-temperature-half"></i> Maks/Min:
-          {{ maksMin }}
+          <i class="fa-solid fa-cloud-rain"></i> Curah Hujan:
+          {{ curahHujan }}
         </div>
         <div class="col-7 text-white">
           <i class="fa-solid fa-droplet"></i> Kelembapan: {{ kelembapan }}%
