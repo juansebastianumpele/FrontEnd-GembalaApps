@@ -43,6 +43,7 @@ export default {
       email: y$string().required().email().label("Email"),
       nomor_telepon: y$string().required().label("Nomor Telepon"),
       alamat: y$string().required().label("Alamat"),
+      postcode: y$number().required().label("Kode Pos"),
       nama_peternakan: y$string().required().label("Nama Peternakan"),
       kata_sandi: y$string().min(5).required().label("Kata Sandi"),
       ulangi_kata_sandi: y$string()
@@ -119,6 +120,17 @@ export default {
                 placeholder="Alamat"
                 label="Alamat"
                 addon-left-icon="fas fa-location-arrow"
+                focused
+                required
+              >
+              </base-input>
+
+              <base-input
+                name="postcode"
+                form-classes="input-group-alternative"
+                placeholder="Kode Pos"
+                label="Kode Pos"
+                addon-left-icon="fas fa-signs-post"
                 focused
                 required
               >
