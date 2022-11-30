@@ -342,9 +342,8 @@ export default {
                 >
                   <base-input
                     v-bind="field"
-                    placeholder="Persentase Kebutuhan Pakan"
-                    label="Persentase Kebutuhan Pakan"
-                    value="5"
+                    placeholder="Masukkan persentase kebutuhan pakan kandang "
+                    label="Persentase Kebutuhan Pakan (%)"
                     type="number"
                   ></base-input>
                 </field-form>
