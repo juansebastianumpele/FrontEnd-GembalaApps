@@ -305,22 +305,21 @@ export default {
       }
     },
     async triggerAddTernak() {
+      await this.a$ddBangsa().catch((error) => this.notify(error, false));
+      await this.a$ddFasePemeliharaan().catch((error) => this.notify(error, false));
+      await this.a$ddKandang().catch((error) => this.notify(error, false));
+      await this.a$ddListBetina().catch((error) => this.notify(error, false));
+      await this.a$ddListPejantan().catch((error) => this.notify(error, false));
+      await this.a$statusTernak().catch((error) => this.notify(error, false));
       this.modal.addTernak = true;
-      this.a$ddBangsa().catch((error) => this.notify(error, false));
-      this.a$ddFasePemeliharaan().catch((error) => this.notify(error, false));
-      this.a$ddKandang().catch((error) => this.notify(error, false));
-      this.a$ddListBetina().catch((error) => this.notify(error, false));
-      this.a$ddListPejantan().catch((error) => this.notify(error, false));
-      this.a$statusTernak().catch((error) => this.notify(error, false));
     },
     async triggerEditModal(row) {
-      this.a$ddBangsa().catch((error) => this.notify(error, false));
-      this.a$ddFasePemeliharaan().catch((error) => this.notify(error, false));
-      this.a$ddKandang().catch((error) => this.notify(error, false));
-      this.a$ddListBetina().catch((error) => this.notify(error, false));
-      this.a$ddListPejantan().catch((error) => this.notify(error, false));
-      this.a$statusTernak().catch((error) => this.notify(error, false));
-      try {
+      await this.a$ddBangsa().catch((error) => this.notify(error, false));
+      await this.a$ddFasePemeliharaan().catch((error) => this.notify(error, false));
+      await this.a$ddKandang().catch((error) => this.notify(error, false));
+      await this.a$ddListBetina().catch((error) => this.notify(error, false));
+      await this.a$ddListPejantan().catch((error) => this.notify(error, false));
+      await this.a$statusTernak().catch((error) => this.notify(error, false));
         const {
           id_ternak,
           rf_id,
@@ -384,10 +383,6 @@ export default {
           image,
         };
         this.modal.ubahTernak = true;
-      } catch (error) {
-        this.clearInput();
-        this.notify(error, false);
-      }
     },
     async triggerDelete(row) {
       try {

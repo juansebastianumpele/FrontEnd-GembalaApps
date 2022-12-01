@@ -98,9 +98,9 @@ export default {
         this.notify(error, false);
       }
     },
-    triggerCreateLepasSapih() {
+    async triggerCreateLepasSapih() {
+      await this.a$cempe().catch((error) => this.notify(error, false));
       this.modal.createLepasSapih = true;
-      this.a$cempe().catch((error) => this.notify(error, false));
     },
     triggerSeleksi(row) {
       this.modal.seleksi = true;

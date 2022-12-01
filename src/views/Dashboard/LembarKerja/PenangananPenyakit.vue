@@ -103,12 +103,15 @@ export default {
     ...mapActions(d$ternak, ["a$ternakList"]),
     ...mapActions(d$penyakit, ["a$penyakitList"]),
     async triggerCreate() {
+      await this.a$kandangList().catch((error) => this.notify(error, false));
+      await this.a$ternakList().catch((error) => this.notify(error, false));
+      await this.a$penyakitList().catch((error) => this.notify(error, false));
       this.modal.addLkPenangananPenyakit = true;
-      this.a$kandangList().catch((error) => this.notify(error, false));
-      this.a$ternakList().catch((error) => this.notify(error, false));
-      this.a$penyakitList().catch((error) => this.notify(error, false));
     },
     async triggerEdit(row) {
+      await this.a$kandangList().catch((error) => this.notify(error, false));
+      await this.a$ternakList().catch((error) => this.notify(error, false));
+      await this.a$penyakitList().catch((error) => this.notify(error, false));
       const {
         id_kesehatan,
         tanggal_sakit,

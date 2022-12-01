@@ -92,10 +92,10 @@ export default {
     },
     ...mapActions(d$ternak, ["a$ternakList"]),
     async triggerAddTernakSakit() {
+      await this.a$ternakList().catch((error) => this.notify(error, false));
+      await this.a$ddListPenyakit().catch((error) => this.notify(error, false));
+      await this.a$kandangList().catch((error) => this.notify(error, false));
       this.modal.addTernakSakit = true;
-      this.a$ternakList().catch((error) => this.notify(error, false));
-      this.a$ddListPenyakit().catch((error) => this.notify(error, false));
-      this.a$kandangList().catch((error) => this.notify(error, false));
     },
     async triggerDetail(row) {
       const { id_penyakit } = row;
