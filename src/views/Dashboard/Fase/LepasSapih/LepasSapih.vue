@@ -1,7 +1,6 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import d$lepasSapih from "@/stores/fase/lepasSapih";
-import d$kandang from "@/stores/monitoring/daftarkandang";
 import { ubahTanggal } from "@/utils/locale/ubahTanggal";
 
 export default {
@@ -10,15 +9,6 @@ export default {
   }),
   data: () => ({
     pageTitle: "Fase Lepas Sapih",
-    input: {
-      ternak: null,
-      tanggal_lepas_sapih: null,
-      kandang: null,
-    },
-    //UI
-    modal: {
-      createLepasSapih: false,
-    },
     // DataTable
     dt: {
       column: [
@@ -35,69 +25,16 @@ export default {
           th: "Kode Kandang",
         },
       ],
-      action: [
-        {
-          text: 'Seleksi',
-          color: 'primary',
-          event: 'seleksi',
-        }
-      ]
     },
   }),
   computed: {
-    ...mapState(d$lepasSapih, ["g$lepasSapih", "g$cempe"]),
-    ...mapState(d$kandang, ["g$kandangList"]),
-    modals() {
-      return Object.values(this.modal).includes(true);
-    },
+    ...mapState(d$lepasSapih, ["g$lepasSapih"]),
   },
-
-  watch: {
-    modals(val) {
-      if (!val) {
-        this.clearInput();
-      }
-    },
-  },
-
   async mounted() {
-    await this.a$lepasSapihList().catch((error) => this.notify(error, false));
-    await this.a$kandangList().catch((error) => this.notify(error, false));
+    this.a$lepasSapihList().catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$lepasSapih, ["a$lepasSapihList", "a$createLepasSapih", "a$cempe"]),
-    ...mapActions(d$kandang, ["a$kandangList"]),
-    clearInput() {
-      this.input = {
-        ternak: null,
-        tanggal_lepas_sapih: null,
-        kandang: null,
-      };
-    },
-    async createLepasSapih() {
-      try {
-        const {
-          ternak,
-          tanggal_lepas_sapih,
-          kandang,
-        } = this.input;
-        const data = {
-          id_ternak: ternak.id_ternak,
-          tanggal_lepas_sapih,
-          id_kandang: kandang.id_kandang,
-        };
-        await this.a$createLepasSapih(data);
-        this.notify("Data berhasil ditambahkan", true);
-        this.modal.createLepasSapih = false;
-        this.a$lepasSapihList();
-      } catch (error) {
-        this.notify(error, false);
-      }
-    },
-    triggerCreateLepasSapih() {
-      this.modal.createLepasSapih = true;
-      this.a$cempe().catch((error) => this.notify(error, false));
-    },
+    ...mapActions(d$lepasSapih, ["a$lepasSapihList"]),
   },
 };
 </script>
@@ -158,54 +95,5 @@ export default {
       <data-table v-else :index="true" :data="g$lepasSapih" :columns="dt.column"  />
     </template>
 
-    <template #modal>
-      <!-- Create fase lepas sapih -->
-      <modal-comp v-model:show="modal.createLepasSapih" modal-classes="modal-md">
-        <template #header>
-          <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
-        </template>
-        <template #body>
-          <form-comp v-if="modal.createLepasSapih">
-            <div class="row">
-              <!-- id_ternak -->
-              <div class="col-12">
-                <base-input name="id_ternak" label="ID ternak">
-                  <multi-select v-model="input.ternak" :options="g$cempe" label="id_ternak" track-by="id_ternak"
-                    placeholder="Pilih ID ternak" :show-labels="false" />
-                </base-input>
-              </div>
-
-              <!-- Tanggal lepas sapih -->
-              <div class="col-12">
-                <base-input name="tanggal_lepas sapih" label="Tanggal Lepas Sapih">
-                  <flat-pickr v-model="input.tanggal_lepas_sapih" :config="{
-                    mode: 'single',
-                    allowInput: true,
-                    maxDate: new Date(),
-                    defaultDate: 'today',
-                  }" class="form-control datepicker" placeholder="Pilih tanggal" />
-                </base-input>
-              </div>
-
-              <!-- Kode kandang -->
-              <div class="col-12">
-                <base-input name="kode_kandang" label="Pilih kandang">
-                  <multi-select v-model="input.kandang" :options="g$kandangList" track-by="id_kandang"
-                    label="kode_kandang" placeholder="Pilih kandang" :show-labels="false" />
-                </base-input>
-              </div>
-            </div>
-          </form-comp>
-        </template>
-        <template #footer>
-          <base-button type="secondary" @click="modal.createLepasSapih = false">
-            Tutup
-          </base-button>
-          <base-button type="primary" @click="createLepasSapih">
-            Tambah {{ pageTitle }}
-          </base-button>
-        </template>
-      </modal-comp>
-    </template>
   </main-layout>
 </template>
