@@ -1,6 +1,7 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import d$user from "@/stores/user";
+import useAuthStore from "@/stores/auth";
 
 import { object as y$object, string as y$string, ref as y$ref } from "yup";
 
@@ -43,10 +44,12 @@ export default {
       editProfile: false,
       daftarBod: false,
       hapusAkun: false,
+      uploadFoto: false,
     },
   }),
   computed: {
     ...mapState(d$user, ["g$userDetail", "g$userPeternakan"]),
+    ...mapState(useAuthStore, ["userInfo"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -57,13 +60,12 @@ export default {
         this.clearInput();
       } else {
         this.input.nama_pengguna = this.g$userDetail.nama_pengguna;
-        this.input.email = this.g$userDetail.email;
         this.input.nomor_telepon = this.g$userDetail.nomor_telepon;
-        this.input.foto = this.g$userDetail.image;
-        this.input.fotoUrl = this.g$userDetail.image;
         this.input.alamat = this.g$userPeternakan.alamat;
         this.input.nama_peternakan = this.g$userPeternakan.nama_peternakan;
         this.input.postcode = this.g$userPeternakan.postcode;
+        this.input.foto = this.g$userDetail.image;
+        this.input.fotoUrl = this.g$userDetail.image;
       }
     },
   },
@@ -72,8 +74,8 @@ export default {
   },
   methods: {
     ...mapActions(d$user, [
-      "a$userChangePw",
       "a$userDetail",
+      "a$userChangePw",
       "a$userChangeProfile",
       "a$userRegisterBod",
       "a$hapusAkun",
@@ -175,6 +177,18 @@ export default {
       this.input.foto = file;
       this.input.fotoUrl = URL.createObjectURL(this.input.foto);
     },
+    async uploadFoto() {
+      try {
+        const foto = new FormData();
+        foto.append("avatar", this.input.foto);
+        await this.a$uploadFoto(foto);
+        this.modal.uploadFoto = false;
+        this.notify("Upload foto berhasil!");
+        this.a$userDetail();
+      } catch (error) {
+        this.notify(error, false);
+      }
+    },
   },
 };
 </script>
@@ -189,6 +203,11 @@ export default {
           class="rounded-circle img-fluid"
           style="width: 200px; height: 200px; object-fit: cover"
         />
+        <base-button @click="modal.uploadFoto = true" class="mt-9 ml--5">
+          <label for="foto" class="m--1">
+            <i class="fas fa-pen-to-square"></i>
+          </label>
+        </base-button>
       </div>
       <div class="row">
         <div class="col">
@@ -246,7 +265,7 @@ export default {
           <div class="col-6">
             <field-form
               v-slot="{ field }"
-              v-model.number="g$userDetail.email"
+              v-model="g$userDetail.email"
               type="email"
               name="email"
             >
@@ -388,22 +407,8 @@ export default {
                   ></base-input>
                 </field-form>
               </div>
-              <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.alamat"
-                  type="text"
-                  name="alamat"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="text"
-                    placeholder="Alamat"
-                    label="Alamat"
-                    addon-left-icon="fas fa-location-arrow"
-                  ></base-input>
-                </field-form>
-              </div>
+
+              <!-- nama peternakan -->
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
@@ -421,11 +426,30 @@ export default {
                 </field-form>
               </div>
 
+              <!-- alamat -->
+              <div class="col-12">
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.alamat"
+                  type="text"
+                  name="alamat"
+                >
+                  <base-input
+                    v-bind="field"
+                    type="text"
+                    placeholder="Alamat"
+                    label="Alamat"
+                    addon-left-icon="fas fa-location-arrow"
+                  ></base-input>
+                </field-form>
+              </div>
+
               <!-- postcode -->
               <div class="col-12">
                 <field-form
                   v-slot="{ field }"
                   v-model="input.postcode"
+                  type="text"
                   name="postcode"
                 >
                   <base-input
@@ -579,6 +603,46 @@ export default {
             Tutup
           </base-button>
           <base-button type="danger" @click="hapusAkun()">Hapus</base-button>
+        </template>
+      </modal-comp>
+
+      <!-- Edit Foto -->
+      <modal-comp v-model:show="modal.uploadFoto" modal-classes="modal-md">
+        <template #header>
+          <h3 class="modal-title">Upload Foto Profil</h3>
+        </template>
+        <template #body>
+          <div class="col-6" v-if="!this.input.foto">
+            <div class="form-group has-label">
+              <label class="form-control-label">Foto</label>
+              <input
+                class="form-control file"
+                id="foto"
+                type="file"
+                ref="foto"
+                accept="image/png, image/jpeg"
+                @change="handleFileUpload()"
+              />
+            </div>
+          </div>
+          <div class="col-12" v-if="this.input.fotoUrl">
+            <div class="text-center pb-2">
+              <base-button type="danger" size="sm" @click="resetImage()">
+                Reset Image
+              </base-button>
+            </div>
+            <div class="text-center">
+              <img width="250" v-if="input.fotoUrl" :src="input.fotoUrl" />
+            </div>
+          </div>
+        </template>
+        <template #footer>
+          <base-button type="secondary" @click="modal.uploadFoto = false">
+            Tutup
+          </base-button>
+          <base-button type="primary" @click="uploadFoto()"
+            >Simpan Perubahan</base-button
+          >
         </template>
       </modal-comp>
     </template>
