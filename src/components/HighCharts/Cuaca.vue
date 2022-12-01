@@ -144,7 +144,7 @@ export default {
       )}°C`;
     },
     curahHujan() {
-      return this.cuaca.rain ? `${this.cuaca.rain["1h"]} mm` : '0 mm';
+      return this.cuaca.rain ? `${this.cuaca.rain["1h"]} mm` : '---';
     },
   },
 
