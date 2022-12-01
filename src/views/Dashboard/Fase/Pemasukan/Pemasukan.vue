@@ -107,11 +107,11 @@ export default {
       }
     },
     async triggerCreate() {
+      await this.a$getTernakBaru().catch((error) => this.notify(error, false));
+      await this.a$kandangList().catch((error) => this.notify(error, false));
+      await this.a$statusTernak().catch((error) => this.notify(error, false));
+      await this.a$bangsa().catch((error) => this.notify(error, false));
       this.modal.createPemasukan = true;
-      this.a$getTernakBaru().catch((error) => this.notify(error, false));
-      this.a$kandangList().catch((error) => this.notify(error, false));
-      this.a$statusTernak().catch((error) => this.notify(error, false));
-      this.a$bangsa().catch((error) => this.notify(error, false));
     },
     async createLkPemasukan() {
       try {

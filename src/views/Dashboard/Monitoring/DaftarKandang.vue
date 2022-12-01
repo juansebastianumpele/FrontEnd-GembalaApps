@@ -180,13 +180,13 @@ export default {
       }
     },
     async triggerCreate() {
+      await this.a$ddListJenisPakan("").catch((error) => this.notify(error, false));
+      await this.a$ddJenisKandang().catch((error) => this.notify(error, false));
       this.modal.addKandang = true;
-      this.a$ddListJenisPakan("").catch((error) => this.notify(error, false));
-      this.a$ddJenisKandang().catch((error) => this.notify(error, false));
     },
     async triggerEditModal(row) {
-      this.a$ddListJenisPakan("").catch((error) => this.notify(error, false));
-      this.a$ddJenisKandang().catch((error) => this.notify(error, false));
+      await this.a$ddListJenisPakan("").catch((error) => this.notify(error, false));
+      await this.a$ddJenisKandang().catch((error) => this.notify(error, false));
       try {
         const {
           id_kandang,

@@ -76,8 +76,6 @@ export default {
     await this.a$pemeliharaanListAll().catch((error) =>
       this.notify(error, false)
     );
-    await this.a$kandangList().catch((error) => this.notify(error, false));
-    await this.a$pakanList("").catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$pemeliharaan, [
@@ -88,6 +86,8 @@ export default {
     ...mapActions(d$kandang, ["a$kandangList"]),
     ...mapActions(d$pakan, ["a$pakanList"]),
     async triggerCreate() {
+      await this.a$kandangList().catch((error) => this.notify(error, false));
+      await this.a$pakanList("").catch((error) => this.notify(error, false));
       this.modal.createLkPemeliharaan = true;
     },
     async createLkPemeliharaan() {
@@ -188,7 +188,7 @@ export default {
               <div class="col-6">
                 <base-input name="kandang" label="Kandang" required>
                   <multi-select v-model="input.kandang" :options="g$kandangList" label="kode_kandang" track-by="id"
-                    placeholder="Pilih Kandang" :show-labels="false" @select="onChange"/>
+                    placeholder="Pilih Kandang" :show-labels="false" @select="onChange" />
                 </base-input>
               </div>
 
@@ -216,8 +216,8 @@ export default {
               <!-- Jumlah pakan -->
               <div class="col-6">
                 <field-form v-slot="{ field }" v-model="input.jumlah_pakan" name="jumlah_pakan">
-                  <base-input v-bind="field" placeholder="Jumlah pakan dalam kg" label="Jumlah Pakan (Kg)"
-                    type="number" required></base-input>
+                  <base-input v-bind="field" placeholder="Jumlah pakan dalam kg" label="Jumlah Pakan (Kg)" type="number"
+                    required></base-input>
                 </field-form>
               </div>
 
