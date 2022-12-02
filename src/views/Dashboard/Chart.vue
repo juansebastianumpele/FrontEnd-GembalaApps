@@ -8,6 +8,7 @@ import HcAreaSpline from "@/components/HighCharts/AreaSpline.vue";
 import d$dashboard from "@/stores/dashboard";
 import Cuaca from "../../components/HighCharts/Cuaca.vue";
 import d$user from "@/stores/user";
+import d$dropdown from "@/stores/dropdown";
 
 export default {
   metaInfo: () => ({
@@ -36,6 +37,7 @@ export default {
       "g$totalPopulasi",
     ]),
     ...mapState(d$user, ["g$userPeternakan"]),
+    ...mapState(d$dropdown, ["g$ddJenisKandang"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -52,6 +54,7 @@ export default {
       "a$populasi",
     ]),
     ...mapActions(d$user, ["a$userDetail"]),
+    ...mapActions(d$dropdown, ["a$ddJenisKandang"]),
   },
   async mounted() {
     this.a$userDetail();
@@ -63,6 +66,7 @@ export default {
     this.a$totalByKandang().catch((error) => this.notify(error, false));
     this.a$totalAdgCempe().catch((error) => this.notify(error, false));
     this.a$populasi().catch((error) => this.notify(error, false));
+    this.a$ddJenisKandang().catch((error) => this.notify(error, false));
   },
 };
 </script>
@@ -74,24 +78,44 @@ export default {
         <!-- kolom pertama -->
         <div class="col-sm-4">
           <card-comp type="success">
-            <h1 class="text-white text-uppercase text-center ls-1 mt-0 mb-2" style="font-size: 12px">
-              Grafik Populasi Domba {{ g$userPeternakan.nama_peternakan }} ({{ new Date().getFullYear() }})
+            <h1
+              class="text-white text-uppercase text-center ls-1 mt-0 mb-2"
+              style="font-size: 12px"
+            >
+              Grafik Populasi Domba {{ g$userPeternakan.nama_peternakan }} ({{
+                new Date().getFullYear()
+              }})
             </h1>
-            <hc-area-spline :height="200" :data="g$totalPopulasi" :data-labels="true" :legend="true" />
+            <hc-area-spline
+              :height="200"
+              :data="g$totalPopulasi"
+              :data-labels="true"
+              :legend="true"
+            />
           </card-comp>
           <card-comp type="success align-items-center">
             <div class="row">
               <div class="col">
-                <h1 class="text-white text-uppercase text-center ls-1 mb-2" style="font-size: 12px">
+                <h1
+                  class="text-white text-uppercase text-center ls-1 mb-2"
+                  style="font-size: 12px"
+                >
                   Detail Populasi Domba {{ g$userPeternakan.nama_peternakan }}
                 </h1>
               </div>
             </div>
-            <hc-pie :title="
-              g$totalTernak.total_ternak
-                ? g$totalTernak.total_ternak.toString()
-                : '0'
-            " :height="245" :width="320" :data="g$totalByStatus" :data-labels="true" :legend="true" />
+            <hc-pie
+              :title="
+                g$totalTernak.total_ternak
+                  ? g$totalTernak.total_ternak.toString()
+                  : '0'
+              "
+              :height="245"
+              :width="320"
+              :data="g$totalByStatus"
+              :data-labels="true"
+              :legend="true"
+            />
           </card-comp>
         </div>
 
@@ -106,7 +130,10 @@ export default {
                 </p>
                 <div class="row mb--3">
                   <div class="col-5">
-                    <h1 class="text-white mt--4 mb--3 mr--2" style="font-size: 32px">
+                    <h1
+                      class="text-white mt--4 mb--3 mr--2"
+                      style="font-size: 32px"
+                    >
                       {{ g$totalKandang.total_kandang }}
                     </h1>
                   </div>
@@ -124,7 +151,10 @@ export default {
                 </p>
                 <div class="row mb--3">
                   <div class="col-5">
-                    <h1 class="text-white mt--4 mb--3 mr--2" style="font-size: 32px">
+                    <h1
+                      class="text-white mt--4 mb--3 mr--2"
+                      style="font-size: 32px"
+                    >
                       {{ g$totalTernak.total_ternak }}
                     </h1>
                   </div>
@@ -142,15 +172,25 @@ export default {
                   Fase Pemeliharaan
                 </h1>
                 <div class="col-0 mb-3">
-                  <base-button type="secondary" class="btn-md" style="width: 100%">
+                  <base-button
+                    type="secondary"
+                    class="btn-md"
+                    style="width: 100%"
+                  >
                     <router-link to="/fase/pemasukan">
                       <div class="row">
-                        <div class="col-6 text-success text-left" style="font-family: inherit">
+                        <div
+                          class="col-6 text-success text-left"
+                          style="font-family: inherit"
+                        >
                           Fase Pemasukan
                         </div>
-                        <div class="col-3 text-success font-weight-bolder" style="font-size: x-large">
+                        <div
+                          class="col-3 text-success font-weight-bolder"
+                          style="font-size: x-large"
+                        >
                           {{
-                              g$totalByFase[1] ? g$totalByFase[1].total_ternak : 0
+                            g$totalByFase[1] ? g$totalByFase[1].total_ternak : 0
                           }}
                         </div>
                         <div class="col-3 text-success">Ekor</div>
@@ -159,15 +199,25 @@ export default {
                   </base-button>
                 </div>
                 <div class="col-0 mb-3">
-                  <base-button type="secondary" class="btn-md" style="width: 100%">
+                  <base-button
+                    type="secondary"
+                    class="btn-md"
+                    style="width: 100%"
+                  >
                     <router-link to="/fase/adaptasi">
                       <div class="row">
-                        <div class="col-6 text-success text-left" style="font-family: inherit">
+                        <div
+                          class="col-6 text-success text-left"
+                          style="font-family: inherit"
+                        >
                           Fase Adaptasi
                         </div>
-                        <div class="col-3 text-success font-weight-bolder" style="font-size: x-large">
+                        <div
+                          class="col-3 text-success font-weight-bolder"
+                          style="font-size: x-large"
+                        >
                           {{
-                              g$totalByFase[0] ? g$totalByFase[0].total_ternak : 0
+                            g$totalByFase[0] ? g$totalByFase[0].total_ternak : 0
                           }}
                         </div>
                         <div class="col-3 text-success">Ekor</div>
@@ -176,15 +226,25 @@ export default {
                   </base-button>
                 </div>
                 <div class="col-0 mb-3">
-                  <base-button type="secondary" class="btn-md" style="width: 100%">
+                  <base-button
+                    type="secondary"
+                    class="btn-md"
+                    style="width: 100%"
+                  >
                     <router-link to="/fase/perkawinan">
                       <div class="row">
-                        <div class="col-6 text-success text-left" style="font-family: inherit">
+                        <div
+                          class="col-6 text-success text-left"
+                          style="font-family: inherit"
+                        >
                           Fase Perkawinan
                         </div>
-                        <div class="col-3 text-success font-weight-bolder" style="font-size: x-large">
+                        <div
+                          class="col-3 text-success font-weight-bolder"
+                          style="font-size: x-large"
+                        >
                           {{
-                              g$totalByFase[2] ? g$totalByFase[2].total_ternak : 0
+                            g$totalByFase[2] ? g$totalByFase[2].total_ternak : 0
                           }}
                         </div>
                         <div class="col-3 text-success">Ekor</div>
@@ -193,15 +253,25 @@ export default {
                   </base-button>
                 </div>
                 <div class="col-0 mb-3">
-                  <base-button type="secondary" class="btn-md" style="width: 100%">
+                  <base-button
+                    type="secondary"
+                    class="btn-md"
+                    style="width: 100%"
+                  >
                     <router-link to="/fase/kebuntingan">
                       <div class="row">
-                        <div class="col-6 text-success text-left" style="font-family: inherit">
+                        <div
+                          class="col-6 text-success text-left"
+                          style="font-family: inherit"
+                        >
                           Fase Kebuntingan
                         </div>
-                        <div class="col-3 text-success font-weight-bolder" style="font-size: x-large">
+                        <div
+                          class="col-3 text-success font-weight-bolder"
+                          style="font-size: x-large"
+                        >
                           {{
-                              g$totalByFase[3] ? g$totalByFase[3].total_ternak : 0
+                            g$totalByFase[3] ? g$totalByFase[3].total_ternak : 0
                           }}
                         </div>
                         <div class="col-3 text-success">Ekor</div>
@@ -210,15 +280,25 @@ export default {
                   </base-button>
                 </div>
                 <div class="col-0 mb-3">
-                  <base-button type="secondary" class="btn-md" style="width: 100%">
+                  <base-button
+                    type="secondary"
+                    class="btn-md"
+                    style="width: 100%"
+                  >
                     <router-link to="/fase/kelahiran">
                       <div class="row">
-                        <div class="col-6 text-success text-left" style="font-family: inherit">
+                        <div
+                          class="col-6 text-success text-left"
+                          style="font-family: inherit"
+                        >
                           Fase Kelahiran
                         </div>
-                        <div class="col-3 text-success font-weight-bolder" style="font-size: x-large">
+                        <div
+                          class="col-3 text-success font-weight-bolder"
+                          style="font-size: x-large"
+                        >
                           {{
-                              g$totalByFase[4] ? g$totalByFase[4].total_ternak : 0
+                            g$totalByFase[4] ? g$totalByFase[4].total_ternak : 0
                           }}
                         </div>
                         <div class="col-3 text-success">Ekor</div>
@@ -227,15 +307,25 @@ export default {
                   </base-button>
                 </div>
                 <div class="col-0 mb-3">
-                  <base-button type="secondary" class="btn-md" style="width: 100%">
+                  <base-button
+                    type="secondary"
+                    class="btn-md"
+                    style="width: 100%"
+                  >
                     <router-link to="/fase/lepas-sapih">
                       <div class="row">
-                        <div class="col-6 text-success text-left" style="font-family: inherit">
+                        <div
+                          class="col-6 text-success text-left"
+                          style="font-family: inherit"
+                        >
                           Fase Lepas Sapih
                         </div>
-                        <div class="col-3 text-success font-weight-bolder" style="font-size: x-large">
+                        <div
+                          class="col-3 text-success font-weight-bolder"
+                          style="font-size: x-large"
+                        >
                           {{
-                              g$totalByFase[5] ? g$totalByFase[5].total_ternak : 0
+                            g$totalByFase[5] ? g$totalByFase[5].total_ternak : 0
                           }}
                         </div>
                         <div class="col-3 text-success">Ekor</div>
@@ -252,7 +342,10 @@ export default {
         <div class="col-sm-4">
           <!-- cuaca -->
           <card-comp type="success">
-            <h1 class="text-white text-uppercase text-center ls-1 mt-0 mb-2" style="font-size: 12px">
+            <h1
+              class="text-white text-uppercase text-center ls-1 mt-0 mb-2"
+              style="font-size: 12px"
+            >
               Cuaca saat ini di {{ g$userPeternakan.nama_peternakan }}
             </h1>
             <cuaca />
@@ -260,12 +353,20 @@ export default {
           <card-comp type="success">
             <div class="row align-items-center">
               <div class="col">
-                <h1 class="text-white text-uppercase text-center ls-1 mb-2" style="font-size: 12px">
+                <h1
+                  class="text-white text-uppercase text-center ls-1 mb-2"
+                  style="font-size: 12px"
+                >
                   Grafik ADG Cempe ({{ new Date().getFullYear() }})
                 </h1>
               </div>
             </div>
-            <hc-area-spline :height="255" :data="g$totalAdgCempe" :data-labels="true" :legend="true" />
+            <hc-area-spline
+              :height="255"
+              :data="g$totalAdgCempe"
+              :data-labels="true"
+              :legend="true"
+            />
           </card-comp>
         </div>
       </div>
@@ -283,16 +384,21 @@ export default {
                   <div class="col-sm-2 text-center border-right">
                     <h6 class="text-white m-0">
                       {{
-                          g$totalByKandang[0]
-                            ? g$totalByKandang[0].jenis_kandang
-                            : ""
+                        g$totalByKandang[0]
+                          ? g$totalByKandang[0].jenis_kandang
+                          : g$ddJenisKandang[0]
+                          ? g$ddJenisKandang[0].name
+                          : ""
                       }}
                     </h6>
-                    <h2 class="text-white m-0" style="font-size: x-large; font-weight: bold">
+                    <h2
+                      class="text-white m-0"
+                      style="font-size: x-large; font-weight: bold"
+                    >
                       {{
-                          g$totalByKandang[0]
-                            ? g$totalByKandang[0].total_ternak
-                            : 0
+                        g$totalByKandang[0]
+                          ? g$totalByKandang[0].total_ternak
+                          : 0
                       }}
                     </h2>
                     <h5 class="text-white m-0">Ekor</h5>
@@ -300,16 +406,21 @@ export default {
                   <div class="col-sm-2 border-right">
                     <h6 class="text-white m-0">
                       {{
-                          g$totalByKandang[1]
-                            ? g$totalByKandang[1].jenis_kandang
-                            : ""
+                        g$totalByKandang[1]
+                          ? g$totalByKandang[1].jenis_kandang
+                          : g$ddJenisKandang[1]
+                          ? g$ddJenisKandang[1].name
+                          : ""
                       }}
                     </h6>
-                    <h2 class="text-white m-0" style="font-size: x-large; font-weight: bold">
+                    <h2
+                      class="text-white m-0"
+                      style="font-size: x-large; font-weight: bold"
+                    >
                       {{
-                          g$totalByKandang[1]
-                            ? g$totalByKandang[1].total_ternak
-                            : 0
+                        g$totalByKandang[1]
+                          ? g$totalByKandang[1].total_ternak
+                          : 0
                       }}
                     </h2>
                     <h5 class="text-white m-0">Ekor</h5>
@@ -317,16 +428,21 @@ export default {
                   <div class="col-sm-2 border-right">
                     <h6 class="text-white m-0">
                       {{
-                          g$totalByKandang[2]
-                            ? g$totalByKandang[2].jenis_kandang
-                            : ""
+                        g$totalByKandang[2]
+                          ? g$totalByKandang[2].jenis_kandang
+                          : g$ddJenisKandang[2]
+                          ? g$ddJenisKandang[2].name
+                          : ""
                       }}
                     </h6>
-                    <h2 class="text-white m-0" style="font-size: x-large; font-weight: bold">
+                    <h2
+                      class="text-white m-0"
+                      style="font-size: x-large; font-weight: bold"
+                    >
                       {{
-                          g$totalByKandang[2]
-                            ? g$totalByKandang[2].total_ternak
-                            : 0
+                        g$totalByKandang[2]
+                          ? g$totalByKandang[2].total_ternak
+                          : 0
                       }}
                     </h2>
                     <h5 class="text-white m-0">Ekor</h5>
@@ -334,16 +450,21 @@ export default {
                   <div class="col-sm-2 border-right">
                     <h6 class="text-white m-0">
                       {{
-                          g$totalByKandang[3]
-                            ? g$totalByKandang[3].jenis_kandang
-                            : ""
+                        g$totalByKandang[3]
+                          ? g$totalByKandang[3].jenis_kandang
+                          : g$ddJenisKandang[3]
+                          ? g$ddJenisKandang[3].name
+                          : ""
                       }}
                     </h6>
-                    <h2 class="text-white m-0" style="font-size: x-large; font-weight: bold">
+                    <h2
+                      class="text-white m-0"
+                      style="font-size: x-large; font-weight: bold"
+                    >
                       {{
-                          g$totalByKandang[3]
-                            ? g$totalByKandang[3].total_ternak
-                            : 0
+                        g$totalByKandang[3]
+                          ? g$totalByKandang[3].total_ternak
+                          : 0
                       }}
                     </h2>
                     <h5 class="text-white m-0">Ekor</h5>
@@ -351,16 +472,21 @@ export default {
                   <div class="col-sm-2 border-right">
                     <h6 class="text-white m-0">
                       {{
-                          g$totalByKandang[4]
-                            ? g$totalByKandang[4].jenis_kandang
-                            : ""
+                        g$totalByKandang[4]
+                          ? g$totalByKandang[4].jenis_kandang
+                          : g$ddJenisKandang[4]
+                          ? g$ddJenisKandang[4].name
+                          : ""
                       }}
                     </h6>
-                    <h2 class="text-white m-0" style="font-size: x-large; font-weight: bold">
+                    <h2
+                      class="text-white m-0"
+                      style="font-size: x-large; font-weight: bold"
+                    >
                       {{
-                          g$totalByKandang[4]
-                            ? g$totalByKandang[4].total_ternak
-                            : 0
+                        g$totalByKandang[4]
+                          ? g$totalByKandang[4].total_ternak
+                          : 0
                       }}
                     </h2>
                     <h5 class="text-white m-0">Ekor</h5>
@@ -368,16 +494,21 @@ export default {
                   <div class="col-sm-2">
                     <h6 class="text-white m-0">
                       {{
-                          g$totalByKandang[5]
-                            ? g$totalByKandang[5].jenis_kandang
-                            : "Kandang Error"
+                        g$totalByKandang[5]
+                          ? g$totalByKandang[5].jenis_kandang
+                          : g$ddJenisKandang[5]
+                          ? g$ddJenisKandang[5].name
+                          : ""
                       }}
                     </h6>
-                    <h2 class="text-white m-0" style="font-size: x-large; font-weight: bold">
+                    <h2
+                      class="text-white m-0"
+                      style="font-size: x-large; font-weight: bold"
+                    >
                       {{
-                          g$totalByKandang[5]
-                            ? g$totalByKandang[5].total_ternak
-                            : 0
+                        g$totalByKandang[5]
+                          ? g$totalByKandang[5].total_ternak
+                          : 0
                       }}
                     </h2>
                     <h5 class="text-white m-0">Ekor</h5>
@@ -391,7 +522,10 @@ export default {
           <card-comp type="success">
             <div class="row align-items-center">
               <div class="col">
-                <h1 class="text-white text-uppercase text-center mt--3 ls-1 mb-1" style="font-size: 12px">
+                <h1
+                  class="text-white text-uppercase text-center mt--3 ls-1 mb-1"
+                  style="font-size: 12px"
+                >
                   Status Keluar
                 </h1>
               </div>
@@ -402,8 +536,10 @@ export default {
                   <p class="text-lg text-dark text-center font-weight-bolder">
                     {{ g$totalByStatusKeluar.total_dijual }}
                   </p>
-                  <p class="text-dark text-center mt--3 pb-3 font-weight-bolder"
-                    style="font-size: 12px; font-family: inherit">
+                  <p
+                    class="text-dark text-center mt--3 pb-3 font-weight-bolder"
+                    style="font-size: 12px; font-family: inherit"
+                  >
                     Dijual
                   </p>
                 </div>
@@ -413,8 +549,10 @@ export default {
                   <p class="text-lg text-dark text-center font-weight-bolder">
                     {{ g$totalByStatusKeluar.total_disembelih }}
                   </p>
-                  <p class="text-dark text-center mt--3 pb-3 font-weight-bolder"
-                    style="font-size: 12px; font-family: inherit">
+                  <p
+                    class="text-dark text-center mt--3 pb-3 font-weight-bolder"
+                    style="font-size: 12px; font-family: inherit"
+                  >
                     Disembelih
                   </p>
                 </div>
@@ -424,8 +562,10 @@ export default {
                   <p class="text-lg text-dark text-center font-weight-bolder">
                     {{ g$totalByStatusKeluar.total_mati }}
                   </p>
-                  <p class="text-dark text-center mt--3 pb-3 font-weight-bolder"
-                    style="font-size: 12px; font-family: inherit">
+                  <p
+                    class="text-dark text-center mt--3 pb-3 font-weight-bolder"
+                    style="font-size: 12px; font-family: inherit"
+                  >
                     Mati
                   </p>
                 </div>
