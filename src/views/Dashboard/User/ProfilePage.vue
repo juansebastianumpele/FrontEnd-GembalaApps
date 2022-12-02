@@ -145,12 +145,7 @@ export default {
           nama_peternakan,
           postcode,
         };
-        const foto = new FormData();
-        foto.append("avatar", this.input.foto);
         await this.a$userChangeProfile(data);
-        if (this.input.foto !== this.g$userDetail.image) {
-          await this.a$uploadFoto(foto);
-        }
         this.modal.editProfile = false;
         this.notify("Edit Profil Sukses!");
         this.a$userDetail();
