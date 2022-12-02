@@ -1,7 +1,7 @@
 <script>
 import axios from "axios";
 import { mapActions, mapState } from "pinia";
-import * as s$dashboard from "@/services/monitoring/dashboard";
+import d$user from "@/stores/user";
 
 
 export default {
@@ -84,11 +84,10 @@ export default {
         rain: 1.27
       }]
     },
-    latitude: -7.716492,
-    longitude: 110.461627,
     appid: '724edd4b529beb144b3986c95d678b48',
   }),
   computed: {
+    ...mapState(d$user, ["g$userPeternakan"]),
     tanggal() {
       return new Intl.DateTimeFormat("id", {
         dateStyle: "full",
@@ -152,7 +151,7 @@ export default {
     async getWeather() {
       await axios
         .get(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${this.latitude}&lon=${this.longitude}&units=metric&lang=id&appid=${this.appid}`
+          `https://api.openweathermap.org/data/2.5/weather?lat=${this.g$userPeternakan.latitude}&lon=${this.g$userPeternakan.longitude}&units=metric&lang=id&appid=${this.appid}`
         )
         .then((response) => {
           this.cuaca = response.data;
@@ -167,18 +166,8 @@ export default {
           this.perkiraaanCuaca = response.data;
         });
     },
-    async getCoordinate() {
-      try {
-        const { data } = await s$dashboard.coordinate();
-        this.latitude = data.latitude;
-        this.longitude = data.longitude;
-      } catch (error) {
-        throw error;
-      }
-    },
   },
   async mounted() {
-    this.getCoordinate();
     this.getWeather();
   },
 };
