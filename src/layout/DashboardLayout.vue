@@ -4,6 +4,19 @@
       <template #links>
         <div class="dropdown-divider mt-0" />
 
+        <!-- Superadmin untuk lihat peternakan -->
+        <sidebar-item
+          v-if="userInfo.role === 'superadmin'"
+          :link="{
+            name: 'Daftar Peternakan',
+            icon: 'fas fa-house-chimney-window text-success',
+            path: '/superadmin/',
+          }"
+        >
+        </sidebar-item>
+
+        <div class="dropdown-divider" />
+
         <sidebar-item
           :link="{
             name: 'Dashboard',
