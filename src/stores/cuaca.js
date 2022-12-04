@@ -87,7 +87,6 @@ const u$cuaca = defineStore({
   actions: {
     async a$getWeather(latitude, longitude) {
       try {
-        console.log(await s$cuaca.getWeather(latitude, longitude, this.appid));
         const { data } = await s$cuaca.getWeather(latitude, longitude, this.appid);
         this.cuaca = data;
       } catch ({ error }) {
