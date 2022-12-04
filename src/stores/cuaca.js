@@ -82,6 +82,7 @@ const u$cuaca = defineStore({
         rain: 1.27
       }]
     },
+    
   }),
   actions: {
     async a$getWeather(latitude, longitude) {
