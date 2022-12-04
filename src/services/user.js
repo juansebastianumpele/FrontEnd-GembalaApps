@@ -11,5 +11,6 @@ const registerBod = (req) => baseApi.post(`${api}/${auth}/register-bod`, req);
 const hapusAkun = (req) =>
   baseApi.delete(`${api}/${auth}/delete-account`, { data: req });
 const uploadFoto = (req) => baseApi.post(`${api}/${auth}/photo-profile`, req);
+const hapusFoto = () => baseApi.delete(`${api}/${auth}/photo-profile`);
 
-export { detail, changePw, changeProfile, registerBod, hapusAkun, uploadFoto };
+export { detail, changePw, changeProfile, registerBod, hapusAkun, uploadFoto, hapusFoto };

@@ -46,6 +46,7 @@ export default {
       hapusAkun: false,
       uploadFoto: false,
     },
+    loading: false,
   }),
   computed: {
     ...mapState(d$user, ["g$userDetail", "g$userPeternakan"]),
@@ -80,6 +81,7 @@ export default {
       "a$userRegisterBod",
       "a$hapusAkun",
       "a$uploadFoto",
+      "a$hapusFoto",
     ]),
     async clearInput() {
       this.input = {
@@ -173,16 +175,23 @@ export default {
       this.input.fotoUrl = URL.createObjectURL(this.input.foto);
     },
     async uploadFoto() {
+      this.loading = true;
       try {
-        const foto = new FormData();
-        foto.append("avatar", this.input.foto);
-        await this.a$uploadFoto(foto);
-        this.modal.uploadFoto = false;
-        this.notify("Upload foto berhasil!");
+        if (!(this.input.foto && this.input.fotoUrl)) {
+          await this.a$hapusFoto();
+          this.notify("Foto berhasil dihapus!");
+        } else {
+          const foto = new FormData();
+          foto.append("avatar", this.input.foto);
+          await this.a$uploadFoto(foto);
+          this.notify("Upload foto berhasil!");
+        }
         this.a$userDetail();
+        this.modal.uploadFoto = false;
       } catch (error) {
         this.notify(error, false);
       }
+      this.loading = false;
     },
   },
 };
@@ -191,13 +200,9 @@ export default {
 <template>
   <main-layout :title="pageTitle">
     <template #header>
-      <div class="text-center">
-        <img
-          :src="g$userDetail.image ? g$userDetail.image : siteMeta.profile"
-          alt="profile"
-          class="rounded-circle img-fluid"
-          style="width: 200px; height: 200px; object-fit: cover"
-        />
+      <div class="text-center m-4" >
+        <img :src="g$userDetail.image ? g$userDetail.image : siteMeta.profile" alt="profile"
+          class="rounded-circle img-fluid " style="width: 200px; height: 200px; object-fit: cover" />
         <base-button @click="modal.uploadFoto = true" class="mt-9 ml--5">
           <label for="foto" class="m--1">
             <i class="fas fa-pen-to-square"></i>
@@ -229,94 +234,34 @@ export default {
       <form-comp>
         <div class="row">
           <div class="col-6">
-            <field-form
-              v-slot="{ field }"
-              v-model="g$userDetail.nama_pengguna"
-              type="text"
-              name="nama_pengguna"
-            >
-              <base-input
-                v-bind="field"
-                placeholder="Nama Pengguna"
-                label="Nama Penguna"
-                disabled
-              ></base-input>
+            <field-form v-slot="{ field }" v-model="g$userDetail.nama_pengguna" type="text" name="nama_pengguna">
+              <base-input v-bind="field" placeholder="Nama Pengguna" label="Nama Penguna" disabled></base-input>
             </field-form>
           </div>
           <div class="col-6">
-            <field-form
-              v-slot="{ field }"
-              v-model="g$userPeternakan.nama_peternakan"
-              type="text"
-              name="nama_peternakan"
-            >
-              <base-input
-                v-bind="field"
-                placeholder="Nama Peternakan"
-                label="Nama Peternakan"
-                disabled
-              ></base-input>
+            <field-form v-slot="{ field }" v-model="g$userPeternakan.nama_peternakan" type="text"
+              name="nama_peternakan">
+              <base-input v-bind="field" placeholder="Nama Peternakan" label="Nama Peternakan" disabled></base-input>
             </field-form>
           </div>
           <div class="col-6">
-            <field-form
-              v-slot="{ field }"
-              v-model="g$userDetail.email"
-              type="email"
-              name="email"
-            >
-              <base-input
-                v-bind="field"
-                placeholder="Email"
-                type="email"
-                label="Email"
-                disabled
-              ></base-input>
+            <field-form v-slot="{ field }" v-model="g$userDetail.email" type="email" name="email">
+              <base-input v-bind="field" placeholder="Email" type="email" label="Email" disabled></base-input>
             </field-form>
           </div>
           <div class="col-6">
-            <field-form
-              v-slot="{ field }"
-              v-model="g$userDetail.nomor_telepon"
-              type="number"
-              name="nomor_telepon"
-            >
-              <base-input
-                v-bind="field"
-                placeholder="Nomor Telepon"
-                label="Nomor Telepon"
-                disabled
-              ></base-input>
+            <field-form v-slot="{ field }" v-model="g$userDetail.nomor_telepon" type="number" name="nomor_telepon">
+              <base-input v-bind="field" placeholder="Nomor Telepon" label="Nomor Telepon" disabled></base-input>
             </field-form>
           </div>
           <div class="col-6">
-            <field-form
-              v-slot="{ field }"
-              v-model="g$userPeternakan.postcode"
-              type="text"
-              name="postcode"
-            >
-              <base-input
-                v-bind="field"
-                placeholder="Kode Pos"
-                label="Kode Pos"
-                disabled
-              ></base-input>
+            <field-form v-slot="{ field }" v-model="g$userPeternakan.postcode" type="text" name="postcode">
+              <base-input v-bind="field" placeholder="Kode Pos" label="Kode Pos" disabled></base-input>
             </field-form>
           </div>
           <div class="col-6">
-            <field-form
-              v-slot="{ field }"
-              v-model="g$userPeternakan.alamat"
-              type="text"
-              name="alamat"
-            >
-              <base-input
-                v-bind="field"
-                placeholder="Alamat"
-                label="Alamat"
-                disabled
-              ></base-input>
+            <field-form v-slot="{ field }" v-model="g$userPeternakan.alamat" type="text" name="alamat">
+              <base-input v-bind="field" placeholder="Alamat" label="Alamat" disabled></base-input>
             </field-form>
           </div>
         </div>
@@ -334,20 +279,9 @@ export default {
             <div class="row">
               <!-- Email BoD -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.email"
-                  type="email"
-                  name="email"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="email"
-                    placeholder="Email"
-                    label="Email Akun Board of Directors"
-                    addon-left-icon="fas fa-envelope"
-                    required
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.email" type="email" name="email">
+                  <base-input v-bind="field" type="email" placeholder="Email" label="Email Akun Board of Directors"
+                    addon-left-icon="fas fa-envelope" required></base-input>
                 </field-form>
               </div>
             </div>
@@ -372,89 +306,39 @@ export default {
           <form-comp v-if="modal.editProfile" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.nama_pengguna"
-                  type="text"
-                  name="nama_pengguna"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="text"
-                    placeholder="Nama Pengguna"
-                    label="Nama Penguna"
-                    addon-left-icon="fas fa-user"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.nama_pengguna" type="text" name="nama_pengguna">
+                  <base-input v-bind="field" type="text" placeholder="Nama Pengguna" label="Nama Penguna"
+                    addon-left-icon="fas fa-user"></base-input>
                 </field-form>
               </div>
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.nomor_telepon"
-                  type="text"
-                  name="nomo_telepon"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="text"
-                    placeholder="Nomor Telepon"
-                    label="Nomor Telepon"
-                    addon-left-icon="fas fa-phone"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.nomor_telepon" type="text" name="nomo_telepon">
+                  <base-input v-bind="field" type="text" placeholder="Nomor Telepon" label="Nomor Telepon"
+                    addon-left-icon="fas fa-phone"></base-input>
                 </field-form>
               </div>
 
               <!-- nama peternakan -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.nama_peternakan"
-                  type="text"
-                  name="nama_peternakan"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="text"
-                    placeholder="Nama Peternakan"
-                    label="Nama Peternakan"
-                    addon-left-icon="fas fa-user"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.nama_peternakan" type="text" name="nama_peternakan">
+                  <base-input v-bind="field" type="text" placeholder="Nama Peternakan" label="Nama Peternakan"
+                    addon-left-icon="fas fa-user"></base-input>
                 </field-form>
               </div>
 
               <!-- alamat -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.alamat"
-                  type="text"
-                  name="alamat"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="text"
-                    placeholder="Alamat"
-                    label="Alamat"
-                    addon-left-icon="fas fa-location-arrow"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.alamat" type="text" name="alamat">
+                  <base-input v-bind="field" type="text" placeholder="Alamat" label="Alamat"
+                    addon-left-icon="fas fa-location-arrow"></base-input>
                 </field-form>
               </div>
 
               <!-- postcode -->
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.postcode"
-                  type="text"
-                  name="postcode"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="text"
-                    placeholder="Kode Pos"
-                    label="Kode Pos"
-                    addon-left-icon="fas fa-signs-post"
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.postcode" type="text" name="postcode">
+                  <base-input v-bind="field" type="text" placeholder="Kode Pos" label="Kode Pos"
+                    addon-left-icon="fas fa-signs-post"></base-input>
                 </field-form>
               </div>
               <!-- <div class="col-6" v-if="!this.input.foto">
@@ -502,55 +386,24 @@ export default {
           <form-comp v-if="modal.changePw" :validation-schema="schema">
             <div class="row">
               <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.password"
-                  type="password"
-                  name="password"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="password"
-                    placeholder="Sandi Lama"
-                    label="Sandi Lama"
-                    password
-                  >
+                <field-form v-slot="{ field }" v-model="input.password" type="password" name="password">
+                  <base-input v-bind="field" type="password" placeholder="Sandi Lama" label="Sandi Lama" password>
                   </base-input>
                 </field-form>
               </div>
             </div>
             <div class="row">
               <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.new_password"
-                  type="new_password"
-                  name="new_password"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="password"
-                    placeholder="Sandi Baru"
-                    label="Sandi Baru"
-                    password
-                  >
+                <field-form v-slot="{ field }" v-model="input.new_password" type="new_password" name="new_password">
+                  <base-input v-bind="field" type="password" placeholder="Sandi Baru" label="Sandi Baru" password>
                   </base-input>
                 </field-form>
               </div>
               <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.repeat_password"
-                  type="repeat_password"
-                  name="repeat_password"
-                >
-                  <base-input
-                    v-bind="field"
-                    type="password"
-                    placeholder="Konfirmasi Sandi Baru"
-                    label="Konfirmasi Sandi Baru"
-                    password
-                  ></base-input>
+                <field-form v-slot="{ field }" v-model="input.repeat_password" type="repeat_password"
+                  name="repeat_password">
+                  <base-input v-bind="field" type="password" placeholder="Konfirmasi Sandi Baru"
+                    label="Konfirmasi Sandi Baru" password></base-input>
                 </field-form>
               </div>
             </div>
@@ -573,19 +426,8 @@ export default {
         </template>
         <template #body>
           <div class="col-12">
-            <field-form
-              v-slot="{ field }"
-              v-model="input.password"
-              type="password"
-              name="password"
-            >
-              <base-input
-                v-bind="field"
-                type="password"
-                placeholder="Kata sandi"
-                label="Masukkan kata sandi"
-                password
-              >
+            <field-form v-slot="{ field }" v-model="input.password" type="password" name="password">
+              <base-input v-bind="field" type="password" placeholder="Kata sandi" label="Masukkan kata sandi" password>
               </base-input>
             </field-form>
             <p class="text-danger text-sm">
@@ -611,20 +453,14 @@ export default {
           <div class="col-6" v-if="!this.input.foto">
             <div class="form-group has-label">
               <label class="form-control-label">Foto</label>
-              <input
-                class="form-control file"
-                id="foto"
-                type="file"
-                ref="foto"
-                accept="image/png, image/jpeg"
-                @change="handleFileUpload()"
-              />
+              <input class="form-control file" id="foto" type="file" ref="foto" accept="image/png, image/jpeg"
+                @change="handleFileUpload()" />
             </div>
           </div>
           <div class="col-12" v-if="this.input.fotoUrl">
             <div class="text-center pb-2">
               <base-button type="danger" size="sm" @click="resetImage()">
-                Reset Image
+                Hapus Foto
               </base-button>
             </div>
             <div class="text-center">
@@ -636,9 +472,12 @@ export default {
           <base-button type="secondary" @click="modal.uploadFoto = false">
             Tutup
           </base-button>
-          <base-button type="primary" @click="uploadFoto()"
-            >Simpan Perubahan</base-button
-          >
+          <base-button type="primary" @click="uploadFoto()" class="spinner">
+            <span v-if="!loading">Simpan Perubahan</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang menyimpan
+            </span>
+          </base-button>
         </template>
       </modal-comp>
     </template>

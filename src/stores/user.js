@@ -62,6 +62,15 @@ const u$user = defineStore({
         throw error;
       }
     },
+
+    // Hapus Foto
+    async a$hapusFoto() {
+      try {
+        await s$user.hapusFoto();
+      } catch ({ error }) {
+        throw error;
+      }
+    }
   },
   getters: {
     g$userDetail: (state) => state.detail,
