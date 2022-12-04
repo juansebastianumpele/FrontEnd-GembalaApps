@@ -27,7 +27,7 @@
               v-model="query"
               type="text"
               class="form-control form-control-sm"
-              placeholder="Search Records"
+              placeholder="Pencarian"
               @keyup="search(query)"
             />
           </div>
