@@ -62,16 +62,16 @@ export default {
   },
   async mounted() {
     await this.a$userDetail();
-    await this.a$totalByStatus().catch((error) => this.notify(error, false));
-    await this.a$totalKandang().catch((error) => this.notify(error, false));
-    await this.a$totalTernak().catch((error) => this.notify(error, false));
-    await this.a$totalByFase().catch((error) => this.notify(error, false));
-    await this.a$totalByStatusKeluar().catch((error) => this.notify(error, false));
-    await this.a$totalByKandang().catch((error) => this.notify(error, false));
-    await this.a$totalAdgCempe().catch((error) => this.notify(error, false));
-    await this.a$populasi().catch((error) => this.notify(error, false));
-    await this.a$ddJenisKandang().catch((error) => this.notify(error, false));
-    await this.a$getWeather(this.g$userPeternakan.latitude, this.g$userPeternakan.longitude);
+    this.a$totalByStatus().catch((error) => this.notify(error, false));
+    this.a$totalKandang().catch((error) => this.notify(error, false));
+    this.a$totalTernak().catch((error) => this.notify(error, false));
+    this.a$totalByFase().catch((error) => this.notify(error, false));
+    this.a$totalByStatusKeluar().catch((error) => this.notify(error, false));
+    this.a$totalByKandang().catch((error) => this.notify(error, false));
+    this.a$totalAdgCempe().catch((error) => this.notify(error, false));
+    this.a$populasi().catch((error) => this.notify(error, false));
+    this.a$ddJenisKandang().catch((error) => this.notify(error, false));
+    this.a$getWeather(this.g$userPeternakan.latitude, this.g$userPeternakan.longitude);
   },
 };
 </script>
