@@ -145,12 +145,7 @@ export default {
           nama_peternakan,
           postcode,
         };
-        const foto = new FormData();
-        foto.append("avatar", this.input.foto);
         await this.a$userChangeProfile(data);
-        if (this.input.foto !== this.g$userDetail.image) {
-          await this.a$uploadFoto(foto);
-        }
         this.modal.editProfile = false;
         this.notify("Edit Profil Sukses!");
         this.a$userDetail();
@@ -462,7 +457,7 @@ export default {
                   ></base-input>
                 </field-form>
               </div>
-              <div class="col-6" v-if="!this.input.foto">
+              <!-- <div class="col-6" v-if="!this.input.foto">
                 <div class="form-group has-label">
                   <label class="form-control-label">Foto</label>
                   <input
@@ -484,7 +479,7 @@ export default {
                 <div class="text-center">
                   <img width="250" v-if="input.fotoUrl" :src="input.fotoUrl" />
                 </div>
-              </div>
+              </div> -->
             </div>
           </form-comp>
         </template>
