@@ -1,119 +1,44 @@
 <script>
-import axios from "axios";
-import { mapActions, mapState } from "pinia";
-import d$user from "@/stores/user";
-
-
 export default {
   name: "Cuaca",
-  data: () => ({
+  props: {
     cuaca: {
-      coord: { lon: 110.3666, lat: -7.7296 },
-      weather: [
-        { id: 804, main: "Clouds", description: "awan mendung", icon: "04d" },
-      ],
-      base: "stations",
-      main: {
-        temp: 26.85,
-        feels_like: 29.16,
-        temp_min: 26.85,
-        temp_max: 26.85,
-        pressure: 1013,
-        humidity: 77,
-        sea_level: 1013,
-        grnd_level: 992,
-      },
-      visibility: 10000,
-      wind: { speed: 2.52, deg: 168, gust: 3.58 },
-      clouds: { all: 100 },
-      dt: 1665452744,
-      sys: { country: "ID", sunrise: 1665440286, sunset: 1665484342 },
-      timezone: 25200,
-      id: 1635660,
-      name: "Melati",
-      cod: 200,
+      type: Object,
+      default: () => { },
     },
     perkiraaanCuaca: {
-      city:
-      {
-        id: 1630681,
-        name: "Candi Prambanan",
-        coord:
-        {
-          lon: 110.4616,
-          lat: -7.7165
-        },
-        country: "ID",
-        population: 44925,
-        timezone: 25200
-      },
-      cod: 200,
-      message: 3.3570573,
-      cnt: 1,
-      list: [{
-        dt: 1669780800,
-        sunrise: 1669759857,
-        sunset: 1669804965,
-        temp: {
-          day: 27.6,
-          min: 22.76,
-          max: 27.79,
-          night: 22.76,
-          eve: 25.56,
-          morn: 23.2
-        },
-        feels_like: {
-          day: 30.03,
-          night: 23.44,
-          eve: 26.23,
-          morn: 23.98
-        },
-        pressure: 1010,
-        humidity: 71,
-        weather: [{
-          id: 500,
-          main: "Rain",
-          description: "hujan rintik-rintik",
-          icon: "10d"
-        }],
-        speed: 4.37,
-        deg: 211,
-        gust: 4.32,
-        clouds: 97,
-        pop: 0.44,
-        rain: 1.27
-      }]
+      type: Object,
+      default: () => { },
     },
-    appid: '724edd4b529beb144b3986c95d678b48',
-  }),
+  },
   computed: {
-    ...mapState(d$user, ["g$userPeternakan"]),
     tanggal() {
-      return new Intl.DateTimeFormat("id", {
+      return this.cuaca.dt ? new Intl.DateTimeFormat("id", {
         dateStyle: "full",
         timeStyle: "short",
-      }).format(this.cuaca.dt * 1000);
+      }).format(this.cuaca.dt * 1000) : null;
     },
     gambarCuaca() {
-      return `https://openweathermap.org/img/wn/${this.cuaca.weather[0].icon}@2x.png`;
+      return this.cuaca.weather ? `https://openweathermap.org/img/wn/${this.cuaca.weather[0].icon}@2x.png` : null;
     },
     suhu() {
-      return `${Math.round(this.cuaca.main.temp)}°C`;
+      return this.cuaca.main ? `${Math.round(this.cuaca.main.temp)}°C` : null;
     },
     terasaSeperti() {
-      return `${Math.round(this.cuaca.main.feels_like)}°C`;
+      return this.cuaca.main ? `${Math.round(this.cuaca.main.feels_like)}°C` : null;
     },
     kelembapan() {
-      return this.cuaca.main.humidity;
+      return this.cuaca.main ? this.cuaca.main.humidity : null;
     },
     tekanan() {
-      return this.cuaca.main.pressure;
+      return this.cuaca.main ? this.cuaca.main.pressure : null;
     },
     kecepatanAngin() {
       // from m/s to km/h
-      return Math.round(this.cuaca.wind.speed * 3.6);
+      return this.cuaca.wind ? Math.round(this.cuaca.wind.speed * 3.6) : null;
     },
     arahAngin() {
+      if (!this.cuaca.wind) { return null; }
       if (this.cuaca.wind.deg >= 0 && this.cuaca.wind.deg <= 22.5) {
         return "Utara ↓";
       } else if (this.cuaca.wind.deg > 22.5 && this.cuaca.wind.deg <= 67.5) {
@@ -135,40 +60,16 @@ export default {
       }
     },
     deskripsi() {
-      return this.cuaca.weather[0].description;
+      return this.cuaca.weather ? this.cuaca.weather[0].description : null;
     },
     maksMin() {
-      return `${Math.round(this.cuaca.main.temp_min)}°C/${Math.round(
+      return this.cuaca.main ? `${Math.round(this.cuaca.main.temp_min)}°C/${Math.round(
         this.cuaca.main.temp_max
-      )}°C`;
+      )}°C` : null;
     },
     curahHujan() {
       return this.cuaca.rain ? `${this.cuaca.rain["1h"]} mm` : '---';
     },
-  },
-
-  methods: {
-    async getWeather() {
-      await axios
-        .get(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${this.g$userPeternakan.latitude}&lon=${this.g$userPeternakan.longitude}&units=metric&lang=id&appid=${this.appid}`
-        )
-        .then((response) => {
-          this.cuaca = response.data;
-        });
-    },
-    async getWeatherPrediction() {
-      await axios
-        .get(
-          `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${this.latitude}&lon=${this.longitude}&units=metric&lang=id&cnt=1&appid=${this.appid}`
-        )
-        .then((response) => {
-          this.perkiraaanCuaca = response.data;
-        });
-    },
-  },
-  async mounted() {
-    this.getWeather();
   },
 };
 </script>
@@ -183,7 +84,7 @@ export default {
   </div>
   <div class="row mt--4">
     <div class="col-5">
-      <img style="width: 80px" :src="gambarCuaca" class="d-block p-0 m-0" alt="..." />
+      <img style="width: 80px" :src="gambarCuaca" class="d-block p-0 m-0" :alt="deskripsi ? deskripsi : 'Icon cuaca'" />
       <p class="text-left text-white ml-2 mt--3 m-0 p-0 text-capitalize" style="font-size: small">
         {{ deskripsi }}
       </p>

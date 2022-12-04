@@ -9,6 +9,7 @@ import d$dashboard from "@/stores/dashboard";
 import Cuaca from "../../components/HighCharts/Cuaca.vue";
 import d$user from "@/stores/user";
 import d$dropdown from "@/stores/dropdown";
+import d$cuaca from "@/stores/cuaca";
 
 export default {
   metaInfo: () => ({
@@ -38,6 +39,7 @@ export default {
     ]),
     ...mapState(d$user, ["g$userPeternakan"]),
     ...mapState(d$dropdown, ["g$ddJenisKandang"]),
+    ...mapState(d$cuaca, ["g$cuaca"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -55,9 +57,12 @@ export default {
     ]),
     ...mapActions(d$user, ["a$userDetail"]),
     ...mapActions(d$dropdown, ["a$ddJenisKandang"]),
+    ...mapActions(d$dropdown, ["a$ddJenisKandang"]),
+    ...mapActions(d$cuaca, ["a$getWeather"]),
   },
   async mounted() {
-    this.a$userDetail();
+    await this.a$userDetail();
+    this.a$getWeather(this.g$userPeternakan.latitude, this.g$userPeternakan.longitude);
     this.a$totalByStatus().catch((error) => this.notify(error, false));
     this.a$totalKandang().catch((error) => this.notify(error, false));
     this.a$totalTernak().catch((error) => this.notify(error, false));
@@ -348,7 +353,7 @@ export default {
             >
               Cuaca saat ini di {{ g$userPeternakan.nama_peternakan }}
             </h1>
-            <cuaca />
+            <cuaca :cuaca="g$cuaca"/>
           </card-comp>
           <card-comp type="success">
             <div class="row align-items-center">
