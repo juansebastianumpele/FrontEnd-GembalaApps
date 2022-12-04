@@ -71,7 +71,7 @@ export default {
     this.a$totalAdgCempe().catch((error) => this.notify(error, false));
     this.a$populasi().catch((error) => this.notify(error, false));
     this.a$ddJenisKandang().catch((error) => this.notify(error, false));
-    this.a$getWeather(this.g$userPeternakan.latitude, this.g$userPeternakan.longitude);
+    await this.a$getWeather(this.g$userPeternakan.latitude, this.g$userPeternakan.longitude);
   },
 };
 </script>
