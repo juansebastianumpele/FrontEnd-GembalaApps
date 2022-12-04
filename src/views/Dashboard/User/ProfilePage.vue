@@ -217,8 +217,9 @@ export default {
           <base-button type="primary" @click="modal.daftarBod = true">
             Daftarkan Akun BoD
           </base-button>
-          <base-button type="success" @click="modal.editProfile = true">
-            Edit Profile
+          <!-- Superadmin tidak bisa edit profil -->
+          <base-button v-if="userInfo.role !== 'superadmin'" type="success" @click="modal.editProfile = true">
+            Edit Profil
           </base-button>
           <base-button type="warning" @click="modal.changePw = true">
             Ganti Sandi
