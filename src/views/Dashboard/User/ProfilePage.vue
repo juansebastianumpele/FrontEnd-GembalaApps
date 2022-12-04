@@ -235,7 +235,7 @@ export default {
         <div class="row">
           <div class="col-6">
             <field-form v-slot="{ field }" v-model="g$userDetail.nama_pengguna" type="text" name="nama_pengguna">
-              <base-input v-bind="field" placeholder="Nama Pengguna" label="Nama Penguna" disabled></base-input>
+              <base-input v-bind="field" placeholder="Nama Pengguna" label="Nama Pengguna" disabled></base-input>
             </field-form>
           </div>
           <div class="col-6">
