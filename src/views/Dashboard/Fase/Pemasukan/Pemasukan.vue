@@ -15,6 +15,7 @@ export default {
   setup() {
     const schema = y$object({
       cek_poel: y$number().required().min(0).max(6).label("Poel"),
+      cek_bcs: y$number().required().min(1).max(5).label("BCS"),
     });
     return {
       schema,
