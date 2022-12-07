@@ -78,9 +78,6 @@ export default {
 
   async mounted() {
     await this.a$adaptasiHariKe3().catch((error) => this.notify(error, false));
-    this.a$getTreatment(3);
-    await this.a$ddListAdaptasiHari3();
-    await this.a$ddKandang();
   },
   methods: {
     ...mapActions(d$adaptasi, [
@@ -98,6 +95,14 @@ export default {
         treatment3: true,
       };
     },
+
+    async triggerCreateAdaptasi() {
+      await this.a$getTreatment(3);
+      await this.a$ddKandang();
+      this.a$ddListAdaptasiHari3();
+      this.modal.createAdaptasi = true;
+    },
+
     async createAdaptasi() {
       try {
         const { id_ternak, treatment1, treatment2, treatment3, id_kandang } =
@@ -149,22 +154,22 @@ export default {
       <div class="col-sm">
         <div class="row">
           <span class="text-center m-2">
-            <router-link to="../adaptasi" >
-            <base-button type="secondary" class="btn-lg text-dark">
+            <router-link to="../adaptasi">
+              <base-button type="secondary" class="btn-lg text-dark">
                 Summary
               </base-button>
             </router-link>
           </span>
           <span class="text-center m-2">
-            <router-link to="data-adaptasi" >
-            <base-button type="success1" class="btn-lg text-white">
+            <router-link to="data-adaptasi">
+              <base-button type="success1" class="btn-lg text-white">
                 {{ pageTitle }}
               </base-button>
             </router-link>
           </span>
           <span class="text-center m-2">
-            <router-link to="langkah-kerja" >
-            <base-button type="secondary" class="btn-lg text-dark">
+            <router-link to="langkah-kerja">
+              <base-button type="secondary" class="btn-lg text-dark">
                 Langkah Kerja
               </base-button>
             </router-link>
@@ -177,43 +182,43 @@ export default {
         </div>
         <div class="col-auto">
           <span class="text-center m-2">
-            <router-link to="data-adaptasi" >
-            <base-button type="secondary" class="btn-sm  text-dark">
+            <router-link to="data-adaptasi">
+              <base-button type="secondary" class="btn-sm text-dark">
                 Hari ke-1
               </base-button>
             </router-link>
           </span>
           <span class="text-center m-2">
-            <router-link to="data-adaptasi-2" >
-            <base-button type="secondary" class="btn-sm text-dark">
+            <router-link to="data-adaptasi-2">
+              <base-button type="secondary" class="btn-sm text-dark">
                 Hari ke-2
               </base-button>
             </router-link>
           </span>
           <span class="text-center m-2">
-            <router-link to="data-adaptasi-3" >
-            <base-button type="success1" class="btn-sm text-white">
+            <router-link to="data-adaptasi-3">
+              <base-button type="success1" class="btn-sm text-white">
                 Hari ke-3
               </base-button>
             </router-link>
           </span>
           <span class="text-center m-2">
-            <router-link to="data-adaptasi-4" >
-            <base-button type="secondary" class="btn-sm text-dark">
+            <router-link to="data-adaptasi-4">
+              <base-button type="secondary" class="btn-sm text-dark">
                 Hari ke-4
               </base-button>
             </router-link>
           </span>
           <span class="text-center m-2">
-            <router-link to="data-adaptasi-5" >
-            <base-button type="secondary" class="btn-sm text-dark">
+            <router-link to="data-adaptasi-5">
+              <base-button type="secondary" class="btn-sm text-dark">
                 Hari ke-5
               </base-button>
             </router-link>
           </span>
         </div>
         <div class="col text-right">
-          <base-button type="success" @click="modal.createAdaptasi = true">
+          <base-button type="success" @click="triggerCreateAdaptasi">
             Tambah {{ pageTitle }}
           </base-button>
         </div>
