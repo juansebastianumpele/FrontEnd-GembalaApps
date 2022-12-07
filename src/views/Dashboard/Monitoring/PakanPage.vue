@@ -3,8 +3,6 @@ import { mapActions, mapState } from "pinia";
 import d$bahanPakan from "@/stores/monitoring/bahanPakan";
 import d$dropdown from "@/stores/dropdown";
 
-import router from "../../../router";
-
 export default {
   metaInfo: () => ({
     title: "Bahan Pakan",
@@ -163,21 +161,16 @@ export default {
         this.notify(error, false);
       }
     },
-    async triggerDetail(row) {
-      try {
+    triggerDetail(row) {
         const { id_jenis_bahan_pakan } = row;
-        router.push({
+        this.$router.push({
           name: "Detail Bahan Pakan",
           params: {
             id: id_jenis_bahan_pakan,
           },
         });
-      } catch (error) {
-        this.clearInput();
-        this.notify(error, false);
       }
     },
-  },
 };
 </script>
 
