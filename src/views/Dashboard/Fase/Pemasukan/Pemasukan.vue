@@ -5,11 +5,22 @@ import d$dropdown from "@/stores/dropdown";
 import d$daftarkandang from "@/stores/monitoring/daftarkandang";
 import d$ternak from "@/stores/monitoring/ternak";
 import { ubahTanggal } from "@/utils/locale/ubahTanggal";
+import { object as y$object, number as y$number } from "yup";
+
 
 export default {
   metaInfo: () => ({
     title: "Fase Pemasukan",
   }),
+  setup() {
+    const schema = y$object({
+      cek_poel: y$number().required().min(0).max(6).label("Poel"),
+      cek_bcs: y$number().required().min(1).max(5).label("BCS"),
+    });
+    return {
+      schema,
+    };
+  },
   data: () => ({
     pageTitle: "Fase Pemasukan",
     //UI
@@ -143,6 +154,7 @@ export default {
           cek_bcs,
           id_kandang: kandang.id_kandang,
         };
+        await this.schema.validate(data);
         await this.a$createLkPemasukan(data);
         this.modal.createPemasukan = false;
         this.notify(`Berhasil menambahkan data ${this.pageTitle}`, true);
@@ -359,7 +371,7 @@ export default {
           <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
         </template>
         <template #body>
-          <form-comp v-if="modal.createPemasukan">
+          <form-comp v-if="modal.createPemasukan" :validation-schema="schema">
             <div class="row">
               <!-- ID Ternak -->
               <div class="col-6">
