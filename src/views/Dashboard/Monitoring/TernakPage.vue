@@ -590,7 +590,7 @@ export default {
       <!-- Edit Modal -->
       <modal-comp v-model:show="modal.ubahTernak" modal-classes="modal-lg">
         <template #header>
-          <h3 class="modal-title">Detail {{ pageTitle }}</h3>
+          <h3 class="modal-title">Detail {{ pageTitle }} Nomor {{input.id_ternak}}</h3>
         </template>
         <template #body>
           <form-comp v-if="modal.ubahTernak" :validation-schema="schema">
@@ -739,7 +739,7 @@ export default {
       <!-- delete modal -->
       <modal-comp v-model:show="modal.confirm" modal-classes="modal-md">
         <template #header>
-          <h3 class="modal-title">Hapus {{ pageTitle }}</h3>
+          <h3 class="modal-title">Hapus {{ pageTitle }} Nomor {{input.id_ternak}}</h3>
         </template>
         <template #body>
           <div class="col-12">
