@@ -17,4 +17,20 @@ const isiPakan = (req) => baseApi.post(`${api}/${pakan}/fill`, req);
 const ubahPakan = (req) => baseApi.put(`${api}/${pakan}/fill`, req);
 const deletePakan = (req) => baseApi.delete(`${api}/${pakan}`, { data: req });
 
-export { add, edit, del, listJenis, listPakan, tambahPakan, kosongkanPakan, isiPakan, ubahPakan, deletePakan };
+//Detail nama pakan
+const listNamaPakan = (req) =>
+  baseApi.get(`${api}/${pakan}/jenis?id_jenis_pakan=${req}`);
+
+export {
+  add,
+  edit,
+  del,
+  listJenis,
+  listPakan,
+  tambahPakan,
+  kosongkanPakan,
+  isiPakan,
+  ubahPakan,
+  deletePakan,
+  listNamaPakan,
+};
