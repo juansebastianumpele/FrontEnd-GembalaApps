@@ -17,7 +17,7 @@ export default {
     };
   },
   data: () => ({
-    pageTitle: `Detail Pakan`,
+    pageTitle: "Detail Pakan",
     // Input
     input: {
       id: "",
@@ -47,12 +47,14 @@ export default {
         {
           name: "tanggal_pembuatan",
           th: "Tanggal Pembuatan",
-          render: ({ tanggal_pembuatan }) => tanggal_pembuatan ? ubahTanggal(tanggal_pembuatan) : null,
+          render: ({ tanggal_pembuatan }) =>
+            tanggal_pembuatan ? ubahTanggal(tanggal_pembuatan) : null,
         },
         {
           name: "tanggal_konsumsi",
           th: "Tanggal Konsumsi",
-          render: ({ tanggal_konsumsi }) => tanggal_konsumsi ? ubahTanggal(tanggal_konsumsi) : null,
+          render: ({ tanggal_konsumsi }) =>
+            tanggal_konsumsi ? ubahTanggal(tanggal_konsumsi) : null,
         },
       ],
       action: [
@@ -82,7 +84,7 @@ export default {
     },
   }),
   computed: {
-    ...mapState(d$pakan, ["g$detailPakan"]),
+    ...mapState(d$pakan, ["g$detailPakan", "g$detailName"]),
     ...mapState(d$dropdown, ["g$ddKeteranganDetailPakan", "g$ddSatuanPakan"]),
     modals() {
       return Object.values(this.modal).includes(true);
@@ -96,8 +98,8 @@ export default {
     },
   },
   async mounted() {
-    await this.a$pakanList(`?id_jenis_pakan=${this.$route.params.id}`).catch((error) =>
-      this.notify(error, false)
+    await this.a$pakanList(`?id_jenis_pakan=${this.$route.params.id}`).catch(
+      (error) => this.notify(error, false)
     );
     await this.a$pakanDetail(this.$route.params.id).catch((error) =>
       this.notify(error, false)
@@ -142,25 +144,25 @@ export default {
       try {
         this.input = { ...row };
         this.modal.kosongkanModal = true;
-      } catch (error) { }
+      } catch (error) {}
     },
     async triggerIsi(row) {
       try {
         this.input = { ...row };
         this.modal.isiModal = true;
-      } catch (error) { }
+      } catch (error) {}
     },
     async triggerUbah(row) {
       try {
         this.input = { ...row };
         this.modal.ubahModal = true;
-      } catch (error) { }
+      } catch (error) {}
     },
     async triggerHapus(row) {
       try {
         this.input = { ...row };
         this.modal.hapusModal = true;
-      } catch (error) { }
+      } catch (error) {}
     },
     async kosongkanPakan() {
       try {
@@ -176,7 +178,7 @@ export default {
         );
         this.modal.kosongkanModal = false;
         this.notify("Berhasil mengosongkan pakan", true);
-      } catch (error) { }
+      } catch (error) {}
     },
     async isiPakan() {
       try {
@@ -186,15 +188,13 @@ export default {
           tanggal_pembuatan: null,
           tanggal_konsumsi: null,
         };
-        await this.a$isiPakan(data).catch((error) =>
-          this.notify(error, false)
-        );
+        await this.a$isiPakan(data).catch((error) => this.notify(error, false));
         await this.a$pakanDetail(this.$route.params.id).catch((error) =>
           this.notify(error, false)
         );
         this.modal.isiModal = false;
         this.notify("Berhasil mengisi pakan", true);
-      } catch (error) { }
+      } catch (error) {}
     },
     async ubahPakan() {
       try {
@@ -212,7 +212,7 @@ export default {
         );
         this.modal.ubahModal = false;
         this.notify("Berhasil mengubah pakan", true);
-      } catch (error) { }
+      } catch (error) {}
     },
     async hapusPakan() {
       try {
@@ -228,14 +228,14 @@ export default {
         );
         this.modal.hapusModal = false;
         this.notify("Berhasil menghapus pakan", true);
-      } catch (error) { }
+      } catch (error) {}
     },
   },
 };
 </script>
 
 <template>
-  <main-layout :title="pageTitle" disable-padding>
+  <main-layout :title="pageTitle + ' ' + g$detailName" disable-padding>
     <template #header>
       <div class="row align-items-center">
         <div class="col-auto">
@@ -253,16 +253,16 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$detailPakan.length" :text="`${pageTitle}`" />
-      <data-table 
-        v-else 
-        :index="true" 
-        :data="g$detailPakan" 
-        :columns="dt.column" 
+      <data-table
+        v-else
+        :index="true"
+        :data="g$detailPakan"
+        :columns="dt.column"
         :actions="dt.action"
-        @isi-pakan="triggerIsi" 
-        @kosongkan-pakan="triggerKosongkan" 
+        @isi-pakan="triggerIsi"
+        @kosongkan-pakan="triggerKosongkan"
         @ubah-pakan="triggerUbah"
-        @hapus-pakan="triggerHapus" 
+        @hapus-pakan="triggerHapus"
       />
     </template>
 
@@ -469,8 +469,17 @@ export default {
             <div class="row">
               <!-- ID -->
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.id" type="number" name="id">
-                  <base-input v-bind="field" placeholder="Masukan ID" label="ID"></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.id"
+                  type="number"
+                  name="id"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Masukan ID"
+                    label="ID"
+                  ></base-input>
                 </field-form>
               </div>
 
@@ -567,7 +576,9 @@ export default {
           <base-button type="secondary" @click="modal.kosongkanModal = false">
             Tutup
           </base-button>
-          <base-button type="primary" @click="kosongkanPakan">Kosongkan</base-button>
+          <base-button type="primary" @click="kosongkanPakan"
+            >Kosongkan</base-button
+          >
         </template>
       </modal-comp>
 
@@ -593,7 +604,7 @@ export default {
       <!-- Ubah pakan -->
       <modal-comp v-model:show="modal.ubahModal" modal-classes="modal-md">
         <template #header>
-          <h3 class="modal-title">Ubah {{ pageTitle }} {{input.id}}</h3>
+          <h3 class="modal-title">Ubah {{ pageTitle }} {{ input.id }}</h3>
         </template>
         <template #body>
           <form-comp v-if="modal.ubahModal" :validation-schema="schema">
@@ -609,15 +620,19 @@ export default {
                 >
                   <flat-pickr
                     v-model="input.tanggal_pembuatan"
-                    :config="{ mode: 'single', allowInput: true, maxDate: new Date() }"
+                    :config="{
+                      mode: 'single',
+                      allowInput: true,
+                      maxDate: new Date(),
+                    }"
                     class="form-control datepicker"
                     placeholder="Pilih Tanggal Pembuatan"
                   />
                 </base-input>
               </div>
 
-                <!-- Tanggal konsumsi -->
-                <div class="col-12">
+              <!-- Tanggal konsumsi -->
+              <div class="col-12">
                 <base-input
                   name="tanggal"
                   class=""
@@ -627,7 +642,11 @@ export default {
                 >
                   <flat-pickr
                     v-model.lazy="input.tanggal_konsumsi"
-                    :config="{ mode: 'single', allowInput: true, minDate: this.input.tanggal_pembuatan }"
+                    :config="{
+                      mode: 'single',
+                      allowInput: true,
+                      minDate: this.input.tanggal_pembuatan,
+                    }"
                     class="form-control datepicker"
                     placeholder="Pilih Tanggal Konsumsi"
                   />
