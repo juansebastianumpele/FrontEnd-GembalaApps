@@ -17,7 +17,7 @@ export default {
     };
   },
   data: () => ({
-    pageTitle: "Data Domba Betina",
+    pageTitle: "Data Domba Indukan",
     // Input
     input: {
       id: null,
