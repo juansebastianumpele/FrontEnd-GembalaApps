@@ -6,6 +6,7 @@ const u$bahanPakan = defineStore({
   state: () => ({
     bahanPakan: [],
     detailBahanPakan: [],
+    detailNamaBahanPakan: [],
   }),
   actions: {
     // Bahan pakan
@@ -43,8 +44,10 @@ const u$bahanPakan = defineStore({
     // Detail bahan pakan
     async a$bahanPakanDetail(req) {
       try {
-        const { data } = await s$bahanPakan.listBahanPakan(req);
-        this.detailBahanPakan = data.list;
+        const { data } = await s$bahanPakan.listNamaBahanPakan(req);
+        this.detailNamaBahanPakan = data.list[0].jenis_bahan_pakan;
+        const { data: data2 } = await s$bahanPakan.listBahanPakan(req);
+        this.detailBahanPakan = data2.list;
       } catch ({ error }) {
         this.detailBahanPakan = [];
         throw error;
@@ -61,6 +64,7 @@ const u$bahanPakan = defineStore({
   getters: {
     g$bahanPakanList: (state) => state.bahanPakan,
     g$detailBahanPakan: (state) => state.detailBahanPakan,
+    g$detailNamaBahanPakan: (state) => state.detailNamaBahanPakan,
   },
 });
 

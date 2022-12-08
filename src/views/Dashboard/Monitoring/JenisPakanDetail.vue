@@ -235,7 +235,7 @@ export default {
 </script>
 
 <template>
-  <main-layout :title="`Detail Pakan ` + g$detailName" disable-padding>
+  <main-layout :title="pageTitle + ' ' + g$detailName" disable-padding>
     <template #header>
       <div class="row align-items-center">
         <div class="col-auto">

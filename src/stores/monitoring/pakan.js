@@ -55,10 +55,10 @@ const u$pakan = defineStore({
     // Detail Pakan
     async a$pakanDetail(req) {
       try {
-        const { data: data2 } = await s$pakan.listNamaPakan(req);
-        this.detailName = data2.list[0].jenis_pakan;
-        const { data } = await s$pakan.listPakan(req);
-        this.detailPakan = data.list;
+        const { data } = await s$pakan.listNamaPakan(req);
+        this.detailName = data.list[0].jenis_pakan;
+        const { data: data2 } = await s$pakan.listPakan(req);
+        this.detailPakan = data2.list;
       } catch ({ error }) {
         this.detailPakan = [];
         throw error;
