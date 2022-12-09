@@ -278,13 +278,13 @@ export default {
               <!-- Kode kandang -->
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.kode_kandang" type="text" name="kode_kandang">
-                  <base-input v-bind="field" placeholder="Kode Kandang" label="Kode Kandang"></base-input>
+                  <base-input v-bind="field" placeholder="Kode Kandang" label="Kode Kandang" required></base-input>
                 </field-form>
               </div>
 
               <!-- Jenis Kandang -->
               <div class="col-12">
-                <base-input name="jeniskandang" placeholder="Jenis Kandang" label="Jenis Kandang">
+                <base-input name="jeniskandang" placeholder="Jenis Kandang" label="Jenis Kandang" required>
                   <multi-select v-model="input.jenis_kandang" :options="g$ddJenisKandang" label="name" track-by="id"
                     placeholder="Pilih Jenis Kandang" :show-labels="false" />
                 </base-input>
@@ -303,7 +303,7 @@ export default {
                 <field-form v-slot="{ field }" v-model="input.persentase_kebutuhan_pakan"
                   name="persentase_kebutuhan_pakan">
                   <base-input v-bind="field" placeholder="Masukkan persentase kebutuhan pakan kandang "
-                    label="Persentase Kebutuhan Pakan (%)" type="number"></base-input>
+                    label="Persentase Kebutuhan Pakan (%)" type="number" required></base-input>
                 </field-form>
               </div>
             </div>
@@ -330,13 +330,13 @@ export default {
               <!-- Kode kandang -->
               <div class="col-12">
                 <field-form v-slot="{ field }" v-model="input.kode_kandang" type="text" name="kode_kandang">
-                  <base-input v-bind="field" placeholder="Kode Kandang" label="Kode Kandang"></base-input>
+                  <base-input v-bind="field" placeholder="Kode Kandang" label="Kode Kandang" required></base-input>
                 </field-form>
               </div>
 
               <!-- Jenis kandang -->
               <div class="col-12">
-                <base-input name="jeniskandang" placeholder="Jenis Kandang" label="Jenis Kandang">
+                <base-input name="jeniskandang" placeholder="Jenis Kandang" label="Jenis Kandang" required>
                   <multi-select v-model="input.jenis_kandang" :options="g$ddJenisKandang" label="name" track-by="id"
                     placeholder="Pilih Jenis Kandang" :show-labels="false" />
                 </base-input>
@@ -355,7 +355,7 @@ export default {
                 <field-form v-slot="{ field }" v-model="input.persentase_kebutuhan_pakan"
                   name="persentase_kebutuhan_pakan">
                   <base-input v-bind="field" placeholder="Masukkan persentase kebutuhan pakan kandang "
-                    label="Persentase Kebutuhan Pakan (%)" type="number"></base-input>
+                    label="Persentase Kebutuhan Pakan (%)" type="number" required></base-input>
                 </field-form>
               </div>
             </div>
