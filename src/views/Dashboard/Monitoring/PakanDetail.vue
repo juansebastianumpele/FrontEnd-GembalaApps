@@ -161,6 +161,7 @@ export default {
                   name="keterangan"
                   placeholder="Pakan masuk atau keluar?"
                   label="Keterangan"
+                  required
                 >
                   <multi-select
                     v-model="input.keterangan"
@@ -184,6 +185,7 @@ export default {
                     placeholder="Jumlah dalam satuan"
                     label="Jumlah"
                     type="number"
+                    required
                   >
                   </base-input>
                 </field-form>

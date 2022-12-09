@@ -287,75 +287,10 @@ export default {
                     v-bind="field"
                     placeholder="Masukan ID"
                     label="ID"
-                  ></base-input>
+                    required
+                  />
                 </field-form>
               </div>
-
-              <!-- Tanggal -->
-              <!-- <div class="col-12">
-                <base-input
-                  name="tanggal"
-                  class=""
-                  placeholder="Pilih tanggal"
-                  label="Tanggal"
-                  required
-                >
-                  <flat-pickr
-                    v-model.lazy="input.tanggal"
-                    :config="{ mode: 'single', allowInput: true }"
-                    class="form-control datepicker"
-                    placeholder="Pilih Tanggal"
-                  />
-                </base-input>
-              </div> -->
-
-              <!-- Keterangan -->
-              <!-- <div class="col-12">
-                <base-input
-                  name="keterangan"
-                  placeholder="Pakan masuk atau keluar?"
-                  label="Keterangan"
-                >
-                  <multi-select
-                    v-model="input.keterangan"
-                    :options="g$ddKeteranganDetailPakan"
-                    placeholder="Pakan masuk atau keluar?"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div> -->
-
-              <!-- Jumlah -->
-              <!-- <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.jumlah"
-                  type="text"
-                  name="stok"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Text"
-                    label="Stok"
-                  ></base-input>
-                </field-form>
-              </div> -->
-
-              <!-- Satuan pakan -->
-              <!-- <div class="col-6">
-                <base-input
-                  name="satuan_pakan"
-                  placeholder="Satuan Pakan"
-                  label="Satuan Pakan"
-                >
-                  <multi-select
-                    v-model="input.satuanPakan"
-                    :options="g$ddSatuanPakan"
-                    placeholder="Pilih Satuan Pakan"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div> -->
             </div>
           </form-comp>
         </template>

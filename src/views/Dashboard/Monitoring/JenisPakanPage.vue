@@ -339,6 +339,7 @@ export default {
                   name="satuan"
                   placeholder="Satuan Pakan"
                   label="Satuan Pakan"
+                  required
                 >
                   <multi-select
                     v-model="input.satuan"
@@ -446,6 +447,7 @@ export default {
                   name="satuan"
                   placeholder="Satuan Pakan"
                   label="Satuan Pakan"
+                  required
                 >
                   <multi-select
                     v-model="input.satuan"
