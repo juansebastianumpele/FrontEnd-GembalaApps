@@ -151,6 +151,7 @@ export default {
                       mode: 'single',
                       allowInput: true,
                       maxDate: new Date(),
+                      defaultDate: 'today'
                     }"
                     class="form-control datepicker"
                     placeholder="Pilih tanggal"
