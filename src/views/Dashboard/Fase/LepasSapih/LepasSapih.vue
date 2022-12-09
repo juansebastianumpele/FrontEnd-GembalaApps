@@ -82,7 +82,7 @@ export default {
           <span class="text-center m-2">
             <router-link to="fase-lepas-sapih" >
               <base-button type="secondary" class="btn-lg text-dark" >
-                Lepas Sapih
+                Cempe Lepas Sapih
               </base-button>
             </router-link>
           </span>
