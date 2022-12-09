@@ -41,9 +41,8 @@ export default {
           <ol>
             <li class="mb-1">Buka monitor Kandang.</li>
             <li class="mb-1">Lihat kebutuhan pakan pada kandang yang akan dikerjakan.</li>
-            <li class="mb-1">Klik Sub-menu Daftar Penyakit.</li>
             <li class="mb-1">Sanitasi kandang ternak serta berikan pakan sesuai porsi.</li>
-            <li class="mb-1">Tambah lembar kerja menggunakan ikon tanda {+} di sebelah kanan atas.</li>
+            <li class="mb-1">Tambah lembar kerja pemeliharaan.</li>
             <li class="mb-1">Isi form.</li>
             <li class="mb-1">Submit Data.</li>
           </ol>
