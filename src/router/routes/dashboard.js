@@ -319,7 +319,7 @@ const dashboardRoutes = [
         path: "pemeliharaan/langkah-kerja",
         name: "Langkah Kerja Pemeliharaan",
         component: () =>
-          import("@/views/Dashboard/LembarKerja/LangkahKerja.vue"),
+          import("@/views/Dashboard/LembarKerja/LangkahKerjaPemeliharaan.vue"),
         meta: { requiresAuth: true },
       },
       {
