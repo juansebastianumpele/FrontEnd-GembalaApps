@@ -52,8 +52,7 @@ export default {
             </li>
             <li class="mb-1">
               Jika terdapat domba mengalami abortus maka domba akan, kembali
-              masuk ke data halaman "Proses Persiapan" dihalaman lembar kerja "
-              perkawinan"
+              masuk ke data halaman "Proses Persiapan" di halaman lembar kerja "Perkawinan"
             </li>
           </ol>
         </card-comp>
