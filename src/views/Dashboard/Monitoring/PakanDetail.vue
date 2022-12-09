@@ -13,9 +13,9 @@ export default {
     // Input
     input: {
       id_bahan_pakan: null,
-      tanggal: "",
-      keterangan: "",
-      jumlah: "",
+      tanggal: null,
+      keterangan: null,
+      jumlah: null,
     },
     // UI
     modal: {
@@ -69,7 +69,10 @@ export default {
     ]),
     clearInput() {
       this.input = {
-        id: null,
+        id_bahan_pakan: null,
+        tanggal: null,
+        keterangan: null,
+        jumlah: null,
       };
     },
     async addDetailPakan() {
