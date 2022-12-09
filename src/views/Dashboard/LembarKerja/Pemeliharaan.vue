@@ -145,7 +145,7 @@ export default {
           <span class="text-center m-2">
             <router-link to="pemeliharaan">
               <base-button type="success1" class="btn-lg text-white">
-                Fase Pemeliharaan
+                Lembar Kerja Pemeliharaan
               </base-button>
             </router-link>
           </span>
