@@ -20,10 +20,10 @@ export default {
     pageTitle: "Detail Pakan",
     // Input
     input: {
-      id: "",
-      status: "",
-      tanggal_pembuatan: "",
-      tanggal_konsumsi: "",
+      id: null,
+      status: null,
+      tanggal_pembuatan: null,
+      tanggal_konsumsi: null,
     },
     // UI
     modal: {
