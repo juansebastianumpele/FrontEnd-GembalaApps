@@ -65,9 +65,6 @@
           </a>
         </template>
 
-        <div class="dropdown-header noti-title">
-          <h6 class="text-overflow m-0">Welcome!</h6>
-        </div>
         <router-link :to="{ name: 'Profile' }" class="dropdown-item">
           <i class="fas fa-user"></i>
           <span>Profil</span>
