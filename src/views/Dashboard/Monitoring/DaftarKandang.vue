@@ -34,6 +34,7 @@ export default {
       ubahKandang: false,
       confirm: false,
     },
+    loading: false,
     // DataTable
     dt: {
       column: [
@@ -114,7 +115,10 @@ export default {
         kode_kandang: "",
       };
     },
+
+    //tambah kandang
     async addKandang() {
+      this.loading = true;
       try {
         const {
           kode_kandang,
@@ -137,8 +141,12 @@ export default {
       } finally {
         this.a$kandangList();
       }
+      this.loading = false;
     },
+
+    //ubah kandang
     async editKandang() {
+      this.loading = true;
       try {
         const {
           id_kandang,
@@ -163,8 +171,12 @@ export default {
       } finally {
         this.a$kandangList();
       }
+      this.loading = false;
     },
+
+    //hapus kandang
     async delKandang() {
+      this.loading = true;
       try {
         const { id_kandang } = this.input;
         const data = {
@@ -178,14 +190,21 @@ export default {
       } finally {
         this.a$kandangList();
       }
+      this.loading = false;
     },
+
     async triggerCreate() {
-      await this.a$ddListJenisPakan("").catch((error) => this.notify(error, false));
+      await this.a$ddListJenisPakan("").catch((error) =>
+        this.notify(error, false)
+      );
       await this.a$ddJenisKandang().catch((error) => this.notify(error, false));
       this.modal.addKandang = true;
     },
+
     async triggerEditModal(row) {
-      await this.a$ddListJenisPakan("").catch((error) => this.notify(error, false));
+      await this.a$ddListJenisPakan("").catch((error) =>
+        this.notify(error, false)
+      );
       await this.a$ddJenisKandang().catch((error) => this.notify(error, false));
       try {
         const {
@@ -214,6 +233,7 @@ export default {
         this.notify(error, false);
       }
     },
+
     async triggerDelete(row) {
       try {
         const { id_kandang, kode_kandang } = row;
@@ -227,6 +247,7 @@ export default {
         this.notify(error, false);
       }
     },
+
     async triggerDetail(row) {
       try {
         const { id_kandang } = row;
@@ -262,8 +283,16 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$kandangList.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$kandangList" :columns="dt.column" :actions="dt.action"
-        @ubah-kandang="triggerEditModal" @hapus-kandang="triggerDelete" @detail-kandang="triggerDetail" />
+      <data-table
+        v-else
+        :index="true"
+        :data="g$kandangList"
+        :columns="dt.column"
+        :actions="dt.action"
+        @ubah-kandang="triggerEditModal"
+        @hapus-kandang="triggerDelete"
+        @detail-kandang="triggerDetail"
+      />
     </template>
 
     <template #modal>
@@ -277,33 +306,73 @@ export default {
             <div class="row">
               <!-- Kode kandang -->
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.kode_kandang" type="text" name="kode_kandang">
-                  <base-input v-bind="field" placeholder="Kode Kandang" label="Kode Kandang" required></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.kode_kandang"
+                  type="text"
+                  name="kode_kandang"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Kode Kandang"
+                    label="Kode Kandang"
+                    required
+                  ></base-input>
                 </field-form>
               </div>
 
               <!-- Jenis Kandang -->
               <div class="col-12">
-                <base-input name="jeniskandang" placeholder="Jenis Kandang" label="Jenis Kandang" required>
-                  <multi-select v-model="input.jenis_kandang" :options="g$ddJenisKandang" label="name" track-by="id"
-                    placeholder="Pilih Jenis Kandang" :show-labels="false" />
+                <base-input
+                  name="jeniskandang"
+                  placeholder="Jenis Kandang"
+                  label="Jenis Kandang"
+                  required
+                >
+                  <multi-select
+                    v-model="input.jenis_kandang"
+                    :options="g$ddJenisKandang"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih Jenis Kandang"
+                    :show-labels="false"
+                  />
                 </base-input>
               </div>
 
               <!-- jenis pakan -->
               <div class="col-12">
-                <base-input name="jenispakan" placeholder="Jenis Pakan" label="Jenis Pakan" required>
-                  <multi-select v-model="input.jenis_pakan" :options="g$ddListJenisPakan" label="name" track-by="id"
-                    placeholder="Pilih Jenis Pakan" :show-labels="false" />
+                <base-input
+                  name="jenispakan"
+                  placeholder="Jenis Pakan"
+                  label="Jenis Pakan"
+                  required
+                >
+                  <multi-select
+                    v-model="input.jenis_pakan"
+                    :options="g$ddListJenisPakan"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih Jenis Pakan"
+                    :show-labels="false"
+                  />
                 </base-input>
               </div>
 
               <!-- persentase kebutuhan pakan -->
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.persentase_kebutuhan_pakan"
-                  name="persentase_kebutuhan_pakan">
-                  <base-input v-bind="field" placeholder="Masukkan persentase kebutuhan pakan kandang "
-                    label="Persentase Kebutuhan Pakan (%)" type="number" required></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.persentase_kebutuhan_pakan"
+                  name="persentase_kebutuhan_pakan"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Masukkan persentase kebutuhan pakan kandang "
+                    label="Persentase Kebutuhan Pakan (%)"
+                    type="number"
+                    required
+                  ></base-input>
                 </field-form>
               </div>
             </div>
@@ -314,7 +383,10 @@ export default {
             Tutup
           </base-button>
           <base-button type="primary" @click="addKandang()">
-            Tambah {{ pageTitle }}
+            <span v-if="!loading">Tambah {{ pageTitle }}</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang menambahkan...
+            </span>
           </base-button>
         </template>
       </modal-comp>
@@ -329,33 +401,73 @@ export default {
             <div class="row">
               <!-- Kode kandang -->
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.kode_kandang" type="text" name="kode_kandang">
-                  <base-input v-bind="field" placeholder="Kode Kandang" label="Kode Kandang" required></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.kode_kandang"
+                  type="text"
+                  name="kode_kandang"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Kode Kandang"
+                    label="Kode Kandang"
+                    required
+                  ></base-input>
                 </field-form>
               </div>
 
               <!-- Jenis kandang -->
               <div class="col-12">
-                <base-input name="jeniskandang" placeholder="Jenis Kandang" label="Jenis Kandang" required>
-                  <multi-select v-model="input.jenis_kandang" :options="g$ddJenisKandang" label="name" track-by="id"
-                    placeholder="Pilih Jenis Kandang" :show-labels="false" />
+                <base-input
+                  name="jeniskandang"
+                  placeholder="Jenis Kandang"
+                  label="Jenis Kandang"
+                  required
+                >
+                  <multi-select
+                    v-model="input.jenis_kandang"
+                    :options="g$ddJenisKandang"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih Jenis Kandang"
+                    :show-labels="false"
+                  />
                 </base-input>
               </div>
 
               <!-- jenis pakan -->
               <div class="col-12">
-                <base-input name="jenispakan" placeholder="Jenis Pakan" label="Jenis Pakan" required>
-                  <multi-select v-model="input.jenis_pakan" :options="g$ddListJenisPakan" label="name" track-by="id"
-                    placeholder="Pilih Jenis Pakan" :show-labels="false" />
+                <base-input
+                  name="jenispakan"
+                  placeholder="Jenis Pakan"
+                  label="Jenis Pakan"
+                  required
+                >
+                  <multi-select
+                    v-model="input.jenis_pakan"
+                    :options="g$ddListJenisPakan"
+                    label="name"
+                    track-by="id"
+                    placeholder="Pilih Jenis Pakan"
+                    :show-labels="false"
+                  />
                 </base-input>
               </div>
 
               <!-- persentase kebutuhan pakan -->
               <div class="col-12">
-                <field-form v-slot="{ field }" v-model="input.persentase_kebutuhan_pakan"
-                  name="persentase_kebutuhan_pakan">
-                  <base-input v-bind="field" placeholder="Masukkan persentase kebutuhan pakan kandang "
-                    label="Persentase Kebutuhan Pakan (%)" type="number" required></base-input>
+                <field-form
+                  v-slot="{ field }"
+                  v-model="input.persentase_kebutuhan_pakan"
+                  name="persentase_kebutuhan_pakan"
+                >
+                  <base-input
+                    v-bind="field"
+                    placeholder="Masukkan persentase kebutuhan pakan kandang "
+                    label="Persentase Kebutuhan Pakan (%)"
+                    type="number"
+                    required
+                  ></base-input>
                 </field-form>
               </div>
             </div>
@@ -366,7 +478,10 @@ export default {
             Tutup
           </base-button>
           <base-button type="primary" @click="editKandang()">
-            Simpan Perubahan
+            <span v-if="!loading">Simpan perubahan</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang menyimpan...
+            </span>
           </base-button>
         </template>
       </modal-comp>
@@ -386,7 +501,12 @@ export default {
           <base-button type="secondary" @click="modal.confirm = false">
             Tutup
           </base-button>
-          <base-button type="danger" @click="delKandang()">Hapus</base-button>
+          <base-button type="danger" @click="delKandang()"
+            ><span v-if="!loading">Hapus</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang menghapus...
+            </span></base-button
+          >
         </template>
       </modal-comp>
     </template>
