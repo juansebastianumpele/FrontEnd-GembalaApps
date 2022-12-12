@@ -32,6 +32,7 @@ export default {
       hapusTernakSakit: false,
       sembuhTernakSakit: false,
     },
+    loading: false,
     // DataTable
     dt: {
       column: [
@@ -138,6 +139,7 @@ export default {
       this.modal.editTernakSakit = true;
     },
     async editTernakSakit() {
+      this.loading = true;
       try {
         const {
           id_kesehatan,
@@ -163,6 +165,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       }
+      this.loading = false;
     },
     triggerSembuh(row) {
       const {
@@ -188,6 +191,7 @@ export default {
       this.modal.sembuhTernakSakit = true;
     },
     async sembuhTernakSakit() {
+      this.loading = true;
       try {
         const { id_kesehatan, tanggal_sakit, kandang, gejala, penanganan } =
           this.input;
@@ -207,6 +211,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       }
+      this.loading = false;
     },
     async triggerDelete(row) {
       const { id_riwayat_kesehatan } = row;
@@ -214,21 +219,6 @@ export default {
         id_riwayat_kesehatan,
       };
       this.modal.hapusTernakSakit = true;
-    },
-    async hapusTernakSakit() {
-      try {
-        const { id_riwayat_kesehatan } = this.input;
-        const data = {
-          id_riwayat_kesehatan,
-        };
-        await this.a$kesehatanDelete(data);
-        this.modal.hapusTernakSakit = false;
-        this.notify(`Hapus ${this.pageTitle} berhasil`);
-        this.clearInput();
-        await this.a$penyakitDetail(this.$route.params.id);
-      } catch (error) {
-        this.notify(error, false);
-      }
     },
   },
 };
@@ -253,7 +243,6 @@ export default {
         :columns="dt.column"
         :actions="dt.action"
         @ubah="triggerEdit"
-        @hapus="triggerDelete"
         @sembuh="triggerSembuh"
       />
     </template>
@@ -267,25 +256,6 @@ export default {
         <template #body>
           <form-comp v-if="modal.editTernakSakit">
             <div class="row">
-              <!-- Penyakit -->
-              <!-- <div class="col-12">
-                <base-input
-                  name="penyakit"
-                  placeholder="Nama Penyakit"
-                  label="Nama Penyakit"
-                  required
-                >
-                  <multi-select
-                    v-model="input.penyakit"
-                    :options="g$penyakitList"
-                    label="nama_penyakit"
-                    track-by="id_penyakit"
-                    placeholder="Pilih Penyakit"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div> -->
-
               <!-- Tanggal sakit -->
               <div class="col-12">
                 <base-input
@@ -382,36 +352,15 @@ export default {
             Tutup
           </base-button>
           <base-button type="primary" @click="editTernakSakit">
-            Ubah {{ pageTitle }}
+            <span v-if="!loading">Ubah {{ pageTitle }}</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang mengubah...
+            </span>
           </base-button>
         </template>
       </modal-comp>
 
-      <!-- Hapus ternak sakit -->
-      <modal-comp
-        v-model:show="modal.hapusTernakSakit"
-        modal-classes="modal-sm"
-      >
-        <template #header>
-          <h3 class="modal-title">Hapus {{ pageTitle }}</h3>
-        </template>
-        <template #body>
-          <p>
-            Yakin ingin menghapus {{ pageTitle }}:
-            <strong>{{ input.id_riwayat_kesehatan }}</strong>
-          </p>
-        </template>
-        <template #footer>
-          <base-button type="secondary" @click="modal.hapusTernakSakit = false">
-            Tutup
-          </base-button>
-          <base-button type="danger" @click="hapusTernakSakit"
-            >Hapus</base-button
-          >
-        </template>
-      </modal-comp>
-
-      <!-- Sembuh LK penanganan penyakit -->
+      <!-- Sembuh Ternak Sakit -->
       <modal-comp
         v-model:show="modal.sembuhTernakSakit"
         modal-classes="modal-sm"
@@ -438,7 +387,10 @@ export default {
             Tutup
           </base-button>
           <base-button type="primary" @click="sembuhTernakSakit"
-            >Sembuh</base-button
+            ><span v-if="!loading">Sembuh</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang menyimpan...
+            </span></base-button
           >
         </template>
       </modal-comp>
