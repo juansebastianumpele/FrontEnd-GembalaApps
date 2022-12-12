@@ -20,6 +20,7 @@ export default {
     modal: {
       createAdaptasi: false,
     },
+    loading: false,
     // DataTable
     dt: {
       column: [
@@ -95,6 +96,7 @@ export default {
     },
 
     async createAdaptasi() {
+      this.loading = true;
       try {
         const { id_ternak, id_kandang, treatment1, treatment2 } = this.input;
         const data = {
@@ -121,6 +123,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       }
+      this.loading = false;
     },
 
     onChange(value) {
@@ -283,7 +286,10 @@ export default {
             Tutup
           </base-button>
           <base-button type="primary" @click="createAdaptasi">
-            Tambah {{ pageTitle }}
+            <span v-if="!loading">Tambah {{ pageTitle }}</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang menambahkan...
+            </span>
           </base-button>
         </template>
       </modal-comp>

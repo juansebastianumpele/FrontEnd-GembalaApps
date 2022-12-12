@@ -22,6 +22,7 @@ export default {
       detailTernak: false,
       addDetailPakan: false,
     },
+    loading: false,
     // DataTable
     dt: {
       column: [
@@ -75,7 +76,9 @@ export default {
         jumlah: null,
       };
     },
+
     async addDetailPakan() {
+      this.loading = true;
       const id_jenis_bahan_pakan = this.$route.params.id;
       const { tanggal, keterangan, jumlah } = this.input;
       const data = {
@@ -91,6 +94,7 @@ export default {
         this.notify(error, false)
       );
       this.modal.addDetailPakan = false;
+      this.loading = false;
     },
   },
 };
@@ -151,7 +155,7 @@ export default {
                       mode: 'single',
                       allowInput: true,
                       maxDate: new Date(),
-                      defaultDate: 'today'
+                      defaultDate: 'today',
                     }"
                     class="form-control datepicker"
                     placeholder="Pilih tanggal"
@@ -202,7 +206,10 @@ export default {
             Tutup
           </base-button>
           <base-button type="primary" @click="addDetailPakan">
-            Tambah {{ pageTitle }}
+            <span v-if="!loading">Tambah {{ pageTitle }}</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang menambahkan...
+            </span>
           </base-button>
         </template>
       </modal-comp>

@@ -21,6 +21,7 @@ export default {
       createLepasSapih: false,
       seleksi: false,
     },
+    loading: false,
     // DataTable
     dt: {
       column: [
@@ -30,25 +31,29 @@ export default {
         },
         {
           th: "Tanggal Lepas Sapih",
-          render: ({ tanggal }) => tanggal ? ubahTanggal(tanggal) : null,
+          render: ({ tanggal }) => (tanggal ? ubahTanggal(tanggal) : null),
         },
         {
           name: "kode_kandang",
           th: "Kode Kandang",
-          render: ({ kandang }) => kandang ? kandang.kode_kandang : null,
+          render: ({ kandang }) => (kandang ? kandang.kode_kandang : null),
         },
       ],
       action: [
         {
-          text: 'Seleksi',
-          color: 'primary',
-          event: 'seleksi',
-        }
-      ]
+          text: "Seleksi",
+          color: "primary",
+          event: "seleksi",
+        },
+      ],
     },
   }),
   computed: {
-    ...mapState(d$lepasSapih, ["g$cempe", "g$statusSeleksi", "g$ternakLepasSapih"]),
+    ...mapState(d$lepasSapih, [
+      "g$cempe",
+      "g$statusSeleksi",
+      "g$ternakLepasSapih",
+    ]),
     ...mapState(d$kandang, ["g$kandangList"]),
     modals() {
       return Object.values(this.modal).includes(true);
@@ -68,7 +73,12 @@ export default {
     await this.a$kandangList().catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$lepasSapih, ["a$createLepasSapih", "a$cempe", "a$ternakLepasSapih", "a$seleksiTernak"]),
+    ...mapActions(d$lepasSapih, [
+      "a$createLepasSapih",
+      "a$cempe",
+      "a$ternakLepasSapih",
+      "a$seleksiTernak",
+    ]),
     ...mapActions(d$kandang, ["a$kandangList"]),
     clearInput() {
       this.input = {
@@ -78,13 +88,11 @@ export default {
         kandang: null,
       };
     },
+
     async createLepasSapih() {
+      this.loading = true;
       try {
-        const {
-          ternak,
-          tanggal_lepas_sapih,
-          kandang,
-        } = this.input;
+        const { ternak, tanggal_lepas_sapih, kandang } = this.input;
         const data = {
           id_ternak: ternak.id_ternak,
           tanggal_lepas_sapih,
@@ -97,16 +105,21 @@ export default {
       } catch (error) {
         this.notify(error, false);
       }
+      this.loading = false;
     },
+
     async triggerCreateLepasSapih() {
       await this.a$cempe().catch((error) => this.notify(error, false));
       this.modal.createLepasSapih = true;
     },
+
     triggerSeleksi(row) {
       this.modal.seleksi = true;
       this.input = row;
     },
+
     async seleksiTernak() {
+      this.loading = true;
       try {
         const { id_ternak, status } = this.input;
         const data = {
@@ -120,6 +133,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       }
+      this.loading = false;
     },
   },
 };
@@ -166,7 +180,7 @@ export default {
             </router-link>
           </span>
           <span class="text-center m-2">
-            <router-link to="fase-lepas-sapih" >
+            <router-link to="fase-lepas-sapih">
               <base-button type="success1" class="btn-lg text-white">
                 Cempe Lepas Sapih
               </base-button>
@@ -183,12 +197,22 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$ternakLepasSapih.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$ternakLepasSapih" :columns="dt.column" :actions="dt.action" @seleksi="triggerSeleksi"/>
+      <data-table
+        v-else
+        :index="true"
+        :data="g$ternakLepasSapih"
+        :columns="dt.column"
+        :actions="dt.action"
+        @seleksi="triggerSeleksi"
+      />
     </template>
 
     <template #modal>
       <!-- Create fase lepas sapih -->
-      <modal-comp v-model:show="modal.createLepasSapih" modal-classes="modal-md">
+      <modal-comp
+        v-model:show="modal.createLepasSapih"
+        modal-classes="modal-md"
+      >
         <template #header>
           <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
         </template>
@@ -198,28 +222,48 @@ export default {
               <!-- id_ternak -->
               <div class="col-12">
                 <base-input name="id_ternak" label="ID ternak">
-                  <multi-select v-model="input.ternak" :options="g$cempe" label="id_ternak" track-by="id_ternak"
-                    placeholder="Pilih ID ternak" :show-labels="false" />
+                  <multi-select
+                    v-model="input.ternak"
+                    :options="g$cempe"
+                    label="id_ternak"
+                    track-by="id_ternak"
+                    placeholder="Pilih ID ternak"
+                    :show-labels="false"
+                  />
                 </base-input>
               </div>
 
               <!-- Tanggal lepas sapih -->
               <div class="col-12">
-                <base-input name="tanggal_lepas sapih" label="Tanggal Lepas Sapih">
-                  <flat-pickr v-model="input.tanggal_lepas_sapih" :config="{
-                    mode: 'single',
-                    allowInput: true,
-                    maxDate: new Date(),
-                    defaultDate: 'today',
-                  }" class="form-control datepicker" placeholder="Pilih tanggal" />
+                <base-input
+                  name="tanggal_lepas sapih"
+                  label="Tanggal Lepas Sapih"
+                >
+                  <flat-pickr
+                    v-model="input.tanggal_lepas_sapih"
+                    :config="{
+                      mode: 'single',
+                      allowInput: true,
+                      maxDate: new Date(),
+                      defaultDate: 'today',
+                    }"
+                    class="form-control datepicker"
+                    placeholder="Pilih tanggal"
+                  />
                 </base-input>
               </div>
 
               <!-- Kode kandang -->
               <div class="col-12">
                 <base-input name="kode_kandang" label="Pilih kandang">
-                  <multi-select v-model="input.kandang" :options="g$kandangList" track-by="id_kandang"
-                    label="kode_kandang" placeholder="Pilih kandang" :show-labels="false" />
+                  <multi-select
+                    v-model="input.kandang"
+                    :options="g$kandangList"
+                    track-by="id_kandang"
+                    label="kode_kandang"
+                    placeholder="Pilih kandang"
+                    :show-labels="false"
+                  />
                 </base-input>
               </div>
             </div>
@@ -230,7 +274,10 @@ export default {
             Tutup
           </base-button>
           <base-button type="primary" @click="createLepasSapih">
-            Tambah {{ pageTitle }}
+            <span v-if="!loading">Tambah {{ pageTitle }}</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang menambahkan...
+            </span>
           </base-button>
         </template>
       </modal-comp>
@@ -246,8 +293,12 @@ export default {
               <!-- status_seleksi -->
               <div class="col-12">
                 <base-input name="status" label="Status">
-                  <multi-select v-model="input.status" :options="g$statusSeleksi"
-                    placeholder="Pilih status" :show-labels="false" />
+                  <multi-select
+                    v-model="input.status"
+                    :options="g$statusSeleksi"
+                    placeholder="Pilih status"
+                    :show-labels="false"
+                  />
                 </base-input>
               </div>
             </div>
@@ -258,7 +309,10 @@ export default {
             Tutup
           </base-button>
           <base-button type="primary" @click="seleksiTernak">
-            Seleksi
+            <span v-if="!loading">Seleksi</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang menyimpan...
+            </span>
           </base-button>
         </template>
       </modal-comp>

@@ -23,6 +23,7 @@ export default {
       usg1: false,
       usg2: false,
     },
+    loading: false,
     // DataTable
     dt: {
       column: [
@@ -44,15 +45,17 @@ export default {
         },
         {
           th: "USG 1",
-          render: ({ usg_1 }) => usg_1
-            ? '<i class="fas fa-solid fa-check text-success" style="font-size: 30px;"></i>'
-            : '<i class="fas fa-solid fa-x text-danger" style="font-size: 20px;"></i>',
+          render: ({ usg_1 }) =>
+            usg_1
+              ? '<i class="fas fa-solid fa-check text-success" style="font-size: 30px;"></i>'
+              : '<i class="fas fa-solid fa-x text-danger" style="font-size: 20px;"></i>',
         },
         {
           th: "USG 2",
-          render: ({ usg_2 }) => usg_2
-            ? '<i class="fas fa-solid fa-check text-success" style="font-size: 30px;"></i>'
-            : '<i class="fas fa-solid fa-x text-danger" style="font-size: 20px;"></i>',
+          render: ({ usg_2 }) =>
+            usg_2
+              ? '<i class="fas fa-solid fa-check text-success" style="font-size: 30px;"></i>'
+              : '<i class="fas fa-solid fa-x text-danger" style="font-size: 20px;"></i>',
         },
         {
           name: "status",
@@ -71,8 +74,8 @@ export default {
           color: "primary",
           show: ({ usg_1, usg_2 }) => usg_1 && !usg_2,
           event: "usg2",
-        }
-      ]
+        },
+      ],
     },
   }),
   computed: {
@@ -83,9 +86,7 @@ export default {
       "g$listPejantan",
       "g$statusPerkawinan",
     ]),
-    ...mapState(d$kandang, [
-      "g$kandangList",
-    ]),
+    ...mapState(d$kandang, ["g$kandangList"]),
   },
   async mounted() {
     this.a$sedangKawin().catch((error) => this.notify(error, false));
@@ -100,9 +101,7 @@ export default {
       "a$createPerkawinan",
       "a$updatePerkawinan",
     ]),
-    ...mapActions(d$kandang, [
-      "a$kandangList",
-    ]),
+    ...mapActions(d$kandang, ["a$kandangList"]),
     clearInput() {
       this.input = {
         id_perkawinan: null,
@@ -126,6 +125,7 @@ export default {
       this.modal.usg2 = true;
     },
     async createPerkawinan() {
+      this.loading = true;
       try {
         const { id_indukan, id_pejantan } = this.input;
         const data = {
@@ -140,8 +140,11 @@ export default {
       } catch (error) {
         this.notify(error, false);
       }
+      this.loading = false;
     },
+
     async updatePerkawinanUsg1() {
+      this.loading = true;
       try {
         const { id_perkawinan, status, kandang } = this.input;
         const data = {
@@ -158,8 +161,11 @@ export default {
       } catch (error) {
         this.notify(error, false);
       }
+      this.loading = false;
     },
+
     async updatePerkawinanUsg2() {
+      this.loading = true;
       try {
         const { id_perkawinan, status, kandang } = this.input;
         const data = {
@@ -176,6 +182,7 @@ export default {
       } catch (error) {
         this.notify(error, false);
       }
+      this.loading = false;
     },
   },
 };
@@ -239,13 +246,23 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$sedangKawin.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$sedangKawin" :columns="dt.column" :actions=dt.action
-        @usg1="triggerUSG1" @usg2="triggerUSG2" />
+      <data-table
+        v-else
+        :index="true"
+        :data="g$sedangKawin"
+        :columns="dt.column"
+        :actions="dt.action"
+        @usg1="triggerUSG1"
+        @usg2="triggerUSG2"
+      />
     </template>
 
     <template #modal>
       <!-- Create fase perkawinan -->
-      <modal-comp v-model:show="modal.createPerkawinan" modal-classes="modal-md">
+      <modal-comp
+        v-model:show="modal.createPerkawinan"
+        modal-classes="modal-md"
+      >
         <template #header>
           <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
         </template>
@@ -255,16 +272,28 @@ export default {
               <!-- id_indukan -->
               <div class="col-12">
                 <base-input name="id_indukan" label="ID Indukan">
-                  <multi-select v-model="input.id_indukan" :options="g$listIndukan" label="id_ternak"
-                    track-by="id_ternak" placeholder="Pilih ID Indukan" :show-labels="false" />
+                  <multi-select
+                    v-model="input.id_indukan"
+                    :options="g$listIndukan"
+                    label="id_ternak"
+                    track-by="id_ternak"
+                    placeholder="Pilih ID Indukan"
+                    :show-labels="false"
+                  />
                 </base-input>
               </div>
 
               <!-- id_pejantan -->
               <div class="col-12">
                 <base-input name="id_pejantan" label="ID Pejantan">
-                  <multi-select v-model="input.id_pejantan" :options="g$listPejantan" label="id_ternak"
-                    track-by="id_ternak" placeholder="Pilih ID Pejantan" :show-labels="false" />
+                  <multi-select
+                    v-model="input.id_pejantan"
+                    :options="g$listPejantan"
+                    label="id_ternak"
+                    track-by="id_ternak"
+                    placeholder="Pilih ID Pejantan"
+                    :show-labels="false"
+                  />
                 </base-input>
               </div>
             </div>
@@ -275,7 +304,10 @@ export default {
             Tutup
           </base-button>
           <base-button type="primary" @click="createPerkawinan">
-            Tambah {{ pageTitle }}
+            <span v-if="!loading">Tambah {{ pageTitle }}</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang menambahkan...
+            </span>
           </base-button>
         </template>
       </modal-comp>
@@ -291,16 +323,26 @@ export default {
               <!-- Status perkawinan -->
               <div class="col-12">
                 <base-input name="status" label="Status">
-                  <multi-select v-model="input.status" :options="g$statusPerkawinan" placeholder="Pilih status"
-                    :show-labels="false" />
+                  <multi-select
+                    v-model="input.status"
+                    :options="g$statusPerkawinan"
+                    placeholder="Pilih status"
+                    :show-labels="false"
+                  />
                 </base-input>
               </div>
 
               <!-- Kode kandang -->
               <div class="col-12">
                 <base-input name="kode_kandang" label="Pilih kandang">
-                  <multi-select v-model="input.kandang" :options="g$kandangList" track-by="id_kandang"
-                    label="kode_kandang" placeholder="Pilih kandang" :show-labels="false" />
+                  <multi-select
+                    v-model="input.kandang"
+                    :options="g$kandangList"
+                    track-by="id_kandang"
+                    label="kode_kandang"
+                    placeholder="Pilih kandang"
+                    :show-labels="false"
+                  />
                 </base-input>
               </div>
             </div>
@@ -311,7 +353,10 @@ export default {
             Tutup
           </base-button>
           <base-button type="primary" @click="updatePerkawinanUsg1">
-            Perbarui USG
+            <span v-if="!loading">Perbarui USG</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang memperbarui...
+            </span>
           </base-button>
         </template>
       </modal-comp>
@@ -327,16 +372,26 @@ export default {
               <!-- Status perkawinan -->
               <div class="col-12">
                 <base-input name="status" label="Status">
-                  <multi-select v-model="input.status" :options="g$statusPerkawinan" placeholder="Pilih status"
-                    :show-labels="false" />
+                  <multi-select
+                    v-model="input.status"
+                    :options="g$statusPerkawinan"
+                    placeholder="Pilih status"
+                    :show-labels="false"
+                  />
                 </base-input>
               </div>
 
               <!-- Kode kandang -->
               <div class="col-12">
                 <base-input name="kode_kandang" label="Pilih kandang">
-                  <multi-select v-model="input.kandang" :options="g$kandangList" track-by="id_kandang"
-                    label="kode_kandang" placeholder="Pilih kandang" :show-labels="false" />
+                  <multi-select
+                    v-model="input.kandang"
+                    :options="g$kandangList"
+                    track-by="id_kandang"
+                    label="kode_kandang"
+                    placeholder="Pilih kandang"
+                    :show-labels="false"
+                  />
                 </base-input>
               </div>
             </div>
@@ -347,11 +402,13 @@ export default {
             Tutup
           </base-button>
           <base-button type="primary" @click="updatePerkawinanUsg2">
-            Perbarui USG
+            <span v-if="!loading">Perbarui USG</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang memperbarui...
+            </span>
           </base-button>
         </template>
       </modal-comp>
-
     </template>
   </main-layout>
 </template>
