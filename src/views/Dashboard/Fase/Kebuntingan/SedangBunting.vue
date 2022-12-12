@@ -16,6 +16,7 @@ export default {
     modal: {
       abortus: false,
     },
+    loading: false,
     // DataTable
     dt: {
       column: [
@@ -30,14 +31,14 @@ export default {
         {
           name: "kandang",
           th: "Kandang",
-          render: ({ kandang }) => kandang ? kandang.kode_kandang : null,
+          render: ({ kandang }) => (kandang ? kandang.kode_kandang : null),
         },
       ],
       action: [
         {
-          text: 'Abortus',
-          color: 'danger',
-          event: 'triggerAbortus',
+          text: "Abortus",
+          color: "danger",
+          event: "triggerAbortus",
         },
       ],
     },
@@ -55,15 +56,21 @@ export default {
       this.input.id_ternak = row.id_ternak;
       this.modal.abortus = true;
     },
+
     async setAbortus() {
+      this.loading = true;
       const data = {
         id_ternak: this.input.id_ternak,
       };
       await this.a$setAbortus(data).catch((error) => this.notify(error, false));
       this.modal.abortus = false;
       await this.a$sedangBunting().catch((error) => this.notify(error, false));
-      this.notify(`Berhasil mengubah status kebuntingan ternak dengan ID ternak ${data.id_ternak} menjadi abortus`, true);
-    }
+      this.notify(
+        `Berhasil mengubah status kebuntingan ternak dengan ID ternak ${data.id_ternak} menjadi abortus`,
+        true
+      );
+      this.loading = false;
+    },
   },
 };
 </script>
@@ -121,8 +128,14 @@ export default {
 
     <template #body>
       <empty-result v-if="!g$sedangBunting.length" :text="`${pageTitle}`" />
-      <data-table v-else :index="true" :data="g$sedangBunting" :columns="dt.column" :actions="dt.action"
-        @triggerAbortus="triggerAbortus" />
+      <data-table
+        v-else
+        :index="true"
+        :data="g$sedangBunting"
+        :columns="dt.column"
+        :actions="dt.action"
+        @triggerAbortus="triggerAbortus"
+      />
     </template>
 
     <template #modal>
@@ -133,7 +146,9 @@ export default {
         </template>
         <template #body>
           <p>
-            Yakin ingin menyatakan ternak dengan ID ternak <strong>{{ input.id_ternak ? input.id_ternak : "ID" }}</strong> abortus?
+            Yakin ingin menyatakan ternak dengan ID ternak
+            <strong>{{ input.id_ternak ? input.id_ternak : "ID" }}</strong>
+            abortus?
           </p>
           <p class="text-danger text-sm">
             Setelah dinyatakan abortus, Anda tidak dapat memulihkan data ini!
@@ -143,7 +158,12 @@ export default {
           <base-button type="secondary" @click="modal.abortus = false">
             Tutup
           </base-button>
-          <base-button type="danger" @click="setAbortus">Abortus</base-button>
+          <base-button type="danger" @click="setAbortus"
+            ><span v-if="!loading">Abortus</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang menyimpan...
+            </span></base-button
+          >
         </template>
       </modal-comp>
     </template>
