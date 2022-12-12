@@ -59,11 +59,6 @@ export default {
           color: "warning",
           event: "ubah",
         },
-        {
-          text: "Hapus",
-          color: "danger",
-          event: "hapus",
-        },
       ],
     },
     input: {
@@ -71,7 +66,7 @@ export default {
       penyakit: null,
       tanggal_sakit: null,
       kandang: null,
-      id_riwayat_kesehatan: null,
+      id_kesehatan: null,
       gejala: null,
       penanganan: null,
       tanggal_sembuh: null,
@@ -79,7 +74,6 @@ export default {
     modal: {
       addLkPenangananPenyakit: false,
       editLkPenangananPenyakit: false,
-      hapusLkPenangananPenyakit: false,
       sembuhLkPenangananPenyakit: false,
     },
     loading: false,
@@ -241,32 +235,6 @@ export default {
       this.modal.sembuhLkPenangananPenyakit = true;
     },
 
-    async triggerDelete(row) {
-      const { id_riwayat_kesehatan } = row;
-      this.input = {
-        id_riwayat_kesehatan,
-      };
-      this.modal.hapusLkPenangananPenyakit = true;
-    },
-
-    //hapus penanganan penyakit
-    async hapusLkPenangananPenyakit() {
-      this.loading = true;
-      try {
-        const { id_riwayat_kesehatan } = this.input;
-        const data = {
-          id_riwayat_kesehatan,
-        };
-        await this.a$kesehatanDelete(data);
-        this.modal.hapusLkPenangananPenyakit = false;
-        this.notify(`Hapus ${this.pageTitle} berhasil`);
-        this.clearInput();
-        await this.a$kesehatanList();
-      } catch (error) {
-        this.notify(error, false);
-      }
-      this.loading = false;
-    },
     // Pilih kandang berdasarkan ternak
     onChange(value) {
       this.input.kandang = value.kandang;
@@ -344,7 +312,6 @@ export default {
         :actions="dt.actions"
         @ubah="triggerEdit"
         @sembuh="triggerSembuh"
-        @hapus="triggerDelete"
       />
     </template>
 
@@ -567,36 +534,6 @@ export default {
               <i class="fa fa-spinner fa-spin"></i> Sedang menyimpan...
             </span>
           </base-button>
-        </template>
-      </modal-comp>
-
-      <!-- Hapus LK penanganan penyakit -->
-      <modal-comp
-        v-model:show="modal.hapusLkPenangananPenyakit"
-        modal-classes="modal-sm"
-      >
-        <template #header>
-          <h3 class="modal-title">Hapus {{ pageTitle }}</h3>
-        </template>
-        <template #body>
-          <p>
-            Yakin ingin menghapus {{ pageTitle }}:
-            <strong>{{ input.id_riwayat_kesehatan }}</strong>
-          </p>
-        </template>
-        <template #footer>
-          <base-button
-            type="secondary"
-            @click="modal.hapusLkPenangananPenyakit = false"
-          >
-            Tutup
-          </base-button>
-          <base-button type="danger" @click="hapusLkPenangananPenyakit"
-            ><span v-if="!loading">Hapus</span>
-            <span v-else>
-              <i class="fa fa-spinner fa-spin"></i> Sedang menghapus...
-            </span></base-button
-          >
         </template>
       </modal-comp>
 
