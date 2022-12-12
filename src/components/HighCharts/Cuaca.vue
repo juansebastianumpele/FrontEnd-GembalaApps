@@ -117,7 +117,7 @@ export default {
       <hr class="bg-white m-2 mr-4 ml--1" />
       <div class="row">
         <div class="col-5 text-white">
-          <i class="fa-solid fa-arrows-to-circle"></i> Tekanan:
+          <i class="fa-solid fa-down-left-and-up-right-to-center"></i> Tekanan:
           {{ tekanan }} hPa
         </div>
         <div class="col-7 text-white">

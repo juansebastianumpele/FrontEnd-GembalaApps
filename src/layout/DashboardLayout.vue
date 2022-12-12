@@ -73,7 +73,7 @@
         <sidebar-item
           :link="{
             name: 'Fase',
-            icon: 'fas fa-solid fa-arrows-spin text-success',
+            icon: 'fas fa-arrows-spin text-success',
           }"
         >
           <sidebar-item
