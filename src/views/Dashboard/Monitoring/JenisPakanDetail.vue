@@ -33,6 +33,7 @@ export default {
       ubahModal: false,
       hapusModal: false,
     },
+    loading: false,
     // DataTable
     dt: {
       column: [
@@ -120,7 +121,9 @@ export default {
         id: null,
       };
     },
+
     async addDetailPakan() {
+      this.loading = true;
       try {
         const id_jenis_pakan = this.$route.params.id;
         const { id } = this.input;
@@ -139,7 +142,9 @@ export default {
       } catch (error) {
         this.notify(error, false);
       }
+      this.loading = false;
     },
+
     async triggerKosongkan(row) {
       try {
         this.input = { ...row };
@@ -165,6 +170,7 @@ export default {
       } catch (error) {}
     },
     async kosongkanPakan() {
+      this.loading = true;
       try {
         const { id_pakan } = this.input;
         const data = {
@@ -179,8 +185,10 @@ export default {
         this.modal.kosongkanModal = false;
         this.notify("Berhasil mengosongkan pakan", true);
       } catch (error) {}
+      this.loading = false;
     },
     async isiPakan() {
+      this.loading = true;
       try {
         const { id_pakan } = this.input;
         const data = {
@@ -195,8 +203,11 @@ export default {
         this.modal.isiModal = false;
         this.notify("Berhasil mengisi pakan", true);
       } catch (error) {}
+      this.loading = false;
     },
+
     async ubahPakan() {
+      this.loading = true;
       try {
         const { id_pakan, tanggal_pembuatan, tanggal_konsumsi } = this.input;
         const data = {
@@ -213,8 +224,11 @@ export default {
         this.modal.ubahModal = false;
         this.notify("Berhasil mengubah pakan", true);
       } catch (error) {}
+      this.loading = false;
     },
+
     async hapusPakan() {
+      this.loading = true;
       try {
         const { id_pakan } = this.input;
         const data = {
@@ -229,6 +243,7 @@ export default {
         this.modal.hapusModal = false;
         this.notify("Berhasil menghapus pakan", true);
       } catch (error) {}
+      this.loading = false;
     },
   },
 };
@@ -299,7 +314,10 @@ export default {
             Tutup
           </base-button>
           <base-button type="primary" @click="addDetailPakan()">
-            Tambah {{ pageTitle }}
+            <span v-if="!loading">Tambah {{ pageTitle }}</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang menambahkan...
+            </span>
           </base-button>
         </template>
       </modal-comp>
@@ -320,7 +338,10 @@ export default {
             Tutup
           </base-button>
           <base-button type="primary" @click="kosongkanPakan"
-            >Kosongkan</base-button
+            ><span v-if="!loading">Kosongkan</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang mengosongkan...
+            </span></base-button
           >
         </template>
       </modal-comp>
@@ -340,7 +361,12 @@ export default {
           <base-button type="secondary" @click="modal.isiModal = false">
             Tutup
           </base-button>
-          <base-button type="primary" @click="isiPakan">Isi</base-button>
+          <base-button type="primary" @click="isiPakan"
+            ><span v-if="!loading">Isi</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang mengisi...
+            </span></base-button
+          >
         </template>
       </modal-comp>
 
@@ -403,7 +429,10 @@ export default {
             Tutup
           </base-button>
           <base-button type="primary" @click="ubahPakan">
-            Ubah {{ pageTitle }}
+            <span v-if="!loading">Simpan perubahan</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang menyimpan...
+            </span>
           </base-button>
         </template>
       </modal-comp>
@@ -423,7 +452,12 @@ export default {
           <base-button type="secondary" @click="modal.hapusModal = false">
             Tutup
           </base-button>
-          <base-button type="primary" @click="hapusPakan">Hapus</base-button>
+          <base-button type="danger" @click="hapusPakan"
+            ><span v-if="!loading">Hapus</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang menghapus...
+            </span></base-button
+          >
         </template>
       </modal-comp>
     </template>

@@ -21,6 +21,7 @@ export default {
       ubahBahanPakan: false,
       confirm: false,
     },
+    loading: false,
     // DataTable
     dt: {
       column: [
@@ -86,7 +87,10 @@ export default {
         satuan: "",
       };
     },
+
+    //tambah bahan pakan
     async addBahanPakan() {
+      this.loading = true;
       try {
         const { jenis_bahan_pakan, satuan } = this.input;
         const data = {
@@ -101,8 +105,12 @@ export default {
       } finally {
         this.a$bahanPakanList("");
       }
+      this.loading = false;
     },
+
+    //ubah bahan pakan
     async ubahBahanPakan() {
+      this.loading = true;
       try {
         const { id_jenis_bahan_pakan, jenis_bahan_pakan, satuan } = this.input;
         const data = {
@@ -118,8 +126,12 @@ export default {
       } finally {
         this.a$bahanPakanList("");
       }
+      this.loading = false;
     },
+
+    //hapus bahan pakan
     async delPakan() {
+      this.loading = true;
       try {
         const { id_jenis_bahan_pakan } = this.input;
         const data = {
@@ -133,7 +145,9 @@ export default {
       } finally {
         this.a$bahanPakanList("");
       }
+      this.loading = false;
     },
+
     async triggerEdit(row) {
       try {
         const { id_jenis_bahan_pakan, jenis_bahan_pakan, satuan } = row;
@@ -162,15 +176,15 @@ export default {
       }
     },
     triggerDetail(row) {
-        const { id_jenis_bahan_pakan } = row;
-        this.$router.push({
-          name: "Detail Bahan Pakan",
-          params: {
-            id: id_jenis_bahan_pakan,
-          },
-        });
-      }
+      const { id_jenis_bahan_pakan } = row;
+      this.$router.push({
+        name: "Detail Bahan Pakan",
+        params: {
+          id: id_jenis_bahan_pakan,
+        },
+      });
     },
+  },
 };
 </script>
 
@@ -263,7 +277,10 @@ export default {
             Tutup
           </base-button>
           <base-button type="primary" @click="addBahanPakan()">
-            Tambah {{ pageTitle }}
+            <span v-if="!loading">Tambah {{ pageTitle }}</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang menambahkan...
+            </span>
           </base-button>
         </template>
       </modal-comp>
@@ -318,7 +335,10 @@ export default {
             Tutup
           </base-button>
           <base-button type="primary" @click="ubahBahanPakan()">
-            Simpan Perubahan
+            <span v-if="!loading">Simpan Perubahan</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang menyimpan...
+            </span>
           </base-button>
         </template>
       </modal-comp>
@@ -338,7 +358,12 @@ export default {
           <base-button type="secondary" @click="modal.confirm = false">
             Tutup
           </base-button>
-          <base-button type="danger" @click="delPakan()">Hapus</base-button>
+          <base-button type="danger" @click="delPakan()"
+            ><span v-if="!loading">Hapus</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang menghapus...
+            </span></base-button
+          >
         </template>
       </modal-comp>
     </template>

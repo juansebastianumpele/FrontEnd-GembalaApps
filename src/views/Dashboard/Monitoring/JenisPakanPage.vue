@@ -44,6 +44,7 @@ export default {
       ubahPakan: false,
       confirm: false,
     },
+    loading: false,
     // DataTable
     dt: {
       column: [
@@ -129,7 +130,10 @@ export default {
         nutrien: "",
       };
     },
+
+    //tambah pakan
     async addPakan() {
+      this.loading = true;
       try {
         const { jenis_pakan, interval_pakan, satuan, komposisi, nutrien } =
           this.input;
@@ -149,8 +153,12 @@ export default {
       } finally {
         this.a$pakanList("");
       }
+      this.loading = false;
     },
+
+    //edit pakan
     async editPakan() {
+      this.loading = true;
       try {
         const {
           id_jenis_pakan,
@@ -177,8 +185,12 @@ export default {
       } finally {
         this.a$pakanList("");
       }
+      this.loading = false;
     },
+
+    //hapus pakan
     async delPakan() {
+      this.loading = true;
       try {
         const { id_jenis_pakan } = this.input;
         const data = {
@@ -192,7 +204,9 @@ export default {
       } finally {
         this.a$pakanList("");
       }
+      this.loading = false;
     },
+
     async triggerEditModal(row) {
       try {
         const {
@@ -393,7 +407,10 @@ export default {
             Tutup
           </base-button>
           <base-button type="primary" @click="addPakan()">
-            Tambah {{ pageTitle }}
+            <span v-if="!loading">Tambah {{ pageTitle }}</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang menambahkan...
+            </span>
           </base-button>
         </template>
       </modal-comp>
@@ -501,7 +518,10 @@ export default {
             Tutup
           </base-button>
           <base-button type="primary" @click="editPakan()">
-            Simpan Perubahan
+            <span v-if="!loading">Simpan Perubahan</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang menyimpan...
+            </span>
           </base-button>
         </template>
       </modal-comp>
@@ -519,7 +539,12 @@ export default {
           <base-button type="secondary" @click="modal.confirm = false">
             Tutup
           </base-button>
-          <base-button type="danger" @click="delPakan()">Hapus</base-button>
+          <base-button type="danger" @click="delPakan()"
+            ><span v-if="!loading">Hapus</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang menghapus...
+            </span></base-button
+          >
         </template>
       </modal-comp>
     </template>
