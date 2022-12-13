@@ -79,7 +79,7 @@ export default {
                   <base-input
                     name="nama_pengguna"
                     form-classes="input-group-alternative"
-                    label="Nama Pengguna (Alfanumerik)"
+                    label="Nama Pengguna"
                     placeholder="Nama Pengguna"
                     addon-left-icon="fas fa-user"
                     required
