@@ -36,7 +36,6 @@ export default {
       nama_pengguna: y$string()
         .min(4)
         .max(30)
-        .matches(/^[a-zA-Z0-9]+$/, "Hanya boleh huruf dan angka")
         .required()
         .label("Nama pengguna"),
       email: y$string().required().email().label("Email"),
@@ -44,7 +43,7 @@ export default {
       alamat: y$string().required().label("Alamat"),
       postcode: y$number().required().label("Kode Pos"),
       nama_peternakan: y$string().required().label("Nama Peternakan"),
-      kata_sandi: y$string().min(5).required().label("Kata Sandi"),
+      kata_sandi: y$string().min(8).required().label("Kata Sandi"),
       ulangi_kata_sandi: y$string()
         .oneOf([y$ref("kata_sandi")], "Kata Sandi Tidak Cocok")
         .required()
