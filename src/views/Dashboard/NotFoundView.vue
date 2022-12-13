@@ -1,21 +1,31 @@
 <template>
   <!-- Header -->
-  <div class="header py-7 py-lg-8 pt-lg-9">
+  <div class="mt-9">
     <div class="container">
-      <div class="header-body text-center mb-7">
-        <div class="row justify-content-center">
-          <div class="col-xl-5 col-lg-6 col-md-8 px-5">
-            <h1 class="text-dark">Ooops!</h1>
-            <p class="text-lead text-black">
-              Page not found. Don't worry though, we have plenty of other pages
-              to explore
-            </p>
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+          <div class="card bg-secondary shadow border-0">
+            <div class="card-header bg-transparent pb-5 text-center">
+              <h1 class="text-dark">Ooops!</h1>
+              <img
+                width="200"
+                style="margin: 20px 0 20px 0"
+                src="../../../public/images/notfound.svg"
+                alt="email"
+              />
+              <p class="text-lead text-black">
+                Halaman tidak ditemukan. Namun jangan khawatir, kami memiliki
+                banyak halaman lain untuk dijelajahi
+              </p>
 
-            <router-link
-              to="/dashboard"
-              class="font-weight-bold text-black mt-5"
-              >Back to dashboard</router-link
-            >
+              <router-link to="/dashboard"
+                ><base-button
+                  type="success1"
+                  class="my-2 btn-lg px-4 rounded-lg text-white"
+                  >Kembali Ke Dashboard</base-button
+                >
+              </router-link>
+            </div>
           </div>
         </div>
       </div>
