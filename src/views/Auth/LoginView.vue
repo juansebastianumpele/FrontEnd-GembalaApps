@@ -67,7 +67,7 @@ export default {
         <div class="card bg-secondary shadow border-0">
           <div class="card-header bg-transparent pb-5">
             <div class="text-muted text-center mt-2 mb-3">
-              <small>Silahkan Masukan Username dan Password</small>
+              <small>Silahkan Masukan Email dan Password</small>
             </div>
             <form-comp :validation-schema="schema" @submit="onSubmit">
               <base-input name="email" addon-left-icon="fas fa-envelope" placeholder="Email">
