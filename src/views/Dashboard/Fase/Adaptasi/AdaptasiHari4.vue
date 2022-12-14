@@ -89,9 +89,11 @@ export default {
     },
 
     async triggerCreateAdaptasi() {
+      this.loading = true;
       await this.a$getTreatment(4);
       await this.a$ddKandang();
       this.a$ddListAdaptasiHari4();
+      this.loading = false;
       this.modal.createAdaptasi = true;
     },
 
@@ -207,7 +209,10 @@ export default {
         </div>
         <div class="col text-right">
           <base-button type="success" @click="triggerCreateAdaptasi">
-            Tambah {{ pageTitle }}
+            <span v-if="!loading">Tambah {{ pageTitle }}</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang memuat...
+            </span>
           </base-button>
         </div>
       </div>

@@ -381,7 +381,7 @@ export default {
           <base-button type="primary" @click="registerBod()">
             <span v-if="!loading">Daftarkan</span>
             <span v-else>
-              <i class="fa fa-spinner fa-spin"></i> Sedang menndaftarkan...
+              <i class="fa fa-spinner fa-spin"></i> Sedang mendaftarkan...
             </span>
           </base-button>
         </template>

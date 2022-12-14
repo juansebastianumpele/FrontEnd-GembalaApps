@@ -86,9 +86,6 @@ export default {
 
   async mounted() {
     await this.a$kelahiranList().catch((error) => this.notify(error, false));
-    this.a$ddKandang(), this.a$ddBangsa(), this.a$listIndukan();
-    this.a$listPejantan();
-    this.a$listCempeBaru();
   },
   methods: {
     ...mapActions(d$kelahiran, [
@@ -111,6 +108,16 @@ export default {
         bangsa: null,
       };
     },
+
+    async triggerCreateKelahiran() {
+      this.loading = true;
+      await this.a$listCempeBaru();
+      await this.a$ddBangsa(), await this.a$listIndukan();
+      await this.a$listPejantan();
+      await this.a$ddKandang(), (this.loading = false);
+      this.modal.createKelahiran = true;
+    },
+
     async createKelahiran() {
       this.loading = true;
       try {
@@ -181,8 +188,11 @@ export default {
           <h3>Daftar {{ pageTitle }}</h3>
         </div>
         <div class="col text-right">
-          <base-button type="success" @click="modal.createKelahiran = true">
-            Tambah {{ pageTitle }}
+          <base-button type="success" @click="triggerCreateKelahiran">
+            <span v-if="!loading">Tambah {{ pageTitle }}</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang memuat...
+            </span>
           </base-button>
         </div>
       </div>

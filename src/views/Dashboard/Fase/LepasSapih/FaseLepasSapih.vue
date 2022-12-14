@@ -70,7 +70,6 @@ export default {
 
   async mounted() {
     await this.a$ternakLepasSapih().catch((error) => this.notify(error, false));
-    await this.a$kandangList().catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$lepasSapih, [
@@ -109,7 +108,10 @@ export default {
     },
 
     async triggerCreateLepasSapih() {
+      this.loading = true;
       await this.a$cempe().catch((error) => this.notify(error, false));
+      await this.a$kandangList().catch((error) => this.notify(error, false));
+      this.loading = false;
       this.modal.createLepasSapih = true;
     },
 
@@ -189,7 +191,10 @@ export default {
         </div>
         <div class="col text-right">
           <base-button type="success" @click="triggerCreateLepasSapih">
-            Tambah {{ pageTitle }}
+            <span v-if="!loading">Tambah {{ pageTitle }}</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang memuat...
+            </span>
           </base-button>
         </div>
       </div>

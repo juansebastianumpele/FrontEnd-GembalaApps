@@ -112,8 +112,10 @@ export default {
       };
     },
     async triggerCreatePerkawinan() {
+      this.loading = true;
       await this.a$listIndukan().catch((error) => this.notify(error, false));
       await this.a$listPejantan().catch((error) => this.notify(error, false));
+      this.loading = false;
       this.modal.createPerkawinan = true;
     },
     triggerUSG1(row) {
@@ -238,7 +240,10 @@ export default {
         </div>
         <div class="col text-right">
           <base-button type="success" @click="triggerCreatePerkawinan">
-            Tambah {{ pageTitle }}
+            <span v-if="!loading">Tambah {{ pageTitle }}</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang memuat...
+            </span>
           </base-button>
         </div>
       </div>

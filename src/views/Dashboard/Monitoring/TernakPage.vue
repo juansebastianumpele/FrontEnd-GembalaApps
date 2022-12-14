@@ -312,6 +312,7 @@ export default {
       this.loading = false;
     },
     async triggerAddTernak() {
+      this.loading = true;
       await this.a$ddBangsa().catch((error) => this.notify(error, false));
       await this.a$ddFasePemeliharaan().catch((error) =>
         this.notify(error, false)
@@ -320,6 +321,7 @@ export default {
       await this.a$ddListBetina().catch((error) => this.notify(error, false));
       await this.a$ddListPejantan().catch((error) => this.notify(error, false));
       await this.a$statusTernak().catch((error) => this.notify(error, false));
+      this.loading = false;
       this.modal.addTernak = true;
     },
     async triggerEditModal(row) {
@@ -436,7 +438,10 @@ export default {
         </div>
         <div class="col text-right">
           <base-button type="success" @click="triggerAddTernak">
-            Tambah {{ pageTitle }}
+            <span v-if="!loading">Tambah {{ pageTitle }}</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang memuat...
+            </span>
           </base-button>
         </div>
       </div>

@@ -118,10 +118,12 @@ export default {
       }
     },
     async triggerCreate() {
+      this.loading = true;
       await this.a$getTernakBaru().catch((error) => this.notify(error, false));
       await this.a$kandangList().catch((error) => this.notify(error, false));
       await this.a$statusTernak().catch((error) => this.notify(error, false));
       await this.a$bangsa().catch((error) => this.notify(error, false));
+      this.loading = false;
       this.modal.createPemasukan = true;
     },
     async createLkPemasukan() {
@@ -220,7 +222,10 @@ export default {
         </div>
         <div class="col text-right">
           <base-button type="success" @click="triggerCreate">
-            Tambah {{ pageTitle }}
+            <span v-if="!loading">Tambah {{ pageTitle }}</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang memuat...
+            </span>
           </base-button>
         </div>
       </div>
