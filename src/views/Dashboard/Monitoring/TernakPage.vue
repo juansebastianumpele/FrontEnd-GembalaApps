@@ -1283,7 +1283,7 @@ export default {
               </div>
             </tab-pane>
             <tab-pane title="Grafik">
-              <h3 class="my-4">Grafik ADG</h3>
+              <h3 class="my-4">Grafik Bobot dan Suhu</h3>
               <hc-line
                 :height="250"
                 :data="g$byTimbangan"
