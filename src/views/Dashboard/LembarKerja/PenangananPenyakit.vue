@@ -2,9 +2,7 @@
 import { mapActions, mapState } from "pinia";
 
 import d$kesehatan from "@/stores/monitoring/kesehatan";
-import d$ternak from "@/stores/monitoring/ternak";
 import d$kandang from "@/stores/monitoring/daftarkandang";
-import d$penyakit from "@/stores/monitoring/penyakit";
 
 import { ubahTanggal } from "@/utils/locale/ubahTanggal";
 
@@ -79,10 +77,8 @@ export default {
     loading: false,
   }),
   computed: {
-    ...mapState(d$ternak, ["g$ternakList"]),
     ...mapState(d$kandang, ["g$kandangList"]),
     ...mapState(d$kesehatan, ["g$kesehatanList"]),
-    ...mapState(d$penyakit, ["g$penyakitList"]),
   },
 
   async mounted() {
@@ -92,26 +88,19 @@ export default {
     ...mapActions(d$kesehatan, [
       "a$kesehatanAdd",
       "a$kesehatanList",
-      "a$kesehatanDelete",
       "a$kesehatanEdit",
     ]),
     ...mapActions(d$kandang, ["a$kandangList"]),
-    ...mapActions(d$ternak, ["a$ternakList"]),
-    ...mapActions(d$penyakit, ["a$penyakitList"]),
 
     async triggerCreate() {
       this.loading = true;
       await this.a$kandangList().catch((error) => this.notify(error, false));
-      await this.a$ternakList().catch((error) => this.notify(error, false));
-      await this.a$penyakitList().catch((error) => this.notify(error, false));
       this.loading = false;
       this.modal.addLkPenangananPenyakit = true;
     },
 
     async triggerEdit(row) {
       await this.a$kandangList().catch((error) => this.notify(error, false));
-      await this.a$ternakList().catch((error) => this.notify(error, false));
-      await this.a$penyakitList().catch((error) => this.notify(error, false));
       const {
         id_kesehatan,
         tanggal_sakit,
