@@ -71,7 +71,10 @@ export default {
     this.a$totalAdgCempe().catch((error) => this.notify(error, false));
     this.a$populasi().catch((error) => this.notify(error, false));
     this.a$ddJenisKandang().catch((error) => this.notify(error, false));
-    this.a$getWeather(this.g$userPeternakan.latitude, this.g$userPeternakan.longitude);
+    this.a$getWeather(
+      this.g$userPeternakan.latitude,
+      this.g$userPeternakan.longitude
+    );
   },
 };
 </script>
@@ -353,7 +356,7 @@ export default {
             >
               Cuaca saat ini di {{ g$userPeternakan.nama_peternakan }}
             </h1>
-            <cuaca :cuaca="g$cuaca"/>
+            <cuaca :cuaca="g$cuaca" />
           </card-comp>
           <card-comp type="success">
             <div class="row align-items-center">
@@ -362,7 +365,7 @@ export default {
                   class="text-white text-uppercase text-center ls-1 mb-2"
                   style="font-size: 12px"
                 >
-                  Grafik ADG Cempe ({{ new Date().getFullYear() }})
+                  Grafik Rata-Rata Bobot Cempe ({{ new Date().getFullYear() }})
                 </h1>
               </div>
             </div>
