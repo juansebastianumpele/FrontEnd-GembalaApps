@@ -24,6 +24,7 @@ export default {
       usg2: false,
     },
     loading: false,
+    loadingModal: false,
     // DataTable
     dt: {
       column: [
@@ -112,11 +113,11 @@ export default {
       };
     },
     async triggerCreatePerkawinan() {
-      this.loading = true;
+      this.modal.createPerkawinan = true;
+      this.loadingModal = true;
       await this.a$listIndukan().catch((error) => this.notify(error, false));
       await this.a$listPejantan().catch((error) => this.notify(error, false));
-      this.loading = false;
-      this.modal.createPerkawinan = true;
+      this.loadingModal = false;
     },
     triggerUSG1(row) {
       this.input = row;
@@ -240,10 +241,7 @@ export default {
         </div>
         <div class="col text-right">
           <base-button type="success" @click="triggerCreatePerkawinan">
-            <span v-if="!loading">Tambah {{ pageTitle }}</span>
-            <span v-else>
-              <i class="fa fa-spinner fa-spin"></i> Sedang memuat...
-            </span>
+            <span>Tambah {{ pageTitle }}</span>
           </base-button>
         </div>
       </div>
@@ -272,37 +270,42 @@ export default {
           <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
         </template>
         <template #body>
-          <form-comp v-if="modal.createPerkawinan">
-            <div class="row">
-              <!-- id_indukan -->
-              <div class="col-12">
-                <base-input name="id_indukan" label="ID Indukan">
-                  <multi-select
-                    v-model="input.id_indukan"
-                    :options="g$listIndukan"
-                    label="id_ternak"
-                    track-by="id_ternak"
-                    placeholder="Pilih ID Indukan"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
+          <div v-if="loadingModal">
+            <i class="fa fa-spinner fa-spin"></i> Sedang memuat...
+          </div>
+          <div v-else>
+            <form-comp v-if="modal.createPerkawinan">
+              <div class="row">
+                <!-- id_indukan -->
+                <div class="col-12">
+                  <base-input name="id_indukan" label="ID Indukan">
+                    <multi-select
+                      v-model="input.id_indukan"
+                      :options="g$listIndukan"
+                      label="id_ternak"
+                      track-by="id_ternak"
+                      placeholder="Pilih ID Indukan"
+                      :show-labels="false"
+                    />
+                  </base-input>
+                </div>
 
-              <!-- id_pejantan -->
-              <div class="col-12">
-                <base-input name="id_pejantan" label="ID Pejantan">
-                  <multi-select
-                    v-model="input.id_pejantan"
-                    :options="g$listPejantan"
-                    label="id_ternak"
-                    track-by="id_ternak"
-                    placeholder="Pilih ID Pejantan"
-                    :show-labels="false"
-                  />
-                </base-input>
+                <!-- id_pejantan -->
+                <div class="col-12">
+                  <base-input name="id_pejantan" label="ID Pejantan">
+                    <multi-select
+                      v-model="input.id_pejantan"
+                      :options="g$listPejantan"
+                      label="id_ternak"
+                      track-by="id_ternak"
+                      placeholder="Pilih ID Pejantan"
+                      :show-labels="false"
+                    />
+                  </base-input>
+                </div>
               </div>
-            </div>
-          </form-comp>
+            </form-comp>
+          </div>
         </template>
         <template #footer>
           <base-button type="secondary" @click="modal.createPerkawinan = false">
