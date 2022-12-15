@@ -31,6 +31,7 @@ export default {
       sembuhTernakSakit: false,
     },
     loading: false,
+    loadingEdit: false,
     // DataTable
     dt: {
       column: [
@@ -94,7 +95,6 @@ export default {
     await this.a$penyakitDetail(this.$route.params.id).catch((error) =>
       this.notify(error, false)
     );
-    await this.a$kandangList().catch((error) => this.notify(error, false));
   },
   methods: {
     ...mapActions(d$kesehatan, ["a$kesehatanEdit", "a$penyakitDetail"]),
@@ -105,6 +105,9 @@ export default {
       };
     },
     async triggerEdit(row) {
+      this.modal.editTernakSakit = true;
+      this.loadingEdit = true;
+      await this.a$kandangList().catch((error) => this.notify(error, false));
       const {
         id_kesehatan,
         tanggal_sakit,
@@ -121,7 +124,7 @@ export default {
         penanganan,
         tanggal_sembuh,
       };
-      this.modal.editTernakSakit = true;
+      this.loadingEdit = false;
     },
     async editTernakSakit() {
       this.loading = true;
@@ -239,98 +242,103 @@ export default {
           <h3 class="modal-title">Ubah {{ pageTitle }}</h3>
         </template>
         <template #body>
-          <form-comp v-if="modal.editTernakSakit">
-            <div class="row">
-              <!-- Tanggal sakit -->
-              <div class="col-12">
-                <base-input
-                  name="tanggal_sakit"
-                  placeholder="Pilih tanggal"
-                  label="Tanggal Sakit"
-                  required
-                >
-                  <flat-pickr
-                    v-model.lazy="input.tanggal_sakit"
-                    :config="{
-                      mode: 'single',
-                      allowInput: true,
-                      maxDate: new Date(),
-                    }"
-                    class="form-control datepicker"
-                    placeholder="Pilih tanggal"
-                  />
-                </base-input>
-              </div>
-
-              <!-- Kandang -->
-              <div class="col-12">
-                <base-input name="kandang" label="Kandang">
-                  <multi-select
-                    v-model="input.kandang"
-                    :options="g$kandangList"
-                    track-by="id_kandang"
-                    label="kode_kandang"
-                    placeholder="Pilih Kandang"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
-
-              <!-- Gejala -->
-              <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.gejala"
-                  type="text"
-                  name="gejala"
-                >
+          <div v-if="loadingEdit">
+            <i class="fa fa-spinner fa-spin"></i> Sedang memuat...
+          </div>
+          <div v-else>
+            <form-comp v-if="modal.editTernakSakit">
+              <div class="row">
+                <!-- Tanggal sakit -->
+                <div class="col-12">
                   <base-input
-                    v-bind="field"
-                    placeholder="Gejala"
-                    label="Gejala"
-                  ></base-input>
-                </field-form>
-              </div>
-
-              <!-- Penanganan -->
-              <div class="col-12">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.penanganan"
-                  type="text"
-                  name="penanganan"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Penanganan"
-                    label="Penanganan"
-                  ></base-input>
-                </field-form>
-              </div>
-
-              <!-- Tanggal sembuh -->
-              <div class="col-12">
-                <base-input
-                  name="tanggal_sembuh"
-                  placeholder="Pilih tanggal"
-                  label="Tanggal Sembuh"
-                  required
-                >
-                  <flat-pickr
-                    v-model.lazy="input.tanggal_sembuh"
-                    :config="{
-                      mode: 'single',
-                      allowInput: true,
-                      minDate: input.tanggal_sakit,
-                      maxDate: new Date(),
-                    }"
-                    class="form-control datepicker"
+                    name="tanggal_sakit"
                     placeholder="Pilih tanggal"
-                  />
-                </base-input>
+                    label="Tanggal Sakit"
+                    required
+                  >
+                    <flat-pickr
+                      v-model.lazy="input.tanggal_sakit"
+                      :config="{
+                        mode: 'single',
+                        allowInput: true,
+                        maxDate: new Date(),
+                      }"
+                      class="form-control datepicker"
+                      placeholder="Pilih tanggal"
+                    />
+                  </base-input>
+                </div>
+
+                <!-- Kandang -->
+                <div class="col-12">
+                  <base-input name="kandang" label="Kandang">
+                    <multi-select
+                      v-model="input.kandang"
+                      :options="g$kandangList"
+                      track-by="id_kandang"
+                      label="kode_kandang"
+                      placeholder="Pilih Kandang"
+                      :show-labels="false"
+                    />
+                  </base-input>
+                </div>
+
+                <!-- Gejala -->
+                <div class="col-12">
+                  <field-form
+                    v-slot="{ field }"
+                    v-model="input.gejala"
+                    type="text"
+                    name="gejala"
+                  >
+                    <base-input
+                      v-bind="field"
+                      placeholder="Gejala"
+                      label="Gejala"
+                    ></base-input>
+                  </field-form>
+                </div>
+
+                <!-- Penanganan -->
+                <div class="col-12">
+                  <field-form
+                    v-slot="{ field }"
+                    v-model="input.penanganan"
+                    type="text"
+                    name="penanganan"
+                  >
+                    <base-input
+                      v-bind="field"
+                      placeholder="Penanganan"
+                      label="Penanganan"
+                    ></base-input>
+                  </field-form>
+                </div>
+
+                <!-- Tanggal sembuh -->
+                <div class="col-12">
+                  <base-input
+                    name="tanggal_sembuh"
+                    placeholder="Pilih tanggal"
+                    label="Tanggal Sembuh"
+                    required
+                  >
+                    <flat-pickr
+                      v-model.lazy="input.tanggal_sembuh"
+                      :config="{
+                        mode: 'single',
+                        allowInput: true,
+                        minDate: input.tanggal_sakit,
+                        maxDate: new Date(),
+                      }"
+                      class="form-control datepicker"
+                      placeholder="Pilih tanggal"
+                    />
+                  </base-input>
+                </div>
               </div>
-            </div>
-          </form-comp>
+            </form-comp>
+          </div>
         </template>
         <template #footer>
           <base-button type="secondary" @click="modal.editTernakSakit = false">
