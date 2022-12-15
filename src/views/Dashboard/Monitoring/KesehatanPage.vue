@@ -97,10 +97,13 @@ export default {
       };
     },
     ...mapActions(d$ternak, ["a$ternakList"]),
+
     async triggerAddTernakSakit() {
+      this.loading = true;
       await this.a$ternakList().catch((error) => this.notify(error, false));
       await this.a$ddListPenyakit().catch((error) => this.notify(error, false));
       await this.a$kandangList().catch((error) => this.notify(error, false));
+      this.loading = false;
       this.modal.addTernakSakit = true;
     },
     async triggerDetail(row) {
@@ -161,7 +164,10 @@ export default {
         </div>
         <div class="col text-right">
           <base-button type="success" @click="triggerAddTernakSakit">
-            Tambah {{ pageTitle }}
+            <span v-if="!loading">Tambah {{ pageTitle }}</span>
+            <span v-else>
+              <i class="fa fa-spinner fa-spin"></i> Sedang memuat...
+            </span>
           </base-button>
         </div>
       </div>
