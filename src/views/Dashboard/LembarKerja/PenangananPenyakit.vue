@@ -1,9 +1,9 @@
 <script>
 import { mapActions, mapState } from "pinia";
-
 import d$kesehatan from "@/stores/monitoring/kesehatan";
 import d$kandang from "@/stores/monitoring/daftarkandang";
-
+import d$ternak from "@/stores/monitoring/ternak";
+import d$penyakit from "@/stores/monitoring/penyakit";
 import { ubahTanggal } from "@/utils/locale/ubahTanggal";
 
 export default {
@@ -75,11 +75,13 @@ export default {
       sembuhLkPenangananPenyakit: false,
     },
     loading: false,
-    loadingEdit: false,
+    loadingModal: false,
   }),
   computed: {
+    ...mapState(d$ternak, ["g$ternakList"]),
     ...mapState(d$kandang, ["g$kandangList"]),
     ...mapState(d$kesehatan, ["g$kesehatanList"]),
+    ...mapState(d$penyakit, ["g$penyakitList"]),
   },
 
   async mounted() {
@@ -92,17 +94,21 @@ export default {
       "a$kesehatanEdit",
     ]),
     ...mapActions(d$kandang, ["a$kandangList"]),
+    ...mapActions(d$ternak, ["a$ternakList"]),
+    ...mapActions(d$penyakit, ["a$penyakitList"]),
 
     async triggerCreate() {
-      this.loading = true;
-      await this.a$kandangList().catch((error) => this.notify(error, false));
-      this.loading = false;
       this.modal.addLkPenangananPenyakit = true;
+      this.loadingModal = true;
+      await this.a$kandangList().catch((error) => this.notify(error, false));
+      await this.a$ternakList().catch((error) => this.notify(error, false));
+      await this.a$penyakitList().catch((error) => this.notify(error, false));
+      this.loadingModal = false;
     },
 
     async triggerEdit(row) {
       this.modal.editLkPenangananPenyakit = true;
-      this.loadingEdit = true;
+      this.loadingModal = true;
       await this.a$kandangList().catch((error) => this.notify(error, false));
       const {
         id_kesehatan,
@@ -120,7 +126,7 @@ export default {
         penanganan,
         tanggal_sembuh,
       };
-      this.loadingEdit = false;
+      this.loadingModal = false;
     },
 
     //tambah penanganan penyakit
@@ -150,8 +156,6 @@ export default {
     async editLkPenangananPenyakit() {
       this.loading = true;
       this.a$kandangList().catch((error) => this.notify(error, false));
-      this.a$ternakList().catch((error) => this.notify(error, false));
-      this.a$penyakitList().catch((error) => this.notify(error, false));
       try {
         const {
           id_kesehatan,
@@ -290,10 +294,7 @@ export default {
         </span>
         <div class="col text-right">
           <base-button type="success" @click="triggerCreate">
-            <span v-if="!loading">Tambah {{ pageTitle }}</span>
-            <span v-else>
-              <i class="fa fa-spinner fa-spin"></i> Sedang memuat...
-            </span>
+            <span>Tambah {{ pageTitle }}</span>
           </base-button>
         </div>
       </div>
@@ -322,83 +323,88 @@ export default {
           <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
         </template>
         <template #body>
-          <form-comp v-if="modal.addLkPenangananPenyakit">
-            <div class="row">
-              <!-- ID ternak -->
-              <div class="col-12">
-                <base-input
-                  name="id_ternak"
-                  placeholder="ID Ternak"
-                  label="ID Ternak"
-                >
-                  <multi-select
-                    v-model="input.ternak"
-                    :options="g$ternakList"
-                    @select="onChange"
-                    label="id_ternak"
-                    track-by="id_ternak"
-                    placeholder="Pilih ternak"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
+          <div v-if="loadingModal">
+            <i class="fa fa-spinner fa-spin"></i> Sedang memuat...
+          </div>
+          <div v-else>
+            <form-comp v-if="modal.addLkPenangananPenyakit">
+              <div class="row">
+                <!-- ID ternak -->
+                <div class="col-12">
+                  <base-input
+                    name="id_ternak"
+                    placeholder="ID Ternak"
+                    label="ID Ternak"
+                  >
+                    <multi-select
+                      v-model="input.ternak"
+                      :options="g$ternakList"
+                      @select="onChange"
+                      label="id_ternak"
+                      track-by="id_ternak"
+                      placeholder="Pilih ternak"
+                      :show-labels="false"
+                    />
+                  </base-input>
+                </div>
 
-              <!-- Penyakit -->
-              <div class="col-12">
-                <base-input
-                  name="penyakit"
-                  placeholder="Nama Penyakit"
-                  label="Nama Penyakit"
-                  required
-                >
-                  <multi-select
-                    v-model="input.penyakit"
-                    :options="g$penyakitList"
-                    label="nama_penyakit"
-                    track-by="id_penyakit"
-                    placeholder="Pilih Penyakit"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
+                <!-- Penyakit -->
+                <div class="col-12">
+                  <base-input
+                    name="penyakit"
+                    placeholder="Nama Penyakit"
+                    label="Nama Penyakit"
+                    required
+                  >
+                    <multi-select
+                      v-model="input.penyakit"
+                      :options="g$penyakitList"
+                      label="nama_penyakit"
+                      track-by="id_penyakit"
+                      placeholder="Pilih Penyakit"
+                      :show-labels="false"
+                    />
+                  </base-input>
+                </div>
 
-              <!-- Tanggal sakit -->
-              <div class="col-12">
-                <base-input
-                  name="tanggal_sakit"
-                  placeholder="Pilih tanggal"
-                  label="Tanggal Sakit"
-                  required
-                >
-                  <flat-pickr
-                    v-model="input.tanggal_sakit"
-                    :config="{
-                      mode: 'single',
-                      allowInput: true,
-                      maxDate: new Date(),
-                      defaultDate: 'today',
-                    }"
-                    class="form-control datepicker"
+                <!-- Tanggal sakit -->
+                <div class="col-12">
+                  <base-input
+                    name="tanggal_sakit"
                     placeholder="Pilih tanggal"
-                  />
-                </base-input>
-              </div>
+                    label="Tanggal Sakit"
+                    required
+                  >
+                    <flat-pickr
+                      v-model="input.tanggal_sakit"
+                      :config="{
+                        mode: 'single',
+                        allowInput: true,
+                        maxDate: new Date(),
+                        defaultDate: 'today',
+                      }"
+                      class="form-control datepicker"
+                      placeholder="Pilih tanggal"
+                    />
+                  </base-input>
+                </div>
 
-              <!-- Kandang -->
-              <div class="col-12">
-                <base-input name="kandang" label="Kandang">
-                  <multi-select
-                    v-model="input.kandang"
-                    :options="g$kandangList"
-                    track-by="id_kandang"
-                    label="kode_kandang"
-                    placeholder="Pilih Kandang"
-                    :show-labels="false"
-                  />
-                </base-input>
+                <!-- Kandang -->
+                <div class="col-12">
+                  <base-input name="kandang" label="Kandang">
+                    <multi-select
+                      v-model="input.kandang"
+                      :options="g$kandangList"
+                      track-by="id_kandang"
+                      label="kode_kandang"
+                      placeholder="Pilih Kandang"
+                      :show-labels="false"
+                    />
+                  </base-input>
+                </div>
               </div>
-            </div>
-          </form-comp>
+            </form-comp>
+          </div>
         </template>
         <template #footer>
           <base-button
@@ -425,7 +431,7 @@ export default {
           <h3 class="modal-title">Ubah {{ pageTitle }}</h3>
         </template>
         <template #body>
-          <div v-if="loadingEdit">
+          <div v-if="loadingModal">
             <i class="fa fa-spinner fa-spin"></i> Sedang memuat...
           </div>
           <div v-else>
