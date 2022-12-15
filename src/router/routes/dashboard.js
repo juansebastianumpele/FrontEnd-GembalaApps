@@ -82,7 +82,7 @@ const dashboardRoutes = [
         meta: { requiresAuth: true },
       },
       {
-        path: "detail-ternak-sakit/:id",
+        path: "data-penyakit/detail-ternak-sakit/:id",
         name: "Detail Ternak Sakit",
         component: () =>
           import("@/views/Dashboard/Monitoring/KesehatanDetail.vue"),
