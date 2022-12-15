@@ -32,9 +32,8 @@ export default {
     dt: {
       column: [
         {
-          name: "createdAt",
           th: "Tanggal",
-          render: ({ createdAt }) => ubahTanggal(createdAt),
+          render: ({ ternak }) => ubahTanggal(ternak.tanggal_masuk),
         },
         {
           name: "id_ternak",
