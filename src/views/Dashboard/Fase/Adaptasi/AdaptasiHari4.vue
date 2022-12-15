@@ -21,6 +21,7 @@ export default {
       createAdaptasi: false,
     },
     loading: false,
+    loadingModal: false,
     // DataTable
     dt: {
       column: [
@@ -89,12 +90,12 @@ export default {
     },
 
     async triggerCreateAdaptasi() {
-      this.loading = true;
+      this.modal.createAdaptasi = true;
+      this.loadingModal = true;
       await this.a$getTreatment(4);
       await this.a$ddKandang();
       this.a$ddListAdaptasiHari4();
-      this.loading = false;
-      this.modal.createAdaptasi = true;
+      this.loadingModal = false;
     },
 
     async createAdaptasi() {
@@ -209,10 +210,7 @@ export default {
         </div>
         <div class="col text-right">
           <base-button type="success" @click="triggerCreateAdaptasi">
-            <span v-if="!loading">Tambah {{ pageTitle }}</span>
-            <span v-else>
-              <i class="fa fa-spinner fa-spin"></i> Sedang memuat...
-            </span>
+            <span>Tambah {{ pageTitle }}</span>
           </base-button>
         </div>
       </div>
@@ -235,56 +233,61 @@ export default {
           <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
         </template>
         <template #body>
-          <form-comp v-if="modal.createAdaptasi">
-            <div class="row">
-              <!-- id_ternak -->
-              <div class="col-12">
-                <base-input name="kandang" label="ID Ternak">
-                  <multi-select
-                    v-model="input.id_ternak"
-                    @select="onChange"
-                    :options="g$ddListAdaptasiHari4"
-                    label="id_ternak"
-                    track-by="id_ternak"
-                    placeholder="Pilih ID Ternak"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
+          <div v-if="loadingModal">
+            <i class="fa fa-spinner fa-spin"></i> Sedang memuat...
+          </div>
+          <div v-else>
+            <form-comp v-if="modal.createAdaptasi">
+              <div class="row">
+                <!-- id_ternak -->
+                <div class="col-12">
+                  <base-input name="kandang" label="ID Ternak">
+                    <multi-select
+                      v-model="input.id_ternak"
+                      @select="onChange"
+                      :options="g$ddListAdaptasiHari4"
+                      label="id_ternak"
+                      track-by="id_ternak"
+                      placeholder="Pilih ID Ternak"
+                      :show-labels="false"
+                    />
+                  </base-input>
+                </div>
 
-              <!-- id_kandang -->
-              <div class="col-12">
-                <base-input name="id_kandang" label="ID Kandang">
-                  <multi-select
-                    v-model="input.id_kandang"
-                    :options="g$ddKandang"
-                    label="name"
-                    track-by="id"
-                    placeholder="Pilih ID Kandang"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
+                <!-- id_kandang -->
+                <div class="col-12">
+                  <base-input name="id_kandang" label="ID Kandang">
+                    <multi-select
+                      v-model="input.id_kandang"
+                      :options="g$ddKandang"
+                      label="name"
+                      track-by="id"
+                      placeholder="Pilih ID Kandang"
+                      :show-labels="false"
+                    />
+                  </base-input>
+                </div>
 
-              <!-- Treatment 1 -->
-              <div class="col-6">
-                <base-input name="treatment1">
-                  <base-checkbox v-model="input.treatment1" name="treatment1">
-                    1. {{ g$getTreatment[0].treatment }}
-                  </base-checkbox>
-                </base-input>
-              </div>
+                <!-- Treatment 1 -->
+                <div class="col-6">
+                  <base-input name="treatment1">
+                    <base-checkbox v-model="input.treatment1" name="treatment1">
+                      1. {{ g$getTreatment[0].treatment }}
+                    </base-checkbox>
+                  </base-input>
+                </div>
 
-              <!-- Treatment 2 -->
-              <div class="col-6">
-                <base-input name="treatment2">
-                  <base-checkbox v-model="input.treatment2" name="treatment2">
-                    2. {{ g$getTreatment[1].treatment }}
-                  </base-checkbox>
-                </base-input>
+                <!-- Treatment 2 -->
+                <div class="col-6">
+                  <base-input name="treatment2">
+                    <base-checkbox v-model="input.treatment2" name="treatment2">
+                      2. {{ g$getTreatment[1].treatment }}
+                    </base-checkbox>
+                  </base-input>
+                </div>
               </div>
-            </div>
-          </form-comp>
+            </form-comp>
+          </div>
         </template>
         <template #footer>
           <base-button type="secondary" @click="modal.createAdaptasi = false">
