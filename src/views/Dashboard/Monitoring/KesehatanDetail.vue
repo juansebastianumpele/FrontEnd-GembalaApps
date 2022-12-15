@@ -2,9 +2,7 @@
 import { mapActions, mapState } from "pinia";
 
 import d$kesehatan from "@/stores/monitoring/kesehatan";
-import d$ternak from "@/stores/monitoring/ternak";
 import d$kandang from "@/stores/monitoring/daftarkandang";
-import d$penyakit from "@/stores/monitoring/penyakit";
 
 import { ubahTanggal } from "@/utils/locale/ubahTanggal";
 
@@ -80,10 +78,7 @@ export default {
   }),
   computed: {
     ...mapState(d$kesehatan, ["g$detailKesehatan"]),
-    ...mapState(d$ternak, ["g$ternakList"]),
     ...mapState(d$kandang, ["g$kandangList"]),
-    ...mapState(d$kesehatan, ["g$kesehatanList"]),
-    ...mapState(d$penyakit, ["g$penyakitList"]),
     modals() {
       return Object.values(this.modal).includes(true);
     },
@@ -100,20 +95,10 @@ export default {
       this.notify(error, false)
     );
     await this.a$kandangList().catch((error) => this.notify(error, false));
-    await this.a$ternakList().catch((error) => this.notify(error, false));
-    await this.a$penyakitList().catch((error) => this.notify(error, false));
   },
   methods: {
-    ...mapActions(d$kesehatan, [
-      "a$kesehatanAdd",
-      "a$kesehatanList",
-      "a$kesehatanDelete",
-      "a$kesehatanEdit",
-      "a$penyakitDetail",
-    ]),
+    ...mapActions(d$kesehatan, ["a$kesehatanEdit", "a$penyakitDetail"]),
     ...mapActions(d$kandang, ["a$kandangList"]),
-    ...mapActions(d$ternak, ["a$ternakList"]),
-    ...mapActions(d$penyakit, ["a$penyakitList"]),
     clearInput() {
       this.input = {
         id: null,
