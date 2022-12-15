@@ -63,7 +63,7 @@ export default {
       detailTernak: false,
     },
     loading: false,
-
+    loadingEdit: false,
     // DataTable
     dt: {
       column: [
@@ -325,6 +325,8 @@ export default {
       this.modal.addTernak = true;
     },
     async triggerEditModal(row) {
+      this.modal.ubahTernak = true;
+      this.loadingEdit = true;
       await this.a$ddBangsa().catch((error) => this.notify(error, false));
       await this.a$ddFasePemeliharaan().catch((error) =>
         this.notify(error, false)
@@ -395,7 +397,7 @@ export default {
         status_keluar,
         image,
       };
-      this.modal.ubahTernak = true;
+      this.loadingEdit = false;
     },
     async triggerDelete(row) {
       try {
@@ -700,216 +702,225 @@ export default {
           </h3>
         </template>
         <template #body>
-          <form-comp v-if="modal.ubahTernak" :validation-schema="schema">
-            <div class="row">
-              <!-- RFID -->
-              <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.rf_id"
-                  type="text"
-                  name="rf_id"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="RFID dari kalung domba"
-                    label="RFID"
-                    required
-                  ></base-input>
-                </field-form>
-              </div>
-
-              <!-- Berat -->
-              <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.berat"
-                  name="berat"
-                >
-                  <base-input
-                    v-bind="field"
-                    placeholder="Berat"
-                    label="Berat"
-                    type="number"
-                  ></base-input>
-                </field-form>
-              </div>
-
-              <!-- Suhu -->
-              <div class="col-6">
-                <field-form v-slot="{ field }" v-model="input.suhu" name="suhu">
-                  <base-input
-                    v-bind="field"
-                    placeholder="Suhu"
-                    label="Suhu"
-                    type="number"
-                  ></base-input>
-                </field-form>
-              </div>
-
-              <!-- Bangsa -->
-              <div class="col-6">
-                <base-input name="bangsa" label="Bangsa">
-                  <multi-select
-                    v-model="input.bangsa"
-                    :options="g$ddBangsa"
-                    label="name"
-                    track-by="id"
-                    placeholder="Pilih bangsa"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
-
-              <!-- Jenis kelamin -->
-              <div class="col-6">
-                <base-input name="jenis_kelamin" label="Jenis Kelamin">
-                  <multi-select
-                    v-model="input.jenis_kelamin"
-                    :options="g$ddJenisKelamin"
-                    placeholder="Pilih Jenis Kelamin"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
-
-              <!-- Tanggal lahir -->
-              <div class="col-6">
-                <base-input name="tanggal_lahir" label="Tanggal Lahir">
-                  <flat-pickr
-                    v-model.lazy="input.tanggal_lahir"
-                    :config="{
-                      mode: 'single',
-                      allowInput: true,
-                      maxDate: new Date(),
-                    }"
-                    class="form-control datepicker"
-                    placeholder="Pilih tanggal"
-                  />
-                </base-input>
-              </div>
-
-              <!-- ID sire -->
-              <div class="col-6">
-                <base-input name="id_sire" label="ID Sire (Bapak)" nullable>
-                  <multi-select
-                    v-model="input.id_sire"
-                    :options="g$ddListPejantan"
-                    label="name"
-                    track-by="id"
-                    placeholder="Pilih ID sire (bapak) dari domba"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
-
-              <!-- ID dam -->
-              <div class="col-6">
-                <base-input name="id_dam" label="ID Dam (Ibu)" nullable>
-                  <multi-select
-                    v-model="input.id_dam"
-                    :options="g$ddListBetina"
-                    label="name"
-                    track-by="id"
-                    placeholder="Pilih ID dam (ibu) dari domba"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
-
-              <!-- Tanggal masuk -->
-              <div class="col-6">
-                <base-input name="tanggal_masuk" label="Tanggal Masuk">
-                  <flat-pickr
-                    v-model.lazy="input.tanggal_masuk"
-                    :config="{
-                      mode: 'single',
-                      allowInput: true,
-                      maxDate: new Date(),
-                      defaultDate: 'today',
-                    }"
-                    class="form-control datepicker"
-                    placeholder="Pilih tanggal"
-                  />
-                </base-input>
-              </div>
-
-              <!-- Kandang -->
-              <div class="col-6">
-                <base-input name="kandang" label="Kandang">
-                  <multi-select
-                    v-model="input.kandang"
-                    :options="g$ddKandang"
-                    label="name"
-                    track-by="id"
-                    placeholder="Pilih Kandang"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
-
-              <!-- Fase -->
-              <div class="col-6">
-                <base-input name="fase" label="Fase Pemeliharaan">
-                  <multi-select
-                    v-model="input.fase"
-                    :options="g$ddFasePemeliharaan"
-                    label="name"
-                    track-by="id"
-                    placeholder="Pilih fase pemeliharaan"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
-
-              <!-- Status-->
-              <div class="col-6">
-                <base-input
-                  name="status_ternak"
-                  placeholder="Status Ternak"
-                  label="Status"
-                >
-                  <multi-select
-                    v-model="input.status_ternak"
-                    :options="g$statusTernak"
-                    label="status_ternak"
-                    track-by="id_status_ternak"
-                    placeholder="Pilih status ternak"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
-
-              <!-- Image-->
-              <!-- <div class="col-6" v-if="!this.input.image">
-                <div class="form-group has-label">
-                  <label class="form-control-label">image</label>
-                  <input
-                    class="form-control file"
-                    id="image"
-                    type="file"
-                    ref="image"
-                    accept="image/*"
-                    @change="handleFileUpload()"
-                  />
+          <div v-if="loadingEdit">
+            <i class="fa fa-spinner fa-spin"></i> Sedang memuat...
+          </div>
+          <div v-else>
+            <form-comp v-if="modal.ubahTernak" :validation-schema="schema">
+              <div class="row">
+                <!-- RFID -->
+                <div class="col-6">
+                  <field-form
+                    v-slot="{ field }"
+                    v-model="input.rf_id"
+                    type="text"
+                    name="rf_id"
+                  >
+                    <base-input
+                      v-bind="field"
+                      placeholder="RFID dari kalung domba"
+                      label="RFID"
+                      required
+                    ></base-input>
+                  </field-form>
                 </div>
+
+                <!-- Berat -->
+                <div class="col-6">
+                  <field-form
+                    v-slot="{ field }"
+                    v-model="input.berat"
+                    name="berat"
+                  >
+                    <base-input
+                      v-bind="field"
+                      placeholder="Berat"
+                      label="Berat"
+                      type="number"
+                    ></base-input>
+                  </field-form>
+                </div>
+
+                <!-- Suhu -->
+                <div class="col-6">
+                  <field-form
+                    v-slot="{ field }"
+                    v-model="input.suhu"
+                    name="suhu"
+                  >
+                    <base-input
+                      v-bind="field"
+                      placeholder="Suhu"
+                      label="Suhu"
+                      type="number"
+                    ></base-input>
+                  </field-form>
+                </div>
+
+                <!-- Bangsa -->
+                <div class="col-6">
+                  <base-input name="bangsa" label="Bangsa">
+                    <multi-select
+                      v-model="input.bangsa"
+                      :options="g$ddBangsa"
+                      label="name"
+                      track-by="id"
+                      placeholder="Pilih bangsa"
+                      :show-labels="false"
+                    />
+                  </base-input>
+                </div>
+
+                <!-- Jenis kelamin -->
+                <div class="col-6">
+                  <base-input name="jenis_kelamin" label="Jenis Kelamin">
+                    <multi-select
+                      v-model="input.jenis_kelamin"
+                      :options="g$ddJenisKelamin"
+                      placeholder="Pilih Jenis Kelamin"
+                      :show-labels="false"
+                    />
+                  </base-input>
+                </div>
+
+                <!-- Tanggal lahir -->
+                <div class="col-6">
+                  <base-input name="tanggal_lahir" label="Tanggal Lahir">
+                    <flat-pickr
+                      v-model.lazy="input.tanggal_lahir"
+                      :config="{
+                        mode: 'single',
+                        allowInput: true,
+                        maxDate: new Date(),
+                      }"
+                      class="form-control datepicker"
+                      placeholder="Pilih tanggal"
+                    />
+                  </base-input>
+                </div>
+
+                <!-- ID sire -->
+                <div class="col-6">
+                  <base-input name="id_sire" label="ID Sire (Bapak)" nullable>
+                    <multi-select
+                      v-model="input.id_sire"
+                      :options="g$ddListPejantan"
+                      label="name"
+                      track-by="id"
+                      placeholder="Pilih ID sire (bapak) dari domba"
+                      :show-labels="false"
+                    />
+                  </base-input>
+                </div>
+
+                <!-- ID dam -->
+                <div class="col-6">
+                  <base-input name="id_dam" label="ID Dam (Ibu)" nullable>
+                    <multi-select
+                      v-model="input.id_dam"
+                      :options="g$ddListBetina"
+                      label="name"
+                      track-by="id"
+                      placeholder="Pilih ID dam (ibu) dari domba"
+                      :show-labels="false"
+                    />
+                  </base-input>
+                </div>
+
+                <!-- Tanggal masuk -->
+                <div class="col-6">
+                  <base-input name="tanggal_masuk" label="Tanggal Masuk">
+                    <flat-pickr
+                      v-model.lazy="input.tanggal_masuk"
+                      :config="{
+                        mode: 'single',
+                        allowInput: true,
+                        maxDate: new Date(),
+                        defaultDate: 'today',
+                      }"
+                      class="form-control datepicker"
+                      placeholder="Pilih tanggal"
+                    />
+                  </base-input>
+                </div>
+
+                <!-- Kandang -->
+                <div class="col-6">
+                  <base-input name="kandang" label="Kandang">
+                    <multi-select
+                      v-model="input.kandang"
+                      :options="g$ddKandang"
+                      label="name"
+                      track-by="id"
+                      placeholder="Pilih Kandang"
+                      :show-labels="false"
+                    />
+                  </base-input>
+                </div>
+
+                <!-- Fase -->
+                <div class="col-6">
+                  <base-input name="fase" label="Fase Pemeliharaan">
+                    <multi-select
+                      v-model="input.fase"
+                      :options="g$ddFasePemeliharaan"
+                      label="name"
+                      track-by="id"
+                      placeholder="Pilih fase pemeliharaan"
+                      :show-labels="false"
+                    />
+                  </base-input>
+                </div>
+
+                <!-- Status-->
+                <div class="col-6">
+                  <base-input
+                    name="status_ternak"
+                    placeholder="Status Ternak"
+                    label="Status"
+                  >
+                    <multi-select
+                      v-model="input.status_ternak"
+                      :options="g$statusTernak"
+                      label="status_ternak"
+                      track-by="id_status_ternak"
+                      placeholder="Pilih status ternak"
+                      :show-labels="false"
+                    />
+                  </base-input>
+                </div>
+
+                <!-- Image-->
+                <!-- <div class="col-6" v-if="!this.input.image">
+                  <div class="form-group has-label">
+                    <label class="form-control-label">image</label>
+                    <input
+                      class="form-control file"
+                      id="image"
+                      type="file"
+                      ref="image"
+                      accept="image/*"
+                      @change="handleFileUpload()"
+                    />
+                  </div>
+                </div>
+                <div class="col-6" v-if="this.input.imageUrl">
+                  <div class="text-center pb-2">
+                    <base-button type="danger" size="sm" @click="resetImage()">
+                      Reset Image
+                    </base-button>
+                  </div>
+                  <div class="text-center">
+                    <img
+                      width="250"
+                      v-if="input.imageUrl"
+                      :src="input.imageUrl"
+                    />
+                  </div>
+                </div> -->
               </div>
-              <div class="col-6" v-if="this.input.imageUrl">
-                <div class="text-center pb-2">
-                  <base-button type="danger" size="sm" @click="resetImage()">
-                    Reset Image
-                  </base-button>
-                </div>
-                <div class="text-center">
-                  <img
-                    width="250"
-                    v-if="input.imageUrl"
-                    :src="input.imageUrl"
-                  />
-                </div>
-              </div> -->
-            </div>
-          </form-comp>
+            </form-comp>
+          </div>
         </template>
         <template #footer>
           <base-button type="secondary" @click="modal.ubahTernak = false">
