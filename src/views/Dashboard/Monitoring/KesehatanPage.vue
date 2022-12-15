@@ -85,8 +85,6 @@ export default {
     ...mapActions(d$kesehatan, [
       "a$kesehatanAdd",
       "a$kesehatanList",
-      "a$kesehatanDelete",
-      "a$kesehatanEdit",
       "a$totalSakit",
     ]),
     ...mapActions(d$dropdown, ["a$ddListPenyakit", "a$ddKandang"]),
