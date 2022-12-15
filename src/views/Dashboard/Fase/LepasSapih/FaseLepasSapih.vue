@@ -22,6 +22,7 @@ export default {
       seleksi: false,
     },
     loading: false,
+    loadingModal: false,
     // DataTable
     dt: {
       column: [
@@ -108,11 +109,11 @@ export default {
     },
 
     async triggerCreateLepasSapih() {
-      this.loading = true;
+      this.modal.createLepasSapih = true;
+      this.loadingModal = true;
       await this.a$cempe().catch((error) => this.notify(error, false));
       await this.a$kandangList().catch((error) => this.notify(error, false));
-      this.loading = false;
-      this.modal.createLepasSapih = true;
+      this.loadingModal = false;
     },
 
     triggerSeleksi(row) {
@@ -191,10 +192,7 @@ export default {
         </div>
         <div class="col text-right">
           <base-button type="success" @click="triggerCreateLepasSapih">
-            <span v-if="!loading">Tambah {{ pageTitle }}</span>
-            <span v-else>
-              <i class="fa fa-spinner fa-spin"></i> Sedang memuat...
-            </span>
+            <span>Tambah {{ pageTitle }}</span>
           </base-button>
         </div>
       </div>
@@ -222,57 +220,62 @@ export default {
           <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
         </template>
         <template #body>
-          <form-comp v-if="modal.createLepasSapih">
-            <div class="row">
-              <!-- id_ternak -->
-              <div class="col-12">
-                <base-input name="id_ternak" label="ID ternak">
-                  <multi-select
-                    v-model="input.ternak"
-                    :options="g$cempe"
-                    label="id_ternak"
-                    track-by="id_ternak"
-                    placeholder="Pilih ID ternak"
-                    :show-labels="false"
-                  />
-                </base-input>
-              </div>
+          <div v-if="loadingModal">
+            <i class="fa fa-spinner fa-spin"></i> Sedang memuat...
+          </div>
+          <div v-else>
+            <form-comp v-if="modal.createLepasSapih">
+              <div class="row">
+                <!-- id_ternak -->
+                <div class="col-12">
+                  <base-input name="id_ternak" label="ID ternak">
+                    <multi-select
+                      v-model="input.ternak"
+                      :options="g$cempe"
+                      label="id_ternak"
+                      track-by="id_ternak"
+                      placeholder="Pilih ID ternak"
+                      :show-labels="false"
+                    />
+                  </base-input>
+                </div>
 
-              <!-- Tanggal lepas sapih -->
-              <div class="col-12">
-                <base-input
-                  name="tanggal_lepas sapih"
-                  label="Tanggal Lepas Sapih"
-                >
-                  <flat-pickr
-                    v-model="input.tanggal_lepas_sapih"
-                    :config="{
-                      mode: 'single',
-                      allowInput: true,
-                      maxDate: new Date(),
-                      defaultDate: 'today',
-                    }"
-                    class="form-control datepicker"
-                    placeholder="Pilih tanggal"
-                  />
-                </base-input>
-              </div>
+                <!-- Tanggal lepas sapih -->
+                <div class="col-12">
+                  <base-input
+                    name="tanggal_lepas sapih"
+                    label="Tanggal Lepas Sapih"
+                  >
+                    <flat-pickr
+                      v-model="input.tanggal_lepas_sapih"
+                      :config="{
+                        mode: 'single',
+                        allowInput: true,
+                        maxDate: new Date(),
+                        defaultDate: 'today',
+                      }"
+                      class="form-control datepicker"
+                      placeholder="Pilih tanggal"
+                    />
+                  </base-input>
+                </div>
 
-              <!-- Kode kandang -->
-              <div class="col-12">
-                <base-input name="kode_kandang" label="Pilih kandang">
-                  <multi-select
-                    v-model="input.kandang"
-                    :options="g$kandangList"
-                    track-by="id_kandang"
-                    label="kode_kandang"
-                    placeholder="Pilih kandang"
-                    :show-labels="false"
-                  />
-                </base-input>
+                <!-- Kode kandang -->
+                <div class="col-12">
+                  <base-input name="kode_kandang" label="Pilih kandang">
+                    <multi-select
+                      v-model="input.kandang"
+                      :options="g$kandangList"
+                      track-by="id_kandang"
+                      label="kode_kandang"
+                      placeholder="Pilih kandang"
+                      :show-labels="false"
+                    />
+                  </base-input>
+                </div>
               </div>
-            </div>
-          </form-comp>
+            </form-comp>
+          </div>
         </template>
         <template #footer>
           <base-button type="secondary" @click="modal.createLepasSapih = false">
