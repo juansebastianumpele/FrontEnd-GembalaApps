@@ -240,7 +240,11 @@ export default {
           <base-button type="warning" @click="modal.changePw = true">
             Ganti Sandi
           </base-button>
-          <base-button type="danger" @click="modal.hapusAkun = true">
+          <base-button
+            v-if="userInfo.role !== 'bod'"
+            type="danger"
+            @click="modal.hapusAkun = true"
+          >
             Hapus Akun
           </base-button>
         </div>
