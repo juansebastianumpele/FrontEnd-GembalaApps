@@ -66,6 +66,7 @@ export default {
       createLkPemeliharaan: false,
     },
     loading: false,
+    loadingModal: false,
   }),
   computed: {
     ...mapState(d$pemeliharaan, ["g$pemeliharaan", "g$pemeliharaanAll"]),
@@ -88,11 +89,11 @@ export default {
     ...mapActions(d$pakan, ["a$pakanList"]),
 
     async triggerCreate() {
-      this.loading = true;
+      this.modal.createLkPemeliharaan = true;
+      this.loadingModal = true;
       await this.a$kandangList().catch((error) => this.notify(error, false));
       await this.a$pakanList("").catch((error) => this.notify(error, false));
-      this.loading = false;
-      this.modal.createLkPemeliharaan = true;
+      this.loadingModal = false;
     },
 
     async createLkPemeliharaan() {
@@ -172,10 +173,7 @@ export default {
         </div>
         <div class="col text-right">
           <base-button type="success" @click="triggerCreate">
-            <span v-if="!loading">Tambah {{ pageTitle }}</span>
-            <span v-else>
-              <i class="fa fa-spinner fa-spin"></i> Sedang memuat...
-            </span>
+            <span>Tambah {{ pageTitle }}</span>
           </base-button>
         </div>
       </div>
@@ -201,96 +199,101 @@ export default {
           <h3 class="modal-title">Tambah {{ pageTitle }} Baru</h3>
         </template>
         <template #body>
-          <form-comp v-if="modal.createLkPemeliharaan">
-            <div class="row">
-              <!-- Kandang -->
-              <div class="col-6">
-                <base-input name="kandang" label="Kandang" required>
-                  <multi-select
-                    v-model="input.kandang"
-                    :options="g$kandangList"
-                    label="kode_kandang"
-                    track-by="id"
-                    placeholder="Pilih Kandang"
-                    :show-labels="false"
-                    @select="onChange"
-                  />
-                </base-input>
-              </div>
+          <div v-if="loadingModal">
+            <i class="fa fa-spinner fa-spin"></i> Sedang memuat...
+          </div>
+          <div v-else>
+            <form-comp v-if="modal.createLkPemeliharaan">
+              <div class="row">
+                <!-- Kandang -->
+                <div class="col-6">
+                  <base-input name="kandang" label="Kandang" required>
+                    <multi-select
+                      v-model="input.kandang"
+                      :options="g$kandangList"
+                      label="kode_kandang"
+                      track-by="id"
+                      placeholder="Pilih Kandang"
+                      :show-labels="false"
+                      @select="onChange"
+                    />
+                  </base-input>
+                </div>
 
-              <!-- Tanggal pemeliharaan -->
-              <div class="col-6">
-                <base-input
-                  name="tanggal_pemeliharaan"
-                  label="Tanggal Pemeliharaan"
-                  required
-                >
-                  <flat-pickr
-                    v-model="input.tanggal_pemeliharaan"
-                    :config="{
-                      mode: 'single',
-                      allowInput: true,
-                      maxDate: new Date(),
-                      defaultDate: 'today',
-                    }"
-                    class="form-control datepicker"
-                    placeholder="Pilih tanggal"
-                    maxDate="today"
-                  />
-                </base-input>
-              </div>
-
-              <!-- Jenis pakan -->
-              <div class="col-6">
-                <base-input name="jenis_pakan" label="Jenis Pakan" required>
-                  <multi-select
-                    v-model="input.jenis_pakan"
-                    :options="g$pakanList"
-                    label="jenis_pakan"
-                    track-by="id_jenis_pakan"
-                    placeholder="Pilih jenis pakan"
-                    :show-labels="false"
-                    :preselectFirst="true"
-                  />
-                </base-input>
-              </div>
-
-              <!-- Jumlah pakan -->
-              <div class="col-6">
-                <field-form
-                  v-slot="{ field }"
-                  v-model="input.jumlah_pakan"
-                  name="jumlah_pakan"
-                >
+                <!-- Tanggal pemeliharaan -->
+                <div class="col-6">
                   <base-input
-                    v-bind="field"
-                    placeholder="Jumlah pakan dalam kg"
-                    label="Jumlah Pakan (Kg)"
-                    type="number"
+                    name="tanggal_pemeliharaan"
+                    label="Tanggal Pemeliharaan"
                     required
-                  ></base-input>
-                </field-form>
-              </div>
+                  >
+                    <flat-pickr
+                      v-model="input.tanggal_pemeliharaan"
+                      :config="{
+                        mode: 'single',
+                        allowInput: true,
+                        maxDate: new Date(),
+                        defaultDate: 'today',
+                      }"
+                      class="form-control datepicker"
+                      placeholder="Pilih tanggal"
+                      maxDate="today"
+                    />
+                  </base-input>
+                </div>
 
-              <!-- Pembersihan kandang -->
-              <div class="col-6">
-                <base-input name="jenis_pakan">
-                  <base-checkbox v-model="input.pembersihan_kandang">
-                    <h5>Pembersihan Kandang</h5>
-                  </base-checkbox>
-                </base-input>
-              </div>
+                <!-- Jenis pakan -->
+                <div class="col-6">
+                  <base-input name="jenis_pakan" label="Jenis Pakan" required>
+                    <multi-select
+                      v-model="input.jenis_pakan"
+                      :options="g$pakanList"
+                      label="jenis_pakan"
+                      track-by="id_jenis_pakan"
+                      placeholder="Pilih jenis pakan"
+                      :show-labels="false"
+                      :preselectFirst="true"
+                    />
+                  </base-input>
+                </div>
 
-              <!-- Pembersihan ternak -->
-              <div class="col-6">
-                <base-input name="jenis_pakan">
-                  <base-checkbox v-model="input.pembersihan_ternak">
-                    <h5>Pembersihan Ternak</h5>
-                  </base-checkbox>
-                </base-input>
+                <!-- Jumlah pakan -->
+                <div class="col-6">
+                  <field-form
+                    v-slot="{ field }"
+                    v-model="input.jumlah_pakan"
+                    name="jumlah_pakan"
+                  >
+                    <base-input
+                      v-bind="field"
+                      placeholder="Jumlah pakan dalam kg"
+                      label="Jumlah Pakan (Kg)"
+                      type="number"
+                      required
+                    ></base-input>
+                  </field-form>
+                </div>
+
+                <!-- Pembersihan kandang -->
+                <div class="col-6">
+                  <base-input name="jenis_pakan">
+                    <base-checkbox v-model="input.pembersihan_kandang">
+                      <h5>Pembersihan Kandang</h5>
+                    </base-checkbox>
+                  </base-input>
+                </div>
+
+                <!-- Pembersihan ternak -->
+                <div class="col-6">
+                  <base-input name="jenis_pakan">
+                    <base-checkbox v-model="input.pembersihan_ternak">
+                      <h5>Pembersihan Ternak</h5>
+                    </base-checkbox>
+                  </base-input>
+                </div>
               </div>
-            </div>
-          </form-comp>
+            </form-comp>
+          </div>
         </template>
         <template #footer>
           <base-button
