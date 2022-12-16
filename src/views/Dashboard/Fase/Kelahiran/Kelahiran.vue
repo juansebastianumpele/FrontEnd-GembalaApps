@@ -111,12 +111,13 @@ export default {
     },
 
     async triggerCreateKelahiran() {
-      this.modal.createKelahiran = true;
       this.loadingModal = true;
-      await this.a$listCempeBaru();
-      await this.a$ddBangsa(), await this.a$listIndukan();
-      await this.a$listPejantan();
-      await this.a$ddKandang(), (this.loading = false);
+      this.modal.createKelahiran = true;
+      await this.a$listCempeBaru().catch((error) => this.notify(error, false));
+      await this.a$ddBangsa().catch((error) => this.notify(error, false));
+      await this.a$listIndukan().catch((error) => this.notify(error, false));
+      await this.a$listPejantan().catch((error) => this.notify(error, false));
+      await this.a$ddKandang().catch((error) => this.notify(error, false));
       this.loadingModal = false;
     },
 
