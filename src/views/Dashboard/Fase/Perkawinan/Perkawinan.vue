@@ -18,7 +18,7 @@ export default {
       column: [
         {
           th: "Tanggal ",
-          render: ({ tanggal_perkawinan }) => ubahTanggal(tanggal_perkawinan),
+          render: ({ tanggal_perkawinan }) => tanggal_perkawinan ? ubahTanggal(tanggal_perkawinan) : null,
         },
         {
           name: "id_indukan",
