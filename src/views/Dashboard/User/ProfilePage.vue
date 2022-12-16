@@ -241,7 +241,7 @@ export default {
             Ganti Sandi
           </base-button>
           <base-button
-            v-if="userInfo.role !== 'bod'"
+            v-if="userInfo.role === 'bod'"
             type="danger"
             @click="modal.hapusAkun = true"
           >
