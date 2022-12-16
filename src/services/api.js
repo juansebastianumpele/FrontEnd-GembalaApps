@@ -40,6 +40,12 @@ baseApi.interceptors.response.use(
         delCk('CERT');
         window.location.reload();
         break;
+      case 0:
+        error.response.data = {
+          code: 0,
+          status: "ERR_INTERNET_DISCONNECTED",
+          error: "Tidak dapat terhubung ke internet"
+        }
       default:
         break;
     }
