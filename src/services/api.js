@@ -46,6 +46,7 @@ baseApi.interceptors.response.use(
           status: "ERR_INTERNET_DISCONNECTED",
           error: "Tidak dapat terhubung ke internet"
         }
+        break;
       default:
         break;
     }
