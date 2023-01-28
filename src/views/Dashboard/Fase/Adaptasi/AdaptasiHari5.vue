@@ -246,7 +246,7 @@ export default {
         </div>
         <div class="col text-right">
           <base-button type="success" @click="triggerCreateAdaptasi">
-            T<span>Tambah {{ pageTitle }}</span>
+            <span>Tambah {{ pageTitle }}</span>
           </base-button>
         </div>
       </div>
