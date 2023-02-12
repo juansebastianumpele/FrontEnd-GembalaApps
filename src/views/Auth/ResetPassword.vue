@@ -68,7 +68,7 @@ export default {
 
               <div class="text-center">
                 <base-button type="success1" class="my-2 text-white" native-type="submit">
-                  Kirim Kode Verifikasi
+                  Kirim Password Baru
                 </base-button>
               </div>
             </form-comp>
