@@ -1,7 +1,7 @@
 <template>
   <div>
     <base-nav
-    v-model="showMenu"
+      v-model="showMenu"
       type="light"
       :transparent="true"
       menu-classes="justify-content-end"
@@ -11,17 +11,17 @@
       <template #brand>
         <div class="navbar-wrapper text-lg-center">
           <router-link
-          class="navbar-brand"
-          :to="{ name: isLoggedIn ? 'Home' : 'Login' }"
+            class="navbar-brand"
+            :to="{ name: isLoggedIn ? 'Home' : 'Login' }"
           >
-          <p class="lead m-0">{{ siteMeta.title }}</p>
-        </router-link>
-      </div>
-    </template>
-    
-    <div class="navbar-collapse-header">
-      <div class="row">
-        <div class="col-6 collapse-brand">
+            <p class="lead m-0">{{ siteMeta.title }}</p>
+          </router-link>
+        </div>
+      </template>
+
+      <div class="navbar-collapse-header">
+        <div class="row">
+          <div class="col-6 collapse-brand">
             <router-link to="/">
               <img :src="siteMeta.logo" />
             </router-link>
@@ -31,7 +31,7 @@
               type="button"
               class="navbar-toggler"
               @click="showMenu = false"
-              >
+            >
               <span></span>
               <span></span>
             </button>
@@ -39,10 +39,11 @@
         </div>
       </div>
     </base-nav>
-    
+
     <div class="main-content">
       <router-view></router-view>
     </div>
+
     <content-footer />
   </div>
 </template>
@@ -105,7 +106,7 @@ export default {
       this.showMenu = false;
     },
     setBackgroundColor() {
-      document.body.classList.add('bg-mineral-glow');
+      document.body.classList.add("bg-white");
     },
     removeBackgroundColor() {
       document.body.classList.remove("bg-white");

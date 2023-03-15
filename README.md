@@ -1,6 +1,6 @@
 # Dashboard Monitoring Domba
 
-## Situs Gomo Apps
+## Situs Gembala Apps
 https://gembala.sembadafarm.com
 
 ## Petunjuk Pemasangan pada _Localhost_
