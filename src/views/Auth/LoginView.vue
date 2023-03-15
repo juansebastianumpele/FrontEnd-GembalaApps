@@ -53,9 +53,11 @@ export default {
       <div class="header-body text-center mb-5">
         <div class="row justify-content-center">
           <div class="col-md-8 px-5">
-            <h1 class="text-black">Selamat Datang di {{ siteMeta.title }}!</h1>
-            <br />
-            <img style="width: 100px" src="../../../public/images/logo.png" alt="" />
+            <img
+              style="width: 208px"
+              src="../../../public/images/logo-gomo.png"
+              alt=""
+            />
           </div>
         </div>
       </div>
@@ -63,39 +65,54 @@ export default {
   </div>
   <div class="container">
     <div class="row mx-0 justify-content-center mt--7">
-      <div class="col-lg-6 col-md-8">
+      <div class="col-lg-5 col-md-8">
         <div class="card bg-secondary shadow border-0">
-          <div class="card-header bg-transparent pb-5">
-            <div class="text-muted text-center mt-2 mb-3">
-              <small>Silahkan Masukan Email dan Password</small>
+          <div class="card-header bg-transparent pb-9">
+            <div class="text-muted text-center mt-4 mb-5">
+              <h1>Masuk Ke Akun Anda</h1>
+              <p style="word-wrap: normal; width: 3rm;">Selamat Datang Di Website
+                Goat Milk Monitoring Dashboard</p>
             </div>
             <form-comp :validation-schema="schema" @submit="onSubmit">
-              <base-input name="email" addon-left-icon="fas fa-envelope" placeholder="Email">
+              <base-input
+                name="email"
+                addon-left-icon="fas fa-envelope"
+                placeholder="Email"
+              >
               </base-input>
 
-              <base-input name="kata_sandi" addon-left-icon="fas fa-lock" type="password" placeholder="Kata Sandi"
-                password>
+              <base-input
+                name="kata_sandi"
+                addon-left-icon="fas fa-lock"
+                type="password"
+                placeholder="Kata Sandi"
+                password
+              >
               </base-input>
 
               <div class="text-center">
-                <base-button type="success1" native-type="submit" class="my-2 btn-lg px-6 rounded-lg text-white">
+                <base-button
+                  type="success1"
+                  native-type="submit"
+                  class="my-2 btn-lg px-6 rounded-lg text-white"
+                >
                   Masuk
                 </base-button>
               </div>
               <div class="text-center mt-4">
                 <div>
-                <span class="text-muted"
-                  ><small>Belum Punya Akun? </small></span
-                >
-                <router-link to="/auth/register" class="text-primary">
-                  <small>Daftar Disini</small>
-                </router-link>
+                  <span class="text-muted"
+                    ><small>Belum Punya Akun? </small></span
+                  >
+                  <router-link to="/auth/register" class="text-primary">
+                    <small>Daftar Disini</small>
+                  </router-link>
                 </div>
 
                 <div>
-                <router-link to="/auth/reset" class="text-primary">
-                  <small>Lupa Password?</small>
-                </router-link>
+                  <router-link to="/auth/reset" class="text-primary">
+                    <small>Lupa Password?</small>
+                  </router-link>
                 </div>
               </div>
             </form-comp>
