@@ -13,3 +13,4 @@ https://gembala.sembadafarm.com
 ## Pemasangan pada _Localhost_ dengan _Backend_ Lokal
 1. Ikuti [petunjuk instalasi _backend_](https://gitlab.com/mbkm/code-repositories/batch-3/peternakan_sobat_ternak/BackEnd_GembalaApps#instalasi)
 2. Ubah konstanta `host` pada `src/utils/constant.js` menjadi alamat URL _backend_ atau `http://localhost:51009`
+# FrontEnd-GembalaApps
